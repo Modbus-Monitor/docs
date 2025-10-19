@@ -1,2 +1,9 @@
-# docs
-Unified documentation for all Modbus Monitor products (XPF, Advanced, Android Free, Mapper Pro). Built with MkDocs Material. Publishes per-product PDFs and a docs hub.
+# Modbus Monitor — Docs
+
+This repo hosts the documentation for all Modbus Monitor products:
+- Modbus Monitor XPF
+- Modbus Monitor Advanced
+- Modbus Monitor Android (Free)
+- Modbus Monitor Mapper Pro
+
+Built with **MkDocs Material**. Each product has its own section and PDF manual.
