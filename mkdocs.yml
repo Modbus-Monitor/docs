@@ -18,5 +18,5 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Imported:
-      - XPF Help (from WordPress): imported/xpf-help.md
-
+      - XPF Help (from WordPress): docs/imported/xpf-help.md
+      
