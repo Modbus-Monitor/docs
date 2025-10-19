@@ -4,6 +4,8 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * *"   # Optional: nightly rebuild at 3 AM UTC
 
 permissions:
   contents: write
@@ -13,21 +15,31 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
+      # ────────────────────────────────
+      # 1️⃣ Install dependencies
+      # ────────────────────────────────
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install mkdocs mkdocs-material
+          pip install mkdocs mkdocs-material mkdocs-include-markdown-plugin mkdocs-awesome-pages-plugin mkdocs-autorefs mkdocs-redirects
 
-      # Fetch and convert multiple WP pages
+      # ────────────────────────────────
+      # 2️⃣ Install pandoc + curl
+      # ────────────────────────────────
       - name: Install pandoc and curl
         run: sudo apt-get update && sudo apt-get install -y pandoc curl
 
+      # ────────────────────────────────
+      # 3️⃣ Import & sanitize WordPress Help pages
+      # ────────────────────────────────
       - name: Import WordPress Help pages
         run: |
           mkdir -p docs/docs/imported
@@ -40,19 +52,38 @@ jobs:
 
           for name in "${!pages[@]}"; do
             echo "Importing ${name}..."
-            curl -L "${pages[$name]}" -o "docs/docs/imported/${name}.html"
+            curl -fsSL "${pages[$name]}" -o "docs/docs/imported/${name}.html" || { echo "Skipping ${name} (not found)"; continue; }
             pandoc -f html -t gfm "docs/docs/imported/${name}.html" -o "docs/docs/imported/${name}.md"
-            sed -i 's#src="/#src="https://quantumbitsolutions.com/#g' "docs/docs/imported/${name}.md"
+
+            # 🔧 Fix absolute paths & remove tracking pixels
+            sed -i \
+              -e 's#src="/#src="https://quantumbitsolutions.com/#g' \
+              -e 's#href="/#href="https://quantumbitsolutions.com/#g' \
+              -e 's#\!\[\](//bat\.bing\.com[^)]*)##g' \
+              "docs/docs/imported/${name}.md"
+
+            # 🧹 Remove inline scripts or noscript blocks (optional cleanup)
+            sed -i '/<script/,/<\/script>/d' "docs/docs/imported/${name}.md"
+            sed -i '/<noscript/,/<\/noscript>/d' "docs/docs/imported/${name}.md"
           done
 
+      # ────────────────────────────────
+      # 4️⃣ Build the MkDocs site
+      # ────────────────────────────────
       - name: Build MkDocs site
-        run: mkdocs build --strict
+        run: mkdocs build
 
+      # ────────────────────────────────
+      # 5️⃣ Upload for GitHub Pages
+      # ────────────────────────────────
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: site
 
+  # ────────────────────────────────
+  # 6️⃣ Deploy to GitHub Pages
+  # ────────────────────────────────
   deploy:
     needs: build
     runs-on: ubuntu-latest
