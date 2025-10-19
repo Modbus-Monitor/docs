@@ -86,6 +86,7 @@ jobs:
         run: |
           sudo apt-get install -y wkhtmltopdf
           mkdir -p site/pdfs
+
           declare -a pages=("xpf-help" "advanced-help" "mapper-help" "android-help")
 
           for page in "${pages[@]}"; do
@@ -93,9 +94,12 @@ jobs:
             PDF_PATH="site/pdfs/${page}.pdf"
             if [ -f "$HTML_PATH" ]; then
               echo "Generating PDF for ${page}..."
-              wkhtmltopdf --enable-local-file-access --quiet "$HTML_PATH" "$PDF_PATH"
+              wkhtmltopdf \
+                --enable-local-file-access \
+                "file://$(pwd)/$HTML_PATH" \
+                "$PDF_PATH" || echo "⚠️ Skipping ${page} (wkhtmltopdf failed)"
             else
-              echo "⚠️  Skipping ${page} (missing HTML)"
+              echo "⚠️  Skipping ${page} (missing HTML at $HTML_PATH)"
             fi
           done
 
