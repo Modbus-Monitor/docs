@@ -1,4 +1,4 @@
-
+docs_dir: docs
 site_name: Modbus Monitor — Documentation
 site_url: https://modbus-monitor.github.io/docs/
 use_directory_urls: true
