@@ -17,6 +17,9 @@ markdown_extensions:
       permalink: true
 nav:
   - Home: index.md
-  - Imported:
-      - XPF Help (from WordPress): docs/imported/xpf-help.md
+  - Imported (from WordPress):
+      - XPF Help: docs/imported/xpf-help.md
+      - Advanced Help: docs/imported/advanced-help.md
+      - Mapper Pro Help: docs/imported/mapper-help.md
+      - Android Free Help: docs/imported/android-help.md
       
