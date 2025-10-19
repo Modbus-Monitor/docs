@@ -152,7 +152,16 @@ venv.bak/
 .ropeproject
 
 # mkdocs documentation
-/site
+#/site
+
+# MkDocs build output
+site/
+
+# OS & editor junk
+.DS_Store
+Thumbs.db
+*.log
+__pycache__/
 
 # mypy
 .mypy_cache/
