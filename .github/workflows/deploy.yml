@@ -33,9 +33,9 @@ jobs:
           mkdir -p docs/docs/imported
           declare -A pages=(
             ["xpf-help"]="https://quantumbitsolutions.com/xpf-help/"
-            ["advanced-help"]="https://quantumbitsolutions.com/advanced-help/"
-            ["mapper-help"]="https://quantumbitsolutions.com/mapper-help/"
-            ["android-help"]="https://quantumbitsolutions.com/android-help/"
+            ["advanced-help"]="https://quantumbitsolutions.com/guide/"
+            ["mapper-help"]="https://quantumbitsolutions.com/sniff-help/"
+            ["android-help"]="https://quantumbitsolutions.com/mmhelp/"
           )
 
           for name in "${!pages[@]}"; do
