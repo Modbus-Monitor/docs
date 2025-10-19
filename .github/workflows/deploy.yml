@@ -18,12 +18,26 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install MkDocs
+
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install mkdocs mkdocs-material
-      - name: Build site
+
+      # --- NEW STEP: import WP help page and convert to Markdown
+      - name: Install pandoc
+        run: sudo apt-get update && sudo apt-get install -y pandoc curl
+
+      - name: Import WordPress Help page
+        run: |
+          mkdir -p docs/docs/imported
+          curl -L "https://quantumbitsolutions.com/xpf-help/" -o docs/docs/imported/xpf-help.html
+          pandoc -f html -t gfm docs/docs/imported/xpf-help.html -o docs/docs/imported/xpf-help.md
+          sed -i 's#src="/#src="https://quantumbitsolutions.com/#g' docs/docs/imported/xpf-help.md
+
+      - name: Build MkDocs site
         run: mkdocs build --strict
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -39,4 +53,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        
