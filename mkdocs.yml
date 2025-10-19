@@ -1,20 +1,43 @@
 site_name: Modbus Monitor — Documentation
 site_url: https://modbus-monitor.github.io/docs/
+use_directory_urls: true
+
 theme:
   name: material
   features:
     - navigation.instant
     - navigation.sections
+    - navigation.tracking
     - toc.integrate
-    - search.highlight
     - content.code.copy
+    - search.highlight
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: deep orange
+    - scheme: slate
+      primary: blue
+      accent: teal
+  icon:
+    logo: material/book-open-page-variant
+  favicon: images/favicon.png   # optional — add later to docs/docs/images/
+
 plugins:
   - search
+  - include-markdown
+  - awesome-pages
+  - autorefs
+  - redirects
+
 markdown_extensions:
   - admonition
   - tables
   - toc:
       permalink: true
+  - def_list
+  - attr_list
+  - md_in_html
+
 nav:
   - Home: index.md
   - Imported (from WordPress):
@@ -22,4 +45,3 @@ nav:
       - Advanced Help: docs/imported/advanced-help.md
       - Mapper Pro Help: docs/imported/mapper-help.md
       - Android Free Help: docs/imported/android-help.md
-      
