@@ -24,16 +24,26 @@ jobs:
           python -m pip install --upgrade pip
           pip install mkdocs mkdocs-material
 
-      # --- NEW STEP: import WP help page and convert to Markdown
-      - name: Install pandoc
+      # Fetch and convert multiple WP pages
+      - name: Install pandoc and curl
         run: sudo apt-get update && sudo apt-get install -y pandoc curl
 
-      - name: Import WordPress Help page
+      - name: Import WordPress Help pages
         run: |
           mkdir -p docs/docs/imported
-          curl -L "https://quantumbitsolutions.com/xpf-help/" -o docs/docs/imported/xpf-help.html
-          pandoc -f html -t gfm docs/docs/imported/xpf-help.html -o docs/docs/imported/xpf-help.md
-          sed -i 's#src="/#src="https://quantumbitsolutions.com/#g' docs/docs/imported/xpf-help.md
+          declare -A pages=(
+            ["xpf-help"]="https://quantumbitsolutions.com/xpf-help/"
+            ["advanced-help"]="https://quantumbitsolutions.com/advanced-help/"
+            ["mapper-help"]="https://quantumbitsolutions.com/mapper-help/"
+            ["android-help"]="https://quantumbitsolutions.com/android-help/"
+          )
+
+          for name in "${!pages[@]}"; do
+            echo "Importing ${name}..."
+            curl -L "${pages[$name]}" -o "docs/docs/imported/${name}.html"
+            pandoc -f html -t gfm "docs/docs/imported/${name}.html" -o "docs/docs/imported/${name}.md"
+            sed -i 's#src="/#src="https://quantumbitsolutions.com/#g' "docs/docs/imported/${name}.md"
+          done
 
       - name: Build MkDocs site
         run: mkdocs build --strict
