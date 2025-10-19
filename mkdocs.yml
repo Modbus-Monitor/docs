@@ -22,7 +22,7 @@ theme:
       accent: teal
   icon:
     logo: material/book-open-page-variant
-  favicon: images/favicon.png   # optional — add later to docs/docs/images/
+  favicon: images/favicon.png   # optional — add later to docs/images/
 
 plugins:
   - search
