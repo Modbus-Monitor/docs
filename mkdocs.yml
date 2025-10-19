@@ -1,0 +1,19 @@
+site_name: Modbus Monitor — Documentation
+site_url: https://modbus-monitor.github.io/docs/
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.sections
+    - toc.integrate
+    - search.highlight
+    - content.code.copy
+plugins:
+  - search
+markdown_extensions:
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+nav:
+  - Home: index.md
