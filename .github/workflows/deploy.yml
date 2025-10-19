@@ -74,6 +74,27 @@ jobs:
         run: mkdocs build
 
       # ────────────────────────────────
+      # 4️⃣b Generate PDFs for each imported help page
+      # ────────────────────────────────
+      - name: Generate PDFs for Imported Help pages
+        run: |
+          sudo apt-get install -y wkhtmltopdf
+          mkdir -p site/pdfs
+
+          declare -a pages=("xpf-help" "advanced-help" "mapper-help" "android-help")
+
+          for page in "${pages[@]}"; do
+            echo "Generating PDF for ${page}..."
+            wkhtmltopdf \
+              --enable-local-file-access \
+              --quiet \
+              "site/docs/imported/${page}/index.html" \
+              "site/pdfs/${page}.pdf" || echo "Skipping ${page} (missing HTML)"
+          done
+
+          echo "✅ PDF export complete"
+
+      # ────────────────────────────────
       # 5️⃣ Upload for GitHub Pages
       # ────────────────────────────────
       - name: Upload artifact
