@@ -5,7 +5,7 @@ on:
     branches: [ main ]
   workflow_dispatch:
   schedule:
-    - cron: "0 3 * * *"   # Optional: nightly rebuild at 3 AM UTC
+    - cron: "0 3 * * *"   # Nightly rebuild at 3 AM UTC
 
 permissions:
   contents: write
@@ -29,7 +29,13 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install mkdocs mkdocs-material mkdocs-include-markdown-plugin mkdocs-awesome-pages-plugin mkdocs-autorefs mkdocs-redirects
+          pip install \
+            mkdocs \
+            mkdocs-material \
+            mkdocs-include-markdown-plugin \
+            mkdocs-awesome-pages-plugin \
+            mkdocs-autorefs \
+            mkdocs-redirects
 
       # ────────────────────────────────
       # 2️⃣ Install pandoc + curl
@@ -62,7 +68,7 @@ jobs:
               -e 's#\!\[\](//bat\.bing\.com[^)]*)##g' \
               "docs/docs/imported/${name}.md"
 
-            # 🧹 Remove inline scripts or noscript blocks (optional cleanup)
+            # 🧹 Remove inline scripts or noscript blocks
             sed -i '/<script/,/<\/script>/d' "docs/docs/imported/${name}.md"
             sed -i '/<noscript/,/<\/noscript>/d' "docs/docs/imported/${name}.md"
           done
@@ -80,16 +86,17 @@ jobs:
         run: |
           sudo apt-get install -y wkhtmltopdf
           mkdir -p site/pdfs
-
           declare -a pages=("xpf-help" "advanced-help" "mapper-help" "android-help")
 
           for page in "${pages[@]}"; do
-            echo "Generating PDF for ${page}..."
-            wkhtmltopdf \
-              --enable-local-file-access \
-              --quiet \
-              "site/docs/imported/${page}/index.html" \
-              "site/pdfs/${page}.pdf" || echo "Skipping ${page} (missing HTML)"
+            HTML_PATH="site/imported/${page}/index.html"
+            PDF_PATH="site/pdfs/${page}.pdf"
+            if [ -f "$HTML_PATH" ]; then
+              echo "Generating PDF for ${page}..."
+              wkhtmltopdf --enable-local-file-access --quiet "$HTML_PATH" "$PDF_PATH"
+            else
+              echo "⚠️  Skipping ${page} (missing HTML)"
+            fi
           done
 
           echo "✅ PDF export complete"
