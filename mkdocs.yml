@@ -1,3 +1,5 @@
+docs_dir: docs
+
 site_name: Modbus Monitor — Documentation
 site_url: https://modbus-monitor.github.io/docs/
 use_directory_urls: true
@@ -41,10 +43,10 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Imported (from WordPress):
-      - XPF Help: docs/imported/xpf-help.md
-      - Advanced Help: docs/imported/advanced-help.md
-      - Mapper Pro Help: docs/imported/mapper-help.md
-      - Android Free Help: docs/imported/android-help.md
+      - XPF Help: imported/xpf-help.md
+      - Advanced Help: imported/advanced-help.md
+      - Mapper Pro Help: imported/mapper-help.md
+      - Android Free Help: imported/android-help.md
   - PDF Downloads:
       - XPF Help PDF: pdfs/xpf-help.pdf
       - Advanced Help PDF: pdfs/advanced-help.pdf
