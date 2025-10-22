@@ -77,7 +77,7 @@ jobs:
       # 4️⃣ Build the MkDocs site
       # ────────────────────────────────
       - name: Build MkDocs site
-        run: mkdocs build
+        run: mkdocs build --strict
 
       # ────────────────────────────────
       # 4️⃣b Generate PDFs for each imported help page
@@ -96,8 +96,9 @@ jobs:
               echo "Generating PDF for ${page}..."
               wkhtmltopdf \
                 --enable-local-file-access \
+                --quiet \
                 "file://$(pwd)/$HTML_PATH" \
-                "$PDF_PATH" || echo "⚠️ Skipping ${page} (wkhtmltopdf failed)"
+                "$PDF_PATH" || true
             else
               echo "⚠️  Skipping ${page} (missing HTML at $HTML_PATH)"
             fi
