@@ -84,6 +84,7 @@ jobs:
 
       # ────────────────────────────────
       # 3️⃣b Commit imported Markdown files back to repo (only if changed)
+      # 3️⃣b Commit imported Markdown files back to repo (guaranteed)
       #     👉 Safe for your repo; skipped automatically on forks or PRs
       # ────────────────────────────────
       - name: Commit imported Markdown files back to repo
@@ -97,19 +98,32 @@ jobs:
           # Authenticate using the GitHub token
           git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}"
 
-          # Ensure we are on main branch
+          # Ensure we're on the main branch and have full history
           git fetch origin main
           git checkout main
 
-          # Only commit when changes exist
-          if ! git diff --quiet -- docs/imported/; then
+          # 🧩 Make sure imported folder exists and has content
+          echo "📂 Verifying generated files..."
+          ls -la docs/imported || echo "⚠️ No imported folder found!"
+          
+          # 🧩 Create placeholder if empty (forces Git to track folder)
+          if [ -z "$(ls -A docs/imported)" ]; then
+            echo "⚠️ No imported Markdown files detected. Creating placeholder..."
+            echo "_Placeholder file to keep folder tracked_" > docs/imported/.keep
+          fi
+
+          # ✅ Add new or modified files explicitly
+          git add docs/imported/*.md || echo "⚠️ No Markdown files found to add"
+          git add docs/imported/.keep || true
+
+          # ✅ Commit only if there are staged changes
+          if ! git diff --cached --quiet; then
             echo "🔄 Changes detected — committing updates..."
-            git add docs/imported/*.md
             git commit -m "Auto-update imported Markdown files ($(date -u +'%Y-%m-%d %H:%M UTC'))"
-            git push origin main || echo "⚠️ Push failed (permissions issue)"
+            git push origin main || echo "⚠️ Push failed (check branch protection or token permissions)"
           else
-            echo "✅ No Markdown changes detected — skipping commit."
-          fi     
+            echo "✅ No new or modified Markdown changes to commit."
+          fi
 
       # ────────────────────────────────
       # 4️⃣ Build the MkDocs site
