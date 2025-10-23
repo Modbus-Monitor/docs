@@ -82,7 +82,11 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-          # Check for changes before committing
+          # Move back to main branch (Actions uses a detached HEAD)
+          git fetch origin main
+          git checkout main
+
+          # Check for Markdown changes
           if ! git diff --quiet -- docs/imported/; then
             echo "🔄 Changes detected, committing updates..."
             git add docs/imported/*.md
