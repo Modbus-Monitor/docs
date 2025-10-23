@@ -17,8 +17,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # ────────────────────────────────
+      # 🔹 Checkout the repository
+      # ────────────────────────────────
       - uses: actions/checkout@v4
 
+      # ────────────────────────────────
+      # 🔹 Set up Python for MkDocs
+      # ────────────────────────────────
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -75,25 +81,26 @@ jobs:
 
       # ────────────────────────────────
       # 3️⃣b Commit imported Markdown files back to repo (only if changed)
+      #     👉 Safe for your repo; skipped automatically on forks or PRs
       # ────────────────────────────────
       - name: Commit imported Markdown files back to repo
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && github.repository == 'Modbus-Monitor/docs'
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-          # Move back to main branch (Actions uses a detached HEAD)
+          # Ensure we are on main branch (Actions uses detached HEAD)
           git fetch origin main
           git checkout main
 
-          # Check for Markdown changes
+          # Only commit when changes exist
           if ! git diff --quiet -- docs/imported/; then
-            echo "🔄 Changes detected, committing updates..."
+            echo "🔄 Changes detected — committing updates..."
             git add docs/imported/*.md
             git commit -m "Auto-update imported Markdown files"
             git push origin main
           else
-            echo "✅ No Markdown changes detected, skipping commit."
+            echo "✅ No Markdown changes detected — skipping commit."
           fi
 
       # ────────────────────────────────
@@ -103,7 +110,8 @@ jobs:
         run: mkdocs build --strict
 
       # ────────────────────────────────
-      # 4️⃣b PDF generation disabled
+      # 4️⃣b PDF generation (disabled for now)
+      #     Uncomment later if PDF export is required
       # ────────────────────────────────
       # - name: Generate PDFs for Imported Help pages
       #   run: |
