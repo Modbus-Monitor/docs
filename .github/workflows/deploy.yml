@@ -21,6 +21,9 @@ jobs:
       # 🔹 Checkout the repository
       # ────────────────────────────────
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # ensures full history, required for committing back
+
 
       # ────────────────────────────────
       # 🔹 Set up Python for MkDocs
@@ -92,13 +95,13 @@ jobs:
           # Ensure we are on main branch (Actions uses detached HEAD)
           git fetch origin main
           git checkout main
-
+          
           # Only commit when changes exist
           if ! git diff --quiet -- docs/imported/; then
             echo "🔄 Changes detected — committing updates..."
             git add docs/imported/*.md
-            git commit -m "Auto-update imported Markdown files"
-            git push origin main
+            git commit -m "Auto-update imported Markdown files ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+            git push origin main || echo "⚠️  Push failed (likely fork or permission issue)"
           else
             echo "✅ No Markdown changes detected — skipping commit."
           fi
