@@ -2099,7 +2099,9 @@ class="wp-block-embed aligncenter is-type-video is-provider-youtube wp-block-emb
 <div class="player-unavailable">
 <h1 id="an-error-occurred." class="message">An error occurred.</h1>
 <div class="submessage">
-Unable to execute JavaScript.
+<a href="https://www.youtube.com/watch?v=l6F49HPSx2U"
+target="_blank">Try watching this video on www.youtube.com</a>, or
+enable JavaScript if it is disabled in your browser.
 </div>
 </div>
 </div>
