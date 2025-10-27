@@ -10,17 +10,39 @@
 
 ## 📖 Introduction
 
-The **Modbus Monitor XPF** application is a versatile tool for facilitating communication between a Windows-based Personal Computer and Modbus Client or Server devices. It offers dual functionality, encompassing both a **Modbus Client** and a **Modbus Server** within a single application.
+The **Modbus Monitor XPF** application is a versatile tool for facilitating communication between a Windows-based Personal Computer and Modbus Client or Server devices. It offers dual functionality, encompassing both a **Modbus Client** and a **Modbus Server** within a single application. 
+
+**Modbus Monitor XPF** is a professional desktop application for communicating with industrial devices using the Modbus protocol. It supports **Modbus TCP/IP, Serial RTU/ASCII, and RTU/ASCII encapsulated over TCP**, allowing you to monitor, read, write, simulate, and analyze Modbus registers in real time.
+
+**This tool is designed for:**
+- Controls & automation engineers
+- Field commissioning & maintenance technicians
+- OEM integration & troubleshooting
+- Lab testing, prototyping, and simulation work
 
 **Key Features:**
-- ✅ **Dual Mode Operation** - Both Modbus Client (Master) and Server (Slave)  
-- ✅ **Multiple Protocols** - Supports Modbus TCP/IP, RTU, and ASCII
-- ✅ **Real-time Monitoring** - Live data visualization and logging
-- ✅ **Advanced Scripting** - Automation and custom commands
-- ✅ **Cross-platform Ready** - Windows 10+ with .NET Framework 4.8+
+- ✅ **Dual Mode Operation** - Both Modbus Client (Master) and Server (Slave)
+- ✅ **Multiple Protocols** - Supports Modbus TCP/IP, ASCII/RTU Over TCP, Serial RTU, Serial ASCII
+- ✅ **Data Conversion** - Extensive Data Converters from Modbus REgisters 28+ Data converters
+- ✅ **Real-time Monitoring** - Live data visualization using charts and exensitve logging and saving data
+- ✅ **Pre-built Modbus Maps** - Download the pre-built Modbus Maps for many common devices in the market such as Solar invervters, Drives, and mary others.
+- ✅ **Validation** - Instantly check if data from server is good value pass/fail/ color coded range. Use to Tool! 
+
+### ⭐ Key Capabilities
+| Capability                          | Description                                                                        |
+| ----------------------------------- | ---------------------------------------------------------------------------------- |
+| **Dual Mode Operation**             | Act as Modbus **Client (Master)** or **Server (Slave)** — simultaneously if needed |
+| **Multiple Protocols**              | TCP/IP, Serial RTU/ASCII, RTU-over-TCP, ASCII-over-TCP                             |
+| **Live Data Monitoring**            | View register values in table, charts, or logs                                     |
+| **Write & Control**                 | Modify coils and registers in real time                                            |
+| **Device Scanning**                 | Discover unknown register maps automatically                                       |
+| **Evaluate & Validation Tools**     | Color-based threshold checking for health/status monitoring                        |
+| **Pre-Built Modbus Maps**           | Download ready-to-use maps for inverters, drives, meters, PLCs, etc.               |
+| **Community & Factory Map Sharing** | Upload and download Modbus maps with one click                                     |
+
 
 !!! tip "Getting Started"
-    New users should check our [YouTube channel](https://www.youtube.com/@ModbusMonitor/videos) for short feature demonstrations.
+    New users should check our [YouTube channel](https://www.youtube.com/@ModbusMonitor/videos) for short feature demonstrations and how to use videos.
 
 ## 🚀 Installation & Setup
 
