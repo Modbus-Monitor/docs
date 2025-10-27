@@ -3,6 +3,12 @@ site_name: Modbus Monitor — Documentation
 site_url: https://modbus-monitor.github.io/docs/
 use_directory_urls: true
 
+# Documentation versioning
+extra:
+  version:
+    provider: mike
+  generator: false
+
 theme:
   name: material
   features:
@@ -38,6 +44,11 @@ markdown_extensions:
   - def_list
   - attr_list
   - md_in_html
+
+# Footer with version information
+copyright: |
+  Documentation Version 1.0.0 • Last Updated: January 15, 2025 • 
+  <a href="https://github.com/Modbus-Monitor/docs" target="_blank">View on GitHub</a>
 
 nav:
   - Home: index.md

@@ -67,13 +67,33 @@ docs/
 
 Documentation is automatically imported from WordPress and converted to Markdown via GitHub Actions. The imported content appears in `docs/imported/` and is rebuilt nightly.
 
+### 📋 Version Management
+
+The documentation uses semantic versioning (`MAJOR.MINOR.PATCH`) for tracking significant content changes:
+
+- **Patch** (1.0.0 → 1.0.1): Bug fixes, typos, minor corrections
+- **Minor** (1.0.1 → 1.1.0): New content, features, sections  
+- **Major** (1.1.0 → 2.0.0): Major restructure, breaking changes
+
+**Updating Version:**
+```bash
+# Linux/WSL
+./update-version.sh
+
+# Windows
+update-version.bat
+```
+
+**Note:** The build date updates automatically with each deployment, but the version number should only be updated when actual content changes occur.
+
 ## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/your-feature`
 3. Make your changes
 4. Test locally with `mkdocs serve`
-5. Submit a pull request
+5. If significant changes: Run `update-version.sh` or `update-version.bat`
+6. Submit a pull request
 
 ## 📄 License
 
