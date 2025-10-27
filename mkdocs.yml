@@ -12,21 +12,34 @@ extra:
 theme:
   name: material
   features:
+    # Navigation enhancements
     - navigation.instant
+    - navigation.instant.prefetch
     - navigation.sections
-    - navigation.tracking
+    - navigation.expand
+    - navigation.path
+    - navigation.prune
+    - navigation.indexes
     - navigation.top
     - navigation.tabs
     - navigation.tabs.sticky
-    - navigation.expand
-    - toc.integrate
+    - navigation.footer
+    # Table of Contents improvements  
     - toc.follow
-    - content.code.copy
-    - content.code.annotate
-    - content.tooltips
+    - toc.integrate
+    # Search enhancements
     - search.highlight
     - search.suggest
     - search.share
+    # Content features
+    - content.code.copy
+    - content.code.select
+    - content.code.annotate
+    - content.tooltips
+    - content.footnote.tooltips
+    - content.tabs.link
+    # Header features
+    - header.autohide
   palette:
     - scheme: default
       primary: indigo
@@ -49,11 +62,20 @@ extra_css:
   - stylesheets/extra.css
 
 plugins:
-  - search
+  - search:
+      separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+      lang: 
+        - en
+      min_search_length: 2
   - include-markdown
   - awesome-pages
   - autorefs
-  - redirects
+  - redirects:
+      redirect_maps:
+        'xpf-users-guide.md': 'products/xpf/user-guide.md'
+        'features-demo.md': 'guides/features-demo.md'
+        'mermaid-showcase.md': 'guides/mermaid-showcase.md'
+        'assets-guide.md': 'guides/assets-guide.md'
   - mermaid2
 
 markdown_extensions:
@@ -101,14 +123,26 @@ copyright: |
 
 nav:
   - Home: index.md
-  - XPF Documentation:
-    - Complete Guide: xpf-users-guide.md
-    - Features Demo: features-demo.md
-    - 📊 Mermaid Showcase: mermaid-showcase.md
+  
+  - Products:
+    - Modbus Monitor XPF:
+      - Complete Guide: products/xpf/user-guide.md
+      - Quick Start: products/xpf/quick-start.md
+  
+  - Technical Resources:
+    - Overview: technical/index.md
+  
+  - Support & Help:
+    - Help Center: support/index.md
+  
   - Documentation Guides:
-    - 🖼️ Images & Assets: assets-guide.md
-  - Imported Content:
-    - XPF Help (Legacy): imported/xpf-help.md
-    - Advanced Help: imported/advanced-help.md
-    - Mapper Help: imported/mapper-help.md
-    - Android Help: imported/android-help.md
+    - guides/features-demo.md
+    - 📊 Mermaid Diagrams: guides/mermaid-showcase.md
+    - 🖼️ Images & Assets: guides/assets-guide.md
+    - 📝 Content Migration: guides/content-migration.md
+  
+  - Legacy Content:
+    - imported/xpf-help.md
+    - imported/advanced-help.md  
+    - imported/mapper-help.md
+    - imported/android-help.md
