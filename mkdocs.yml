@@ -15,9 +15,18 @@ theme:
     - navigation.instant
     - navigation.sections
     - navigation.tracking
+    - navigation.top
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.expand
     - toc.integrate
+    - toc.follow
     - content.code.copy
+    - content.code.annotate
+    - content.tooltips
     - search.highlight
+    - search.suggest
+    - search.share
   palette:
     - scheme: default
       primary: indigo
@@ -29,21 +38,61 @@ theme:
     logo: material/book-open-page-variant
   favicon: images/favicon.png   # optional — add later to docs/images/
 
+# Extra JavaScript for math and enhanced features
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+# Extra CSS for custom styling
+extra_css:
+  - stylesheets/extra.css
+
 plugins:
   - search
   - include-markdown
   - awesome-pages
   - autorefs
   - redirects
+  - mermaid2
 
 markdown_extensions:
   - admonition
   - tables
   - toc:
       permalink: true
+      toc_depth: 3
   - def_list
   - attr_list
   - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_div_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      base_path: docs
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.caret
+  - pymdownx.tilde
+  - footnotes
 
 # Footer with version information
 copyright: |
@@ -52,8 +101,14 @@ copyright: |
 
 nav:
   - Home: index.md
-  - Imported (from WordPress):
-      - XPF Help: imported/xpf-help.md
-      - Advanced Help: imported/advanced-help.md
-      - Mapper Pro Help: imported/mapper-help.md
-      - Android Free Help: imported/android-help.md
+  - XPF Documentation:
+    - Complete Guide: xpf-users-guide.md
+    - Features Demo: features-demo.md
+    - 📊 Mermaid Showcase: mermaid-showcase.md
+  - Documentation Guides:
+    - 🖼️ Images & Assets: assets-guide.md
+  - Imported Content:
+    - XPF Help (Legacy): imported/xpf-help.md
+    - Advanced Help: imported/advanced-help.md
+    - Mapper Help: imported/mapper-help.md
+    - Android Help: imported/android-help.md

@@ -44,7 +44,9 @@ jobs:
             mkdocs-include-markdown-plugin \
             mkdocs-awesome-pages-plugin \
             mkdocs-autorefs \
-            mkdocs-redirects
+            mkdocs-redirects \
+            pymdown-extensions \
+            mkdocs-mermaid2-plugin
 
       # ────────────────────────────────
       # 2️⃣ Install pandoc + curl
