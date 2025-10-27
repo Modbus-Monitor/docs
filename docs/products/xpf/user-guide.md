@@ -48,38 +48,55 @@ Most Modbus tools are either simple monitors or complex SCADA packages. XPF sits
 
 ### Getting the Software
 
-=== "Microsoft Store (Recommended)"
+=== "Microsoft Store"
 
-    **Best for most users - automatic updates and licensing**
+    **Universal - Works on both 32-bit and 64-bit Windows**
     
-    1. **Open** Microsoft Store on Windows
-    2. **Search** for "Modbus Monitor XPF"
-    3. **Install** - no admin rights needed
-    4. **License** activates automatically if purchased through store
+    - **Automatic updates** and license management
+    - **No admin rights** needed for installation
+    - **Best for hobbyists** and multi-computer setups
+    - **License per user** (not per machine)
     
-    [:material-microsoft-windows: Open Microsoft Store](ms-windows-store://pdp/?productid=9PG862WL5HSM){ .md-button .md-button--primary }
+    [:material-microsoft-windows: Get from Microsoft Store](ms-windows-store://pdp/?productid=9PG862WL5HSM){ .md-button .md-button--primary }
 
 === "Direct Download"
 
-    **Portable version - good for field laptops or restricted systems**
-    
-    1. **Download** the executable file
-    2. **No installation** required - just run it
-    3. **Copy to USB** drive for use on multiple machines
-    4. **Manual licensing** required (see activation steps below)
-    
-    [:material-download: Download Portable Version](https://quantumbitsolutions.com/purchase/){ .md-button }
+    **Choose your architecture and installation type:**
 
-=== "Enterprise Purchase"
+    | Architecture | Installer (Permanent Setup) | Portable (No Install) |
+    |-------------|------------------------------|------------------------|
+    | **64-bit** *(Recommended for modern systems)* | [:material-download: x64 Installer](https://quantumbitsolutions.com/download/ModbusMonitor_XPF_x64_Installer.zip){ .md-button } | [:material-download: x64 Portable](https://quantumbitsolutions.com/download/Modbus_Monitor_XPFx64.zip){ .md-button } |
+    | **32-bit** *(Older systems only)* | [:material-download: x86 Installer](https://quantumbitsolutions.com/download/ModbusMonitor_XPF_x86_Installer.zip){ .md-button } | [:material-download: x86 Portable](https://quantumbitsolutions.com/download/Modbus_Monitor_XPFx86.zip){ .md-button } |
 
-    **Site licenses and volume pricing**
+    **What's the difference?**
     
-    - **Multiple installations** on company systems
-    - **Offline licensing** for air-gapped networks  
-    - **Volume discounts** available
-    - **Invoice billing** and purchase orders accepted
+    - **Installer:** Creates shortcuts, integrates with Windows, faster startup
+    - **Portable:** No installation needed, run from USB drives, good for field work
+    - **64-bit:** Works on modern Windows (2010+), handles large datasets better  
+    - **32-bit:** Only needed for older Windows systems or embedded PCs
+
+=== "Purchase"
+
+    **Volume licensing and site deployments**    
+    - **Multiple machine licenses** available
+    - **Offline licensing** for air-gapped networks
+    - **Volume discounts** for large deployments
+    - **Purchase orders** and invoice billing accepted
     
-    [:material-email: Contact Sales](https://quantumbitsolutions.com/contact-us/){ .md-button }
+    [:material-email: Enterprise Sales](https://quantumbitsolutions.com/contact-us/){ .md-button }
+    [:material-cart: Browse License Options](https://quantumbitsolutions.com/shop/){ .md-button }
+
+!!! note "Which Version Should I Choose?"
+    **Most users:** Choose the **64-bit version** - it works on modern Windows systems and handles large datasets better.
+    
+    **Use 32-bit version if:**
+    - Running on older Windows systems (pre-2010)
+    - Using embedded/industrial PCs with 32-bit OS
+    - Company policy requires 32-bit applications
+    
+    **Installer vs Portable:**
+    - **Installer:** Better for permanent desk setups, adds shortcuts and file associations
+    - **Portable:** Better for field work, USB drives, or systems without admin rights
 
 ### License Activation
 
@@ -119,25 +136,25 @@ Most Modbus tools are either simple monitors or complex SCADA packages. XPF sits
 
 ### System Requirements
 
-=== "Minimum Specs"
+=== "64-bit Version (Recommended)"
 
-    | Component | Requirement |
-    |-----------|-------------|
-    | **OS** | Windows 10 (64-bit) |
-    | **RAM** | 4 GB |
-    | **Storage** | 100 MB free space |
-    | **.NET** | Framework 4.8+ |
-    | **Ports** | USB (for serial adapters) |
+    | Component | Requirement | Notes |
+    |-----------|-------------|--------|
+    | **OS** | Windows 10/11 x64 | Most modern systems |
+    | **RAM** | 4 GB minimum, 8 GB+ recommended | More memory = better performance |
+    | **Storage** | 100-500 MB free space | Depends on log file size |
+    | **.NET** | Framework 4.8+ | Usually pre-installed |
+    | **Ports** | USB or Ethernet | For Modbus connections |
 
-=== "Recommended Specs"
+=== "32-bit Version"
 
-    | Component | Recommendation |
-    |-----------|----------------|
-    | **OS** | Windows 11 (64-bit) |
-    | **RAM** | 8 GB or more |
-    | **Storage** | 500 MB free space |
-    | **.NET** | Latest version |
-    | **Network** | Gigabit Ethernet |
+    | Component | Requirement | Notes |
+    |-----------|-------------|--------|
+    | **OS** | Windows 10/11 x86 | Older or embedded systems |
+    | **RAM** | 2-4 GB | 32-bit limit is ~3.5 GB total |
+    | **Storage** | 100 MB free space | Smaller footprint |
+    | **.NET** | Framework 4.8+ | Same as 64-bit |
+    | **Ports** | USB or Ethernet | Full feature compatibility |
 
 === "Field Laptop Setup"
 
