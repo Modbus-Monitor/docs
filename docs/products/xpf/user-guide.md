@@ -2,51 +2,193 @@
 
 # Modbus Monitor XPF - User Guide
 
-!!! info "Professional Modbus Communication Tool"
-    **Version**: Latest • **Updated**: October 2025  
-    Versatile tool for Modbus Client and Server communication on Windows
+**A practical guide for controls engineers and technicians**
 
 [TOC]
 
-## 📖 Introduction
+## 1. Introduction
 
-The **Modbus Monitor XPF** application is a versatile tool for facilitating communication between a Windows-based Personal Computer and Modbus Client or Server devices. It offers dual functionality, encompassing both a **Modbus Client** and a **Modbus Server** within a single application. 
+**Modbus Monitor XPF** is a Windows application for working with Modbus devices. It handles both Client (Master) and Server (Slave) operations and supports all common Modbus variants: TCP/IP, Serial RTU, Serial ASCII, and RTU/ASCII over TCP.
 
-**Modbus Monitor XPF** is a professional desktop application for communicating with industrial devices using the Modbus protocol. It supports **Modbus TCP/IP, Serial RTU/ASCII, and RTU/ASCII encapsulated over TCP**, allowing you to monitor, read, write, simulate, and analyze Modbus registers in real time.
+**What you can do with it:**
+- Monitor live data from PLCs, drives, meters, and other Modbus devices
+- Write values to registers and coils for testing or control
+- Simulate Modbus devices for testing your own equipment
+- Scan unknown devices to discover their register maps
+- Log data for analysis and troubleshooting
+- Validate register values against expected ranges
 
-**This tool is designed for:**
-- Controls & automation engineers
-- Field commissioning & maintenance technicians
-- OEM integration & troubleshooting
-- Lab testing, prototyping, and simulation work
+**Who this is for:**
+- Controls engineers commissioning systems
+- Maintenance technicians troubleshooting communications
+- System integrators testing device compatibility  
+- Equipment manufacturers validating Modbus implementations
 
-**Key Features:**
-- ✅ **Dual Mode Operation** - Both Modbus Client (Master) and Server (Slave)
-- ✅ **Multiple Protocols** - Supports Modbus TCP/IP, ASCII/RTU Over TCP, Serial RTU, Serial ASCII
-- ✅ **Data Conversion** - Extensive Data Converters from Modbus REgisters 28+ Data converters
-- ✅ **Real-time Monitoring** - Live data visualization using charts and exensitve logging and saving data
-- ✅ **Pre-built Modbus Maps** - Download the pre-built Modbus Maps for many common devices in the market such as Solar invervters, Drives, and mary others.
-- ✅ **Validation** - Instantly check if data from server is good value pass/fail/ color coded range. Use to Tool! 
+### What Makes This Different
 
-### ⭐ Key Capabilities
-| Capability                          | Description                                                                        |
-| ----------------------------------- | ---------------------------------------------------------------------------------- |
-| **Dual Mode Operation**             | Act as Modbus **Client (Master)** or **Server (Slave)** — simultaneously if needed |
-| **Multiple Protocols**              | TCP/IP, Serial RTU/ASCII, RTU-over-TCP, ASCII-over-TCP                             |
-| **Live Data Monitoring**            | View register values in table, charts, or logs                                     |
-| **Write & Control**                 | Modify coils and registers in real time                                            |
-| **Device Scanning**                 | Discover unknown register maps automatically                                       |
-| **Evaluate & Validation Tools**     | Color-based threshold checking for health/status monitoring                        |
-| **Pre-Built Modbus Maps**           | Download ready-to-use maps for inverters, drives, meters, PLCs, etc.               |
-| **Community & Factory Map Sharing** | Upload and download Modbus maps with one click                                     |
+Most Modbus tools are either simple monitors or complex SCADA packages. XPF sits in the middle - it's powerful enough for serious work but simple enough to use quickly. The key advantages:
 
+1. **Runs both Master and Slave simultaneously** - Test client-server interactions on one PC
+2. **Pre-built device maps** - No manual register setup for common equipment
+3. **Built-in data validation** - Automatic pass/fail testing with color coding
+4. **Professional logging** - Proper timestamped records for troubleshooting
 
-!!! tip "Getting Started"
-    New users should check our [YouTube channel](https://www.youtube.com/@ModbusMonitor/videos) for short feature demonstrations and how to use videos.
+### System Requirements
 
-## 🚀 Installation & Setup
+- Windows 10 or 11 (64-bit recommended)
+- .NET Framework 4.8 or later
+- 4GB RAM minimum, 8GB recommended
+- Serial ports (USB-to-serial adapters work fine)
+- Network access for TCP/IP communications
 
-### Download Options
+!!! note "Field Laptop Tip"
+    XPF works well on industrial laptops. The portable version doesn't require installation - just copy to a USB drive and run it anywhere.
+
+## 2. Installation & Activation
+
+### Getting the Software
+
+=== "Microsoft Store (Recommended)"
+
+    **Best for most users - automatic updates and licensing**
+    
+    1. **Open** Microsoft Store on Windows
+    2. **Search** for "Modbus Monitor XPF"
+    3. **Install** - no admin rights needed
+    4. **License** activates automatically if purchased through store
+    
+    [:material-microsoft-windows: Open Microsoft Store](ms-windows-store://pdp/?productid=9PG862WL5HSM){ .md-button .md-button--primary }
+
+=== "Direct Download"
+
+    **Portable version - good for field laptops or restricted systems**
+    
+    1. **Download** the executable file
+    2. **No installation** required - just run it
+    3. **Copy to USB** drive for use on multiple machines
+    4. **Manual licensing** required (see activation steps below)
+    
+    [:material-download: Download Portable Version](https://quantumbitsolutions.com/purchase/){ .md-button }
+
+=== "Enterprise Purchase"
+
+    **Site licenses and volume pricing**
+    
+    - **Multiple installations** on company systems
+    - **Offline licensing** for air-gapped networks  
+    - **Volume discounts** available
+    - **Invoice billing** and purchase orders accepted
+    
+    [:material-email: Contact Sales](https://quantumbitsolutions.com/contact-us/){ .md-button }
+
+### License Activation
+
+**Trial Version:**
+- Full functionality for evaluation period
+- No credit card required
+- All features available during trial
+
+**Purchasing a License:**
+1. **Get your UID first** - Copy it from the license screen before buying
+2. **Buy online** - Use your UID when purchasing at quantumbitsolutions.com
+3. **Microsoft Store** - Purchase and activation happen automatically
+4. **Enterprise/Site licenses** - Contact sales for multiple installations
+
+**Activation Steps:**
+1. Open XPF
+2. Click "Activate" button
+3. Enter your license key from the purchase email
+4. Click "Verify" - should show "Licensed" status
+
+### Common Installation Issues
+
+**"Won't start" or crashes:**
+- Install latest .NET Framework from Microsoft
+- Run as Administrator (right-click → Run as Administrator)
+- Check Windows Defender isn't blocking it
+
+**Serial ports not showing:**
+- Install drivers for your USB-to-serial adapter
+- Check Device Manager for COM port assignments
+- Some cheap adapters need specific drivers
+
+**Network connection problems:**
+- Windows Firewall may block Modbus TCP (port 502)
+- Add firewall exception for XPF if needed
+- Corporate networks sometimes block non-standard ports
+
+### System Requirements
+
+=== "Minimum Specs"
+
+    | Component | Requirement |
+    |-----------|-------------|
+    | **OS** | Windows 10 (64-bit) |
+    | **RAM** | 4 GB |
+    | **Storage** | 100 MB free space |
+    | **.NET** | Framework 4.8+ |
+    | **Ports** | USB (for serial adapters) |
+
+=== "Recommended Specs"
+
+    | Component | Recommendation |
+    |-----------|----------------|
+    | **OS** | Windows 11 (64-bit) |
+    | **RAM** | 8 GB or more |
+    | **Storage** | 500 MB free space |
+    | **.NET** | Latest version |
+    | **Network** | Gigabit Ethernet |
+
+=== "Field Laptop Setup"
+
+    **For industrial/field use:**
+    
+    - **Rugged laptop** with serial ports
+    - **USB-to-RS485** converters (industrial grade)
+    - **Ethernet port** for Modbus TCP
+    - **Offline installation** capability
+    - **Administrator rights** for driver installation
+
+## 3. Understanding the Interface
+
+### Main Window Layout
+
+When you open XPF, you'll see a ribbon interface similar to Excel. Here's what matters:
+
+**Top Section (Ribbon Tabs):**
+- **File** - Open/save configurations, licensing, settings
+- **Home** - Daily operations, copy/paste, add/remove monitor points  
+- **Client** - Settings when acting as Modbus Master
+- **Contextual tabs** - Appear when you activate features like logging
+
+**Bottom Section (Data Area):**
+- **Monitor Points table** - Shows your register list and live values
+- **Switch views** - Log view, Chart view, Online Maps (toggle buttons in ribbon)
+
+### Key Concepts
+
+**Monitor Points:** Each row represents one Modbus address you want to read or write. Think of it as your "shopping list" of registers.
+
+**Client vs Server Mode:** 
+- **Client (Master)** - You initiate communication, polling devices for data
+- **Server (Slave)** - You simulate a device, responding to other masters
+
+**Magic Codes:** Special text you add to register names for advanced features (covered in Advanced Features section).
+
+### Navigation Tips
+
+**Quick Access Toolbar:** Customize this with your most-used functions (Save, Start/Stop polling, etc.)
+
+**Right-click menus:** Most tables and fields have context menus with relevant options.
+
+**Keyboard shortcuts:**
+- `Ctrl+S` - Save current configuration
+- `Ctrl+O` - Open saved configuration  
+- `Ctrl+C/V` - Copy/paste monitor points (works with Excel too)
+- `F5` - Refresh/update display
+
+!!! tip "Workflow Tip"
+    Set up your monitor points first, then configure communication settings. Save frequently - especially before making big changes.
 
 === "Microsoft Store (Recommended)"
 
