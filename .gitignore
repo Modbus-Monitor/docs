@@ -190,6 +190,9 @@ cython_debug/
 # Learn more at https://abstra.io/docs
 .abstra/
 
+# Visual Studio
+.vs/
+
 # Visual Studio Code
 #  Visual Studio Code specific template is maintained in a separate VisualStudioCode.gitignore 
 #  that can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
@@ -214,3 +217,22 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Personal files and sensitive data
+personal/
+local/
+private/
+*.personal.*
+*-personal.*
+personal-*
+NOTES.md
+DRAFT*.md
+TODO.md
+
+# Local development files that may contain personal paths
+.vscode/settings.json
+local-config.*
+
+# OS generated files that might contain personal info
+.DS_Store
+Thumbs.db
