@@ -825,7 +825,7 @@ versatile functionality.
 Contact us for support until then: List questions in our
 [Forum](https://quantumbitsolutions.com/forums/) or contact us for
 additional help [<span class="__cf_email__"
-cfemail="2e5d5b5e5e415c5a6e5f5b4f405a5b434c475a5d41425b5a4741405d004d4143">\[email protected\]</span>](/cdn-cgi/l/email-protection#ec9f999c9c839e98ac9d998d829899818e85989f838099988583829fc28f8381)
+cfemail="d6a5a3a6a6b9a4a296a7a3b7b8a2a3bbb4bfa2a5b9baa3a2bfb9b8a5f8b5b9bb">\[email protected\]</span>](/cdn-cgi/l/email-protection#5b282e2b2b34292f1b2a2e3a352f2e3639322f2834372e2f3234352875383436)
 
 Links to helpful articles:
 
