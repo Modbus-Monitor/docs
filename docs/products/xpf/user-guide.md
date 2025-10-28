@@ -10,7 +10,7 @@
 
 **Modbus Monitor XPF** is a Windows application for working with Modbus devices. It handles both Client (Master) and Server (Slave) operations and supports all common Modbus variants: TCP/IP, Serial RTU, Serial ASCII, and RTU/ASCII over TCP.
 
-![Modbus Monitor XPF Main Interface](../../assets/screenshots/xpf-main-interface.png){ .screenshot-shadow }
+![Modbus Monitor XPF Main Interface](../../assets/screenshots/xpf-main-interface.webp){ .screenshot-shadow }
 
 **What you can do with it:**
 - Monitor live data from PLCs, drives, meters, and other Modbus devices
@@ -260,7 +260,7 @@ When you open XPF, you'll see a ribbon interface similar to Excel. Here's what m
    - **Online Key**: Click "Activate" and enter your license key
    - **License File**: Use "Load" button for site/offline licenses
 
-![License Window](../../assets/screenshots/xpf-license-window.png)
+![License Window](../../assets/screenshots/xpf-license-window.webp){ .screenshot-shadow }
 
 !!! warning "License Requirements"
     Your **UID (User Identification)** is required when purchasing. Copy it before visiting the store!
@@ -324,7 +324,7 @@ graph TB
 
 The **Modbus Wizard** simplifies adding monitor points through a graphical interface:
 
-![Modbus Wizard Interface](../../assets/screenshots/xpf-modbus-wizard.png)
+![Modbus Wizard Interface](../../assets/screenshots/xpf-modbus-wizard.webp){ .screenshot-shadow }
 
 **Wizard Operations:**
 - **👁️ View**: Examine existing monitor point configuration
@@ -343,7 +343,7 @@ The **Modbus Wizard** simplifies adding monitor points through a graphical inter
 
 ### Filter & Search
 
-![Filter Interface](../../assets/screenshots/xpf-filter-section.png)
+![Filter Interface](../../assets/screenshots/xpf-home-tab.webp){ .screenshot-shadow }
 
 | Component | Function |
 |-----------|----------|
@@ -357,7 +357,7 @@ The **Modbus Wizard** simplifies adding monitor points through a graphical inter
 
 The **Evaluate** feature provides visual validation of Modbus values using conditional formatting:
 
-![Evaluate Settings](../../assets/screenshots/xpf-evaluate-limits.png)
+![Evaluate Settings](../../assets/screenshots/xpf-evaluate-limits.webp){ .screenshot-shadow }
 
 **Value Range Testing:**
 - **🟢 Nominal**: Values within acceptable range (between Low and High limits)
@@ -390,7 +390,7 @@ Switch between Monitor Points view and Events Log for detailed communication ana
 
 Access pre-built Modbus maps from the cloud or share your configurations with the community:
 
-![Online Maps Interface](../../assets/screenshots/xpf-online-maps.png)
+![Online Maps Interface](../../assets/screenshots/xpf-online-maps.webp){ .screenshot-shadow }
 
 ### Downloading Factory Maps
 
