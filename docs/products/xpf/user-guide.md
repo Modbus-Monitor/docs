@@ -554,59 +554,104 @@ Set conditional formatting for value validation:
 
 ### Interface Configuration
 
-The Client tab configures XPF as a Modbus Master device:
+The Client tab configures XPF as a Modbus Master device with comprehensive protocol support:
 
-=== "TCP/IP Connection"
+=== "TCP Connection Options"
 
-    **Network Configuration:**
+    **Choose from 3 TCP protocol variants:**
+    
+    | Protocol | Interface | Protocol Options | Use Case |
+    |----------|-----------|------------------|----------|
+    | **Modbus TCP** | TCP | Default | Standard Ethernet Modbus |
+    | **Modbus RTU over TCP** | TCP | RTU | Serial protocol over network |
+    | **Modbus ASCII over TCP** | TCP | ASCII | ASCII protocol over network |
+    
+    **TCP Configuration:**
     ```yaml
     Interface: TCP
-    IP Address: 192.168.1.100  # IPv4, IPv6, or hostname
-    Port: 502                   # Standard Modbus TCP port
-    Timeout: 3000              # Connection timeout (ms)
+    IP Address: 192.168.1.100    # IPv4, IPv6, or hostname ("localhost")
+    Modbus Port: 502             # Standard port (changeable)
+    Timeout: 3000                # Connection timeout (ms)
+    Protocol Options: Default/RTU/ASCII
     ```
+
+=== "UDP Connection Options"
+
+    **Choose from 3 UDP protocol variants:**
     
-    **Protocol Options:**
-    - **Default**: Standard Modbus TCP
-    - **RTU**: Modbus RTU over TCP  
-    - **ASCII**: Modbus ASCII over TCP
-
-=== "UDP Connection"
-
+    | Protocol | Interface | Protocol Options | Use Case |
+    |----------|-----------|------------------|----------|
+    | **Modbus UDP** | UDP | Default | Standard UDP Modbus |
+    | **Modbus RTU over UDP** | UDP | RTU | Serial protocol over UDP |
+    | **Modbus ASCII over UDP** | UDP | ASCII | ASCII protocol over UDP |
+    
     **UDP Configuration:**
     ```yaml
     Interface: UDP
-    IP Address: 192.168.1.100  # IPv4, IPv6, or hostname  
-    Port: 502                   # Standard Modbus port
-    Timeout: 3000              # Response timeout (ms)
+    IP Address: 192.168.1.100    # IPv4, IPv6, or hostname
+    Port: 502                    # Standard port (changeable)
+    Timeout: 3000               # Response timeout (ms)
+    Protocol Options: Default/RTU/ASCII
     ```
 
-=== "Serial Connection"
+=== "Serial Connection Options"
 
+    **Choose from 2 serial protocol variants:**
+    
+    | Protocol | Interface | Protocol Options | Use Case |
+    |----------|-----------|------------------|----------|
+    | **Modbus Serial RTU** | Serial | Default or RTU | Binary serial protocol |
+    | **Modbus Serial ASCII** | Serial | ASCII | ASCII serial protocol |
+    
     **Serial Configuration:**
     ```yaml
     Interface: Serial
-    COM Port: COM1             # Available COM port
-    Baud Rate: 9600            # 1200-115200 bps
-    Data Bits: 8               # 7 or 8 bits
-    Parity: None               # None, Even, Odd
-    Stop Bits: 1               # 1 or 2 bits
+    COM Port: COM1              # Available COM port
+    Baud Rate: 9600             # 1200-115200 bps
+    Data Bits: 8                # 7 or 8 bits
+    Parity: None                # None, Even, Odd
+    Stop Bits: 1                # 1 or 2 bits
+    Protocol Options: Default/RTU/ASCII
     ```
 
 ### Timeout Settings
 
-Critical timing parameters for reliable communication:
+Critical timing parameters for reliable communication - **these settings are crucial for optimizing communication efficiency**:
 
-| Parameter | Default | Range | Description |
-|-----------|---------|-------|-------------|
-| **Response Timeout** | 3000ms | 100-60000ms | Wait for complete Modbus frame |
-| **Inter-Frame Delay** | 20ms | 0-10000ms | Delay between monitor points |
-| **Poll Rate** | 1000ms | 100-3600000ms | Delay before scanning entire list |
+| Parameter | Default | Range | Purpose & Impact |
+|-----------|---------|-------|------------------|
+| **Response Timeout** | 3000ms | 100-60000ms | Duration to gather all bytes from remote server including complete Modbus frame up to CRC. **Too short = false timeouts, too long = slow error detection** |
+| **Inter-Frame Delay** | 20ms | 0-10000ms | Wait time between each monitor point in the list. **Prevents overwhelming slow devices or networks** |
+| **Poll Rate** | 1000ms | 100-3600000ms | Delay before scanning entire list again. **Controls overall polling frequency** |
 
-!!! tip "Timeout Optimization"
-    - **Fast Networks**: Reduce timeouts for quicker response
-    - **Slow Serial**: Increase timeouts to prevent errors
-    - **High Traffic**: Increase inter-frame delay to reduce collisions
+!!! tip "Timeout Optimization by Environment"
+    **Fast Local Networks (LAN):**
+    ```yaml
+    Response Timeout: 1000ms    # Quick response expected
+    Inter-Frame Delay: 5ms      # Minimal delay needed
+    Poll Rate: 500ms           # Fast refresh rate
+    ```
+    
+    **Slow Serial Connections:**
+    ```yaml
+    Response Timeout: 5000ms    # Allow for slow serial transmission
+    Inter-Frame Delay: 50ms     # Prevent serial buffer overrun
+    Poll Rate: 2000ms          # Reduce load on serial device
+    ```
+    
+    **WAN/Internet Connections:**
+    ```yaml
+    Response Timeout: 10000ms   # Account for network latency
+    Inter-Frame Delay: 100ms    # Prevent network congestion
+    Poll Rate: 5000ms          # Conservative refresh rate
+    ```
+
+!!! warning "Critical Timing Considerations"
+    These parameters directly affect:
+    - **Network traffic management** - Higher delays = less network load
+    - **Error detection speed** - Longer timeouts = slower fault detection  
+    - **System responsiveness** - Shorter poll rates = more responsive but higher load
+    - **Device compatibility** - Some devices need specific timing requirements
 
 ### Write Operations
 
@@ -656,20 +701,48 @@ Transform monitor point data into time-series charts:
 - **🔍 Fit**: Auto-scale view to current data
 - **📊 Samples**: Set buffer size (0 = unlimited, other = rolling window)
 
-### Auto Save & Restore
+### Auto Save & Restore Features
 
-#### Auto Save Feature
-Automatically saves every scan to CSV files:
-- **Location**: Documents folder
-- **Filename**: Auto-generated with timestamps
-- **Content**: All monitor point data
-- **Usage**: Post-analysis with Excel, MATLAB, etc.
+#### Auto Save Feature: Effortless Data Management
+**Automatically saves every scan to CSV files** - essential for data logging and analysis:
 
-#### Restore Feature  
-Write configuration values to remote devices:
-- **Production Setup**: Program devices with preset configurations
-- **Validation**: Verify device settings match expectations
-- **Batch Configuration**: Set multiple parameters at once
+**How it works:**
+- **Every polling cycle** gets saved automatically
+- **CSV files** created in your Documents folder  
+- **Filenames** generated seamlessly with timestamps
+- **Data instantly added** to newly created files
+- **All monitoring points** included in each save
+
+**Benefits:**
+- **Zero manual work** - set it and forget it
+- **Perfect for Chart analysis** - export poll data for Excel/MATLAB
+- **Continuous data logging** - never lose important readings
+- **Post-analysis ready** - CSV format works with all analysis tools
+- **Production environments** - automatic record keeping
+
+**Usage Example:**
+```
+Documents/ModbusScan_2025-10-28_14-30-15.csv
+Documents/ModbusScan_2025-10-28_14-31-15.csv
+Documents/ModbusScan_2025-10-28_14-32-15.csv
+```
+
+#### Restore Feature: Device Configuration & Validation
+**Write monitoring data directly into remote Modbus devices** - excellent for production setup:
+
+**Capabilities:**
+- **Program remote devices** with preset values from all monitoring points
+- **Production environment tool** for efficient device configuration
+- **Validate configurations** by writing known values and reading back
+- **Batch configuration** - set multiple parameters simultaneously
+- **Quality assurance** - verify device settings match specifications
+
+**Use Cases:**
+- **Manufacturing setup**: Program devices with factory configurations
+- **Commissioning**: Set operational parameters on new installations
+- **Testing**: Validate device behavior with known input values
+- **Maintenance**: Restore devices to known-good configurations
+- **Calibration**: Set reference values for sensor calibration
 
 ### Poll Controls
 
