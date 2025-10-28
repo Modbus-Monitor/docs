@@ -21,10 +21,97 @@
 
 /* Screenshot styling */
 .screenshot {
-  border: 1px solid #e0e0e0;
+  margin: 1.5rem 0;
+  text-align: center;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.screenshot img {
+  max-width: 75%;
+  height: auto;
   border-radius: 0.5rem;
-  box-shadow: 0 0.2rem 1rem rgba(0,0,0,.1);
-  margin: 1rem 0;
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.screenshot img:hover {
+  transform: scale(1.02);
+  box-shadow: 
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Optimal screenshot sizing - responsive and professional round corner*/
+.screenshot-shadowc {
+  max-width: 85% !important;
+  height: auto !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 
+    0 8px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  display: block !important;
+  margin: 1.5rem auto !important;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out !important;
+}
+
+/* Optimal screenshot sizing - responsive and professional */
+.screenshot-shadow {
+  max-width: 85% !important;
+  height: auto !important;  
+  box-shadow: 
+    0 8px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  display: block !important;
+  margin: 1.5rem auto !important;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out !important;
+}
+
+
+.screenshot-shadow:hover {
+  transform: scale(1.02) !important;
+  border-radius: 0.7rem !important;
+  box-shadow: 
+    0 12px 30px -8px rgba(0, 0, 0, 0.15),
+    0 12px 15px -8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Responsive screenshot sizing for different screen sizes */
+@media (min-width: 1200px) {
+  .screenshot-shadow {
+    max-width: 80% !important;  /* Slightly smaller on very large screens */
+  }
+}
+
+@media (max-width: 1024px) {
+  .screenshot-shadow {
+    max-width: 90% !important;  /* Larger on tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .screenshot-shadow {
+    max-width: 95% !important;  /* Nearly full width on phones */
+    margin: 1rem auto !important;
+  }
+}
+
+/* Responsive screenshot sizing */
+@media (max-width: 768px) {
+  .screenshot {
+    margin: 1rem -1rem;
+  }
+  
+  .screenshot img {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
 }
 
 /* Keyboard key styling */

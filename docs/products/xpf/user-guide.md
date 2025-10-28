@@ -10,6 +10,8 @@
 
 **Modbus Monitor XPF** is a Windows application for working with Modbus devices. It handles both Client (Master) and Server (Slave) operations and supports all common Modbus variants: TCP/IP, Serial RTU, Serial ASCII, and RTU/ASCII over TCP.
 
+![Modbus Monitor XPF Main Interface](../../assets/screenshots/xpf-main-interface.png){ .screenshot-shadow }
+
 **What you can do with it:**
 - Monitor live data from PLCs, drives, meters, and other Modbus devices
 - Write values to registers and coils for testing or control
