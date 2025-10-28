@@ -36,7 +36,13 @@ Get help with our products, find answers to common questions, and connect with o
 ### Discussion Forum
 Join thousands of automation professionals discussing Modbus implementations, troubleshooting, and best practices.
 
-[🗣️ Visit Forum](https://quantumbitsolutions.com/forums/){ .md-button target="_blank" }
+**Active Discussion Areas:**
+- **XPF Support** - Windows desktop application help
+- **Android Monitor** - Mobile app questions (Free & Advanced)
+- **Mapper Pro** - Network analysis and troubleshooting
+- **General Support** - Cross-product questions and tips
+
+[🗣️ Visit Community Forum](https://quantumbitsolutions.com/forums/){ .md-button .md-button--primary target="_blank" }
 
 ### Knowledge Base
 Searchable database of solutions, tips, and technical articles contributed by our community and support team.
