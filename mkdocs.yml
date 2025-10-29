@@ -42,11 +42,11 @@ theme:
     - header.autohide
   palette:
     - scheme: default
-      primary: blue
-      accent: cyan
+      primary: indigo
+      accent: deep orange
     - scheme: slate
       primary: blue
-      accent: cyan
+      accent: teal
   icon:
     logo: material/book-open-page-variant
   favicon: images/favicon.png   # optional — add later to docs/images/
@@ -59,7 +59,6 @@ extra_javascript:
 
 # Extra CSS for custom styling
 extra_css:
-  - stylesheets/novoa-theme.css
   - stylesheets/extra.css
 
 plugins:
