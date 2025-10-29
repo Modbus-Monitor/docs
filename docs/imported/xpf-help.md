@@ -600,7 +600,9 @@ class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube w
 <div class="player-unavailable">
 <h1 id="an-error-occurred." class="message">An error occurred.</h1>
 <div class="submessage">
-Unable to execute JavaScript.
+<a href="https://www.youtube.com/watch?v=Tt_JaRWQI0w"
+target="_blank">Try watching this video on www.youtube.com</a>, or
+enable JavaScript if it is disabled in your browser.
 </div>
 </div>
 </div>
@@ -989,7 +991,9 @@ class="wp-block-embed aligncenter is-type-video is-provider-youtube wp-block-emb
 <div class="player-unavailable">
 <h1 id="an-error-occurred." class="message">An error occurred.</h1>
 <div class="submessage">
-Unable to execute JavaScript.
+<a href="https://www.youtube.com/watch?v=7c_ZKHzH_ew"
+target="_blank">Try watching this video on www.youtube.com</a>, or
+enable JavaScript if it is disabled in your browser.
 </div>
 </div>
 </div>
