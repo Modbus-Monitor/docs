@@ -42,11 +42,11 @@ theme:
     - header.autohide
   palette:
     - scheme: default
-      primary: indigo
-      accent: deep orange
+      primary: blue
+      accent: cyan
     - scheme: slate
       primary: blue
-      accent: teal
+      accent: cyan
   icon:
     logo: material/book-open-page-variant
   favicon: images/favicon.png   # optional — add later to docs/images/
