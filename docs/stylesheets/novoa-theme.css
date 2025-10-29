@@ -1,0 +1,294 @@
+/* =================================================================
+   QUANTUM BIT SOLUTIONS - BRAND MATCHED THEME
+   Simplified styling matching quantumbitsolutions.com without
+   complex Novoa/Elementor dependencies
+   ================================================================= */
+
+/* =================================================================
+   ROOT VARIABLES - Matched to Quantum Bit Solutions Website
+   ================================================================= */
+:root {
+  /* Brand Colors - Extracted from quantumbitsolutions.com */
+  --qbs-primary: #3b82f6;          /* Primary blue from site */
+  --qbs-secondary: #1e40af;        /* Darker blue accent */
+  --qbs-accent: #06b6d4;           /* Cyan accent */
+  
+  /* Background Colors */
+  --qbs-bg-primary: #ffffff;       /* Clean white background */
+  --qbs-bg-secondary: #f8fafc;     /* Light gray backgrounds */
+  --qbs-bg-dark: #1e293b;          /* Dark sections */
+  
+  /* Text Colors */
+  --qbs-text-primary: #1e293b;     /* Main text - dark slate */
+  --qbs-text-secondary: #64748b;   /* Secondary text */
+  --qbs-text-muted: #94a3b8;       /* Muted text */
+  --qbs-text-light: #ffffff;       /* Light text on dark */
+  
+  /* Typography - Modern professional stack */
+  --qbs-font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+  --qbs-font-mono: 'Consolas', 'Monaco', 'Courier New', monospace;
+  
+  /* Design System */
+  --qbs-border-radius: 0.5rem;
+  --qbs-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  --qbs-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --qbs-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* =================================================================
+   MKDOCS MATERIAL OVERRIDES - QBS Brand Style
+   ================================================================= */
+
+/* Main content typography */
+.md-content {
+  font-family: var(--qbs-font-primary);
+  color: var(--qbs-text-primary);
+}
+
+/* Headings - Professional style matching QBS site */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4 {
+  font-family: var(--qbs-font-primary);
+  font-weight: 600;
+  color: var(--qbs-text-primary);
+}
+
+.md-typeset h1 {
+  color: var(--qbs-primary);
+  border-bottom: 3px solid var(--qbs-primary);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.md-typeset h2 {
+  color: var(--qbs-secondary);
+  margin-top: 2rem;
+}
+
+/* Buttons - Matching QBS button style */
+.md-button {
+  background: var(--qbs-primary);
+  color: white;
+  border-radius: var(--qbs-border-radius);
+  font-family: var(--qbs-font-primary);
+  font-weight: 500;
+  padding: 0.625rem 1.25rem;
+  box-shadow: var(--qbs-shadow-sm);
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.md-button:hover {
+  background: var(--qbs-secondary);
+  box-shadow: var(--qbs-shadow-md);
+  transform: translateY(-2px);
+}
+
+.md-button--primary {
+  background: var(--qbs-primary);
+}
+
+/* Links - QBS brand color */
+.md-typeset a {
+  color: var(--qbs-primary);
+  transition: color 0.2s ease;
+}
+
+.md-typeset a:hover {
+  color: var(--qbs-secondary);
+}
+
+/* Tables - Clean professional style */
+.md-typeset table:not([class]) {
+  border-radius: var(--qbs-border-radius);
+  overflow: hidden;
+  box-shadow: var(--qbs-shadow-sm);
+  border: 1px solid #e2e8f0;
+}
+
+.md-typeset table:not([class]) th {
+  background: var(--qbs-primary);
+  color: white;
+  font-family: var(--qbs-font-primary);
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+}
+
+.md-typeset table:not([class]) td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Code blocks - Professional developer style */
+.md-typeset code {
+  font-family: var(--qbs-font-mono);
+  background: var(--qbs-bg-secondary);
+  color: var(--qbs-text-primary);
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.375rem;
+  font-size: 0.875em;
+}
+
+.md-typeset .highlight {
+  border-radius: var(--qbs-border-radius);
+  box-shadow: var(--qbs-shadow-sm);
+  margin: 1.5rem 0;
+}
+
+/* Admonitions - QBS styled callouts */
+.md-typeset .admonition {
+  border-radius: var(--qbs-border-radius);
+  box-shadow: var(--qbs-shadow-sm);
+  border-left: 4px solid var(--qbs-primary);
+  font-family: var(--qbs-font-primary);
+}
+
+.md-typeset .admonition-title {
+  font-weight: 600;
+  font-family: var(--qbs-font-primary);
+  background: var(--qbs-bg-secondary);
+}
+
+/* =================================================================
+   QBS CUSTOM COMPONENTS - Matching Website Style
+   ================================================================= */
+
+/* Product cards - matching QBS product layout */
+.qbs-product-card {
+  background: var(--qbs-bg-primary);
+  border: 1px solid #e2e8f0;
+  border-radius: var(--qbs-border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--qbs-shadow-sm);
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.qbs-product-card:hover {
+  box-shadow: var(--qbs-shadow-lg);
+  transform: translateY(-4px);
+  border-color: var(--qbs-primary);
+}
+
+.qbs-product-card h3 {
+  color: var(--qbs-primary);
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+}
+
+/* Feature grid - QBS style */
+.qbs-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+/* Hero section - inspired by QBS homepage */
+.qbs-hero {
+  background: linear-gradient(135deg, var(--qbs-primary) 0%, var(--qbs-secondary) 100%);
+  color: white;
+  padding: 3rem 2rem;
+  border-radius: var(--qbs-border-radius);
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.qbs-hero h1 {
+  color: white;
+  border: none;
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+}
+
+.qbs-hero p {
+  font-size: 1.125rem;
+  opacity: 0.95;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+/* Call to action buttons */
+.qbs-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.qbs-cta-buttons .md-button {
+  min-width: 150px;
+}
+
+/* Screenshots - professional presentation */
+.qbs-screenshot {
+  border-radius: var(--qbs-border-radius);
+  box-shadow: var(--qbs-shadow-lg);
+  border: 1px solid #e2e8f0;
+  margin: 2rem auto;
+  overflow: hidden;
+  max-width: 90%;
+}
+
+.qbs-screenshot img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Info boxes - matching QBS callout style */
+.qbs-info-box {
+  background: var(--qbs-bg-secondary);
+  border-left: 4px solid var(--qbs-accent);
+  border-radius: var(--qbs-border-radius);
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.qbs-info-box.primary {
+  border-left-color: var(--qbs-primary);
+}
+
+.qbs-info-box.success {
+  border-left-color: #10b981;
+  background: #f0fdf4;
+}
+
+.qbs-info-box.warning {
+  border-left-color: #f59e0b;
+  background: #fffbeb;
+}
+
+/* =================================================================
+   RESPONSIVE DESIGN - Mobile Optimization
+   ================================================================= */
+@media (max-width: 768px) {
+  .qbs-hero {
+    padding: 2rem 1rem;
+  }
+  
+  .qbs-hero h1 {
+    font-size: 1.75rem;
+  }
+  
+  .qbs-feature-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .qbs-cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .qbs-screenshot {
+    max-width: 100%;
+  }
+}
+
+/* =================================================================
+   INTEGRATION - Maintains compatibility with existing styles
+   ================================================================= */

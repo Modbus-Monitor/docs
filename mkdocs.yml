@@ -59,6 +59,7 @@ extra_javascript:
 
 # Extra CSS for custom styling
 extra_css:
+  - stylesheets/novoa-theme.css
   - stylesheets/extra.css
 
 plugins:
