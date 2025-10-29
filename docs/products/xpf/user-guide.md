@@ -14,6 +14,7 @@
 
 
 **What you can do with it:**
+
 - Monitor live data from PLCs, drives, meters, and other Modbus devices
 - Write values to registers and coils for testing or control
 - Simulate Modbus devices for testing your own equipment
@@ -22,6 +23,7 @@
 - Validate register values against expected ranges
 
 **Who this is for:**
+
 - Controls engineers commissioning systems
 - Maintenance technicians troubleshooting communications
 - System integrators testing device compatibility  
@@ -36,18 +38,53 @@ Most Modbus tools are either simple monitors or complex SCADA packages. XPF sits
 3. **Built-in data validation** - Automatic pass/fail testing with color coding
 4. **Professional logging** - Proper timestamped records for troubleshooting
 
+## 2. Installation & Activation
+
 ### System Requirements
 
-- Windows 10 or 11 (64-bit recommended)
-- .NET Framework 4.8 or later
-- 4GB RAM minimum, 8GB recommended
-- Serial ports (USB-to-serial adapters work fine)
-- Network access for TCP/IP communications
+=== "Quick Reference"
 
-!!! note "Field Laptop Tip"
-    XPF works well on industrial laptops. The portable version doesn't require installation - just copy to a USB drive and run it anywhere.
+    **Minimum Requirements:**
+    
+    - Windows 10 or 11 (64-bit recommended)
+    - .NET Framework 4.8 or later
+    - 4GB RAM minimum, 8GB recommended
+    - 100-500 MB free disk space
+    - Serial ports (USB-to-serial adapters work fine)
+    - Network access for TCP/IP communications
 
-## 2. Installation & Activation
+=== "64-bit Version (Recommended)"
+
+    | Component | Minimum | Recommended | Notes |
+    |-----------|---------|-------------|--------|
+    | **OS** | Windows 10 x64 | Windows 11 x64 | Most modern systems |
+    | **RAM** | 4 GB | 8 GB+ | More memory = better performance |
+    | **Storage** | 100 MB | 500 MB | Depends on log file size |
+    | **.NET** | Framework 4.8+ | Latest Version | Usually pre-installed |
+    | **Ports** | USB or Ethernet | Multiple adapters | For Modbus connections |
+
+=== "32-bit Version"
+
+    | Component | Minimum | Recommended | Notes |
+    |-----------|---------|-------------|--------|
+    | **OS** | Windows 10 x86 | Windows 11 x86 | Older or embedded systems |
+    | **RAM** | 2 GB | 4 GB | 32-bit limit is ~3.5 GB total |
+    | **Storage** | 100 MB | 200 MB | Smaller footprint |
+    | **.NET** | Framework 4.8+ | Latest Version | Same as 64-bit |
+    | **Ports** | USB or Ethernet | Multiple adapters | Full feature compatibility |
+
+=== "Field Laptop Setup"
+
+    **Recommended for field work:**
+    
+    - Rugged laptop with Windows 10/11
+    - USB-to-serial adapter (FTDI chipset recommended)
+    - Ethernet port for Modbus TCP
+    - 8GB RAM for smooth operation
+    - **Portable version** - No installation needed, runs from USB drive
+    
+    !!! tip "Field Technician Tip"
+        Keep the portable version on a USB drive alongside your serial adapters. You can run it on any Windows machine without installation rights.
 
 ### Getting the Software
 
@@ -137,38 +174,6 @@ Most Modbus tools are either simple monitors or complex SCADA packages. XPF sits
 - Add firewall exception for XPF if needed
 - Corporate networks sometimes block non-standard ports
 
-### System Requirements
-
-=== "64-bit Version (Recommended)"
-
-    | Component | Requirement | Notes |
-    |-----------|-------------|--------|
-    | **OS** | Windows 10/11 x64 | Most modern systems |
-    | **RAM** | 4 GB minimum, 8 GB+ recommended | More memory = better performance |
-    | **Storage** | 100-500 MB free space | Depends on log file size |
-    | **.NET** | Framework 4.8+ | Usually pre-installed |
-    | **Ports** | USB or Ethernet | For Modbus connections |
-
-=== "32-bit Version"
-
-    | Component | Requirement | Notes |
-    |-----------|-------------|--------|
-    | **OS** | Windows 10/11 x86 | Older or embedded systems |
-    | **RAM** | 2-4 GB | 32-bit limit is ~3.5 GB total |
-    | **Storage** | 100 MB free space | Smaller footprint |
-    | **.NET** | Framework 4.8+ | Same as 64-bit |
-    | **Ports** | USB or Ethernet | Full feature compatibility |
-
-=== "Field Laptop Setup"
-
-    **For industrial/field use:**
-    
-    - **Rugged laptop** with serial ports
-    - **USB-to-RS485** converters (industrial grade)
-    - **Ethernet port** for Modbus TCP
-    - **Offline installation** capability
-    - **Administrator rights** for driver installation
-
 ## 3. Understanding the Interface
 
 ### Main Window Layout
@@ -231,15 +236,6 @@ When you open XPF, you'll see a ribbon interface similar to Excel. Here's what m
     4. **First Launch** may have slight delay (unpacking files)
     
     [:material-download: Download Portable](https://quantumbitsolutions.com/purchase/){ .md-button }
-
-### System Requirements
-
-| Component | Minimum | Recommended |
-|-----------|---------|-------------|
-| **OS** | Windows 10 | Windows 11 |
-| **RAM** | 4 GB | 8 GB |
-| **Storage** | 100 MB | 500 MB |
-| **.NET** | Framework 4.8+ | Latest Version |
 
 ### License Activation
 
