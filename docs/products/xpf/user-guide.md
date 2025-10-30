@@ -501,45 +501,71 @@ When you launch Modbus Monitor XPF for the first time, the **License window appe
 The main application window of Modbus Monitor XPF is organized into several key sections that work together to provide a comprehensive Modbus communication interface.
 
 ![XPF Application Window Layout](../../assets/screenshots/xpf-application-window.webp){ .screenshot-shadow }
+*Figure 3.1: Main application interface showing five key areas (see numbered components below)*
 
 **The application window contains five main areas:**
 
-#### 1. Quick Access Toolbar
+!!! tip "Cross-Reference with Screenshot"
+    Each numbered section (**①②③④⑤**) in the screenshot above corresponds to the detailed descriptions below. Use this visual guide to quickly locate features in the actual application.
 
-Located at the very top, this toolbar includes icons for common actions:
+#### ① Quick Access Toolbar
+
+Located at the very top, this toolbar provides one-click access to frequently used commands. **You can customize which buttons appear** by right-clicking the toolbar.
+
+**Available Quick Access Toolbar Buttons:**
 
 | Button | Function | Description |
 |--------|----------|-------------|
-| **Save** | Save configuration | Quickly save your current configuration |
-| **Read-Once** | Single poll | Poll all Monitoring points once |
-| **Client** | Start polling | Start Polling all Monitoring points recursively |
-| **Server** | Start server | Start Modbus Server |
-| **Log** | Show logs | Show Communications Logs |
-| **Clear** | Clear logs | Clear Communication Log entries |
+| **Save** | Save configuration | Quickly save your current Modbus map configuration to CSV file |
+| **Open** | Open file | Load previously saved configuration |
+| **Chart** | Open chart view | Switch to Chart visualization window |
+| **Read** | Read once | Poll all monitoring points once and stop |
+| **Write** | Write once | Write selected monitor point value once |
+| **Client** | Modbus Client | Start/Stop continuous polling of all monitoring points |
+| **Server** | Modbus Server | Start/Stop Modbus Server |
+| **Show** | Show log | Toggle Event Log / Communication Log view |
+| **Start** | Log Controls| Start/Stop Communication events captures |
+| **Clear** | Clear logs | Clear all entries from Communication Log window |
 
-!!! tip "Customize Your Toolbar"
-    You can customize the Quick Access Toolbar with your most-used functions (Start/Stop polling, Clear, etc.) for faster access during operations.
+**Customization Options:**
 
-#### 2. Ribbon Tabs
+- **Show Below the Ribbon**: Position toolbar below ribbon tabs instead of above
+- **Checkmarks (✓)**: Indicate which buttons are currently visible on toolbar
+- **Right-click**: Access customization menu any time
+- **Add/Remove**: Click any button name to toggle its visibility
+
+!!! tip "Recommended Quick Access Setup"
+    **For daily operations**, most technicians keep these buttons visible:
+    
+    - **Save** - Quick configuration saves during field work
+    - **Read** - Single poll to check current values
+    - **Start/Stop** - Control polling quickly
+    - **Show** - Toggle between Monitor Points and Log views
+    - **Clear** - Clear logs between test runs
+    
+    This provides instant access to 90% of common operations without navigating through ribbon tabs.
+
+#### ② Ribbon Tabs
 
 Below the Quick Access Toolbar, you'll find multiple tabs that organize all application features:
 
 **Standard Tabs (Always Visible):**
 
-- **File** - Backstage view with file operations, licensing, settings, and links
+- **File** - Backstage view with file operations, licensing, settings, support, and links
 - **Home** - Most frequently used commands (copy/paste, Modbus Wizard, list management)
 - **Client** - Modbus Client (Master) operations (interface config, polling, scanner, charts)
+- **Server** - Modbus Server (Slave) operations (interface config, Modbus TCP Server, Modbus RTU Server )
 - **IoT** - IoT integration (ThingSpeak cloud logging, MQTT messaging for cloud/device communication)
 
 **Contextual Tabs (Appear When Features Active):**
 
 - **Log Options** - Appears when Event Log is active (filter, export, auto-scroll controls)
-- **Chart Options** - Appears when Chart view is open (axis config, samples, data export)
-- **Server Options** - Appears when Server mode is running (traffic capture, simulation settings)
+<!-- - **Chart Options** - Appears when Chart view is open (axis config, samples, data export)
+- **Server Options** - Appears when Server mode is running (traffic capture, simulation settings) -->
 
 The active tab is highlighted, making it easy to see which commands are currently available.
 
-#### 3. Command Buttons (Ribbon Commands)
+#### ③ Command Groups (Ribbon Commands)
 
 In the middle section of each ribbon tab, you'll find groups of related command buttons:
 
@@ -550,7 +576,7 @@ In the middle section of each ribbon tab, you'll find groups of related command 
 
 Buttons are accompanied by icons and arrows indicating their functions and options.
 
-#### 4. Dialog Launcher
+#### ④ Dialog Launcher
 
 Small buttons in the corner of command groups that open additional settings or options:
 
@@ -560,7 +586,7 @@ Small buttons in the corner of command groups that open additional settings or o
 | **Advanced Options** | Context-specific dialogs | Access detailed settings |
 | **Extended Settings** | Beyond ribbon display | Configure advanced parameters |
 
-#### 5. Window Portal Area
+#### ⑤ Window Portal Area
 
 The main workspace at the bottom displays different information depending on the selected mode:
 
@@ -607,11 +633,12 @@ The standard Modbus Monitor XPF ribbon contains the following tabs, from left to
 **Monitor Points:** Each row in the Monitor Points table represents one Modbus address you want to read or write. Think of it as your "register shopping list" - you define what data you need, and XPF handles the polling, writing, retrying, data conversion, byte swap, and display formatting.
 
 **Client vs Server Mode:** 
+
 - **Client (Master)** - You initiate communication, continuously polling remote devices for data
 - **Server (Slave)** - You simulate a Modbus device, responding to requests from other masters
 - **Simultaneous Operation** - Both modes can run at the same time on different interfaces 
 
-**Magic Codes:** Special text you add to the Name field of monitor points to enable advanced features like custom poll rates, bit field access, string length control, and date/time conversion (covered in detail in Monitor Points section).
+**Magic Codes:** Special text you add to the **Name** field of monitor points to enable advanced features like custom poll rates, bit field access, string length control, and date/time conversion (covered in detail in Monitor Points section).
 
 **Dual Functionality:** XPF can operate as both Client and Server simultaneously, making it ideal for testing client-server interactions on a single PC without physical devices. 
 
@@ -619,11 +646,20 @@ The standard Modbus Monitor XPF ribbon contains the following tabs, from left to
 
 **Quick Access Toolbar Customization:**
 
-| Action | Method | Benefit |
+| Action | Method | Details |
 |--------|--------|---------|
-| **Add Functions** | Right-click toolbar | Customize with most-used commands |
-| **Common Additions** | Start/Stop polling, Save, Clear, Read Once | Quick access to frequent operations |
-| **Efficiency Gain** | One-click access | Speeds up repetitive operations |
+| **Open Customization Menu** | Right-click anywhere on toolbar | Shows complete list of available buttons (11 options) |
+| **Add/Remove Buttons** | Click button name in menu | Checkmark (✓) indicates button is currently visible |
+| **Reposition Toolbar** | Select "Show Below the Ribbon" | Moves toolbar from top to below ribbon tabs |
+| **Reset to Default** | Remove all, then add preferred buttons | Create your personalized button set |
+
+**Customization Best Practices:**
+
+- **Add buttons you use frequently** - Start, Stop, Read, Save, Show
+- **Remove rarely-used buttons** - Keep toolbar uncluttered for faster access
+- **Field work setup** - Save, Read, Start, Stop, Show (essential operations only)
+- **Development setup** - Add Chart, Write for testing and analysis work
+- **Position preference** - Below ribbon if you prefer buttons closer to data area
 
 **Right-click Context Menus:**
 
@@ -716,122 +752,352 @@ graph TB
 | **🔗 Client** | Modbus Client (Master) | Interface config, Polling, Charts, Scanner |
 | **⚙️ Contextual** | Context-sensitive options | Log Options, Chart Options (when active) |
 
-## 🏠 Home Tab - Essential Operations
+## 📁 File Tab (Backstage View)
 
-### File Operations
+The **File Tab** provides access to the backstage view containing essential file operations, application settings, license management, and resources. Click the **File** tab to enter this full-screen view.
 
-| Feature | Description | Usage |
-|---------|-------------|-------|
-| **💾 Save** | Save current Modbus map as CSV | Preserves configuration for reuse |
-| **📂 Open** | Load previously saved map | Quick setup from saved files |
-| **☁️ Online** | Access cloud-based maps | Community and factory maps |
+### Home Section - File Navigation
 
-### Clipboard Management
+The Home section provides quick access to your file system and document management:
 
-| Operation | Shortcut | Description |
-|-----------|----------|-------------|
-| **📋 Paste** | `Ctrl+V` | Paste from clipboard or Excel |
-| **📄 Copy** | `Ctrl+C` | Copy selected rows |
-| **✂️ Cut** | `Ctrl+X` | Copy and remove rows |
+| Feature | Icon/Button | Description |
+|---------|-------------|-------------|
+| **🏠 Home** | Home button | Navigate to Documents folder |
+| **📂 Open** | Folder icon | Open folder in Windows Explorer |
+| **⬆️ Up** | Up arrow | Move up one level in directory tree |
+| **📍 Current Folder** | `<Documents>` | Displays current folder name |
 
-!!! tip "Excel Integration"
-    You can copy monitor points directly from Excel and paste them into XPF. Use `Shift+Click` for sequential selection or `Ctrl+Click` for multiple rows.
+**Workflow:**
+1. Click **File Tab** to enter backstage view
+2. Use **Home** to jump to Documents folder
+3. Navigate folders with **Up** button
+4. Click **Open** to browse in Windows Explorer
+5. Select your XPF configuration file to load
 
-### 🧙‍♂️ Modbus Wizard
+### Recent Files Section
 
-The **Modbus Wizard** simplifies adding monitor points through a graphical interface:
-
-![Modbus Wizard Interface](../../assets/screenshots/xpf-modbus-wizard.webp){ .screenshot-shadow }
-
-**Wizard Operations:**
-- **👁️ View**: Examine existing monitor point configuration
-- **✏️ Edit**: Modify Modbus function, address, data type using dropdown menus
-- **➕ Add**: Create new monitor points with guided setup
-
-### List Management
+Quick access to recently used Modbus maps and configurations:
 
 | Button | Function | Description |
 |--------|----------|-------------|
-| **➕ Add** | Add monitor point | Creates new row with incremented address |
-| **➖ Remove** | Delete selected | Removes single or multiple selected points |
-| **❌ Delete All** | Clear list | Removes all monitor points |
-| **🔢 Offset** | Address base | Toggle between 0-based (0-65535) or 1-based (1-65536) |
-| **🆔 ID** | Change Unit ID | Update Unit ID for all monitor points |
+| **🔄 Refresh** | Update list | Refresh the recent files list |
+| **📂 Open Folder** | Show location | Opens folder containing selected file |
+| **📄 Open File** | Load map | Loads selected configuration in XPF |
+| **➖ Remove** | Delete entry | Remove selected file from recent list |
+| **🗑️ Delete** | Clear all | Deletes all entries from recent list |
 
-### Filter & Search
+!!! tip "Quick File Access"
+    The Recent Files list is the fastest way to switch between different device configurations. Your most commonly used maps are always one click away.
+
+### About Section - Application Information
+
+Access version information, documentation, and support resources:
+
+| Option | Description | Action |
+|--------|-------------|--------|
+| **ℹ️ Version** | Current application version | Displays installed version number |
+| **🔑 Activate** | License activation | Opens license window for activation |
+| **📝 Submit Feedback** | User feedback | Direct feedback to developers |
+| **📚 Documentation** | Online help | Access comprehensive online help |
+| **🎥 Videos** | Tutorial videos | Links to YouTube tutorials |
+| **📧 Contact Email** | Support contact | Email address for inquiries |
+| **🔒 Privacy Policy** | Data handling | View privacy policy details |
+| **📜 EULA** | License agreement | End User License Agreement terms |
+
+**Quick Actions:**
+- **Need help?** Click **Documentation** for online guides
+- **New to XPF?** Click **Videos** for visual tutorials  
+- **License issues?** Click **Activate** to manage licenses
+- **Feature requests?** Use **Submit Feedback**
+
+### Settings Section - Application Appearance
+
+Customize the application theme to match your environment:
+
+| Theme | Description | Best For |
+|-------|-------------|----------|
+| **☀️ Light** | Bright interface | Well-lit environments, daytime use |
+| **🌙 Dark** | Dark interface | Low-light environments, reduced eye strain |
+| **💻 System Default** | Follows Windows | Automatically matches Windows theme |
+
+**Theme Selection:**
+1. Click **File Tab** → **Settings**
+2. Choose theme from dropdown
+3. Theme applies immediately (no restart needed)
+
+!!! tip "Field Work Preference"
+    Many field technicians prefer **Dark theme** when working in dimly lit equipment rooms or cabinets.
+
+### Exit - Close Application
+
+**Exit** button safely closes the Modbus Monitor XPF application:
+
+- **Saves** current window position and settings
+- **Prompts** to save unsaved changes (if any)
+- **Terminates** all active connections properly
+- **Releases** serial ports and network resources
+
+## 🏠 Home Tab - Essential Operations
+
+The **Home Tab** contains the most frequently used commands for daily operations - everything you need for working with Modbus maps and monitoring points.
+
+![Home Tab Interface](../../assets/screenshots/xpf-home-tab.webp){ .screenshot-shadow }
+
+### File Group - Document Management
+
+| Feature | Description | Details |
+|---------|-------------|---------|
+| **💾 Save** | Save current document in CSV format | Preserves entire Modbus map configuration including monitor points, settings, and extended properties for reuse |
+| **📂 Open** | Open previously saved file | Load saved XPF configuration files (CSV format) from any location |
+| **☁️ Online** | Download Modbus Maps from online folder or community | Access pre-configured maps from (1) factory-released validated maps or (2) community-uploaded maps. See detailed explanation below. |
+
+!!! note "CSV Format Benefits"
+    XPF saves configurations as standard CSV files, making them easy to:
+    
+    - **Edit** in Excel or text editors for batch modifications
+    - **Version control** using Git or other systems
+    - **Share** with team members or across sites
+    - **Document** device configurations for compliance
+
+### Clipboard Group - Data Transfer
+
+| Operation | Shortcut | Description |
+|-----------|----------|-------------|
+| **📋 Paste** | `Ctrl+V` | Paste from clipboard from selected row(s) - either from the application or Microsoft Excel. Adds to end of list. |
+| **📄 Copy** | `Ctrl+C` | Copy selected single or multiple row(s) to clipboard. Multiple sequential rows can be selected with Shift+Click's first and last row. Multiple rows in any order using Control+Click. |
+| **✂️ Cut** | `Ctrl+X` | Copy the content of the current item to clipboard and delete the item from the list. |
+
+!!! tip "Excel Integration Workflow"
+    **Typical workflow for Excel integration:**
+    
+    1. **Create** monitor point list in Excel with columns: Name, Address, Unit ID, Gain, Offset, Data Type, Swap Type
+    2. **Select** rows in Excel (use Shift+Click for range, Ctrl+Click for individual)
+    3. **Copy** with `Ctrl+C`
+    4. **Switch** to XPF application
+    5. **Select** starting row in monitor points list
+    6. **Paste** with `Ctrl+V` - rows are added at end of list
+    
+    This is invaluable for batch device setup or migrating configurations.
+
+### 🧙‍♂️ Modbus Wizard - GUI Configuration Tool
+
+The **Modbus Wizard** simplifies adding and configuring monitor points through a graphical interface, eliminating the need to manually edit configuration files. The wizard can add a new monitor point on an empty row, allowing for easy configuration using the GUI instead of manual editing.
+
+![Modbus Wizard Interface](../../assets/screenshots/xpf-modbus-wizard.webp){ .screenshot-shadow }
+*How to use Modbus Wizard to configure Modbus Monitor Point*
+
+**Wizard Operations:**
+
+| Operation | Description | Use Case |
+|-----------|-------------|----------|
+| **👁️ View** | Click on a row to view existing configuration | Examine current monitor point settings without making changes |
+| **✏️ Edit** | Click on a row and use combo boxes to change settings | Modify Modbus Function, Modbus Address, Data Type, Magic Codes, etc. The wizard ensures proper unique Magic Codes are added automatically. |
+| **➕ Add** | Add new monitor point by selecting well-known Modbus Function Type | Create new monitor points with guided setup - wizard handles Magic Code generation |
+
+**Dialog Box Launcher:**
+- Click the small arrow icon in the Modbus Wizard group corner
+- Opens extended options and advanced wizard settings
+- Provides access to additional configuration parameters
+
+!!! tip "Magic Code Automation"
+    The Modbus Wizard's biggest advantage is **automatic Magic Code management**. Instead of memorizing codes like `:16` for string length or `@1000` for poll rate, use the wizard's dropdown menus. The wizard adds proper codes automatically and ensures they're unique and valid.
+
+### List Group - Monitor Point Management
+
+Manage Monitor Points (also called Row or Item) in your configuration:
+
+| Button | Function | Description |
+|--------|----------|-------------|
+| **➕ Add** | Add new Monitor Point | Creates new row with **default values**. Uses the last row and **increments the Modbus Address by one** for easy entry. |
+| **➖ Remove** | Delete selected Monitor Point | Removes **single or multiple selected** items from Monitor Point List Table. Use `Ctrl+Click` to select multiple non-sequential items. |
+| **❌ Delete All** | Delete All monitoring points | Removes **all Monitoring Points** from the Monitor Point List Table. Use with caution! |
+| **🔢 Offset** | Set One Based mode | Set Offset to **1** or **0** for the Modbus Address listed in the Address Column. In other words, address values in the list start with **1 (1-65536)** or **0 (0-65535)**. |
+| **🆔 ID** | Change ID for all monitoring points | Updates Unit ID (Station ID or Slave ID) for **all** monitoring points to the new value. Useful when changing target device. |
+
+!!! example "Typical Workflow"
+    **Adding multiple consecutive registers:**
+    
+    1. Add first register at address 400001
+    2. Click **Add (+)** - automatically creates 400002
+    3. Click **Add (+)** again - creates 400003
+    4. Continue as needed - each Add increments by one
+    
+    **Bulk ID changes:**
+    
+    - If you need to change all monitor points from Slave ID 1 to Slave ID 5
+    - Simply click **ID** button and enter 5
+    - All monitor points update immediately
+
+### Filter Group - Search and Filter Monitor Points
+
+Search Name and Address fields to filter monitoring points based on search criteria:
 
 ![Filter Interface](../../assets/screenshots/xpf-home-tab.webp){ .screenshot-shadow }
 
-| Component | Function |
-|-----------|----------|
-| **Row Index** | Shows currently selected row position |
-| **Filter Text** | Search in Name and Address fields |
-| **Total Rows** | Display total/filtered monitor points |
-| **ID Filter** | Filter by Unit ID (Slave ID) |
-| **Clear** | Reset filter to show all rows |
+| Component | Function | Description |
+|-----------|----------|-------------|
+| **Left Number (Row Index)** | Selected Row Index | Shows the **index of the currently selected row** or monitor point. Especially handy when the list is filtered and you want to know the true index of the selected row. |
+| **Filter Box (Text Entry)** | Text search | Enter the key value to filter the list by. All **Name** and **Address** fields containing the text will show up as a filtered list. |
+| **Right Number (Total Rows)** | Total row count | Shows the **total number of rows or points** in the Monitor Points List (full or filtered). |
+| **Clear Filter** | Reset filter | Clears the filter and shows all rows in the list. |
+| **ID Box** | Unit ID filter | Select the **Unit ID (Slave ID or Station ID)** to filter the list further. Useful when working with multiple devices. |
 
-### 📊 Evaluate (Validation & Testing)
+!!! example "Filter Usage Scenarios"
+    **Scenario 1: Finding temperature sensors**
+    
+    - Type `temp` in Filter Box
+    - All monitor points with "temperature" in the name appear
+    - Quickly locate all temperature-related registers
+    
+    **Scenario 2: Working with specific slave**
+    
+    - Select `ID: 5` from ID dropdown
+    - Only registers for Slave ID 5 are displayed
+    - Focus on single device configuration
+    
+    **Scenario 3: Combined filtering**
+    
+    - Filter by ID: 3 AND text: "status"
+    - Shows only status registers for Slave 3
+    - Precise targeting of specific registers
 
-The **Evaluate** feature provides visual validation of Modbus values using conditional formatting:
+### 📊 Evaluate Group (Validate or Test)
+
+Change the background colors of the Value cell based on the High, Low, and Nominal Limits. **Quickly validate the value from the Modbus device and test to see if it is within the valid range.**
 
 ![Evaluate Settings](../../assets/screenshots/xpf-evaluate-limits.webp){ .screenshot-shadow }
+*Evaluate or Test Limits Settings*
 
-**Value Range Testing:**
-- **🟢 Nominal**: Values within acceptable range (between Low and High limits)
-- **🟡 High Limit**: Values at or above high threshold  
-- **🔴 Low Limit**: Values at or below low threshold
-- **🎨 Color Coding**: Automatic background coloring based on limits
+#### Evaluate Filter Area
 
-**Configuration Options:**
-- **✅ Enable/Disable**: Toggle evaluation for individual points
-- **🎨 Color Selection**: Choose colors for each range
-- **📝 String Limits**: Set same High/Low limits for text data
-- **🔄 Auto Update**: Refresh display after each scan
+| Button | Function | Description |
+|--------|----------|-------------|
+| **�️ Show** | Extend toolbar | Click to extend the toolbar with more filtering options |
+| **🔴 High** | Filter high values | Filter the list to show values that have **reached the High Limit** |
+| **� Nominal** | Show nominal values | Display monitoring points with **Nominal Values** (within acceptable range) |
+| **🔵 Low** | Filter low values | Filter the list to show values that have **reached the Low Limit** |
+| **🔄 Auto** | Automatic update | **Automatically update** the UI with selected filters after each scan |
+| **⭕ Off** | Toggle evaluate mode | Toggle Evaluate (Test) Mode **on or off** for all monitoring points |
 
-### 📋 Events and Communication Log
+#### Evaluate Limits Settings (Per Monitor Point)
 
-Switch between Monitor Points view and Events Log for detailed communication analysis:
+Access these settings by clicking the **three ellipses (...)** at the end of each monitor point row:
 
-**Log Features:**
-- **🔄 Start/Stop**: Control communication logging
-- **🗑️ Clear**: Remove all log entries  
-- **💾 Save As**: Export logs to text file
-- **⚠️ Errors Only**: Filter to show only error events
-- **📜 Auto Scroll**: Follow latest communication events
-- **⏰ Timestamps**: All events include UTC timestamps
+| Setting | Options | Description |
+|---------|---------|-------------|
+| **✅ Evaluate** | Checkbox | Turn the Evaluate feature **on or off** for this specific monitor point |
+| **🎨 Nominal Color** | Color picker | Choose a color for the **Nominal Value range**. The nominal range is calculated as values **between the Low Limit and High Limit**. |
+| **🔻 Low Limit** | Value + Color | Choose a color to highlight the Value column when the value **equals or falls below the Low Limit**. The value can be **numerical or string** type. |
+| **🔺 High Limit** | Value + Color | Choose a color to highlight the Value column when the value **equals or exceeds the High Limit**. The value can be **numerical or string** type. |
+| **📝 String Mode** | Same High/Low | For String Data Type, set the **same High and Low Limit** for exact string matching |
+
+!!! example "Practical Applications"
+    **Quality Control Testing:**
+    
+    - Set High Limit: 100, Low Limit: 0, Nominal: Green
+    - Values 0-100 show green (pass)
+    - Values outside range show red/yellow (fail)
+    - Instant visual validation during production testing
+    
+    **Equipment Health Monitoring:**
+    
+    - Motor temperature: High=80°C (Red), Low=10°C (Blue), Nominal=Green
+    - Pressure sensor: High=150 PSI (Red), Nominal=Green
+    - Quick identification of out-of-spec conditions
+    
+    **String Validation:**
+    
+    - Device status should be "RUNNING"
+    - Set High Limit = Low Limit = "RUNNING", Nominal Color = Green
+    - Any other status shows as error color
+
+### 📋 Log Group - Events and Communication Log
+
+Switch to the Events Log Window to view **Modbus communications and general events**. The Monitoring Points area is switched to show event logs in the same area. Use the **"Log"** button to switch between both views.
+
+**Log Button Behavior:**
+
+- **Location**: The Log button is in the **Home tab** or Ribbon Header
+- **Toggle Function**: Switches between Event Log view and Monitoring Point view
+- **Stay-On Indicator**: This button stays on during Log Monitoring
+- **Deactivate**: Click again to turn off the Communication Traffic Monitoring view portal (but communication traffic still monitors if it started already)
+
+**Activating Logging:**
+
+1. You can enable logging using a configuration or project file
+2. Or by clicking the **Start button** in the contextual Log Options tab
+3. Once enabled, logging remains active during Log Monitoring
+
+**Communication Log Features:**
+
+| Button | Function | Description |
+|--------|----------|-------------|
+| **▶️ Start/Stop** | Control logging | Click **Start** to begin communication logging in comma-delimited text format. Click **Stop** to pause logging. |
+| **🗑️ Clear** | Remove entries | Clear all logs from the display window |
+| **💾 Save As** | Export logs | Save displayed log to text file for analysis or archival |
+| **⚠️ Errors** | Error filter | Show **only communication events with Errors** - filters out successful transactions |
+| **📜 Scroll** | Auto-scroll | Scroll to the **latest communication log** entry automatically |
+| **⏰ Timestamps** | UTC time | All events in the window are **time-stamped with UTC** for accurate correlation |
+
+!!! tip "Logging Best Practices"
+    **Hints:**
+    
+    - If the file or project is saved, **traffic monitoring will automatically start** the next time the project is loaded
+    - Communication traffic monitoring will **continue if it has already begun**, even though the communication traffic view is hidden
+    - The Log button only toggles the **view** - logging itself runs independently
 
 !!! warning "Performance Impact"
-    Event logging consumes more processing power and memory. Turn off when not needed for better performance.
+    The Events log consumes **more processing power and memory** to log data at a high rate. Therefore, **turn off this feature when not needed** for optimal performance, especially during long-term monitoring or when polling many registers at high speed.
 
-## 🌐 Online Maps Feature
+## 🌐 Online Button - Cloud-Based Modbus Maps
 
-Access pre-built Modbus maps from the cloud or share your configurations with the community:
+View and Download Online Modbus Maps from either **(1) factory-released maps** by Modbus Monitor or **(2) community-uploaded maps** from users. Toggle the **Online** button in the File group located in the Home tab to activate this feature. **An internet connection is required** to use this feature.
 
 ![Online Maps Interface](../../assets/screenshots/xpf-online-maps.webp){ .screenshot-shadow }
+*How to download pre-defined Modbus Map*
 
-### Downloading Factory Maps
+### Online Maps Navigator - Interface Components
 
-1. **Click** "Factory" icon and wait for cloud update
-2. **Select** device from the available list
-3. **Click** "Download" button
-4. **Wait** for green checkmark confirmation
-5. **Map opens** automatically when download completes
+| # | Icon/Button | Function | Description |
+|---|-------------|----------|-------------|
+| **❌** | **X (Back)** | Close navigator | Close this Online Map navigator and go back to the previous view |
+| **1** | **🏭 Factory** | Maps from Factory | Officially released and validated Modbus Maps |
+| **2** | **👥 Community** | Community Maps | Click to see maps shared by others in the user community |
+| **3** | **📤 Share** | Upload | Upload your Modbus Map and share with the online community |
+| **4** | **📥 Download** | Download | Download selected Online Maps to local system |
+| **5** | **✅ Status** | Progress Indicator | Download or Upload status:<br>**Green Check mark**: All went OK<br>**Red Cross**: Error downloading. Download process interrupted or check the Internet connection. |
+| **6** | **📄 Name** | File display | Name of the map just downloaded or selected |
 
-### Sharing Community Maps
+### Downloading Factory Maps - Step by Step
 
-1. **Click** "Community" icon
-2. **Click** "Share" and select your XPF map file
-3. **Wait** for green checkmark (upload success)
-4. **Refresh** community list to see your contribution
+**To Download Files:**
 
-| Icon | Function | Description |
-|------|----------|-------------|
-| **❌ Back** | Close navigator | Return to previous view |
-| **🏭 Factory** | Official maps | Validated maps from manufacturer |
-| **👥 Community** | User maps | Maps shared by community |
-| **📤 Share** | Upload map | Contribute your map to community |
-| **📥 Download** | Get map | Download selected map |
-| **✅ Status** | Progress | Green=success, Red=error |
+1. Click on the **Factory Icon [1]** and wait for the list to update from the cloud
+2. Click on the **File Name** from the list of available devices; the file name appears in the text area **[6]**
+3. Click on the **Download button [4]**
+4. The Modbus Map of the devices **automatically opens** when the file successfully downloads after the **green check mark [5]** appears and the online button closes
+
+!!! tip "Factory Maps Advantage"
+    Factory maps are **officially validated** and tested. They're your best starting point for common industrial equipment like VFDs, meters, and PLCs from major manufacturers.
+
+### Uploading Community Maps - Step by Step
+
+**To Upload File:**
+
+1. Click on **Community icon [2]**
+2. Click on the **Share Icon [3]** and choose the local XPF Modbus Map data file from your computer
+3. **Green Check** shows **[5]** when the file is successfully uploaded to the cloud
+4. Click on the **Community Files Maps icon [2]** to refresh the list of files in the window and see your contribution
+
+!!! example "Sharing Your Work"
+    **When to share your maps:**
+    
+    - You've created a map for equipment without factory support
+    - You've enhanced an existing map with additional registers
+    - You've documented a custom or proprietary device
+    - You want to help other users with the same equipment
+    
+    Your contributions help the entire community!
 
 ## 📊 Monitor Points Configuration
 
@@ -1086,37 +1352,85 @@ Control how XPF handles value changes in the Value column:
 - **Function 15 (0x0F)**: Write Multiple Coils
 - **Function 16 (0x10)**: Write Multiple Registers
 
-### Scanner Tool
+### Scanner - Modbus Address Discovery Tool
 
-Discover unknown Modbus addresses automatically:
+**Poll remote server to discover new Modbus Addresses or build Modbus Map for devices without public Modbus Maps.** This is invaluable when Modbus Maps are unknown or unavailable from manufacturers.
 
-**Scanner Configuration:**
-1. **Start Address**: Beginning address in 6-digit format (e.g., 400001)
-2. **Register Count**: Number of consecutive registers to scan
-3. **Data Type**: Assumed data format for proper register calculation
-4. **Swap Type**: Byte order for multi-register values
-5. **Unit ID**: Target slave ID for scanning
+**Scanner Configuration Parameters:**
+
+| # | Field | Format | Description |
+|---|-------|--------|-------------|
+| **1** | **Start** | 6-digit format | Start Address to begin scanner (e.g., 400001 for holding registers) |
+| **2** | **Regs** | Number | Number of registers or polls to serially scan consecutively |
+| **3** | **Data** | Data Type | Assumed Data Type. The program **automatically calculates** the number of registers (1, 2, 4) to request depending on the Data Type selected |
+| **4** | **Swap** | Swap Type | Data Swap for 32-bit or 64-bit data values (ABCD, CDBA, BADC, CDAB) |
+| **5** | **ID** | Byte (1-247) | Server ID (Slave ID) to start scanning |
 
 **Scanner Process:**
-1. Configure range and parameters
-2. Click "Start" to begin systematic polling
-3. Monitor results in real-time
-4. Valid responses automatically added to monitor points list
 
-### Chart Visualization
+1. **Configure** the range and parameters above
+2. **Click "Start"** to begin systematic polling of consecutive addresses
+3. **Monitor** results in real-time as scanner tests each address
+4. **Valid responses** are automatically added to monitor points list
+5. **Invalid addresses** are skipped (no response or error)
 
-Transform monitor point data into time-series charts:
+!!! example "Typical Scanner Usage"
+    **Scenario: Unknown PLC registers**
+    
+    - Start: 400001 (Holding registers)
+    - Regs: 100 (scan 100 consecutive registers)
+    - Data: INT16 (assume 16-bit values)
+    - Swap: ABCD_BE (big-endian)
+    - ID: 1 (slave device 1)
+    
+    Scanner will poll 400001 through 400100, adding responsive registers to your monitor points list automatically.
 
-**Chart Setup:**
-1. **Enable Charting**: Mark monitor points for charting in extended options
-2. **Select Axis**: Choose axis 0 or 1 for different scales
-3. **Switch View**: Click "Chart" button to open chart window
+### Charts - Data Trends Visualization
 
-**Chart Controls:**
-- **💾 Save**: Export chart data as CSV
-- **🗑️ Clear**: Reset chart data buffer
-- **🔍 Fit**: Auto-scale view to current data
-- **📊 Samples**: Set buffer size (0 = unlimited, other = rolling window)
+**Modbus charting is essential for anyone working with industrial automation and control systems.** With Modbus Monitor XPF, you can effortlessly visualize your Modbus data through time series, making it easier to analyze trends and patterns.
+
+**Why Use Charts?**
+
+- **Visualize data values over time** - See trends and patterns emerge
+- **Compare multiple signals** - Track relationships between different registers
+- **Identify anomalies** - Spot unusual behavior or drift
+- **Performance analysis** - Evaluate system behavior under different conditions
+- **Quality control** - Monitor process stability and consistency
+
+**Chart Setup Process:**
+
+1. **Tag Monitor Points**: To see the trending data, the monitoring point **must be tagged and included in the chart**
+2. **Enable Charting**: Access via the extended button (three dots) in each monitor point row
+3. **Choose Axis**: Select either **axis 0 or 1** for different Y-axis scales (useful for comparing values with different ranges)
+4. **Switch View**: Click the **Chart** button in the Client tab to switch to Chart Window
+
+**Chart Option Context Menu - Controls:**
+
+| Button | Function | Description |
+|--------|----------|-------------|
+| **💾 Save** | Export data | Saves chart data as a **CSV file** in the user documents folder for post-analysis with Excel, MATLAB, or other tools |
+| **🗑️ Clear** | Reset buffer | Clears all chart data from the buffer and display |
+| **🔍 Fit** | Auto-scale | Adjusts the range to **fit the chart to the current view** automatically |
+| **📊 Samples** | Buffer size | Sets the buffer size to store data:<br>**0** = All data stored (chart does not pan, uses available memory)<br>**Other value** = Controls the size of the window that pans the chart by the buffer size |
+
+!!! tip "Chart Best Practices"
+    **Effective charting strategies:**
+    
+    - **Use dual axes** when comparing values with vastly different ranges (e.g., temperature 0-100°C on axis 0, pressure 0-3000 PSI on axis 1)
+    - **Set appropriate sample buffer** - Use 0 for short tests, use limited buffer (e.g., 1000 samples) for long-term monitoring to prevent memory issues
+    - **Save regularly** - Export chart data periodically during long tests
+    - **Combine with Auto Save** - Use the Auto Save feature to capture all data points automatically
+
+!!! example "Real-World Applications"
+    **Process monitoring:**
+    - Chart temperature, pressure, and flow rate over 8-hour shift
+    - Identify process drift or instability
+    - Compare against spec limits
+    
+    **Equipment commissioning:**
+    - Monitor startup behavior
+    - Verify settling time and stability
+    - Document performance for baseline
 
 ### Auto Save & Restore Features
 
@@ -1170,66 +1484,215 @@ Documents/ModbusScan_2025-10-28_14-32-15.csv
 | **1️⃣ Read Once** | Single scan all points | One-time data snapshot |
 | **✍️ Write Once** | Single write operation | Set value without continuous polling |
 
-## 🖥️ Modbus Server Operations
+## 🖥️ Modbus Server (Slave) Operations
 
-XPF can simultaneously operate as both Client and Server, providing complete Modbus simulation capabilities.
+**Modbus Server or Slave can be used to learn the Modbus Protocol for beginners and simulate real-world devices for advanced developers needing millisecond responses to fine-tune the system.** The Modbus Server can be started simultaneously on both interfaces (TCP and Serial).
 
-### Server Capabilities
+**Why Use Server Mode?**
 
-**Multi-Interface Support:**
+- **SCADA Development**: Simulate Modbus devices for development without physical hardware
+- **Learning**: Understand Modbus Protocol through hands-on experimentation
+- **Testing**: Validate client implementations against known-good server
+- **Device Simulation**: Replace expensive equipment during development
+- **Production Setup**: Configure and test systems before hardware installation
 
-✅ **TCP Server**: Standard Modbus TCP on port 502  
+### Server Capabilities - Multi-Interface Support
+
+**One of the key strengths** of the Modbus Monitor XPF application is its **ability to run multiple servers with two physical interfaces simultaneously**.
+
+✅ **TCP Server**: Standard Modbus TCP on port 502 (or custom port)  
 ✅ **UDP Server**: Modbus UDP for specialized applications  
-✅ **Multiple Serial**: Multiple COM ports with different settings  
-✅ **Concurrent Operation**: All interfaces can run simultaneously
+✅ **Multiple Serial Servers**: Multiple COM ports (COM10, COM11, COM12, etc.) each with its own baud rate settings  
+✅ **Concurrent Operation**: TCP server can run concurrently with multiple Serial Ports - all interfaces active simultaneously
+✅ **Six Protocol Variants**: Support for all Modbus TCP, UDP, RTU, and ASCII combinations
 
-### TCP Server Configuration
+!!! example "Multiple Servers, Multiple Interfaces"
+    The image shows how the TCP and Serial sections are ready for configuration:
+    
+    - **Modbus TCP server** running on Port 502
+    - **Modbus RTU on COM10** at 9600 baud
+    - **Modbus RTU on COM11** at 19200 baud
+    - **Modbus RTU on COM12** at 115200 baud
+    
+    All servers run **simultaneously** with independent settings!
+
+### TCP/UDP Server Configuration
 
 | Setting | Options | Description |
 |---------|---------|-------------|
-| **Interface** | TCP/UDP | Choose network protocol |
-| **Protocol** | Default/RTU/ASCII | Modbus variant over network |
-| **Port** | 502 (default) | TCP/UDP port number |
-| **IP Binding** | IPv4/IPv6/Both | Address family support |
-| **Loopback** | Enabled/Disabled | Local testing vs network access |
+| **Interface** | TCP / UDP | Two interface types available:<br>**TCP**: Modbus TCP server started on the port when enabled<br>**UDP**: Modbus UDP server started on the port when enabled |
+| **Protocol Options** | Default / RTU / ASCII | Six Modbus Protocols available:<br>**Default**: Modbus TCP or Modbus UDP (selected by interface)<br>**RTU**: Modbus RTU over TCP or Modbus RTU over UDP<br>**ASCII**: Modbus ASCII over TCP or Modbus ASCII over UDP |
+| **Server Port** | Number | Port number for Modbus Server. **Default Port 502** (standard Modbus port) |
+| **Server IP** | IPv4/IPv6/Both/Loopback | **IPv4**: Create server on IPv4 address range<br>**IPv6**: Create server in IPv6 address range<br>**Both**: Create server supporting both IPv4 and IPv6<br>**Loopback**: Enable to use local loopback address automatically ("127.0.0.1" or "localhost" for IPv4, "::1" for IPv6) Uncheck to specify your own address |
+| **Enable** | Checkbox | **Enable**: Start Modbus TCP or UDP server<br>**Disable**: Don't start on TCP or UDP interfaces |
 
-### Serial Server Configuration
+**Six Modbus Varieties for Server Mode** based on combination of Interface and Protocol Options:
+
+1. Modbus TCP (Interface=TCP, Protocol=Default)
+2. Modbus RTU over TCP (Interface=TCP, Protocol=RTU)
+3. Modbus ASCII over TCP (Interface=TCP, Protocol=ASCII)
+4. Modbus UDP (Interface=UDP, Protocol=Default)
+5. Modbus RTU over UDP (Interface=UDP, Protocol=RTU)
+6. Modbus ASCII over UDP (Interface=UDP, Protocol=ASCII)
+
+### Serial (RTU/ASCII) Server Configuration
 
 | Parameter | Options | Description |
 |-----------|---------|-------------|
-| **COM Port** | Available ports | Physical/virtual serial ports |
-| **Baud Rate** | 1200-115200 | Communication speed |
-| **Data Bits** | 7/8 | Character size |
-| **Parity** | None/Even/Odd | Error detection |
-| **Stop Bits** | 1/2 | Character termination |
-| **Protocol** | RTU/ASCII | Modbus serial variant |
+| **COM Port** | Available COM ports | Select the COM Port to run the Modbus RTU Server on. **Note**: Multiple COM Ports are supported, each with different communication settings. Enable all COM ports that need a server. |
+| **Baud Rate** | 1200-115200 bps | Communication speed for serial connection |
+| **Data Bits** | 7 / 8 bits | Character size (typically 8 bits for RTU) |
+| **Parity** | None / Even / Odd | Error detection method |
+| **Stop Bits** | 1 / 2 bits | Character termination |
+| **Protocol** | Default/RTU/ASCII | **Default**: Start Modbus RTU server on selected COM Port<br>**RTU**: Same as default (binary protocol)<br>**ASCII**: Modbus ASCII server on selected COM Port |
 
 ### Advanced Server Features
 
-#### Traffic Capture (Sniffing)
-Automatically build Modbus maps from client requests:
+#### Capture - Modbus Map Traffic Sniffer
+
+**Effortlessly sniff Modbus Map traffic from connected clients and automatically build Modbus Maps.** This feature is invaluable when Modbus Maps are unknown or unavailable from manufacturers, providing a way to discover the addresses the Modbus Master is using.
+
+**How It Works:**
+
+When enabled, the Capture feature monitors incoming Modbus requests from clients and automatically creates monitor points based on those requests. This "learns" the Modbus map by observing real communication.
 
 **Capture Settings:**
-- **Enable**: Turn on automatic map building
-- **Default Value**: Use 0 or register address as initial value
-- **Auto Discovery**: Learn client communication patterns
+
+| Setting | Options | Description |
+|---------|---------|-------------|
+| **On** | Enable | Enable the addition of Modbus Monitoring points based on Modbus Requests. **Note**: The server must be running for this feature to work. |
+| **Off** | Disable | Disable the Capture or Modbus Traffic sniffer |
+| **Default Value 0** | Fill with zero | Fill **"0"** as the value into the newly created Modbus Map entries |
+| **Auto Value** | Fill with address | Use the **Modbus Register address as the fill value** for newly created entries |
 
 **Use Cases:**
-- **Reverse Engineering**: Discover unknown device maps
-- **System Analysis**: Understand existing Modbus networks  
-- **Testing**: Validate client behavior patterns
 
-#### Simulation Capabilities
-Generate realistic sensor data for testing:
-- **Dynamic Values**: Simulate changing sensor readings
-- **Pattern Generation**: Create predictable test data
-- **Scenario Testing**: Validate client applications
+1. **Reverse Engineering**: When you don't have documentation for a Modbus device
+   - Start XPF Server on same network/port
+   - Let existing client connect and communicate
+   - XPF captures all register accesses automatically
+   - Result: Complete Modbus map discovered from live traffic
 
-#### Multiple Server Instances
-Run multiple servers for complex testing:
+2. **System Analysis**: Understanding existing Modbus networks
+   - Place XPF between client and server (monitoring mode)
+   - Capture reveals which registers are actually used
+   - Identify active vs. unused registers
+
+3. **Protocol Validation**: Testing client implementations
+   - Enable capture while your client polls the server
+   - Verify client is requesting correct registers
+   - Check function codes and access patterns
+
+!!! tip "Capture Best Practices"
+    - **Start with clean list**: Clear monitor points before enabling capture
+    - **Use Default Value 0**: Easier to identify newly captured points
+    - **Let it run**: Allow all client operations to complete for full map
+    - **Review results**: Captured points may need refinement (names, data types)
+    - **Save immediately**: Export captured map before making changes
+
+#### Server Start/Stop - Concurrent Operation
+
+**Both the Modbus TCP server (when Enabled) and Modbus RTU server start simultaneously (when the COM port is selected).**
+
+**Server Control:**
+
+- **Single Button**: One Start/Stop control manages all enabled servers
+- **TCP Server**: Starts if Interface is set to TCP or UDP and Enable is checked
+- **Serial Servers**: Start automatically for all selected COM ports
+- **Simultaneous Start**: All configured servers start together
+- **Independent Operation**: Each server operates independently once started
+- **Clean Shutdown**: Stop button properly closes all server connections
+
+**Status Indicators:**
+
+- **Running**: Button shows "Stop" and servers are active
+- **Stopped**: Button shows "Start" and no servers are running
+- **Connection Count**: (if displayed) Shows number of active client connections
+
+!!! tip "Multiple Server Strategy"
+    **Common configuration patterns:**
+    
+    - **Development**: TCP on port 502 for SCADA testing
+    - **Integration**: TCP + Serial for mixed client testing  
+    - **Production Simulation**: Multiple serial ports for multi-device emulation
+    - **Protocol Testing**: Same data on TCP and Serial for comparison
+
+#### Multiple Server Instances - Advanced Setup
+
+Run multiple servers for complex testing scenarios:
+
+**Multiple Servers, Single Interface:**
+
+It is common practice to run **multiple instances** of the server on the same interface, such as TCP, by running multiple instances of the Modbus Monitor XPF application, each with different TCP port numbers.
+
+**Example Configuration:**
+
+- **Instance 1**: Modbus TCP on Port 502 (standard)
+- **Instance 2**: Modbus RTU over TCP on Port 602
+- **Instance 3**: Modbus TCP on Port 503 (alternate device)
+
+Each instance:
+- Runs as separate XPF application window
+- Has its own Modbus map configuration
+- Responds independently to client requests
+- Simulates different devices or device types
+
+**Benefits:**
+
 - **Different Ports**: Multiple TCP servers on different ports
-- **Mixed Protocols**: TCP + multiple serial interfaces
-- **Device Simulation**: Each server represents different device type
+- **Mixed Protocols**: TCP + multiple serial interfaces simultaneously
+- **Device Simulation**: Each server represents different device type or model
+- **Load Testing**: Multiple servers for testing client handling of multiple devices
+
+## 🌐 IoT Integration - MQTT & Cloud Connectivity
+
+!!! info "Feature Documentation In Progress"
+    The MQTT and IoT integration features are available in Modbus Monitor XPF. Comprehensive documentation for these features is currently being prepared and will be added soon.
+
+### MQTT Protocol Support
+
+Modbus Monitor XPF includes **MQTT messaging** capabilities for cloud and device communication, enabling IoT integration scenarios.
+
+**Key Capabilities** (Documentation forthcoming):
+
+- **MQTT Client**: Connect to MQTT brokers for data publishing
+- **Topic Mapping**: Map Modbus registers to MQTT topics
+- **Bi-directional**: Support for both publishing (Device-to-Cloud) and subscribing (Cloud-to-Device)
+- **QoS Levels**: Quality of Service configuration options
+- **TLS/SSL**: Secure connections to cloud platforms
+
+### IoT Platform Integration
+
+**ThingSpeak Cloud Logging:**
+
+ThingSpeak integration provides cloud-based data logging and visualization capabilities.
+
+*(Detailed configuration and usage documentation will be added here)*
+
+**MQTT Broker Connection:**
+
+Connect to popular MQTT brokers including:
+
+- AWS IoT Core
+- Azure IoT Hub
+- Eclipse Mosquitto
+- HiveMQ
+- Other standard MQTT brokers
+
+*(Detailed configuration and usage documentation will be added here)*
+
+### Use Cases for IoT Integration
+
+**Potential Applications:**
+
+1. **Remote Monitoring**: Push Modbus data to cloud for remote access
+2. **Data Aggregation**: Collect data from multiple sites to central cloud platform
+3. **Alert/Notification**: Trigger cloud-based alerts on Modbus events
+4. **Historical Logging**: Store long-term data in cloud databases
+5. **Mobile Access**: Access Modbus data via cloud-connected mobile apps
+
+!!! note "Coming Soon"
+    Detailed step-by-step guides for MQTT configuration, ThingSpeak setup, and IoT platform integration will be added to this section. Check back for updates or contact support for assistance with IoT features.
 
 ## 🔧 Advanced Features & Tips
 
