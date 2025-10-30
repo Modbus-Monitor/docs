@@ -500,13 +500,35 @@ When you launch Modbus Monitor XPF for the first time, the **License window appe
 
 The main application window of Modbus Monitor XPF is organized into several key sections that work together to provide a comprehensive Modbus communication interface.
 
-![XPF Application Window Layout](../../assets/screenshots/xpf-application-window.webp){ .screenshot-shadow }
-*Figure 3.1: Main application interface showing five key areas (see numbered components below)*
+![XPF Application Window with numbered annotations showing Quick Access Toolbar, Ribbon Tabs, Command Groups, Dialog Launcher, and Window Portal Area](../../assets/screenshots/xpf-application-window-annotated.png){ .screenshot-shadow }
+*Figure 3.1: Main application interface showing five key areas (①②③④⑤)*
+
+**Interface Component Structure:**
+
+```mermaid
+graph TB
+    QAT["① Quick Access Toolbar<br/>Customizable one-click commands<br/>Save • Open • Read • Start • Show"]
+    TABS["② Ribbon Tabs<br/>File • Home • Client • Server • IoT"]
+    GROUPS["③ Command Groups<br/>Clipboard • Modbus Wizard • List<br/>Filter • Evaluate • Log"]
+    LAUNCHER["④ Dialog Launcher<br/>Small arrows in group corners<br/>Access extended options"]
+    PORTAL["⑤ Window Portal Area<br/>Monitor Points • Log • Chart • Online Maps"]
+    
+    QAT -.-> TABS
+    TABS -.-> GROUPS
+    GROUPS -.-> LAUNCHER
+    GROUPS -.-> PORTAL
+    
+    style QAT fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style TABS fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style GROUPS fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style LAUNCHER fill:#ffebee,stroke:#c62828,stroke-width:2px
+    style PORTAL fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+```
 
 **The application window contains five main areas:**
 
-!!! tip "Cross-Reference with Screenshot"
-    Each numbered section (**①②③④⑤**) in the screenshot above corresponds to the detailed descriptions below. Use this visual guide to quickly locate features in the actual application.
+!!! tip "Cross-Reference with Screenshot and Diagram"
+    Each numbered section (**①②③④⑤**) in the annotated screenshot and Mermaid diagram above corresponds to the detailed descriptions below. Use these visual guides to quickly locate features in the actual application.
 
 #### ① Quick Access Toolbar
 
