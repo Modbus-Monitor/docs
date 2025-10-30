@@ -140,22 +140,177 @@ Most Modbus tools are either simple monitors or complex SCADA packages. XPF sits
 
 ### License Activation
 
-**Trial Version:**
-- Full functionality for evaluation period
-- No credit card required
-- All features available during trial
+!!! info "Trial Version Available"
+    **Free full-featured trial** - No credit card required. All features available during evaluation period. Perfect for testing before purchase.
 
-**Purchasing a License:**
-1. **Get your UID first** - Copy it from the license screen before buying
-2. **Buy online** - Use your UID when purchasing at quantumbitsolutions.com
-3. **Microsoft Store** - Purchase and activation happen automatically
-4. **Enterprise/Site licenses** - Contact sales for multiple installations
+Choose your activation method based on how you obtained the software:
 
-**Activation Steps:**
-1. Open XPF
-2. Click "Activate" button
-3. Enter your license key from the purchase email
-4. Click "Verify" - should show "Licensed" status
+=== "Microsoft Store (Easiest)"
+
+    **Automatic activation with Microsoft Account**
+    
+    The Microsoft Store version handles licensing automatically - no manual activation needed!
+    
+    **Purchase & Activation Flow:**
+    
+    1. **Open License Window**
+       - Launch Modbus Monitor XPF
+       - The license dialog appears automatically on first launch
+       - Or go to **File → License** in the ribbon
+    
+    2. **Click "Store" Button**
+       - Opens Microsoft Store purchase page
+       - Your UID is automatically included
+    
+    3. **Complete Purchase**
+       - Sign in with your Microsoft Account
+       - Complete payment in the store
+    
+    4. **Automatic Activation**
+       - Returns to XPF automatically
+       - License activates immediately
+       - Status shows "Licensed"
+    
+    **Benefits:**
+    - ✅ No manual license key entry
+    - ✅ Automatic renewal options
+    - ✅ License tied to Microsoft Account (not individual PC)
+    - ✅ Easy reinstallation on any Windows device
+    
+    !!! tip "Multi-Computer Usage"
+        Microsoft Store licenses follow your Microsoft Account. Install on multiple devices and sign in with the same account - no need to repurchase!
+    
+    <!-- Screenshot placeholder: xpf-store-activation.png -->
+    <!-- Shows: License window with Store button highlighted, Microsoft Store purchase page -->
+
+=== "Online Purchase (Direct)"
+
+    **Manual activation with license key**
+    
+    For licenses purchased directly from quantumbitsolutions.com
+    
+    **Step-by-Step Activation:**
+    
+    1. **Copy Your UID (BEFORE Purchasing!)**
+       - Launch Modbus Monitor XPF
+       - Open **File → License** in ribbon
+       - Find your **UID (User Identification)** - looks like: `ABC123-DEF456-GHI789`
+       - **Click "Copy UID"** button or manually copy the code
+       - Save it somewhere - you'll need it for purchase
+    
+    2. **Purchase License Online**
+       - Visit [:material-cart: quantumbitsolutions.com/shop](https://quantumbitsolutions.com/shop/)
+       - Select **Modbus Monitor XPF** license
+       - **Paste your UID** in the order form (critical!)
+       - Complete payment
+    
+    3. **Receive License Key via Email**
+       - Check your email (usually arrives within minutes)
+       - License key format: `XXXX-XXXX-XXXX-XXXX-XXXX`
+       - Save this email - you'll need it for reinstallation
+    
+    4. **Activate in XPF**
+       - Return to **File → License** window
+       - Click **"Activate"** button
+       - **Paste your license key** in the text field
+       - Click **"Verify"** button
+       - Status changes to **"Licensed"** ✓
+    
+    !!! warning "Important: Copy UID First!"
+        Your license key is tied to your UID. If you purchase without providing your UID, contact support for assistance.
+    
+    **Troubleshooting:**
+    - **"Invalid Key" error:** Verify you copied the complete key (including dashes)
+    - **"UID Mismatch":** Contact support - key may be for different UID
+    - **"Connection Error":** Check internet connection - activation requires online verification
+    
+    ![License Activation Window](../../assets/screenshots/xpf-license-window.webp){ .screenshot-shadow }
+    
+    <!-- Additional screenshot placeholders:
+         - xpf-copy-uid.png: Shows UID field and Copy button
+         - xpf-enter-key.png: Shows Activate button and key entry field
+         - xpf-activation-success.png: Shows "Licensed" status
+    -->
+
+=== "Enterprise/Site License"
+
+    **License file for multiple installations or air-gapped systems**
+    
+    For organizations needing multiple installations, offline activation, or centralized license management.
+    
+    **License Types:**
+    
+    | License Type | Use Case | Activation Method |
+    |--------------|----------|-------------------|
+    | **Site License** | Multiple PCs at one location | License file or key |
+    | **Volume License** | Many installations, any location | License server or files |
+    | **Offline License** | Air-gapped networks, no internet | License file only |
+    | **OEM License** | Bundled with equipment | Custom activation |
+    
+    **Activation with License File:**
+    
+    1. **Contact Sales**
+       - Email [:material-email: sales@quantumbitsolutions.com](mailto:sales@quantumbitsolutions.com)
+       - Provide: Number of seats, deployment type, offline requirements
+       - Receive quote and purchase order details
+    
+    2. **Receive License File**
+       - Sales team provides `.lic` file after purchase
+       - File contains all activation data
+       - No internet required for activation
+    
+    3. **Load License File**
+       - Open **File → License** in XPF
+       - Click **"Load"** button
+       - Browse to your `.lic` file
+       - Select and open
+       - Status shows "Licensed" immediately
+    
+    4. **Deploy to Multiple Systems**
+       - Copy the same `.lic` file to all licensed computers
+       - Install XPF on each system
+       - Load the license file on each installation
+    
+    **Offline Activation Process:**
+    
+    If you need to activate a system with no internet access:
+    
+    1. **Generate Request**
+       - On offline PC: Click "Offline Activation"
+       - Save request file (`.req`) to USB drive
+    
+    2. **Submit Request**
+       - Transfer `.req` file to internet-connected PC
+       - Email to support or use online portal
+    
+    3. **Receive Response**
+       - Support provides response file (`.rsp`)
+       - Download to USB drive
+    
+    4. **Complete Activation**
+       - Transfer `.rsp` file to offline PC
+       - Load response file in XPF
+       - System activates without internet
+    
+    !!! note "Enterprise Support"
+        Enterprise licenses include priority email support and optional phone support. Contact sales for Service Level Agreement (SLA) options.
+    
+    [:material-email: Contact Enterprise Sales](https://quantumbitsolutions.com/contact-us/){ .md-button .md-button--primary }
+    
+    <!-- Screenshot placeholder: xpf-load-license-file.png -->
+    <!-- Shows: Load button, file browser dialog with .lic file -->
+
+**License Comparison:**
+
+| Feature | Trial | Standard | Enterprise |
+|---------|-------|----------|------------|
+| **Duration** | Time-limited | Perpetual | Perpetual |
+| **Full Features** | ✅ Yes | ✅ Yes | ✅ Yes |
+| **Updates** | During trial | 1 year included | Custom terms |
+| **Installations** | 1 PC | 1 PC per license | Multiple PCs |
+| **Support** | Community forum | Email support | Priority support |
+| **Offline Use** | ✅ Yes | ✅ Yes | ✅ Yes (special activation) |
+| **Price** | Free | [View pricing](https://quantumbitsolutions.com/shop/) | Contact sales |
 
 ### Common Installation Issues
 
@@ -236,31 +391,6 @@ When you open XPF, you'll see a ribbon interface similar to Excel. Here's what m
     4. **First Launch** may have slight delay (unpacking files)
     
     [:material-download: Download Portable](https://quantumbitsolutions.com/purchase/){ .md-button }
-
-### License Activation
-
-#### License Types Available
-
-| License Type | Features | Purchase Method |
-|--------------|----------|-----------------|
-| **Trial** | Full features, time-limited | Free evaluation |
-| **Standard** | Complete functionality | Microsoft Store or Online |
-| **Site License** | Multiple installations | Contact sales |
-| **Offline License** | Air-gapped environments | Special request |
-
-#### Activation Process
-
-1. **Get Your UID**: Copy the unique User Identification from the license screen
-2. **Purchase License**: Use the UID when purchasing online or through Microsoft Store  
-3. **Activate**: 
-   - **Microsoft Store**: Click "Store" button in license screen
-   - **Online Key**: Click "Activate" and enter your license key
-   - **License File**: Use "Load" button for site/offline licenses
-
-![License Window](../../assets/screenshots/xpf-license-window.webp){ .screenshot-shadow }
-
-!!! warning "License Requirements"
-    Your **UID (User Identification)** is required when purchasing. Copy it before visiting the store!
 
 ## 🏠 Application Interface
 
