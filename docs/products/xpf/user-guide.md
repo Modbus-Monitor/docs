@@ -172,10 +172,11 @@ Choose your activation method based on how you obtained the software:
        - Status shows "Licensed"
     
     **Benefits:**
-    - ✅ No manual license key entry
-    - ✅ Automatic renewal options
-    - ✅ License tied to Microsoft Account (not individual PC)
-    - ✅ Easy reinstallation on any Windows device
+    
+    ✅ No manual license key entry  
+    ✅ Automatic renewal options  
+    ✅ License tied to Microsoft Account (not individual PC)  
+    ✅ Easy reinstallation on any Windows device
     
     !!! tip "Multi-Computer Usage"
         Microsoft Store licenses follow your Microsoft Account. Install on multiple devices and sign in with the same account - no need to repurchase!
@@ -887,10 +888,11 @@ XPF can simultaneously operate as both Client and Server, providing complete Mod
 ### Server Capabilities
 
 **Multi-Interface Support:**
-- ✅ **TCP Server**: Standard Modbus TCP on port 502
-- ✅ **UDP Server**: Modbus UDP for specialized applications  
-- ✅ **Multiple Serial**: Multiple COM ports with different settings
-- ✅ **Concurrent Operation**: All interfaces can run simultaneously
+
+✅ **TCP Server**: Standard Modbus TCP on port 502  
+✅ **UDP Server**: Modbus UDP for specialized applications  
+✅ **Multiple Serial**: Multiple COM ports with different settings  
+✅ **Concurrent Operation**: All interfaces can run simultaneously
 
 ### TCP Server Configuration
 
