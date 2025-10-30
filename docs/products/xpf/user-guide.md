@@ -8,10 +8,11 @@
 
 ## 1. Introduction
 
-**Modbus Monitor XPF** is a Windows application for working with Modbus devices. It handles both Client (Master) and Server (Slave) operations and supports all common Modbus variants: TCP/IP, Serial RTU, Serial ASCII, and RTU/ASCII over TCP.
+**Modbus Monitor XPF** is a versatile Windows application for facilitating communication between a Windows-based PC and Modbus Client or Server devices. It handles both Client (Master) and Server (Slave) operations and supports all common Modbus variants: TCP/IP, Serial RTU, Serial ASCII, and RTU/ASCII over TCP.
 
 ![Modbus Monitor XPF Main Interface](../../assets/screenshots/xpf-main-interface.png){ .screenshot-shadow }
 
+**One of the standout features** of Modbus Monitor XPF is its **dual functionality** - it encompasses both a Modbus Client and a Modbus Server **within a single application, running simultaneously**. This dual capability, combined with support for both Modbus Serial and Modbus TCP protocols, makes it an invaluable tool for various Modbus communication needs.
 
 **What you can do with it:**
 
@@ -21,6 +22,7 @@
 - Scan unknown devices to discover their register maps
 - Log data for analysis and troubleshooting
 - Validate register values against expected ranges
+- **Run Client and Server modes simultaneously** on one PC
 
 **Who this is for:**
 
@@ -28,15 +30,25 @@
 - Maintenance technicians troubleshooting communications
 - System integrators testing device compatibility  
 - Equipment manufacturers validating Modbus implementations
+- SCADA developers needing device simulation without physical hardware
 
 ### What Makes This Different
 
 Most Modbus tools are either simple monitors or complex SCADA packages. XPF sits in the middle - it's powerful enough for serious work but simple enough to use quickly. The key advantages:
 
-1. **Runs both Master and Slave simultaneously** - Test client-server interactions on one PC
-2. **Pre-built device maps** - No manual register setup for common equipment
+1. **Runs both Master and Slave simultaneously** - Test client-server interactions on one PC without physical devices
+2. **Pre-built device maps** - Download factory-validated maps or community-contributed maps for common equipment
 3. **Built-in data validation** - Automatic pass/fail testing with color coding
 4. **Professional logging** - Proper timestamped records for troubleshooting
+5. **Cross-platform protocol support** - Mix Modbus TCP, RTU, ASCII in the same session
+
+### Learning Resources
+
+Beyond this user guide, additional resources are available:
+
+- 🎥 **[YouTube Tutorials](https://www.youtube.com/@ModbusMonitor/videos)** - Short demonstrations of features and workflows
+- 📖 **[Online Help](https://quantumbitsolutions.com/xpf-help/)** - Comprehensive web-based documentation
+- 💬 **[Community Forum](https://quantumbitsolutions.com/forums/)** - User discussions and troubleshooting help
 
 ## 2. Installation & Activation
 
@@ -88,19 +100,35 @@ Most Modbus tools are either simple monitors or complex SCADA packages. XPF sits
 
 ### Getting the Software
 
-=== "Microsoft Store"
+=== "Microsoft Store (Recommended)"
 
-    **Universal - Works on both 32-bit and 64-bit Windows**
+    **Install via Microsoft Store - Easiest Method**
     
+    Search for "Modbus Monitor XPF" directly in the Microsoft Store on your Windows Desktop. Once installed, the application can be accessed from the Start Menu.
+    
+    **Benefits:**
     - **Automatic updates** and license management
     - **No admin rights** needed for installation
-    - **Best for hobbyists** and multi-computer setups
-    - **License per user** (not per machine)
+    - **Universal binary** - Works on both 32-bit and 64-bit Windows
+    - **License per user** (not per machine) - follows your Microsoft Account
+    - **Automatic cloud licensing** - Purchase and activate through Store
     
     [:material-microsoft-windows: Get from Microsoft Store](ms-windows-store://pdp/?productid=9PG862WL5HSM){ .md-button .md-button--primary }
+    
+    Or visit the web store: [Microsoft Store Product Page](https://www.microsoft.com/store/apps/9PG862WL5HSM)
 
-=== "Direct Download"
+=== "Direct Download from Web"
 
+    **Install from the Web - Portable or Installer Options**
+    
+    Visit QuantumBitSolutions.com Download or Shop pages to download or purchase the application.
+    
+    **Portable Version:**
+    - The software is a **portable version**, meaning it can be **run from any location without requiring installation**
+    - **First launch note:** Slight delay is normal as the application unpacks files to a temporary location
+    - Perfect for USB drives or systems without admin rights
+    - Keep it with your field equipment for on-site troubleshooting
+    
     **Choose your architecture and installation type:**
 
     | Architecture | Installer (Permanent Setup) | Portable (No Install) |
@@ -108,6 +136,10 @@ Most Modbus tools are either simple monitors or complex SCADA packages. XPF sits
     | **64-bit** *(Recommended for modern systems)* | [:material-download: x64 Installer](https://quantumbitsolutions.com/download/ModbusMonitor_XPF_x64_Installer.zip){ .md-button } | [:material-download: x64 Portable](https://quantumbitsolutions.com/download/Modbus_Monitor_XPFx64.zip){ .md-button } |
     | **32-bit** *(Older systems only)* | [:material-download: x86 Installer](https://quantumbitsolutions.com/download/ModbusMonitor_XPF_x86_Installer.zip){ .md-button } | [:material-download: x86 Portable](https://quantumbitsolutions.com/download/Modbus_Monitor_XPFx86.zip){ .md-button } |
 
+    **Additional Download Locations:**
+    - [:material-download: Download Page](https://quantumbitsolutions.com/purchase/) - All versions available
+    - [:material-cart: Shop Page](https://quantumbitsolutions.com/shop/) - Purchase with download links
+    
     **What's the difference?**
     
     - **Installer:** Creates shortcuts, integrates with Windows, faster startup
@@ -115,7 +147,7 @@ Most Modbus tools are either simple monitors or complex SCADA packages. XPF sits
     - **64-bit:** Works on modern Windows (2010+), handles large datasets better  
     - **32-bit:** Only needed for older Windows systems or embedded PCs
 
-=== "Purchase"
+=== "Enterprise Purchase"
 
     **Volume licensing and site deployments**    
     - **Multiple machine licenses** available
@@ -140,22 +172,51 @@ Most Modbus tools are either simple monitors or complex SCADA packages. XPF sits
 
 ### License Activation
 
-!!! info "Trial Version Available"
-    **Free full-featured trial** - No credit card required. All features available during evaluation period. Perfect for testing before purchase.
+This section walks you through activating the license for your Modbus Monitor XPF software. The License window provides several buttons and fields to help you navigate the activation process.
+
+**First Launch Experience:**
+
+When you launch Modbus Monitor XPF for the first time, the **License window appears automatically**. This window displays:
+
+- **UID (User Identification)** - Your unique identifier for license purchases
+- **License Information Panel** - Shows current license status (Trial or Licensed)
+- **Hardware ID (HWID)** - Used for certain license types
+- **Licensing Buttons** - Store, Shop, Activate, Load, Trial, Exit
+
+**Licensing Buttons Overview:**
+
+| Button | Purpose | When to Use |
+|--------|---------|-------------|
+| **Store** | Microsoft Store purchase & activation | Purchase through Microsoft Store or activate Store license |
+| **Shop** | Online shop page | Opens web browser to quantumbitsolutions.com/shop |
+| **Activate** | Enter license key | After purchasing online key-based license |
+| **Load** | Load license file | For `.lic` files (enterprise/offline licenses) |
+| **Trial** | Start trial mode | Begin evaluation period with full features |
+| **Exit** | Close license window | Exit the application |
+
+!!! info "Trial Version - Full Featured Evaluation"
+    **Free trial with ALL features unlocked** - No credit card required. Perfect for testing before purchase.
     
     **Starting Trial Mode:**
-    - Launch XPF for the first time
-    - License window appears automatically
-    - Click **"Trial"** button to begin evaluation period
-    - License Information Panel shows days remaining
-    - Full functionality available during trial
+    1. Launch XPF for the first time
+    2. License window appears automatically
+    3. Click **"Trial"** button to begin evaluation period
+    4. License Information Panel shows how many days are left in your evaluation period
+    5. Start using the application immediately with full functionality
     
     **Trial Features:**
-    - ✅ All features unlocked (Client, Server, Scanner, Charts, Logging)
-    - ✅ No watermarks or limitations
+    - ✅ All features unlocked (Client, Server, Scanner, Charts, Logging, Online Maps)
+    - ✅ No watermarks or limitations on functionality
     - ✅ Save and load configuration files
     - ✅ Time-limited evaluation period
     - ✅ Convert to full license anytime during or after trial
+    - ✅ No data loss when upgrading from trial to licensed
+
+**Main Steps to Activate the Software:**
+
+1. **Purchase License** - Click "Store" or "Shop" button to visit licensing store and complete purchase
+2. **Load or Enter Key** - After purchase, load license file (enterprise) or enter license key (online purchase)
+3. **Verify Activation** - License Information Panel confirms activation status and trial mode is disabled
 
 **Choose your activation method based on how you obtained the software:**
 
