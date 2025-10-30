@@ -202,15 +202,7 @@ When you launch Modbus Monitor XPF for the first time, the **License window appe
     2. License window appears automatically
     3. Click **"Trial"** button to begin evaluation period
     4. License Information Panel shows how many days are left in your evaluation period
-    5. Start using the application immediately with full functionality
-    
-    **Trial Features:**
-    - ✅ All features unlocked (Client, Server, Scanner, Charts, Logging, Online Maps)
-    - ✅ No watermarks or limitations on functionality
-    - ✅ Save and load configuration files
-    - ✅ Time-limited evaluation period
-    - ✅ Convert to full license anytime during or after trial
-    - ✅ No data loss when upgrading from trial to licensed
+    5. Start using the application immediately with limited functionality. Runtime and some features are restricted and requires full license.
 
 **Main Steps to Activate the Software:**
 
@@ -504,44 +496,130 @@ When you launch Modbus Monitor XPF for the first time, the **License window appe
 
 ## 3. Understanding the Interface
 
-### Main Window Layout
+### Modbus Monitor XPF - Application Window
 
-When you open XPF, you'll see a ribbon interface similar to Excel. Here's what matters:
+The main application window of Modbus Monitor XPF is organized into several key sections that work together to provide a comprehensive Modbus communication interface.
 
-**Top Section (Ribbon Tabs):**
-- **File** - Open/save configurations, licensing, settings
-- **Home** - Daily operations, copy/paste, add/remove monitor points  
-- **Client** - Settings when acting as Modbus Master
-- **Contextual tabs** - Appear when you activate features like logging
+![XPF Application Window Layout](../../assets/screenshots/xpf-application-window.png){ .screenshot-shadow }
 
-**Bottom Section (Data Area):**
-- **Monitor Points table** - Shows your register list and live values
-- **Switch views** - Log view, Chart view, Online Maps (toggle buttons in ribbon)
+**The application window contains five main areas:**
+
+#### 1. Quick Access Toolbar
+
+Located at the very top, this toolbar includes icons for common actions:
+
+- **Save** - Quickly save your current configuration
+- **Undo** - Reverse recent changes
+- **Redo** - Reapply undone changes
+
+!!! tip "Customize Your Toolbar"
+    You can customize the Quick Access Toolbar with your most-used functions (Start/Stop polling, Clear, etc.) for faster access during operations.
+
+#### 2. Ribbon Tabs
+
+Below the Quick Access Toolbar, you'll find multiple tabs that organize all application features:
+
+- **File** - Backstage view with file operations, licensing, settings, and links
+- **Home** - Most frequently used commands (copy/paste, Modbus Wizard, list management)
+- **Client** - Modbus Client (Master) operations (interface config, polling, scanner, charts)
+- **Contextual Ribbon Tabs** - Additional tabs appear when specific features are active
+
+The active tab is highlighted, making it easy to see which commands are currently available.
+
+#### 3. Command Buttons (Ribbon Commands)
+
+In the middle section of each ribbon tab, you'll find groups of related command buttons:
+
+- **Add Device** - Add new monitor points to your list
+- **Delete Device** - Remove selected monitor points
+- **Offset ID** - Change address base or Unit ID for all points
+- And many more, organized by function
+
+Buttons are accompanied by icons and arrows indicating their functions and options.
+
+#### 4. Dialog Launcher
+
+Small buttons in the corner of command groups that open additional settings or options:
+
+- Look for the small arrow icon in the bottom-right of command groups
+- Opens extended dialogs with advanced configuration options
+- Provides access to detailed settings not shown on the ribbon
+
+#### 5. Window Portal Area
+
+The main workspace at the bottom displays different information depending on the selected mode:
+
+**Default View - Monitor Points List:**
+- Table showing all your Modbus monitoring points
+- Displays Name, Address, Unit ID, Value, and other register details
+- This is where you configure what data to read/write
+
+**Alternative Views (toggled via ribbon buttons):**
+- **Log Window** - Shows communication events and Modbus traffic when Log button is toggled
+- **Chart Window** - Displays time-series data visualization when Chart button is active
+- **Online Maps Navigator** - Browse and download pre-built Modbus maps when Online button is toggled
+
+Each view provides relevant information for the specific task being performed.
+
+### Application Window - Ribbon Tabs Overview
+
+The standard Modbus Monitor XPF ribbon contains the following tabs, from left to right:
+
+| Tab | Purpose | Key Features |
+|-----|---------|--------------|
+| **📁 File** | Backstage view | File operations, licensing, theme settings, recent files, online resources |
+| **🏠 Home** | Daily operations | Copy/paste, Modbus Wizard, list management, filtering, evaluation |
+| **🔗 Client** | Modbus Client (Master) | Interface selection, timeouts, write functions, scanner, charts, poll controls |
+| **⚙️ Contextual Tabs** | Context-sensitive | Log Options (when logging active), Chart Options (when chart active) |
+
+!!! note "Contextual Tabs Appear Dynamically"
+    Contextual tabs (also known as Option Tabs) appear only when you activate specific features. For example, selecting the Log option from the Home tab will make the "Log - Options" contextual tab appear with logging-specific controls.
 
 ### Key Concepts
 
-**Monitor Points:** Each row represents one Modbus address you want to read or write. Think of it as your "shopping list" of registers.
+**Monitor Points:** Each row in the Monitor Points table represents one Modbus address you want to read or write. Think of it as your "register shopping list" - you define what data you need, and XPF handles the polling.
 
 **Client vs Server Mode:** 
-- **Client (Master)** - You initiate communication, polling devices for data
-- **Server (Slave)** - You simulate a device, responding to other masters
+- **Client (Master)** - You initiate communication, continuously polling remote devices for data
+- **Server (Slave)** - You simulate a Modbus device, responding to requests from other masters
+- **Simultaneous Operation** - Both modes can run at the same time on different interfaces
 
-**Magic Codes:** Special text you add to register names for advanced features (covered in Advanced Features section).
+**Magic Codes:** Special text you add to the Name field of monitor points to enable advanced features like custom poll rates, bit field access, string length control, and date/time conversion (covered in detail in Monitor Points section).
+
+**Dual Functionality:** XPF can operate as both Client and Server simultaneously, making it ideal for testing client-server interactions on a single PC without physical devices.
 
 ### Navigation Tips
 
-**Quick Access Toolbar:** Customize this with your most-used functions (Save, Start/Stop polling, etc.)
+**Quick Access Toolbar Customization:**
+- Right-click the toolbar to add your most-used functions
+- Common additions: Start/Stop polling, Save, Clear, Read Once
+- Speeds up repetitive operations significantly
 
-**Right-click menus:** Most tables and fields have context menus with relevant options.
+**Right-click Context Menus:**
+- Most tables and fields have context menus with relevant options
+- Right-click on monitor point rows for quick actions
+- Context menus adapt to what you've selected
 
-**Keyboard shortcuts:**
+**Keyboard Shortcuts:**
 - `Ctrl+S` - Save current configuration
 - `Ctrl+O` - Open saved configuration  
-- `Ctrl+C/V` - Copy/paste monitor points (works with Excel too)
+- `Ctrl+C` / `Ctrl+V` - Copy/paste monitor points (works with Excel too)
+- `Ctrl+X` - Cut selected rows
 - `F5` - Refresh/update display
+- `Shift+Click` - Select sequential rows
+- `Ctrl+Click` - Select multiple non-sequential rows
 
-!!! tip "Workflow Tip"
-    Set up your monitor points first, then configure communication settings. Save frequently - especially before making big changes.
+**Window Portal Switching:**
+- Use ribbon buttons to toggle between Monitor Points, Log, Chart, and Online Maps views
+- Each view occupies the same screen space but shows different information
+- Views can be switched without losing data in other views
+
+!!! tip "Workflow Best Practice"
+    1. Set up your monitor points first (define what you want to read/write)
+    2. Configure communication settings (TCP/Serial, timeouts)
+    3. Save your configuration before starting polling
+    4. Test with "Read Once" before enabling continuous polling
+    5. Save frequently - especially before making major changes
 
 === "Microsoft Store (Recommended)"
 
