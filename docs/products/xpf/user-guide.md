@@ -508,9 +508,14 @@ The main application window of Modbus Monitor XPF is organized into several key 
 
 Located at the very top, this toolbar includes icons for common actions:
 
-- **Save** - Quickly save your current configuration
-- **Undo** - Reverse recent changes
-- **Redo** - Reapply undone changes
+| Button | Function | Description |
+|--------|----------|-------------|
+| **Save** | Save configuration | Quickly save your current configuration |
+| **Read-Once** | Single poll | Poll all Monitoring points once |
+| **Client** | Start polling | Start Polling all Monitoring points recursively |
+| **Server** | Start server | Start Modbus Server |
+| **Log** | Show logs | Show Communications Logs |
+| **Clear** | Clear logs | Clear Communication Log entries |
 
 !!! tip "Customize Your Toolbar"
     You can customize the Quick Access Toolbar with your most-used functions (Start/Stop polling, Clear, etc.) for faster access during operations.
@@ -519,10 +524,18 @@ Located at the very top, this toolbar includes icons for common actions:
 
 Below the Quick Access Toolbar, you'll find multiple tabs that organize all application features:
 
+**Standard Tabs (Always Visible):**
+
 - **File** - Backstage view with file operations, licensing, settings, and links
 - **Home** - Most frequently used commands (copy/paste, Modbus Wizard, list management)
 - **Client** - Modbus Client (Master) operations (interface config, polling, scanner, charts)
-- **Contextual Ribbon Tabs** - Additional tabs appear when specific features are active
+- **IoT** - IoT integration (ThingSpeak cloud logging, MQTT messaging for cloud/device communication)
+
+**Contextual Tabs (Appear When Features Active):**
+
+- **Log Options** - Appears when Event Log is active (filter, export, auto-scroll controls)
+- **Chart Options** - Appears when Chart view is open (axis config, samples, data export)
+- **Server Options** - Appears when Server mode is running (traffic capture, simulation settings)
 
 The active tab is highlighted, making it easy to see which commands are currently available.
 
@@ -541,23 +554,22 @@ Buttons are accompanied by icons and arrows indicating their functions and optio
 
 Small buttons in the corner of command groups that open additional settings or options:
 
-- Look for the small arrow icon in the bottom-right of command groups
-- Opens extended dialogs with advanced configuration options
-- Provides access to detailed settings not shown on the ribbon
+| Feature | Location | Purpose |
+|---------|----------|---------|
+| **Arrow Icon** | Bottom-right of command groups | Opens extended dialogs |
+| **Advanced Options** | Context-specific dialogs | Access detailed settings |
+| **Extended Settings** | Beyond ribbon display | Configure advanced parameters |
 
 #### 5. Window Portal Area
 
 The main workspace at the bottom displays different information depending on the selected mode:
 
-**Default View - Monitor Points List:**
-- Table showing all your Modbus monitoring points
-- Displays Name, Address, Unit ID, Value, and other register details
-- This is where you configure what data to read/write
-
-**Alternative Views (toggled via ribbon buttons):**
-- **Log Window** - Shows communication events and Modbus traffic when Log button is toggled
-- **Chart Window** - Displays time-series data visualization when Chart button is active
-- **Online Maps Navigator** - Browse and download pre-built Modbus maps when Online button is toggled
+| View | Trigger | Display Content |
+|------|---------|-----------------|
+| **Monitor Points List** | Default view | Table showing all Modbus monitoring points with Name, Address, Unit ID, Value, and register details |
+| **Log Window** | Log button toggled | Communication events and Modbus traffic history |
+| **Chart Window** | Chart button active | Time-series data visualization and trend analysis |
+| **Online Maps Navigator** | Online button toggled | Browse and download pre-built Modbus maps from factory/community |
 
 Each view provides relevant information for the specific task being performed.
 
@@ -565,54 +577,81 @@ Each view provides relevant information for the specific task being performed.
 
 The standard Modbus Monitor XPF ribbon contains the following tabs, from left to right:
 
+**Standard Tabs (Always Visible):**
+
 | Tab | Purpose | Key Features |
 |-----|---------|--------------|
 | **📁 File** | Backstage view | File operations, licensing, theme settings, recent files, online resources |
 | **🏠 Home** | Daily operations | Copy/paste, Modbus Wizard, list management, filtering, evaluation |
 | **🔗 Client** | Modbus Client (Master) | Interface selection, timeouts, write functions, scanner, charts, poll controls |
-| **⚙️ Contextual Tabs** | Context-sensitive | Log Options (when logging active), Chart Options (when chart active) |
+| **🌐 IoT** | Cloud integration | ThingSpeak logging, MQTT messaging, cloud-to-device communication |
 
-!!! note "Contextual Tabs Appear Dynamically"
-    Contextual tabs (also known as Option Tabs) appear only when you activate specific features. For example, selecting the Log option from the Home tab will make the "Log - Options" contextual tab appear with logging-specific controls.
+**Contextual Tabs (Appear Dynamically):**
+
+| Tab | Trigger | Key Features |
+|-----|---------|--------------|
+| **📊 Log Options** | Event Log active | Filter errors, export logs, auto-scroll, timestamp format, clear history |
+| **📈 Chart Options** | Chart view open | Axis configuration, sample buffer size, fit to view, export chart data, clear buffer |
+
+
+!!! note "How Contextual Tabs Work"
+    Contextual tabs (also known as Option Tabs) appear only when you activate specific features, providing relevant controls without cluttering the interface.
+    
+    **Examples:**
+    - Click **Show** button in Home tab → Log group → **Log Options** tab appears
+    
+    When you deactivate the feature (close log, close chart), the contextual tab automatically disappears.
 
 ### Key Concepts
 
-**Monitor Points:** Each row in the Monitor Points table represents one Modbus address you want to read or write. Think of it as your "register shopping list" - you define what data you need, and XPF handles the polling.
+**Monitor Points:** Each row in the Monitor Points table represents one Modbus address you want to read or write. Think of it as your "register shopping list" - you define what data you need, and XPF handles the polling, writing, retrying, data conversion, byte swap, and display formatting.
 
 **Client vs Server Mode:** 
 - **Client (Master)** - You initiate communication, continuously polling remote devices for data
 - **Server (Slave)** - You simulate a Modbus device, responding to requests from other masters
-- **Simultaneous Operation** - Both modes can run at the same time on different interfaces
+- **Simultaneous Operation** - Both modes can run at the same time on different interfaces 
 
 **Magic Codes:** Special text you add to the Name field of monitor points to enable advanced features like custom poll rates, bit field access, string length control, and date/time conversion (covered in detail in Monitor Points section).
 
-**Dual Functionality:** XPF can operate as both Client and Server simultaneously, making it ideal for testing client-server interactions on a single PC without physical devices.
+**Dual Functionality:** XPF can operate as both Client and Server simultaneously, making it ideal for testing client-server interactions on a single PC without physical devices. 
 
 ### Navigation Tips
 
 **Quick Access Toolbar Customization:**
-- Right-click the toolbar to add your most-used functions
-- Common additions: Start/Stop polling, Save, Clear, Read Once
-- Speeds up repetitive operations significantly
+
+| Action | Method | Benefit |
+|--------|--------|---------|
+| **Add Functions** | Right-click toolbar | Customize with most-used commands |
+| **Common Additions** | Start/Stop polling, Save, Clear, Read Once | Quick access to frequent operations |
+| **Efficiency Gain** | One-click access | Speeds up repetitive operations |
 
 **Right-click Context Menus:**
-- Most tables and fields have context menus with relevant options
-- Right-click on monitor point rows for quick actions
-- Context menus adapt to what you've selected
+
+| Feature | Usage | Behavior |
+|---------|-------|----------|
+| **Table Context Menus** | Right-click any table row | Relevant actions for selected item |
+| **Field Context Menus** | Right-click input fields | Field-specific operations |
+| **Adaptive Menus** | Context-sensitive | Options change based on selection |
 
 **Keyboard Shortcuts:**
-- `Ctrl+S` - Save current configuration
-- `Ctrl+O` - Open saved configuration  
-- `Ctrl+C` / `Ctrl+V` - Copy/paste monitor points (works with Excel too)
-- `Ctrl+X` - Cut selected rows
-- `F5` - Refresh/update display
-- `Shift+Click` - Select sequential rows
-- `Ctrl+Click` - Select multiple non-sequential rows
+
+| Shortcut | Function | Usage |
+|----------|----------|-------|
+| `Ctrl+S` | Save configuration | Preserve current setup |
+| `Ctrl+O` | Open configuration | Load saved file |
+| `Ctrl+C` / `Ctrl+V` | Copy/paste | Works with Excel integration |
+| `Ctrl+X` | Cut rows | Move selected items |
+| `F5` | Refresh display | Update current view |
+| `Shift+Click` | Select range | Sequential row selection |
+| `Ctrl+Click` | Multi-select | Non-sequential rows |
 
 **Window Portal Switching:**
-- Use ribbon buttons to toggle between Monitor Points, Log, Chart, and Online Maps views
-- Each view occupies the same screen space but shows different information
-- Views can be switched without losing data in other views
+
+| Feature | Method | Result |
+|---------|--------|--------|
+| **View Toggle** | Ribbon button clicks | Switch between Monitor Points, Log, Chart, Online Maps |
+| **Shared Space** | Same screen area | Each view replaces previous in portal |
+| **Data Persistence** | Background retention | Switching views doesn't lose data |
 
 !!! tip "Workflow Best Practice"
     1. Set up your monitor points first (define what you want to read/write)
