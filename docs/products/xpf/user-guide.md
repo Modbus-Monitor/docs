@@ -500,7 +500,7 @@ When you launch Modbus Monitor XPF for the first time, the **License window appe
 
 The main application window of Modbus Monitor XPF is organized into several key sections that work together to provide a comprehensive Modbus communication interface.
 
-![XPF Application Window Layout](../../assets/screenshots/xpf-application-window.png){ .screenshot-shadow }
+![XPF Application Window Layout](../../assets/screenshots/xpf-application-window.webp){ .screenshot-shadow }
 
 **The application window contains five main areas:**
 

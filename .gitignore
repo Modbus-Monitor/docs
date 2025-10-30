@@ -1,3 +1,6 @@
+# WordPress uploads folder (temporary, not for commit)
+uploads/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
