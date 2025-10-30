@@ -301,6 +301,84 @@ Choose your activation method based on how you obtained the software:
     <!-- Screenshot placeholder: xpf-load-license-file.png -->
     <!-- Shows: Load button, file browser dialog with .lic file -->
 
+=== "Troubleshooting"
+
+    **Common installation and activation issues**
+    
+    ### Installation Problems
+    
+    **Application won't start or crashes immediately:**
+    
+    - Install latest .NET Framework from Microsoft
+    - Right-click XPF → "Run as Administrator"
+    - Check Windows Defender isn't blocking the application
+    - Verify system meets minimum requirements (Windows 10/11)
+    
+    **Serial ports not showing in interface:**
+    
+    - Install drivers for your USB-to-serial adapter
+    - Check Device Manager for COM port assignments
+    - Some generic adapters need specific drivers (FTDI, Prolific, etc.)
+    - Try different USB ports if adapter not recognized
+    
+    **Network connection problems:**
+    
+    - Windows Firewall may block Modbus TCP (port 502)
+    - Add firewall exception: Control Panel → Windows Defender Firewall → Allow an app
+    - Corporate networks sometimes block non-standard ports
+    - Verify IP address and subnet configuration
+    
+    ### Activation Issues
+    
+    **"Invalid Key" error when activating:**
+    
+    - Verify you copied the complete license key (including all dashes)
+    - Check for extra spaces at beginning or end of key
+    - Ensure key matches the UID shown in License window
+    - Contact support if key was purchased for different UID
+    
+    **"Connection Error" during activation:**
+    
+    - Check internet connection is active
+    - Verify firewall isn't blocking XPF's internet access
+    - Try temporarily disabling antivirus software
+    - Some corporate proxies block activation - contact IT
+    
+    **Microsoft Store activation not working:**
+    
+    - Ensure you're signed in with correct Microsoft Account
+    - Check Microsoft Store app is updated to latest version
+    - Try signing out and back in to Microsoft Account
+    - Restart XPF after completing purchase
+    
+    **License shows "Expired" unexpectedly:**
+    
+    - Verify system clock is set correctly (wrong date can cause this)
+    - Check if subscription renewal payment failed
+    - Contact support to verify license status
+    
+    ### Performance Issues
+    
+    **Slow startup or sluggish performance:**
+    
+    - Close unnecessary applications consuming RAM
+    - Check for Windows updates pending installation
+    - Disable communication logging when not needed
+    - Reduce number of monitor points being polled
+    
+    **High memory usage:**
+    
+    - Disable Event Log if not needed (major memory consumer)
+    - Limit chart buffer size (set Samples value instead of unlimited)
+    - Clear log files periodically
+    - Reduce poll rate for large register lists
+    
+    ### Still Having Issues?
+    
+    📧 **Email Support:** support@quantumbitsolutions.com  
+    💬 **Community Forum:** [quantumbitsolutions.com/forums](https://quantumbitsolutions.com/forums/)  
+    📖 **Knowledge Base:** [Technical Resources](../../technical/index.md)
+
 **License Comparison:**
 
 | Feature | Trial | Standard | Enterprise |
@@ -312,23 +390,6 @@ Choose your activation method based on how you obtained the software:
 | **Support** | Community forum | Email support | Priority support |
 | **Offline Use** | ✅ Yes | ✅ Yes | ✅ Yes (special activation) |
 | **Price** | Free | [View pricing](https://quantumbitsolutions.com/shop/) | Contact sales |
-
-### Common Installation Issues
-
-**"Won't start" or crashes:**
-- Install latest .NET Framework from Microsoft
-- Run as Administrator (right-click → Run as Administrator)
-- Check Windows Defender isn't blocking it
-
-**Serial ports not showing:**
-- Install drivers for your USB-to-serial adapter
-- Check Device Manager for COM port assignments
-- Some cheap adapters need specific drivers
-
-**Network connection problems:**
-- Windows Firewall may block Modbus TCP (port 502)
-- Add firewall exception for XPF if needed
-- Corporate networks sometimes block non-standard ports
 
 ## 3. Understanding the Interface
 
