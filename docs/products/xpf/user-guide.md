@@ -4,7 +4,7 @@
 
 **A practical guide for controls engineers and technicians**
 
-[TOC]
+<!-- [TOC] -->
 
 ## 1. Introduction
 
@@ -496,7 +496,7 @@ When you launch Modbus Monitor XPF for the first time, the **License window appe
 
 ## 3. Understanding the Interface
 
-### Modbus Monitor XPF - Application Window
+### Application Window
 
 The main application window of Modbus Monitor XPF is organized into several key sections that work together to provide a comprehensive Modbus communication interface.
 
@@ -528,7 +528,7 @@ graph TB
 **The application window contains five main areas:**
 
 !!! tip "Cross-Reference with Screenshot and Diagram"
-    Each numbered section (**①②③④⑤**) in the annotated screenshot and Mermaid diagram above corresponds to the detailed descriptions below. Use these visual guides to quickly locate features in the actual application.
+    Each numbered section (**①②③④⑤**) in the annotated screenshot and the diagram above corresponds to the detailed descriptions below. Use these visual guides to quickly locate features in the actual application.
 
 #### ① Quick Access Toolbar
 
@@ -621,7 +621,7 @@ The main workspace at the bottom displays different information depending on the
 
 Each view provides relevant information for the specific task being performed.
 
-### Application Window - Ribbon Tabs Overview
+### Ribbon Tabs Overview
 
 The standard Modbus Monitor XPF ribbon contains the following tabs, from left to right:
 
@@ -629,17 +629,17 @@ The standard Modbus Monitor XPF ribbon contains the following tabs, from left to
 
 | Tab | Purpose | Key Features |
 |-----|---------|--------------|
-| **📁 File** | Backstage view | File operations, licensing, theme settings, recent files, online resources |
-| **🏠 Home** | Daily operations | Copy/paste, Modbus Wizard, list management, filtering, evaluation |
-| **🔗 Client** | Modbus Client (Master) | Interface selection, timeouts, write functions, scanner, charts, poll controls |
-| **🌐 IoT** | Cloud integration | ThingSpeak logging, MQTT messaging, cloud-to-device communication |
+| **File** | Backstage view | File operations, licensing, theme settings, recent files, online resources, exit |
+| **Home** | Main Operations | Copy/paste, Modbus Wizard, list management, filtering, evaluation |
+| **Client** | Modbus Client (Master) | Interface selection, timeouts, write functions, scanner, charts, poll controls |
+| **IoT** | Cloud integration | ThingSpeak logging, MQTT messaging, cloud-to-device communication |
 
 **Contextual Tabs (Appear Dynamically):**
 
 | Tab | Trigger | Key Features |
 |-----|---------|--------------|
 | **📊 Log Options** | Event Log active | Filter errors, export logs, auto-scroll, timestamp format, clear history |
-| **📈 Chart Options** | Chart view open | Axis configuration, sample buffer size, fit to view, export chart data, clear buffer |
+<!-- | **📈 Chart Options** | Chart view open | Axis configuration, sample buffer size, fit to view, export chart data, clear buffer | -->
 
 
 !!! note "How Contextual Tabs Work"
@@ -652,13 +652,194 @@ The standard Modbus Monitor XPF ribbon contains the following tabs, from left to
 
 ### Key Concepts
 
-**Monitor Points:** Each row in the Monitor Points table represents one Modbus address you want to read or write. Think of it as your "register shopping list" - you define what data you need, and XPF handles the polling, writing, retrying, data conversion, byte swap, and display formatting.
+```mermaid
+graph TB
+    MAP["📋 MODBUS MAP / LIST<br/><i>Complete collection of all Monitor Points</i>"]
+    
+    subgraph TABLE["Monitor Points Table"]
+        direction TB
+        HEADER["<b>NAME | ADDRESS | UNIT ID | GAIN | OFFSET | DATA TYPE | SWAP TYPE | VALUE</b>"]
+        ROW1["Motor Speed | 400001 | 1 | 1.00000 | 0.00000 | UINT16 | ABCD_BE | 1450"]
+        ROW2["Line Voltage | 400002 | 1 | 1.00000 | 0.00000 | INT16 | ABCD_BE | 230"]
+        ROW3["Pump Status | 100001 | 1 | 1.00000 | 0.00000 | BIT | ABCD_BE | 1"]
+        ROW4["Temperature SP | 000001 | 1 | 1.00000 | 0.00000 | BIT | ABCD_BE | 1"]
+        
+        HEADER -.-> ROW1
+        HEADER -.-> ROW2
+        HEADER -.-> ROW3
+        HEADER -.-> ROW4
+    end
+    
+    ENGINE["⚙️ XPF POLLING ENGINE<br/><i>Handles: Polling • Writing • Retries<br/>Data Conversion • Byte Swap • Display Formatting</i>"]
+    
+    MAP ==> TABLE
+    TABLE ==> ENGINE
+    
+    NOTE1["✅ The entire table = <b>Modbus Map/List</b>"]
+    NOTE2["🔹 Each row = One <b>Monitor Point</b>"]
+    
+    TABLE -.-> NOTE1
+    TABLE -.-> NOTE2
+    
+    style MAP fill:#e3f2fd,stroke:#1976d2,stroke-width:3px,color:#000
+    style TABLE fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style HEADER fill:#2196f3,stroke:#1565c0,stroke-width:2px,color:#fff
+    style ROW1 fill:#fff,stroke:#90caf9,stroke-width:1px
+    style ROW2 fill:#fff,stroke:#90caf9,stroke-width:1px
+    style ROW3 fill:#fff,stroke:#90caf9,stroke-width:1px
+    style ROW4 fill:#fff,stroke:#90caf9,stroke-width:1px
+    style ENGINE fill:#c8e6c9,stroke:#388e3c,stroke-width:3px,color:#000
+    style NOTE1 fill:#fff9c4,stroke:#f57f17,stroke-width:2px
+    style NOTE2 fill:#fff9c4,stroke:#f57f17,stroke-width:2px
+```
+
+**Modbus Map / List:** The Modbus Map (or Monitor Points List) is the complete collection of data points you want to communicate with on a Modbus device. Think of it as your “register shopping list” — a centralized view showing all Modbus addresses you plan to read or write. Each entry in this list includes its address, function code, data type, and optional pre- or post-processing settings. Together, these entries form a dictionary of Modbus data that defines what the XPF application will handle. XPF then automatically manages polling, writing, retries, data conversions, byte-swapping, and display formatting across the entire list.
+
+**Monitor Point:** A Monitor Point is a single data entry within the Modbus Map — representing one Modbus register or coil you want to read or write. You configure its details (address, function code, data type, scaling, and optional pre/post-processing). Each Monitor Point operates as an independent tag, allowing you to precisely define what data you want and how it should be processed. XPF then performs all background operations for that point: polling, retrying, converting, swapping bytes if needed, and displaying formatted values.
+
+!!! example "📘 Modbus Map and Monitor Points - Practical Example"
+    **Understanding the relationship between Modbus Map and Monitor Points:**
+    
+    | NAME | ADDRESS | UNIT ID | GAIN | OFFSET | DATA TYPE | SWAP TYPE | VALUE |
+    |------|---------|---------|------|--------|-----------|-----------|-------|
+    | Motor Speed | `400001` | 1 | 1.00000 | 0.00000 | UINT16 | ABCD_BE | 1450 |
+    | Line Voltage | `300001` | 1 | 1.00000 | 0.00000 | INT16 | ABCD_BE | 230 |
+    | Pump Status | `100001` | 1 | 1.00000 | 0.00000 | BIT | ABCD_BE | 1 |
+    | Coil Register | `000001` | 1 | 1.00000 | 0.00000 | BIT | ABCD_BE | 1 |
+    
+    **Key Points:**
+    
+    - ✅ The **entire table above** represents your **Modbus Map/List**
+    - 🔹 **Each row** (e.g., Motor Speed, Line Voltage) represents one **Monitor Point**
+    - 🎯 Each Monitor Point has all 8 columns: NAME, ADDRESS (6-digit), UNIT ID, GAIN, OFFSET, DATA TYPE, SWAP TYPE, VALUE
+    - 📍 Address format: `4xxxxx`=Holding Reg | `3xxxxx`=Input Reg | `1xxxxx`=Discrete Input | `0xxxxx`=Coil
+    - 🔄 XPF automatically handles all polling, conversions, and formatting for every Monitor Point in the list
 
 **Client vs Server Mode:** 
 
 - **Client (Master)** - You initiate communication, continuously polling remote devices for data
 - **Server (Slave)** - You simulate a Modbus device, responding to requests from other masters
 - **Simultaneous Operation** - Both modes can run at the same time on different interfaces 
+
+**XPF Functionality Architecture:**
+
+=== "🔵 Client Mode (Master)"
+
+    **XPF initiates communication to read/write data from remote Modbus devices**
+
+    ```mermaid
+    graph LR
+        subgraph MAPLIST["Modbus Map"]
+            direction TB
+            ADDR1["40001 | Read Holding | INT16<br/>Motor Speed RPM"]
+            ADDR2["40002 | Read Holding Reg | FLOAT32<br/>Line Voltage V"]
+            ADDR3["00001 | Read Coil | BOOL<br/>Pump Running Status"]
+            
+            ADDR1 ~~~ ADDR2 ~~~ ADDR3
+        end
+        
+        subgraph XPF["XPF - CLIENT MODE"]
+            direction TB
+            MAPLIST
+            ENGINE["Polling Engine"]
+        end
+        
+        PLC["🏭 PLC<br/>Holding Registers<br/>192.168.1.10 or RTU"]
+        VFD["⚡ VFD Drive<br/>Speed Control<br/>192.168.1.10 or RTU"]
+        METER["📊 Energy Meter<br/>Power Data<br/>192.168.1.10 or RTU"]
+        
+        XPF -->|"1️⃣ Send Read Request<br/>Modbus TCP"| PLC
+        PLC -->|"2️⃣ Return Data<br/>Register Values"| XPF
+        
+        XPF -->|"1️⃣ Send Read Request<br/>Modbus RTU"| VFD
+        VFD -->|"2️⃣ Return Data<br/>Speed, Status"| XPF
+        
+        XPF -->|"1️⃣ Send Read Request<br/>Modbus TCP"| METER
+        METER -->|"2️⃣ Return Data<br/>Voltage, Current"| XPF
+        
+        style XPF fill:#e3f2fd,stroke:#1976d2,stroke-width:4px
+        style MAPLIST fill:#fff,stroke:#1976d2,stroke-width:2px
+        style ADDR1 fill:#f5f5f5,stroke:#90caf9,stroke-width:1px
+        style ADDR2 fill:#f5f5f5,stroke:#90caf9,stroke-width:1px
+        style ADDR3 fill:#f5f5f5,stroke:#90caf9,stroke-width:1px
+        style ENGINE fill:#bbdefb,stroke:#1976d2,stroke-width:2px
+        style PLC fill:#fff9c4,stroke:#ff6f00,stroke-width:2px
+        style VFD fill:#fff9c4,stroke:#ff6f00,stroke-width:2px
+        style METER fill:#fff9c4,stroke:#ff6f00,stroke-width:2px
+    ```
+
+    **Client Mode Flow:**
+    
+    1. **Configure Monitor Points** - Define which registers/coils to read/write
+    2. **XPF sends requests** - Polls devices according to configured timing
+    3. **Devices respond** - Send back register values, coil states
+    4. **XPF processes data** - Apply scaling, byte swapping, display formatting
+    5. **Log communication** - Track all transactions for troubleshooting
+
+    **Use Cases:** Monitor PLCs, read sensor data, control VFDs, commissioning systems
+
+=== "🟢 Server Mode (Slave)"
+
+    **XPF responds to requests from external Modbus masters (SCADA, HMI, PLC)**
+
+    ```mermaid
+    graph RL
+        subgraph XPF["XPF - SERVER MODE"]
+            direction TB
+            LISTEN["Server Listener"]
+            SVRDATA            
+        end
+        
+        subgraph SVRDATA["Modbus Map"]
+            direction TB
+            REG1["40001 | Holding | INT16<br/>Process Value 1"]
+            REG2["40002 | Holding | FLOAT32<br/>Temperature C"]
+            REG3["00001 | Coil | BOOL<br/>Alarm Status"]
+            
+            REG1 ~~~ REG2 ~~~ REG3
+        end
+        
+        SCADA["SCADA System<br/>TCP Client<br/>192.168.1.100"]
+        HMI["HMI Panel<br/>RTU Client<br/>COM2"]
+        PLCM["PLC Master<br/>TCP Client<br/>192.168.1.50"]
+        
+        SCADA -->|"1️⃣ Send Read Request<br/>Modbus TCP"| XPF
+        XPF -->|"2️⃣ Return Data<br/>From Data Table"| SCADA
+        
+        HMI -->|"1️⃣ Send Read Request<br/>Modbus RTU"| XPF
+        XPF -->|"2️⃣ Return Data<br/>Register Values"| HMI
+        
+        PLCM -->|"1️⃣ Send Write Request<br/>Function 06/16"| XPF
+        XPF -->|"2️⃣ Confirm Write<br/>Update Data Table"| PLCM
+        
+        style XPF fill:#e8f5e9,stroke:#388e3c,stroke-width:4px
+        style SVRDATA fill:#fff,stroke:#388e3c,stroke-width:2px
+        style REG1 fill:#f5f5f5,stroke:#81c784,stroke-width:1px
+        style REG2 fill:#f5f5f5,stroke:#81c784,stroke-width:1px
+        style REG3 fill:#f5f5f5,stroke:#81c784,stroke-width:1px
+        style LISTEN fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+        style SCADA fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+        style HMI fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+        style PLCM fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    ```
+
+    **Server Mode Flow:**
+    
+    1. **Configure Server Data** - Set up registers, coils, and initial values
+    2. **External master sends request** - SCADA/HMI asks for data
+    3. **XPF processes request** - Validates function code, address range
+    4. **XPF sends response** - Provides requested data or write confirmation
+    5. **Log transaction** - Track all requests for analysis
+
+    **Use Cases:** Simulate devices for testing, act as protocol gateway, development without hardware
+
+!!! tip "💡 Simultaneous Operation - Run Both Modes Together"
+    **XPF can operate as Client AND Server at the same time:**
+    
+    - **Client mode** reads data from real PLCs (Modbus TCP on port 502)
+    - **Server mode** provides that data to SCADA (Modbus RTU on COM1)
+    - Each mode uses independent interface configuration
+    - Perfect for protocol conversion, testing, or acting as a data bridge
 
 **Magic Codes:** Special text you add to the **Name** field of monitor points to enable advanced features like custom poll rates, bit field access, string length control, and date/time conversion (covered in detail in Monitor Points section).
 
@@ -672,8 +853,7 @@ The standard Modbus Monitor XPF ribbon contains the following tabs, from left to
 |--------|--------|---------|
 | **Open Customization Menu** | Right-click anywhere on toolbar | Shows complete list of available buttons (11 options) |
 | **Add/Remove Buttons** | Click button name in menu | Checkmark (✓) indicates button is currently visible |
-| **Reposition Toolbar** | Select "Show Below the Ribbon" | Moves toolbar from top to below ribbon tabs |
-| **Reset to Default** | Remove all, then add preferred buttons | Create your personalized button set |
+
 
 **Customization Best Practices:**
 
@@ -699,7 +879,6 @@ The standard Modbus Monitor XPF ribbon contains the following tabs, from left to
 | `Ctrl+O` | Open configuration | Load saved file |
 | `Ctrl+C` / `Ctrl+V` | Copy/paste | Works with Excel integration |
 | `Ctrl+X` | Cut rows | Move selected items |
-| `F5` | Refresh display | Update current view |
 | `Shift+Click` | Select range | Sequential row selection |
 | `Ctrl+Click` | Multi-select | Non-sequential rows |
 
@@ -718,113 +897,50 @@ The standard Modbus Monitor XPF ribbon contains the following tabs, from left to
     4. Test with "Read Once" before enabling continuous polling
     5. Save frequently - especially before making major changes
 
-=== "Microsoft Store (Recommended)"
-
-    **Easiest Installation Method:**
-    
-    1. **Search** for "Modbus Monitor XPF" in Microsoft Store
-    2. **Install** directly from the store
-    3. **Launch** from Start Menu
-    4. **Activate** license through the store
-    
-    [:material-microsoft-windows: Open Microsoft Store](ms-windows-store://pdp/?productid=9PG862WL5HSM){ .md-button .md-button--primary }
-
-=== "Direct Download"
-
-    **Portable Version:**
-    
-    1. **Visit** [QuantumBitSolutions Download Page](https://quantumbitsolutions.com/purchase/)
-    2. **Download** the portable executable
-    3. **Run** from any location (no installation required)
-    4. **First Launch** may have slight delay (unpacking files)
-    
-    [:material-download: Download Portable](https://quantumbitsolutions.com/purchase/){ .md-button }
-
-## 🏠 Application Interface
-
-### Main Window Layout
-
-The Modbus Monitor XPF interface is organized into several key areas:
-
-```mermaid
-graph TB
-    QAT[Quick Access Toolbar<br/>Save, Undo, Redo]
-    TABS[Ribbon Tabs<br/>File, Home, Client]
-    COMMANDS[Command Buttons<br/>Add Device, Delete, Configure]
-    LAUNCHER[Dialog Launcher<br/>Advanced Options]
-    PORTAL[Window Portal Area<br/>Monitor Points / Log View / Online Maps]
-    
-    QAT --> TABS
-    TABS --> COMMANDS  
-    COMMANDS --> LAUNCHER
-    COMMANDS --> PORTAL
-    
-    style QAT fill:#e3f2fd
-    style TABS fill:#fff3e0
-    style COMMANDS fill:#f3e5f5
-    style PORTAL fill:#e8f5e8
-```
-
-### Ribbon Tabs Overview
-
-| Tab | Purpose | Key Features |
-|-----|---------|--------------|
-| **📁 File** | File operations & settings | Open/Save, Recent files, Licensing, Themes |
-| **🏠 Home** | Daily operations | Copy/Paste, Modbus Wizard, List management |
-| **🔗 Client** | Modbus Client (Master) | Interface config, Polling, Charts, Scanner |
-| **⚙️ Contextual** | Context-sensitive options | Log Options, Chart Options (when active) |
-
-## 📁 File Tab (Backstage View)
+### File Tab (Backstage View)
 
 The **File Tab** provides access to the backstage view containing essential file operations, application settings, license management, and resources. Click the **File** tab to enter this full-screen view.
 
-### Home Section - File Navigation
+#### Home Section
 
 The Home section provides quick access to your file system and document management:
 
 | Feature | Icon/Button | Description |
 |---------|-------------|-------------|
-| **🏠 Home** | Home button | Navigate to Documents folder |
-| **📂 Open** | Folder icon | Open folder in Windows Explorer |
-| **⬆️ Up** | Up arrow | Move up one level in directory tree |
-| **📍 Current Folder** | `<Documents>` | Displays current folder name |
+| **Home** | Home button | Navigate to Documents folder |
+| **Open** | Folder icon | Open folder in Windows Explorer |
+| **Up** | Up arrow | Move up one level in directory tree |
+| **Current Folder** | `<Documents>` | Displays current folder name |
 
-**Workflow:**
-1. Click **File Tab** to enter backstage view
-2. Use **Home** to jump to Documents folder
-3. Navigate folders with **Up** button
-4. Click **Open** to browse in Windows Explorer
-5. Select your XPF configuration file to load
-
-### Recent Files Section
+#### Recent Section
 
 Quick access to recently used Modbus maps and configurations:
 
 | Button | Function | Description |
 |--------|----------|-------------|
-| **🔄 Refresh** | Update list | Refresh the recent files list |
-| **📂 Open Folder** | Show location | Opens folder containing selected file |
-| **📄 Open File** | Load map | Loads selected configuration in XPF |
-| **➖ Remove** | Delete entry | Remove selected file from recent list |
-| **🗑️ Delete** | Clear all | Deletes all entries from recent list |
+| **Refresh** | Update list | Refresh the recent files list |
+| **Open Folder** | Show location | Opens folder containing selected file |
+| **Open File** | Load map | Loads selected configuration in XPF |
+| **Remove** | Delete entry | Remove selected file from recent list |
+| **Delete** | Clear all | Deletes all entries from recent list |
 
 !!! tip "Quick File Access"
     The Recent Files list is the fastest way to switch between different device configurations. Your most commonly used maps are always one click away.
 
-### About Section - Application Information
+#### About Section
 
 Access version information, documentation, and support resources:
 
 | Option | Description | Action |
 |--------|-------------|--------|
-| **ℹ️ Version** | Current application version | Displays installed version number |
-| **🔑 Activate** | License activation | Opens license window for activation |
-| **📝 Submit Feedback** | User feedback | Direct feedback to developers |
-| **📚 Documentation** | Online help | Access comprehensive online help |
-| **🎥 Videos** | Tutorial videos | Links to YouTube tutorials |
-| **📧 Contact Email** | Support contact | Email address for inquiries |
-| **🔒 Privacy Policy** | Data handling | View privacy policy details |
-| **📜 EULA** | License agreement | End User License Agreement terms |
+| **Version** | Current application version | Displays installed version number |
+| **Activate** | License activation | Opens license window for activation |
+| **Submit Feedback** | User feedback | Direct feedback to developers |
+| **Documentation** | Online help | Access comprehensive online help |
+| **Videos** | Tutorial videos | Links to YouTube tutorials |
+| **Contact Email** | Support contact | Email address for inquiries |
+| **Privacy Policy** | Data handling | View privacy policy details |
+| **EULA** | License agreement | End User License Agreement terms |
 
 **Quick Actions:**
 - **Need help?** Click **Documentation** for online guides
@@ -832,7 +948,7 @@ Access version information, documentation, and support resources:
 - **License issues?** Click **Activate** to manage licenses
 - **Feature requests?** Use **Submit Feedback**
 
-### Settings Section - Application Appearance
+#### Settings Section
 
 Customize the application theme to match your environment:
 
@@ -850,7 +966,7 @@ Customize the application theme to match your environment:
 !!! tip "Field Work Preference"
     Many field technicians prefer **Dark theme** when working in dimly lit equipment rooms or cabinets.
 
-### Exit - Close Application
+#### Exit
 
 **Exit** button safely closes the Modbus Monitor XPF application:
 
@@ -859,19 +975,20 @@ Customize the application theme to match your environment:
 - **Terminates** all active connections properly
 - **Releases** serial ports and network resources
 
-## 🏠 Home Tab - Essential Operations
+### Home Tab
 
-The **Home Tab** contains the most frequently used commands for daily operations - everything you need for working with Modbus maps and monitoring points.
+The **Home Tab** contains the most frequently used commands for essential Operations - everything you need for working with Modbus maps and monitoring points.
 
-![Home Tab Interface](../../assets/screenshots/xpf-home-tab.webp){ .screenshot-shadow }
+![Home Tab Interface](../../assets/screenshots/xpf-home-tab.png)
 
-### File Group - Document Management
+#### File Group - Document Management
 
 | Feature | Description | Details |
 |---------|-------------|---------|
-| **💾 Save** | Save current document in CSV format | Preserves entire Modbus map configuration including monitor points, settings, and extended properties for reuse |
-| **📂 Open** | Open previously saved file | Load saved XPF configuration files (CSV format) from any location |
-| **☁️ Online** | Download Modbus Maps from online folder or community | Access pre-configured maps from (1) factory-released validated maps or (2) community-uploaded maps. See detailed explanation below. |
+| **Save** | Save current document in CSV format | Preserves entire Modbus map configuration including monitor points, settings, and extended properties for reuse |
+| **Save As** | Save As New document | Preserves entire Modbus map configuration including monitor points, settings, and extended properties for reuse |
+| **Open** | Open previously saved file | Load saved XPF configuration files (CSV format) from any location |
+| **Online** | Download Modbus Maps from online folder or community | Access pre-configured maps from (1) factory-released validated maps or (2) community-uploaded maps. See detailed explanation below. |
 
 !!! note "CSV Format Benefits"
     XPF saves configurations as standard CSV files, making them easy to:
@@ -881,48 +998,162 @@ The **Home Tab** contains the most frequently used commands for daily operations
     - **Share** with team members or across sites
     - **Document** device configurations for compliance
 
-### Clipboard Group - Data Transfer
+#### Clipboard Group - Data Transfer
 
 | Operation | Shortcut | Description |
 |-----------|----------|-------------|
-| **📋 Paste** | `Ctrl+V` | Paste from clipboard from selected row(s) - either from the application or Microsoft Excel. Adds to end of list. |
-| **📄 Copy** | `Ctrl+C` | Copy selected single or multiple row(s) to clipboard. Multiple sequential rows can be selected with Shift+Click's first and last row. Multiple rows in any order using Control+Click. |
-| **✂️ Cut** | `Ctrl+X` | Copy the content of the current item to clipboard and delete the item from the list. |
+| **Paste** | `Ctrl+V` | Paste from clipboard from selected row(s) - either from the application or Microsoft Excel. Adds to end of list. |
+| **Copy** | `Ctrl+C` | Copy selected single or multiple row(s) to clipboard. Multiple sequential rows can be selected with Shift+Click's first and last row. Multiple rows in any order using Control+Click. |
+| **Cut** | `Ctrl+X` | Copy the content of the current item to clipboard and delete the item from the list. |
 
-!!! tip "Excel Integration Workflow"
-    **Typical workflow for Excel integration:**
+#### Modbus Wizard - Quick Configuration Tool
+
+The **Modbus Wizard** provides a streamlined interface for configuring monitor points without manually editing the table. Access it by clicking the **Dialog Launcher** (small arrow) in the Modbus Wizard group corner.
+
+![Modbus Wizard Dialog](../../assets/screenshots/xpf-modbus-wizard.webp){ .screenshot-shadow }
+*Modbus Wizard configuration interface*
+
+**Configuration Fields:**
+
+| Field | Purpose | Options/Format |
+|-------|---------|----------------|
+| **Register Name** | Descriptive identifier | Text field - name your monitor point |
+| **Modbus Function** | Register type and access | See full list below |
+| **Sub-Function** | Function variant *(FC8 only)* | Appears for FC8 Diagnostics - e.g., "0 (0x0) Return Query Data" |
+| **Device ID** | Device identification type *(FC43-14 only)* | Appears for FC43-14 - e.g., "01 Get Basic Device ID (stream)" |
+| **Object ID** | MEI object identifier *(FC43-14 only)* | Appears for FC43-14 - Object number (00-FF hexadecimal) |
+| **CustomQ** | Custom Modbus Packet | Add PDU part of the Modbus Command to send any command  |
+| **Data Request** | Request address/value | Address or data value for the request |
+| **Address** |  Modbus Address | Zero or One based Modbus Address |
+| **Data Type** | Data interpretation | See full list below |
+| **Poll Rate Control** | Update frequency | NONE, SKIP, ONCE, INTERVAL (Adjust Poll Rate value) |
+| **Bit Field** | Extract specific bit | 0-15 for 16-bit registers - selects individual bit |
+| **Write Only** | Skip during reads | Checkbox - for write-only registers |
+
+!!! info "Function-Specific Fields"
+    The wizard dynamically displays additional fields based on the selected Modbus Function:
     
-    1. **Create** monitor point list in Excel with columns: Name, Address, Unit ID, Gain, Offset, Data Type, Swap Type
-    2. **Select** rows in Excel (use Shift+Click for range, Ctrl+Click for individual)
-    3. **Copy** with `Ctrl+C`
-    4. **Switch** to XPF application
-    5. **Select** starting row in monitor points list
-    6. **Paste** with `Ctrl+V` - rows are added at end of list
+    - **FC8 Diagnostics**: Shows `Sub-Function` dropdown with diagnostic test options
+    - **FC43-14 Read Device Identification**: Shows `Device ID` and `Object ID` fields for MEI object selection
+    - These fields only appear when their corresponding function is selected
+
+**Modbus Function Options:**
+
+| Function Code | Description | Use Case |
+|---------------|-------------|----------|
+| **FC43 (0x2B) Encapsulated Interface Transport** | MEI Transport | Device identification, vendor information |
+| **FC43-14 (0x2B-0x0E) Read Device Identification** | Read device ID | Manufacturer, model, serial number strings |
+| **FC43-15/16 (0x2B-0x0F/0xA) Read/Write Date and Time** | Date/Time sync | Clock synchronization |
+| **FC1 Coils (0x)** | Read/Write Coils | Digital outputs, relay control |
+| **FC2 Discrete Inputs (1x)** | Read Discrete Inputs | Digital inputs, switch states |
+| **FC3 Holding Register (4x)** | Read/Write Holding Registers | Process values, setpoints |
+| **FC4 Input Registers (3x)** | Read Input Registers | Sensor data, measurements |
+| **FC7 Read Exception Status** | Exception status | Device error/status flags |
+| **FC8 Diagnostics** | Diagnostics | Device diagnostic information |
+| **FC11 (0x0B) Get Comm Event Counter** | Communication events | Event counter |
+| **FC12 (0x0C) Get Comm Event Log** | Communication log | Event log retrieval |
+| **FC17 Report Server ID** | Server identification | Server/slave ID information |
+
+**Data Type Options:**
+
+| Data Type | Size | Range/Description |
+|-----------|------|-------------------|
+| **BIT** | 1 bit | Boolean: 0 or 1, True/False |
+| **INT16** | 16-bit | Signed: -32,768 to 32,767 |
+| **UINT16** | 16-bit | Unsigned: 0 to 65,535 |
+| **INT32** | 32-bit | Signed: -2,147,483,648 to 2,147,483,647 |
+| **UINT32** | 32-bit | Unsigned: 0 to 4,294,967,295 |
+| **FLOAT32** | 32-bit | IEEE 754 floating point |
+| **INT64** | 64-bit | Signed 64-bit integer |
+| **UINT64** | 64-bit | Unsigned 64-bit integer |
+| **DOUBLE64** | 64-bit | IEEE 754 double precision |
+| **HEX** | Variable | Hexadecimal display format |
+| **STRING** | Variable | ASCII text string |
+| **DATETIME** | Variable | Date and time values |
+
+**Poll Rate Control Options:**
+
+| Option | Behavior | Use Case |
+|--------|----------|----------|
+| **NONE** | Default polling | Uses global poll rate setting |
+| **SKIP** | Skip polling | Exclude from automatic reads (manual only) |
+| **ONCE** | Poll once at startup | Read initial value only, then stop |
+| **INTERVAL** | Custom interval | Opens dialog to set specific poll rate in milliseconds |
+
+**How to Use:**
+
+1. **View Existing Point**: Click any row in Monitor Points table - Wizard displays current settings
+2. **Edit Configuration**: 
+   - Select row to edit
+   - Change values in Wizard dropdowns/fields
+   - Click **OK** to apply changes
+3. **Add New Point**:
+   - Click empty row or Add button
+   - Fill in Register Name
+   - Select Modbus Function from dropdown
+   - Configure Data Type and optional settings
+   - Click **OK** to create
+
+**Quick Reference - Common Function Codes:**
+
+| Function | Code | Access | Address Range | Typical Use |
+|----------|------|--------|---------------|-------------|
+| **FC01** | 0x01 | Read/Write | 0xxxxx | Coils - Digital outputs, relay control |
+| **FC02** | 0x02 | Read Only | 1xxxxx | Discrete Inputs - Switch states, sensors |
+| **FC03** | 0x03 | Read/Write | 4xxxxx | Holding Registers - Setpoints, configuration |
+| **FC04** | 0x04 | Read Only | 3xxxxx | Input Registers - Sensor data, measurements |
+| **FC43** | 0x2B | Special | N/A | Encapsulated - Device ID, date/time |
+
+**Common Scenarios:**
+
+=== "Reading Device Information"
+
+    **Setup:**
+    - Register Name: `Device Model`
+    - Modbus Function: `FC43 (0x2B) Encapsulated Interface Transport`
+    - CustomQ: `28` (typical string length)
+    - Data Type: `BIT` or `STRING`
     
-    This is invaluable for batch device setup or migrating configurations.
+    **Result:** Reads device identification strings (manufacturer, model, version)
 
-### 🧙‍♂️ Modbus Wizard - GUI Configuration Tool
+=== "Temperature Sensor"
 
-The **Modbus Wizard** simplifies adding and configuring monitor points through a graphical interface, eliminating the need to manually edit configuration files. The wizard can add a new monitor point on an empty row, allowing for easy configuration using the GUI instead of manual editing.
+    **Setup:**
+    - Register Name: `Water Temp`
+    - Modbus Function: `FC04 (0x04) Input Registers`
+    - Data Type: `INT16` or `FLOAT32`
+    - Poll Rate Control: `NONE` (default polling)
+    
+    **Result:** Continuous monitoring of read-only temperature value
 
-![Modbus Wizard Interface](../../assets/screenshots/xpf-modbus-wizard.webp){ .screenshot-shadow }
-*How to use Modbus Wizard to configure Modbus Monitor Point*
+=== "Alarm Status Bit"
 
-**Wizard Operations:**
+    **Setup:**
+    - Register Name: `High Temp Alarm`
+    - Modbus Function: `FC02 (0x02) Discrete Inputs`
+    - Data Type: `BIT`
+    - Bit Field: `5` (extracts bit 5)
+    
+    **Result:** Monitors specific alarm bit in status register
 
-| Operation | Description | Use Case |
-|-----------|-------------|----------|
-| **👁️ View** | Click on a row to view existing configuration | Examine current monitor point settings without making changes |
-| **✏️ Edit** | Click on a row and use combo boxes to change settings | Modify Modbus Function, Modbus Address, Data Type, Magic Codes, etc. The wizard ensures proper unique Magic Codes are added automatically. |
-| **➕ Add** | Add new monitor point by selecting well-known Modbus Function Type | Create new monitor points with guided setup - wizard handles Magic Code generation |
+=== "Setpoint Control"
 
-**Dialog Box Launcher:**
-- Click the small arrow icon in the Modbus Wizard group corner
-- Opens extended options and advanced wizard settings
-- Provides access to additional configuration parameters
+    **Setup:**
+    - Register Name: `Target Speed`
+    - Modbus Function: `FC03 (0x03) Holding Registers`
+    - Data Type: `UINT16`
+    - Write Only: `☐` (unchecked - read and write)
+    
+    **Result:** Bidirectional control - read current setpoint, write new values
 
-!!! tip "Magic Code Automation"
-    The Modbus Wizard's biggest advantage is **automatic Magic Code management**. Instead of memorizing codes like `:16` for string length or `@1000` for poll rate, use the wizard's dropdown menus. The wizard adds proper codes automatically and ensures they're unique and valid.
+!!! tip "Wizard Advantages"
+    **Why use the Wizard instead of direct table editing:**
+    
+    - **Validation**: Ensures valid combinations of function codes and data types
+    - **Guided Setup**: Dropdown menus prevent common configuration errors
+    - **No Syntax Errors**: Automatically formats addresses and codes correctly
+    - **Beginner Friendly**: Visual interface easier than memorizing Modbus specifications
+    - **Quick Changes**: Faster than navigating table columns for adjustments
 
 ### List Group - Monitor Point Management
 
