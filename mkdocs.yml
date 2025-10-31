@@ -16,7 +16,6 @@ theme:
     - navigation.instant
     - navigation.instant.prefetch
     - navigation.sections
-    - navigation.expand
     - navigation.path
     - navigation.prune
     - navigation.indexes
