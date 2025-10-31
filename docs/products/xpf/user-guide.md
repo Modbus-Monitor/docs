@@ -1015,8 +1015,6 @@ The **Home Tab** contains the most frequently used commands for essential Operat
 
 #### Modbus Wizard
 
-**Guided Point Configuration** - Configure monitor points using guided dialogs with dropdown menus and validation. Easier than manual table editing - prevents configuration errors and provides function-specific options.
-
 The **Modbus Wizard** provides a streamlined interface for configuring monitor points without manually editing the table. Access it by clicking the **Dialog Launcher** (small arrow) in the Modbus Wizard group corner.
 
 ![Modbus Wizard Dialog](../../assets/screenshots/xpf-modbus-wizard.webp){ .screenshot-shadow }
@@ -1151,13 +1149,15 @@ The **List Group** provides essential tools for managing your Monitor Points (al
 
 **Filter Components:**
 
-| Component | Description |
-|-----------|-------------|
-| **Row Index** (left number) | Shows the **index of the currently selected row**. Especially useful when the list is filtered to know the true row number. |
-| **Filter Text Box** | Enter text to search. Filters all **Name** and **Address** fields that contain the entered text. |
-| **Total Rows** (right number) | Shows the **total number of rows** in the current view (filtered or full list). |
-| **Clear Filter** (X button) | Clears the text filter and shows all rows in the list. |
-| **ID Dropdown** | Select **Unit ID** (Slave ID or Station ID) to filter by device. Combine with text filter for precise results. |
+| Label | Component | Description |
+|-------|-----------|-------------|
+| **1** | **Row Index**| Shows the **index of the currently selected row**. Especially useful when the list is filtered to know the true row number. -1 when none Selected.|
+| **2** | **Filter Text Box** | Enter text to search. Filters all **Name** and **Address** fields that contain the entered text. |
+| **3** | **Total Rows** | Shows the **total number of rows** in the current view (filtered or full list). |
+| **4** | **Clear Filter**| Clears the text filter and shows all rows in the list. |
+| **5** | **Clear ID** | Clears the ID filter and shows all rows in the list. |
+| **6** | **ID Dropdown** | Select **Unit ID** (Slave ID or Station ID) to filter by device. Combine with text filter for precise results. |
+
 
 !!! tip "How Filtering Works"
     **Text Search:**
@@ -1203,7 +1203,6 @@ The **List Group** provides essential tools for managing your Monitor Points (al
 Change the background colors of the Value cell based on the High, Low, and Nominal Limits. **Quickly validate the value from the Modbus device and test to see if it is within the valid range.**
 
 ![Evaluate Settings](../../assets/screenshots/xpf-evaluate-limits.webp){ .screenshot-shadow }
-*Evaluate or Test Limits Settings*
 
 #### Evaluate Filter Area
 
@@ -1218,15 +1217,20 @@ Change the background colors of the Value cell based on the High, Low, and Nomin
 
 #### Evaluate Limits Settings (Per Monitor Point)
 
-Access these settings by clicking the **three ellipses (...)** at the end of each monitor point row:
+Fine-tune validation thresholds for individual monitor points. Each point can have custom limits and color coding independent of others in your list.
 
-| Setting | Options | Description |
-|---------|---------|-------------|
-| **Evaluate** | Checkbox | Turn the Evaluate feature **on or off** for this specific monitor point |
-| **Nominal Color** | Color picker | Choose a color for the **Nominal Value range**. The nominal range is calculated as values **between the Low Limit and High Limit**. |
-| **Low Limit** | Value + Color | Choose a color to highlight the Value column when the value **equals or falls below the Low Limit**. The value can be **numerical or string** type. |
-| **High Limit** | Value + Color | Choose a color to highlight the Value column when the value **equals or exceeds the High Limit**. The value can be **numerical or string** type. |
-| **String Mode** | Same High/Low | For String Data Type, set the **same High and Low Limit** for exact string matching |
+![Evaluate Settings](../../assets/screenshots/xpf-home-evaluate.png)
+
+Click the **three dots (...)** button at the end of any monitor point row to open the Evaluate Limits dialog shown above.
+
+|Label | Setting | Options | Description |
+|------|---------|---------|-------------|
+|**1**| **Three Dots (...)** | Button | Opens the Evaluate Limits settings dialog for this monitor point |
+|**2**| **Evaluate** | Checkbox | Turn the Evaluate feature **on or off** for this specific monitor point |
+|**3**| **Nominal Color** | Color picker | Choose a color for the **Nominal Value range**. The nominal range is calculated as values **between the Low Limit and High Limit**. |
+|**4**| **Low Limit** | Value + Color | Choose a color to highlight the Value column when the value **equals or falls below the Low Limit**. The value can be **numerical or string** type. |
+|**5**| **High Limit** | Value + Color | Choose a color to highlight the Value column when the value **equals or exceeds the High Limit**. The value can be **numerical or string** type. |
+|**4 + 5**| **String Mode** | Same High/Low | For String Data Type, set the **same High and Low Limit** for exact string matching |
 
 !!! example "Practical Applications"
     **Quality Control Testing:**
@@ -1251,6 +1255,8 @@ Access these settings by clicking the **three ellipses (...)** at the end of eac
 #### Log Group
 
 **Communication Monitoring and Logging** - View and record all Modbus communication traffic for troubleshooting. Filter errors, export logs to file, and timestamp all events for accurate diagnostics.
+
+![Log Settings](../../assets/screenshots/xpf-home-log.png)
 
 Switch to the Events Log Window to view **Modbus communications and general events**. The Monitoring Points area is switched to show event logs in the same area. Use the **"Log"** button to switch between both views.
 
