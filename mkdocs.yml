@@ -15,7 +15,6 @@ theme:
     # Navigation enhancements
     - navigation.instant
     - navigation.instant.prefetch
-    - navigation.sections
     - navigation.path
     - navigation.prune
     - navigation.indexes
@@ -25,7 +24,6 @@ theme:
     - navigation.footer
     # Table of Contents improvements  
     - toc.follow
-    - toc.integrate
     # Search enhancements
     - search.highlight
     - search.suggest
@@ -82,7 +80,7 @@ markdown_extensions:
   - tables
   - toc:
       permalink: true
-      toc_depth: 3
+      toc_depth: 2
   - def_list
   - attr_list
   - md_in_html
