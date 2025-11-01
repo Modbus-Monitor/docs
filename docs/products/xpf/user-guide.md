@@ -1099,7 +1099,7 @@ The **Modbus Wizard** provides a streamlined interface for configuring monitor p
     - Register Name: `Target Speed`
     - Modbus Function: `FC03 (0x03) Holding Registers`
     - Data Type: `UINT16`
-    - Write Only: `☐` (unchecked - read and write)
+    - Write Only: Unchecked (read and write)
     
     **Result:** Bidirectional control - read current setpoint, write new values
 
@@ -1556,20 +1556,29 @@ Users can upload their own custom Modbus Maps to share with the community or sto
 
 ## Monitor Points Configuration
 
-### Monitor Points Table Structure
+**Monitor Points** are similar to PLC tags - each one represents a specific data point you want to read or write on a Modbus device. Just as PLC tags map to memory addresses in a controller, Monitor Points map to Modbus registers and coils with all the configuration needed to access and interpret the data correctly.
+
+This section explains everything you need to know about configuring Monitor Points, including address formats, data types, scaling options, and advanced features. Whether you're setting up a simple temperature sensor or complex multi-register data structures, understanding these configuration options is essential for effective Modbus communication.
+
+### Monitor Points Structure
 
 Each row in the Monitor Points table represents a single Modbus register or group of registers to monitor:
 
-| Column | Data Type | Example | Description |
-|--------|-----------|---------|-------------|
-| **Name** | String | `Water Temperature:16` | Descriptive name + magic codes |
-| **Address** | Integer | `400001` | 6-digit Modbus address format |
-| **Unit ID** | Byte (1-247) | `1` | Slave/Station ID |
-| **Gain** | Float | `1.5` | Scaling multiplier (Y = mX + b) |
-| **Offset** | Float | `100` | Value offset (Y = mX + b) |
-| **Data Type** | Enum | `INT16` | Data interpretation format |
-| **Swap Type** | Enum | `ABCD_BE` | Byte/word order for multi-register |
-| **Value** | String/Number | `Solar Meter 123` | Current/set value |
+|Number| Column | Data Type | Example | Description |
+|------|--------|-----------|---------|-------------|
+|1| **Name** | String | `Water Temperature:16` | Descriptive name + [magic codes](#1-name-field-enhanced-with-magic-codes) for advanced features |
+|2| **Address** | Integer | `400001` | [6-digit Modbus address format](#2-address-field-6-digit-format) |
+|3| **Unit ID** | Byte (1-247) | `1` | Slave/Station ID (1-247) |
+|4| **Gain** | Float | `1.5` | Scaling multiplier: `Y = (Gain * X) + Offset` |
+|5| **Offset** | Float | `100` | Value offset: `Y = (Gain * X) + Offset` |
+|6| **Data Type** | Enum | `INT16` | [Data interpretation format](#3-data-type-options) (INT16, UINT16, FLOAT32, STRING, etc.) |
+|7| **Swap Type** | Enum | `ABCD_BE` | [Byte/word order](#4-swap-type-for-multi-register-data) for multi-register data |
+|8| **Value** | String/Number | `123.45` | Shows latest polled value, red border for errors, editable for writes |
+|9| **Extra (...)** | Button | `...` | Additional Options such as CommandQ, Chart, Simulate|
+|10| **CustomQ** | Hex String | `11 04 00 6B` | [Custom Modbus command](#custom-commands-customq) in hexadecimal |
+|11| **Chart** | Checkbox | Checked / Unchecked | Enable charting for this monitor point to display value trends over time |
+|12| **Axis** | Integer | `0` or `1` | Assign to chart axis (0 or 1) for multi-scale time-series visualization |
+|13| **Simulate** | Checkbox | Checked / Unchecked | Enable simulation mode (Server mode only) to generate test values without actual device |
 
 ### Detailed Field Descriptions
 
@@ -1725,26 +1734,81 @@ graph LR
     - Use the **Offset** button in the List Group to switch between modes globally
     - `400001` (1-based) and `400000` (0-based) both refer to the first physical holding register
 
-#### 3. Data Type Options
+#### 3. Unit ID (Slave/Station ID)
+
+The Unit ID identifies which Modbus slave device to communicate with on the network:
+
+| Range | Description | Common Usage |
+|-------|-------------|--------------|
+| **1-247** | Valid Slave IDs | Standard Modbus device addressing |
+| **0** | Broadcast address | Not recommended for normal operations |
+| **248-255** | Reserved | Not used in standard Modbus |
+
+**Key Points:**
+- Each device on a Modbus network must have a unique Unit ID
+- Use the **Swap ID** button in List Group to change all monitor points at once
+- TCP/IP devices often use Unit ID 1 or match their IP last octet
+
+#### 4. Gain (Scaling Multiplier)
+
+Apply linear scaling to raw Modbus values using the formula: **`Y = (Gain * X) + Offset`**
+
+| Value | Effect | Example |
+|-------|--------|---------|
+| **1.0** | No scaling (default) | Raw value displayed as-is |
+| **0.1** | Divide by 10 | Convert tenths to units (e.g., 235 → 23.5) |
+| **10** | Multiply by 10 | Amplify small values |
+| **-1** | Invert sign | Convert positive to negative |
+
+**Common Applications:**
+- Temperature conversion: Gain = 0.1 (tenths of degree to degrees)
+- Pressure scaling: Gain = 0.01 (convert to proper decimal places)
+- Current measurement: Gain = 0.001 (milliamps to amps)
+
+#### 5. Offset (Value Adjustment)
+
+Add or subtract a constant from the scaled value: **`Y = (Gain * X) + Offset`**
+
+| Value | Effect | Example |
+|-------|--------|---------|
+| **0** | No offset (default) | Scaled value used as-is |
+| **-273.15** | Celsius to Kelvin | Temperature conversion |
+| **32** | Celsius to Fahrenheit | After gain of 1.8 |
+
+**Processing Order:** Raw Value → Gain (multiply) → Offset (add) → Display
+
+#### 6. Data Type (Data Interpretation)
+
+Defines how to interpret the raw Modbus register data.
+
+**Available Data Types:**
 
 | Type | Size | Range | Usage |
 |------|------|-------|-------|
 | **BIT** | 1 bit | 0/1 | Boolean values |
 | **INT16** | 16-bit | -32,768 to 32,767 | Signed integers |
 | **UINT16** | 16-bit | 0 to 65,535 | Unsigned integers (default) |
-| **INT32** | 32-bit | ±2.1 billion | Large signed numbers |
+| **INT32** | 32-bit | +/- 2.1 billion | Large signed numbers |
 | **UINT32** | 32-bit | 0 to 4.2 billion | Large unsigned numbers |
 | **FLOAT32** | 32-bit | IEEE 754 | Floating point numbers |
-| **INT64** | 64-bit | ±9.2×10¹⁸ | Very large integers |
-| **UINT64** | 64-bit | 0 to 1.8×10¹⁹ | Very large unsigned |
+| **INT64** | 64-bit | +/- 9.2 x 10^18 | Very large integers |
+| **UINT64** | 64-bit | 0 to 1.8 x 10^19 | Very large unsigned |
 | **DOUBLE64** | 64-bit | IEEE 754 | Double precision float |
 | **HEX** | Variable | Hexadecimal | Raw hex display |
 | **STRING** | Variable | Text | Character strings |
 | **DATETIME** | Variable | Date/Time | Formatted timestamps |
 
-#### 4. Swap Type for Multi-Register Data
+**Most Common Types:**
+- **UINT16**: Unsigned 16-bit integer (0-65535) - default for most registers
+- **INT16**: Signed 16-bit integer (-32768 to 32767) - for negative values
+- **FLOAT32**: 32-bit floating point - for decimal precision
+- **STRING**: Text data - use with `:xx` magic code for length
 
-When reading 32-bit or 64-bit values across multiple registers:
+#### 7. Swap Type (Byte/Word Order)
+
+Controls byte ordering for multi-register data (32-bit, 64-bit values spanning multiple registers).
+
+**Available Swap Types:**
 
 | Swap Type | Description | Byte Order |
 |-----------|-------------|------------|
@@ -1753,48 +1817,94 @@ When reading 32-bit or 64-bit values across multiple registers:
 | **BADC_BEBS** | Big-Endian Byte Swap | Bytes swapped within words |
 | **CDAB_LEBS** | Little-Endian Word Swap | Words swapped |
 
-#### 5. Poll Rate Control Options
+**Quick Selection Guide:**
+- **ABCD_BE** (Big-Endian): Try this first for most devices
+- **CDBA_LE** (Little-Endian): If ABCD shows wrong values
+- **BADC_BEBS / CDAB_LEBS**: For devices with swapped byte/word order
 
-Configure individual monitor point polling behavior:
+#### 8. Value (Current/Display Value)
 
-| Option | Behavior | Use Case |
-|--------|----------|----------|
-| **NONE** | Default polling | Uses global poll rate setting from Client/Server tab |
-| **SKIP** | Skip polling | Exclude from automatic reads (manual trigger only) |
-| **ONCE** | Poll once at startup | Read initial value only, then stop polling |
-| **INTERVAL** | Custom interval | Opens dialog to set specific poll rate in milliseconds |
+The Value field serves multiple purposes depending on mode and state:
 
-#### 6. Value Field Behavior
+| Mode | Display | Interaction |
+|------|---------|-------------|
+| **Client Mode** | Shows latest polled value | Read-only, auto-updates during polling |
+| **Server Mode** | Editable field | Click to edit, sends value to requesting clients |
+| **Error State** | Empty with red border | Click cell to view error message details |
+| **Evaluate Mode** | Color-coded background | Indicates pass/fail based on limits |
 
-| Mode | Behavior | Interaction |
-|------|----------|-------------|
-| **Client Mode** | Displays polled values | Read-only, shows server data |
-| **Server Mode** | Editable send values | Click to edit, sends to client |
-| **Error State** | Red border | Click to see error message |
+#### 9. Extra (...) Button
 
-### Extended Configuration Options
+Click the **three dots (...)** button at the end of each row to access extended options:
 
-#### Custom Commands (CustomQ)
-Send raw Modbus commands in hexadecimal format:
+**Available Options:**
+- **Evaluate Limits**: Set High/Low thresholds with color coding
+- **CustomQ**:Custom Modbus command in hexadecimal
+- **Chart**:Enable charting for this monitor point to display value trends over time
+- **Simulate**:Simulation mode
+
+#### 10. CustomQ (Custom Modbus Command)
+
+Send raw Modbus PDU commands in hexadecimal format for special function codes or manufacturer-specific commands.
+
+**Format:** Space-separated hex bytes (PDU only, no MBAP header or CRC)
+
+**Examples:**
 ```
-Example: 11 04 00 6B 00 03
-Usage: Custom function codes or manufacturer-specific commands
+11 04 00 6B 00 03    # Read File Record
+14 0E 06 ...         # Write File Record
+2B 0E 01 00          # Read Device Identification
 ```
 
-#### Charting Configuration  
-Enable time-series visualization:
-- **Axis Selection**: Choose axis 0 or 1 for multi-scale charting
-- **Time Series**: Values plotted over time for trend analysis
-- **Export**: Chart data saved as CSV for external analysis
+**Use Cases:**
+- Custom function codes not in standard Modbus
+- Manufacturer-specific diagnostics
+- Advanced MEI commands
+- File transfer operations
 
-#### Evaluate Limits
-Set conditional formatting for value validation:
-- **High Limit**: Upper threshold for acceptable values
-- **Low Limit**: Lower threshold for acceptable values  
-- **Nominal Range**: Values between high and low limits
-- **Color Coding**: Visual indicators for each range
+#### 11. Chart (Enable Charting)
 
-## 🔗 Modbus Client Operations
+Enable time-series charting for this monitor point to visualize value trends over time.
+
+| State | Result |
+|-------|--------|
+| **Checked** | Values plotted on chart in real-time, See Chart Button to the chart |
+| **Unchecked** | Monitor point excluded from chart (default)|
+
+**Requirements:** Client mode must be running (polling active) for data collection
+
+#### 12. Axis (Chart Axis Assignment)
+
+Assign monitor point to specific chart axis for multi-scale visualization:
+
+| Value | Purpose | Example |
+|-------|---------|---------|
+| **0** | Left axis | Temperature (0-100°C) |
+| **1** | Right axis | Pressure (0-1000 PSI) |
+
+**Benefits of Dual Axis:**
+- Compare values with different scales simultaneously
+- Temperature and pressure on same chart
+- Speed and current measurements together
+
+#### 13. Simulate (Simulation Mode)
+
+Enable simulation mode to generate test values without requiring an actual Modbus device.
+
+| State | Mode | Behavior |
+|-------|------|----------|
+| **Checked** | Simulation ON | Generates test patterns (ramp, sine, random) |
+| **Unchecked** | Normal mode | Uses actual device communication |
+
+**Available Only In:** Server mode - allows testing without physical hardware
+
+**Simulation Patterns:**
+- **Ramp**: Incrementing values for testing trending
+- **Sine Wave**: Oscillating pattern for dynamic testing
+- **Random**: Random values within configured range
+- **Static**: User-defined constant value
+
+## Modbus Client Operations
 
 ### Interface Configuration
 
@@ -2255,7 +2365,7 @@ Connect to popular MQTT brokers including:
 !!! note "Coming Soon"
     Detailed step-by-step guides for MQTT configuration, ThingSpeak setup, and IoT platform integration will be added to this section. Check back for updates or contact support for assistance with IoT features.
 
-## 🔧 Advanced Features & Tips
+## Advanced Features & Tips
 
 ### Magic Code Reference
 
