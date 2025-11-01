@@ -2091,6 +2091,157 @@ Enable simulation mode to generate test values without requiring an actual Modbu
 
 ## Modbus Client Operations
 
+**Client Mode Overview:** XPF operates as a Modbus Master (Client) when you want to read data from or write data to remote Modbus devices. In this mode, XPF initiates all communication by sending requests to Modbus Server devices (PLCs, drives, meters, sensors) and processes their responses. You can simultaneously connect to multiple devices using different interfaces and protocols.
+
+**Supported Interfaces & Protocols:**
+
+| Interface | Protocol Variants | Use Case |
+|-----------|------------------|----------|
+| **TCP** | Modbus TCP, RTU over TCP, ASCII over TCP | Ethernet networks, most common for modern industrial systems |
+| **UDP** | Modbus UDP, RTU over UDP, ASCII over UDP | Connectionless Ethernet, broadcasting applications |
+| **Serial** | Modbus RTU, Modbus ASCII | Legacy systems, direct serial connections, RS485 networks |
+
+**Key Capabilities:**
+
+- **Multi-Protocol Support** - Connect TCP, UDP, and Serial devices simultaneously
+- **Continuous Polling** - Automatic data collection from all configured monitor points
+- **Smart Write Operations** - Automatic or manual function code selection for register writes
+- **Advanced Scanner** - Discover unknown registers and build device maps automatically
+- **Real-Time Charting** - Visualize data trends and patterns over time
+- **Auto Save & Restore** - Automatic data logging and value restoration to devices
+
+![Modbus Monitor XPF Client](../../assets/screenshots/xpf-client-tab.webp)
+
+### Client Tab Groups & Features
+
+**Complete reference for all Client tab ribbon groups and their functionality:**
+
+| Group | Purpose | Key Features | Description |
+|-------|---------|--------------|-------------|
+| **Interface** | Protocol Selection | Interface Type, Protocol Options, One-Based Toggle | Choose connection type (TCP/UDP/Serial) and Modbus protocol variant (Standard/RTU/ASCII) |
+| **TCP** | Network Settings | IP Address, Port, Connection Timeout | Configure Ethernet-based connections with IP address, port number, and connection timeout settings |
+| **COM** | Serial Settings | COM Port, Baud Rate, Data Bits, Parity, Stop Bits | Configure serial communication parameters for RTU/ASCII over RS232/RS485 connections |
+| **Timeout** | Timing Control | Response Timeout, Inter-Frame Delay, Poll Rate, Retries | Critical timing parameters for reliable communication and performance optimization |
+| **Write** | Write Operations | Auto/Manual Mode, Function Code Selection | Control how value changes are written to devices - automatic smart selection or manual function code control |
+| **Scanner** | Address Discovery | Start Address, Register Count, Data Type, Swap Type, Unit ID | Systematically discover unknown registers and automatically build monitor point lists |
+| **Value** | Data Management | Clear Values Toggle | Clear previously read values from display for fresh data collection |
+| **Chart** | Data Visualization | Chart Button | Switch to real-time charting view for trending analysis of tagged monitor points |
+| **Client Poll** | Operation Control | Auto Save, Restore, Write, Read, Statistics, Start/Stop | Main operational controls for polling, data collection, and client status monitoring |
+
+**Detailed Group Breakdown:**
+
+=== "Interface Group"
+
+    **Primary connection and protocol configuration**
+    
+    | Control | Options | Function |
+    |---------|---------|----------|
+    | **Interface Type** | TCP, UDP, Serial | Selects physical connection method |
+    | **Protocol Options** | Default, RTU, ASCII | Chooses Modbus protocol variant |
+    | **One Based** | Checkbox | Switches between 0-based and 1-based addressing |
+    
+    **Protocol Selection Guide:**
+    - **TCP + Default** = Standard Modbus TCP (most common)
+    - **TCP + RTU** = Modbus RTU protocol over TCP/IP
+    - **TCP + ASCII** = Modbus ASCII protocol over TCP/IP
+    - **Serial + Default/RTU** = Standard Modbus RTU over serial
+    - **Serial + ASCII** = Modbus ASCII over serial
+
+=== "TCP Group"
+
+    **Ethernet network connection settings**
+    
+    | Setting | Format | Range | Purpose |
+    |---------|--------|-------|---------|
+    | **IP Address** | IPv4/IPv6/Hostname | Any valid IP | Target device network address |
+    | **Port** | Integer | 1-65535 | TCP port (502 = standard Modbus) |
+    | **Connection Timeout** | Milliseconds | 0-65535 | Time to establish TCP connection |
+    
+    **Common Configurations:**
+    ```yaml
+    Local PLC: 192.168.1.100:502
+    Remote HMI: plc.company.com:502  
+    Custom Port: 10.0.1.50:1502
+    ```
+
+=== "COM Group"
+
+    **Serial communication parameters**
+    
+    | Parameter | Options | Typical Values |
+    |-----------|---------|----------------|
+    | **COM Port** | Available ports | COM1, COM3, USB-Serial adapters |
+    | **Baud Rate** | 300-921600 | 9600, 19200, 38400, 115200 |
+    | **Data Bits** | 7, 8 | 8 (most common) |
+    | **Parity** | None, Even, Odd, Mark, Space | None (most common) |
+    | **Stop Bits** | None, One, Two, 1.5 | One (standard) |
+    
+    **Standard Serial Settings:**
+    ```yaml
+    Common RTU: 9600,8,N,1
+    High Speed: 115200,8,N,1
+    Legacy ASCII: 1200,7,E,1
+    ```
+
+=== "Timeout Group"
+
+    **Critical communication timing parameters**
+    
+    | Parameter | Range | Default | Impact |
+    |-----------|-------|---------|--------|
+    | **Response Timeout** | 100-60000ms | 3000ms | How long to wait for device response |
+    | **Inter-Frame Delay** | 0-10000ms | 20ms | Delay between monitor point requests |
+    | **Poll Rate** | 100-3600000ms | 1000ms | Delay before repeating full scan |
+    | **Retries** | 1-65535 | 3 | Number of retry attempts for failed requests |
+
+=== "Write Group"
+
+    **Value writing control and function code selection**
+    
+    | Mode | Function | Behavior |
+    |------|----------|----------|
+    | **Auto** | Smart Selection | Automatically chooses single/multiple write functions |
+    | **Manual** | User Control | Manually select Function 05/06/15/16 |
+    | **Disabled** | Read Only | Prevents accidental writes, values revert on scan |
+    
+    **Available Write Functions:**
+    - **FC05** - Write Single Coil
+    - **FC06** - Write Single Register
+    - **FC15** - Write Multiple Coils
+    - **FC16** - Write Multiple Registers
+
+=== "Scanner Group"
+
+    **Automated register discovery and mapping**
+    
+    | Field | Purpose | Example |
+    |-------|---------|---------|
+    | **Start** | Starting address | 400001 (first holding register) |
+    | **Regs** | Number to scan | 100 (scan 100 consecutive addresses) |
+    | **Data** | Assumed data type | UINT16, FLOAT32, INT32 |
+    | **Swap** | Byte order | ABCD_BE, CDBA_LE |
+    | **ID** | Target Unit ID | 1-247 |
+    
+    **Scanner Process:**
+    1. Configure parameters above
+    2. Click "Start" to begin systematic polling
+    3. Valid responses automatically added to monitor points
+    4. Invalid addresses skipped
+    5. Results appear in main monitor points list
+
+=== "Client Poll Group"
+
+    **Main operational controls for data collection**
+    
+    | Control | Function | Usage |
+    |---------|----------|-------|
+    | **Auto Save** | CSV data logging | Automatically saves every scan to timestamped CSV files |
+    | **Restore** | Upload values | Writes current monitor point values back to remote devices |
+    | **Write** | Single write | Writes selected monitor point value once |
+    | **Read** | Single poll | Polls all monitor points once and stops |
+    | **Statistics** | TX/RX counters | Shows message counts and frames per second |
+    | **Start/Stop** | Master control | Begins/ends continuous polling operation |
+
 ### Interface Configuration
 
 The Client tab configures XPF as a Modbus Master device with comprehensive protocol support:
