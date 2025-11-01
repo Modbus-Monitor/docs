@@ -2328,53 +2328,476 @@ Each instance:
 
 ## IoT Integration - MQTT & Cloud Connectivity
 
-!!! info "Feature Documentation In Progress"
-    The MQTT and IoT integration features are available in Modbus Monitor XPF. Comprehensive documentation for these features is currently being prepared and will be added soon.
+Modbus Monitor XPF includes comprehensive **MQTT messaging** capabilities for cloud and device communication, enabling Industrial IoT integration scenarios. Connect your Modbus devices to cloud platforms, publish data to MQTT brokers, and enable bi-directional communication between industrial equipment and cloud services.
 
-### MQTT Protocol Support
+### Quick Start
 
-Modbus Monitor XPF includes **MQTT messaging** capabilities for cloud and device communication, enabling IoT integration scenarios.
+1. **Access MQTT Panel**: Open Modbus Monitor XPF and locate the **IoT** tab on the ribbon (available when MQTT connector is installed)
+2. **Configure Broker**: Enter broker **Host** (e.g., `broker.hivemq.com`) and **Port** (typically `1883` for standard, `8883` for TLS)
+3. **Set Client ID**: Enter a unique **Client ID** for your connection (e.g., `ModbusMonitor-MyPC-01`)
+4. **Authenticate** (optional): Enter username and password if required by broker
+5. **Enable TLS** (optional): Check **TLS/SSL** and select certificates for encrypted connections
+6. **Subscribe to Topics**: Add topics to monitor (e.g., `devices/+/status`), then click **Subscribe**
+7. **Test Connection**: Click **Send** to publish a test message
 
-**Key Capabilities** (Documentation forthcoming):
+### Accessing the MQTT Panel
 
-- **MQTT Client**: Connect to MQTT brokers for data publishing
-- **Topic Mapping**: Map Modbus registers to MQTT topics
-- **Bi-directional**: Support for both publishing (Device-to-Cloud) and subscribing (Cloud-to-Device)
-- **QoS Levels**: Quality of Service configuration options
-- **TLS/SSL**: Secure connections to cloud platforms
+The MQTT controls are located in the **IoT** tab on the ribbon interface. The entire MQTT group appears only when your installation includes the MQTT connector feature.
 
-### IoT Platform Integration
+**Panel Organization:**
+- **Broker Settings** (top section): Connection parameters and authentication
+- **Topic Management** (middle section): Subscribe/unsubscribe to MQTT topics
+- **Utilities** (bottom section): Send, console, logging, and connection controls
 
-**ThingSpeak Cloud Logging:**
+### Broker Connection Settings
 
-ThingSpeak integration provides cloud-based data logging and visualization capabilities.
+Configure your MQTT broker connection with the following parameters:
 
-*(Detailed configuration and usage documentation will be added here)*
+| Setting | Description | Example / Notes |
+|---------|-------------|-----------------|
+| **Host** | MQTT broker address (domain or IP) | `broker.hivemq.com`, `192.168.1.10`, `mqtt.example.com` |
+| **Port** | Broker port number | `1883` (standard), `8883` (TLS/SSL), `8083`/`8084` (WebSocket) |
+| **Timeout (ms)** | Connection timeout in milliseconds | `5000` (5 seconds) - increase for slow networks |
+| **KeepAlive (s)** | MQTT keep-alive interval in seconds | `60` - maintains connection, detects disconnects |
+| **Version** | MQTT protocol version | `3.1.1` (most common), `5.0` (latest), `3.1` (legacy) |
+| **Client ID** | Unique identifier for this MQTT client | Must be unique per connection to avoid conflicts |
+| **Username** | Authentication username | Leave empty for anonymous brokers |
+| **Password** | Authentication password | Leave empty for anonymous brokers |
 
-**MQTT Broker Connection:**
+**Connection Settings Best Practices:**
 
-Connect to popular MQTT brokers including:
+- **Client ID**: Use descriptive, unique IDs like `ModbusMonitor-Site1-PLC1`
+- **Timeout**: Increase for cellular/satellite connections (10000ms+)
+- **KeepAlive**: Standard is 60 seconds; increase to 300+ for unreliable networks
+- **Version**: Use 3.1.1 unless broker specifically requires 5.0 or 3.1
 
-- AWS IoT Core
-- Azure IoT Hub
-- Eclipse Mosquitto
-- HiveMQ
-- Other standard MQTT brokers
+!!! tip "Public Test Brokers"
+    For testing MQTT functionality, use these public brokers:
+    
+    - **HiveMQ**: `broker.hivemq.com` : `1883` (no authentication)
+    - **Eclipse Mosquitto**: `test.mosquitto.org` : `1883` (no authentication)
+    - **EMQX**: `broker.emqx.io` : `1883` (no authentication)
+    
+    **Note:** Public brokers are for testing only - never send sensitive data!
 
-*(Detailed configuration and usage documentation will be added here)*
+### TLS/SSL Secure Connections
 
-### Use Cases for IoT Integration
+Enable encrypted MQTT connections for production deployments and cloud platforms.
 
-**Potential Applications:**
+**TLS/SSL Configuration:**
 
-1. **Remote Monitoring**: Push Modbus data to cloud for remote access
-2. **Data Aggregation**: Collect data from multiple sites to central cloud platform
-3. **Alert/Notification**: Trigger cloud-based alerts on Modbus events
-4. **Historical Logging**: Store long-term data in cloud databases
-5. **Mobile Access**: Access Modbus data via cloud-connected mobile apps
+| Setting | Purpose | Details |
+|---------|---------|---------|
+| **TLS/SSL Checkbox** | Enable encrypted transport | Check to activate TLS (typically uses port 8883) |
+| **CA Certificate** | Validate broker identity | Click **CA** button to select CA certificate file (`.crt`, `.pem`) |
+| **Client Certificate** | Mutual authentication | Click **Client** button to select client cert/key (`.pfx`, `.p12`, `.pem`) |
+| **WebSocket Checkbox** | MQTT over WebSocket | Enable for browser-based or cloud connections requiring WebSocket transport |
 
-!!! note "Coming Soon"
-    Detailed step-by-step guides for MQTT configuration, ThingSpeak setup, and IoT platform integration will be added to this section. Check back for updates or contact support for assistance with IoT features.
+**Certificate Setup Steps:**
+
+1. **Enable TLS**: Check the **TLS/SSL** checkbox
+2. **CA Certificate** (broker validation):
+   - Public CA: Not required if broker uses certificates from trusted CAs (Let's Encrypt, DigiCert, etc.)
+   - Self-signed: Click **CA** button and select broker's CA certificate file
+3. **Client Certificate** (mutual TLS):
+   - If broker requires client authentication, click **Client** button
+   - Select client certificate file (PFX/PKCS12 with private key, or separate cert/key files)
+4. **Verify Hostname**: Ensure broker hostname matches certificate CN or SAN
+
+**Common Certificate Formats:**
+
+| Format | Extension | Usage |
+|--------|-----------|-------|
+| **PEM** | `.pem`, `.crt` | CA certificates, public certificates (text format) |
+| **PKCS12** | `.pfx`, `.p12` | Client certificates with private key (binary, password-protected) |
+| **DER** | `.der`, `.cer` | Binary certificate format (less common) |
+
+!!! warning "Certificate Security"
+    - **Protect private keys**: Never share client certificate private keys
+    - **Validate certificates**: Verify broker certificate before trusting
+    - **Use strong passwords**: Protect PFX/P12 files with strong passwords
+    - **Check expiration**: Monitor certificate expiration dates
+
+### Topic Management
+
+MQTT uses hierarchical topics for organizing messages. XPF supports subscribing to multiple topics with wildcard support.
+
+**Topic Field and Controls:**
+
+| Control | Function | Usage |
+|---------|----------|-------|
+| **Topic ComboBox** | Enter/select topics | Type topic names or select from history |
+| **Add Button** | Add to subscription list | Adds current topic to active subscriptions |
+| **Remove Button** | Remove from list | Removes selected topic from subscriptions |
+| **Subscribe Button** | Subscribe to all topics | Activates subscriptions for all topics in list |
+| **Unsubscribe Button** | Unsubscribe from all | Clears all active subscriptions |
+
+**MQTT Topic Wildcards:**
+
+| Wildcard | Symbol | Description | Example |
+|----------|--------|-------------|---------|
+| **Single-level** | `+` | Matches one topic level | `devices/+/status` matches `devices/plc1/status`, `devices/sensor2/status` |
+| **Multi-level** | `#` | Matches all remaining levels | `sensors/#` matches `sensors/temp`, `sensors/temp/zone1`, `sensors/pressure/tank3` |
+
+**Topic Examples:**
+
+```
+# Specific topics (no wildcards)
+factory/line1/plc/register1
+building/hvac/temperature
+
+# Single-level wildcards
+devices/+/status              # All device statuses
+sensors/temperature/+         # All temperature zones
+
+# Multi-level wildcards
+factory/#                     # Everything under factory
+devices/+/data/#             # All data from all devices
+
+# Combined wildcards
+site/+/equipment/#           # All equipment data from all sites
+```
+
+**Topic Best Practices:**
+
+- **Hierarchical Structure**: Use logical hierarchy (site/building/equipment/measurement)
+- **Lowercase**: Stick to lowercase for consistency
+- **Descriptive**: Use clear, self-documenting topic names
+- **Avoid Spaces**: Use underscores or hyphens instead (`device_1` not `device 1`)
+- **Limit Depth**: Keep hierarchy under 7 levels for manageability
+
+!!! tip "Testing Topics"
+    Subscribe to `#` (all topics) temporarily to see all broker activity, but remove this before production use as it consumes bandwidth and memory.
+
+### Publishing Messages
+
+Send test messages or publish data to MQTT topics.
+
+**Publish Controls:**
+
+1. **Select Topic**: Enter or select target topic in Topic ComboBox
+2. **Click Send**: Publishes a test message to the selected topic
+3. **Verify**: Check Console or external MQTT client to confirm message receipt
+
+**Publishing Workflow:**
+
+```
+Step 1: Enter topic     → test/modbusmonitor
+Step 2: Click Send      → Message published
+Step 3: Verify Console  → Confirm TX count increased
+```
+
+!!! note "Message Content"
+    The **Send** button publishes a sample/test message. For publishing actual Modbus data to MQTT topics, configure topic mapping in the main application settings.
+
+### Console and Debug Logging
+
+Monitor MQTT communication and diagnose connection issues with the built-in console and logging features.
+
+**Console Features:**
+
+| Button/Control | Function | Purpose |
+|----------------|----------|---------|
+| **Console Button** | Open MQTT console | View incoming/outgoing messages in real-time |
+| **Log Toggle** | Enable/disable debug logging | Enable for troubleshooting, disable for production |
+| **Message Display** | Timestamped entries | Shows TX (transmitted) and RX (received) messages |
+
+**What Gets Logged:**
+
+- **Connection Events**: Connected, disconnected, reconnection attempts
+- **Published Messages**: Topics and payloads sent (TX)
+- **Received Messages**: Topics and payloads received (RX)
+- **Errors**: Connection failures, authentication errors, timeouts
+- **Subscription Changes**: Topic subscriptions and unsubscriptions
+
+**Debug Log Usage:**
+
+1. Click **Log** toggle to enable debug logging
+2. Perform MQTT operations (connect, subscribe, publish)
+3. Review console for detailed TX/RX information
+4. Disable logging after troubleshooting to reduce overhead
+
+### Connection Status and Counters
+
+Monitor MQTT connection health and message statistics.
+
+**Status Indicators:**
+
+| Indicator | Location | Information Displayed |
+|-----------|----------|----------------------|
+| **Counter Label** | Top of panel | Shows TX/RX/Error counts in format `TX: 123 / RX: 456 / Err: 0` |
+| **Connection Button** | Bottom of panel | Shows connection state with icon (connected/disconnected/error) |
+| **Subscribe Button** | Middle section | Background color indicates subscription count |
+
+**Counter Information:**
+
+- **TX (Transmitted)**: Number of messages published
+- **RX (Received)**: Number of messages received from subscriptions
+- **Error**: Number of communication errors encountered
+
+**Double-Click Counter**: Double-click the counter label for additional statistics and details.
+
+### MQTT Broker Examples
+
+#### Example 1: Public Broker (No TLS)
+
+Connect to HiveMQ public broker for testing.
+
+**Configuration:**
+
+```yaml
+Host: broker.hivemq.com
+Port: 1883
+KeepAlive: 60
+Client ID: ModbusMonitor-MyPC-01
+Username: (leave empty)
+Password: (leave empty)
+TLS/SSL: Unchecked
+WebSocket: Unchecked
+```
+
+**Steps:**
+
+1. Enter settings above
+2. Add topic: `test/modbusmonitor`
+3. Click **Subscribe**
+4. Click **Send** to publish test message
+5. Verify message in Console
+
+#### Example 2: TLS Broker with Client Certificate
+
+Connect to secure broker with mutual TLS authentication.
+
+**Configuration:**
+
+```yaml
+Host: mqtt.example.com
+Port: 8883
+Client ID: ModbusMonitor-Site1-PLC1
+Username: deviceuser
+Password: (your password)
+TLS/SSL: Checked
+CA: ca.crt (broker CA certificate)
+Client: client.pfx (client cert with private key)
+WebSocket: Unchecked
+```
+
+**Steps:**
+
+1. Check **TLS/SSL** checkbox
+2. Click **CA** button, select `ca.crt`
+3. Click **Client** button, select `client.pfx`
+4. Enter username/password
+5. Add topics and subscribe
+6. Verify connection status shows "Connected"
+
+#### Example 3: AWS IoT Core Connection
+
+Connect to AWS IoT Core with certificate-based authentication.
+
+**Configuration:**
+
+```yaml
+Host: your-endpoint.iot.region.amazonaws.com
+Port: 8883
+Client ID: ModbusMonitor-AWS-Client1
+TLS/SSL: Checked
+CA: AmazonRootCA1.pem
+Client: device-certificate.pfx (contains cert + key)
+```
+
+**AWS-Specific Notes:**
+
+- Client ID must match AWS IoT policy
+- Use X.509 certificates from AWS IoT console
+- Topics must match AWS IoT policy permissions
+
+#### Example 4: Azure IoT Hub Connection
+
+Connect to Azure IoT Hub using SAS token authentication.
+
+**Configuration:**
+
+```yaml
+Host: your-hub.azure-devices.net
+Port: 8883
+Client ID: your-device-id
+Username: your-hub.azure-devices.net/your-device-id/?api-version=2021-04-12
+Password: (SAS token)
+TLS/SSL: Checked
+```
+
+**Azure-Specific Notes:**
+
+- Username format specific to Azure IoT Hub
+- Password is SharedAccessSignature (SAS) token
+- Generate SAS tokens from Azure portal or CLI
+
+### Troubleshooting
+
+#### Connection Issues
+
+**Cannot Connect to Broker:**
+
+| Problem | Solution |
+|---------|----------|
+| Hostname not resolving | Verify DNS resolution, try IP address instead |
+| Connection timeout | Check firewall rules, verify broker is running, increase timeout value |
+| Port blocked | Verify network allows outbound traffic on MQTT ports (1883, 8883) |
+| Wrong protocol | Match protocol version to broker (3.1.1 vs 5.0) |
+
+**Quick Test:**
+
+```powershell
+# Test basic connectivity (Windows PowerShell)
+Test-NetConnection broker.hivemq.com -Port 1883
+
+# Test with telnet
+telnet broker.hivemq.com 1883
+```
+
+#### Authentication Failures
+
+**Username/Password Rejected:**
+
+- Verify credentials are correct (check for typos, case sensitivity)
+- Confirm broker requires authentication (try without credentials first)
+- Check broker logs for specific auth failure reasons
+
+**Certificate Authentication Failed:**
+
+- Verify certificate files are correct format (PEM, PFX)
+- Check certificate hasn't expired
+- Ensure certificate CN/SAN matches broker hostname
+- Verify client certificate is authorized by broker CA
+- Check file permissions (can application read certificate files?)
+
+#### Message Delivery Issues
+
+**Messages Not Arriving:**
+
+| Issue | Check |
+|-------|-------|
+| Wrong topic | Verify subscribed topic matches published topic |
+| Wildcard mismatch | Check wildcard usage (+, #) matches topic structure |
+| QoS mismatch | Verify broker/client QoS settings compatible |
+| Not connected | Ensure connection status shows "Connected" |
+| Buffer overflow | Check if too many messages overwhelming client |
+
+**Subscription Problems:**
+
+- Confirm subscriptions active (Subscribe button clicked after adding topics)
+- Check subscription count indicator on Subscribe button
+- Verify topic names (no trailing spaces, correct case)
+- Review broker logs for subscription rejections
+
+#### Console Issues
+
+**Console Empty or Not Updating:**
+
+- Enable **Log** toggle to see debug information
+- Verify messages are actually being sent/received (check broker logs)
+- Click **Console** button to ensure window is visible
+- Check filter settings if console view is filtered
+
+### Common Use Cases
+
+#### Use Case 1: Remote Monitoring
+
+**Scenario**: Monitor industrial equipment from remote locations via cloud MQTT broker.
+
+**Setup:**
+
+1. Configure XPF to poll Modbus devices locally
+2. Connect to cloud MQTT broker (AWS IoT, Azure IoT Hub)
+3. Map Modbus register values to MQTT topics
+4. Publish data at regular intervals
+5. Subscribe remote dashboard/mobile app to same topics
+
+**Benefits:**
+- Real-time remote visibility
+- Historical data collection
+- Alert notifications
+- Multi-site monitoring
+
+#### Use Case 2: Data Aggregation
+
+**Scenario**: Collect data from multiple factory sites to central analytics platform.
+
+**Architecture:**
+
+```
+Site 1: Modbus → XPF → MQTT → Cloud Broker
+Site 2: Modbus → XPF → MQTT → Cloud Broker
+Site 3: Modbus → XPF → MQTT → Cloud Broker
+                                    ↓
+                          Analytics Platform
+```
+
+#### Use Case 3: Bi-directional Control
+
+**Scenario**: Monitor Modbus devices and receive control commands from cloud.
+
+**Topics:**
+
+- **Publish**: `factory/line1/plc/data` (sensor readings)
+- **Subscribe**: `factory/line1/plc/commands` (setpoint changes)
+
+**Workflow:**
+
+1. XPF polls Modbus devices, publishes data to MQTT
+2. Cloud application analyzes data
+3. Cloud publishes control commands to command topics
+4. XPF receives commands, writes to Modbus devices
+
+### FAQ
+
+**Q: What MQTT versions are supported?**  
+A: Select from the Version dropdown: 3.1, 3.1.1 (most common), and 5.0 (latest). Use 3.1.1 unless your broker specifically requires a different version.
+
+**Q: Do I need to provide a Client ID?**  
+A: Yes, always use a unique Client ID for each connected instance. Some brokers accept empty IDs and generate temporary IDs, but using unique IDs prevents connection conflicts and enables persistent sessions.
+
+**Q: What certificate formats are accepted?**  
+A: Common formats include PEM (`.crt`, `.pem`) for CA certificates, and PFX/PKCS12 (`.pfx`, `.p12`) for client certificates with private keys. Some brokers also support separate certificate and key files.
+
+**Q: Can I connect to multiple brokers simultaneously?**  
+A: The current implementation supports one broker connection at a time. To connect to multiple brokers, run multiple instances of XPF or use a broker bridge/federation.
+
+**Q: How do I map Modbus data to MQTT topics?**  
+A: Topic mapping configuration is available in the IoT tab settings. Detailed documentation for topic mapping will be added in a future update.
+
+**Q: What happens if the connection drops?**  
+A: XPF automatically attempts to reconnect using the configured timeout and keep-alive settings. Check the connection status indicator and console logs for reconnection activity.
+
+**Q: Is there a message size limit?**  
+A: MQTT protocol supports up to 256MB per message, but practical limits depend on your broker configuration and network. Most implementations limit messages to 1-10MB.
+
+**Q: Can I use wildcards when publishing?**  
+A: No, wildcards (`+`, `#`) are only supported for subscriptions. Publishing requires a specific topic without wildcards.
+
+### ThingSpeak Cloud Integration
+
+ThingSpeak provides cloud-based data logging, visualization, and MATLAB analytics integration.
+
+**ThingSpeak MQTT Configuration:**
+
+```yaml
+Host: mqtt3.thingspeak.com
+Port: 1883 (or 8883 for TLS)
+Client ID: (any unique ID)
+Username: (your ThingSpeak username or MQTT device credentials)
+Password: (your MQTT API key)
+```
+
+**Topic Format for ThingSpeak:**
+
+```
+channels/<channel_id>/publish
+```
+
+!!! note "ThingSpeak Documentation"
+    Detailed ThingSpeak integration guide with channel setup, API key configuration, and data formatting will be added in a future update. Visit [ThingSpeak.com](https://thingspeak.com) for platform documentation.
 
 ## Advanced Features & Tips
 
