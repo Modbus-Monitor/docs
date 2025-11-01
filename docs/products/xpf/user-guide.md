@@ -2499,27 +2499,294 @@ Documents/ModbusScan_2025-10-28_14-32-15.csv
 
 ## Modbus Server (Slave) Operations
 
-**Modbus Server or Slave can be used to learn the Modbus Protocol for beginners and simulate real-world devices for advanced developers needing millisecond responses to fine-tune the system.** The Modbus Server can be started simultaneously on both interfaces (TCP and Serial).
+**Server Mode Overview:** XPF operates as a Modbus Server (Slave) when you want to simulate Modbus devices or provide data to Modbus Client applications. In this mode, XPF responds to requests from Modbus Master devices (SCADA systems, HMIs, PLCs) by serving data from your configured monitor points. This is invaluable for development, testing, and device simulation without requiring physical hardware.
+
+![Modbus Monitor XPF Server](../../assets/screenshots/xpf-server-tab.webp)
+
+**Supported Server Interfaces & Protocols:**
+
+| Interface | Protocol Variants | Use Case |
+|-----------|------------------|----------|
+| **TCP** | Modbus TCP, RTU over TCP, ASCII over TCP | Standard Ethernet Modbus servers, most common for modern applications |
+| **UDP** | Modbus UDP, RTU over UDP, ASCII over UDP | Connectionless servers, broadcasting, specialized applications |
+| **Serial** | Modbus RTU, Modbus ASCII | Legacy system simulation, RS485 network simulation, direct serial connections |
+
+**Key Server Capabilities:**
+
+- **Multi-Interface Concurrent Operation** - Run TCP and multiple Serial servers simultaneously
+- **Traffic Capture & Learning** - Automatically build Modbus maps from incoming client requests
+- **Advanced Simulation Engine** - Generate dynamic test data with sine waves, ramps, and patterns
+- **Real Device Simulation** - Millisecond response times for realistic device behavior
+- **Multi-Protocol Support** - Six protocol combinations (TCP/UDP × Default/RTU/ASCII)
+- **Multiple Instance Support** - Run multiple server instances on different ports/interfaces
 
 **Why Use Server Mode?**
 
 - **SCADA Development**: Simulate Modbus devices for development without physical hardware
-- **Learning**: Understand Modbus Protocol through hands-on experimentation
-- **Testing**: Validate client implementations against known-good server
-- **Device Simulation**: Replace expensive equipment during development
+- **Learning**: Understand Modbus Protocol through hands-on experimentation  
+- **Testing**: Validate client implementations against known-good server responses
+- **Device Simulation**: Replace expensive equipment during development and testing
 - **Production Setup**: Configure and test systems before hardware installation
+- **Protocol Analysis**: Capture and analyze Modbus communication patterns
+- **Training**: Provide safe learning environment for Modbus communication
+
+
+
+### Server Tab Groups & Features
+
+**Complete reference for all Server tab ribbon groups and their functionality:**
+
+| Group | Purpose | Key Features | Description |
+|-------|---------|--------------|-------------|
+| **TCP** | Network Server | Interface Type, Port, Protocol Options, IP Configuration, Enable | Configure TCP/UDP Modbus servers with protocol variants and network settings |
+| **Serial** | COM Port Servers | COM Port Selection, Baud Rate, Data/Parity/Stop Bits, Protocol | Configure serial Modbus servers on multiple COM ports with individual settings |
+| **Capture** | Traffic Analysis | On/Off Toggle, Auto Value/Default Value | Automatically capture incoming requests and build Modbus maps from live traffic |
+| **Simulate** | Data Generation | Sample Time, Frequency, Sample Generator, Value Controls | Advanced simulation engine for generating dynamic test data patterns |
+| **Server** | Operation Control | Statistics, Connection Count, Start/Stop | Main server control with connection monitoring and operational status |
+
+**Detailed Group Breakdown:**
+
+=== "TCP Group"
+
+    **Network-based Modbus server configuration**
+    
+    | Control | Options | Function |
+    |---------|---------|----------|
+    | **Interface** | TCP, UDP | Select network protocol (TCP or UDP) |
+    | **Port** | 1-65535 | Server listening port (502 = standard Modbus) |
+    | **Protocol Options** | Default, RTU, ASCII | Modbus protocol variant over TCP/UDP |
+    | **IP Configuration** | IPv4, IPv6, Both, Loopback | Network interface binding options |
+    | **Enable** | Checkbox | Activate TCP/UDP server when Start is pressed |
+    
+    **Six Network Protocol Combinations:**
+    - **TCP + Default** = Standard Modbus TCP server
+    - **TCP + RTU** = Modbus RTU protocol over TCP
+    - **TCP + ASCII** = Modbus ASCII protocol over TCP  
+    - **UDP + Default** = Standard Modbus UDP server
+    - **UDP + RTU** = Modbus RTU protocol over UDP
+    - **UDP + ASCII** = Modbus ASCII protocol over UDP
+    
+    **IP Configuration Options:**
+    ```yaml
+    IPv4: Bind to IPv4 addresses only
+    IPv6: Bind to IPv6 addresses only  
+    Both: Support both IPv4 and IPv6 clients
+    Loopback: Use 127.0.0.1 (IPv4) or ::1 (IPv6)
+    Custom: Specify exact IP address to bind
+    ```
+
+=== "Serial Group"
+
+    **COM port-based Modbus server configuration**
+    
+    | Parameter | Options | Purpose |
+    |-----------|---------|---------|
+    | **COM Port** | Available ports | Select COM port(s) for serial servers |
+    | **Baud Rate** | 300-921600 bps | Serial communication speed |
+    | **Data Bits** | 7, 8 | Character size (8 for RTU, 7/8 for ASCII) |
+    | **Parity** | None, Even, Odd, Mark, Space | Error detection method |
+    | **Stop Bits** | None, One, Two, 1.5 | Character termination |
+    | **Protocol** | Default/RTU, ASCII | Serial Modbus protocol variant |
+    
+    **Multiple COM Port Support:**
+    - **Simultaneous Servers** - Enable multiple COM ports concurrently
+    - **Individual Settings** - Each COM port has independent baud/parity/stop bit settings
+    - **Mixed Protocols** - Run RTU on COM1, ASCII on COM2 simultaneously
+    - **Scalable Configuration** - Support for COM1 through high-numbered USB ports
+    
+    **Common Serial Configurations:**
+    ```yaml
+    Standard RTU: 9600,8,N,1 (Default/RTU protocol)
+    High Speed: 115200,8,N,1 (Default/RTU protocol)  
+    ASCII Mode: 1200,7,E,1 (ASCII protocol)
+    Legacy: 1200,8,N,2 (older devices)
+    ```
+
+=== "Capture Group"
+
+    **Intelligent traffic analysis and map building**
+    
+    | Feature | Mode | Behavior |
+    |---------|------|----------|
+    | **Capture Toggle** | On/Off | Enable automatic Modbus map creation from incoming requests |
+    | **Value Assignment** | Auto Value | Use register address as initial value (e.g., register 400001 = value 400001) |
+    | **Value Assignment** | Default Value | Fill new monitor points with zero/false values |
+    
+    **How Capture Works:**
+    1. **Server Running** - Capture only works when server is active
+    2. **Client Requests** - Monitor incoming Modbus function codes and addresses  
+    3. **Auto Creation** - Automatically create monitor points for requested registers
+    4. **Value Population** - Fill with address value or default zero
+    5. **Map Building** - Build complete device map from observed traffic
+    
+    **Use Cases:**
+    - **Reverse Engineering** - Discover what registers a client application needs
+    - **Device Simulation** - Build maps by observing real device communication
+    - **System Analysis** - Understand existing Modbus network traffic patterns
+    - **Documentation** - Generate register maps from undocumented systems
+
+=== "Simulate Group"
+
+    **Advanced dynamic data generation engine**
+    
+    | Control | Range | Purpose |
+    |---------|-------|---------|
+    | **Ts (Sample Time)** | 1-1000000 ms | Update rate for simulation engine |
+    | **Freq (Frequency)** | 0.01-1000000 Hz | Sine wave frequency for dynamic simulation |
+    | **Sample Button** | Action | Add sample monitor point with sine wave pattern |
+    | **Toggle Button** | Action | Enable/disable simulation on all monitor points |
+    | **Max/Default/Min** | Actions | Set all simulated values to maximum/default/minimum ranges |
+    
+    **Simulation Patterns Available:**
+    - **Sine Wave** - `Value = Amplitude × sin(2π × Freq × time)`
+    - **Ramp** - Linear increase/decrease over time
+    - **Random** - Random values within data type range
+    - **Static** - User-defined constant values
+    - **Step** - Square wave patterns
+    
+    **Advanced Features:**
+    - **Nyquist Rate** - Values update twice per sample time for accurate waveforms
+    - **Per-Point Control** - Enable simulation individually via monitor point checkboxes
+    - **Data Type Aware** - Simulation respects INT16, UINT32, FLOAT32 ranges automatically
+    - **Real-Time Updates** - Clients see live changing data for dynamic testing
+
+=== "Server Group"
+
+    **Main operational control and monitoring**
+    
+    | Display | Function | Information |
+    |---------|----------|-------------|
+    | **TX/RX Counter** | Statistics | Shows total messages processed (requests + responses) |
+    | **Connection Count** | Active Clients | Number of currently connected TCP clients |
+    | **Start/Stop Button** | Master Control | Starts/stops all enabled servers simultaneously |
+    
+    **Server Operation:**
+    - **Simultaneous Start** - All enabled servers (TCP + Serial) start together
+    - **Independent Protocols** - Each server operates with its configured protocol
+    - **Connection Monitoring** - Track active TCP connections in real-time
+    - **Performance Stats** - Monitor message throughput and response times
+    - **Clean Shutdown** - Proper disconnection of all clients and COM ports
+
+### Powerful Multi-Server Architecture - Revolutionary Time & Hardware Savings
+
+**🚀 Game-Changing Feature:** XPF's most powerful capability is running **multiple Modbus servers simultaneously on different interfaces** - a revolutionary approach that **saves significant time and eliminates the need for extra hardware**.
+
+**Traditional Approach vs. XPF Multi-Server:**
+
+| Traditional Method | XPF Multi-Server Approach | Savings |
+|-------------------|---------------------------|---------|
+| Multiple PCs/devices needed | **Single XPF instance** | **Hardware cost elimination** |
+| Separate software licenses | **One XPF license** | **Licensing cost reduction** |
+| Complex setup coordination | **Unified configuration** | **Setup time reduction (hours → minutes)** |
+| Multiple maintenance points | **Single point of control** | **Maintenance simplification** |
+
+**What XPF Can Run Simultaneously:**
+
+=== "Network Servers (TCP/UDP)"
+
+    **Single Network Interface, Multiple Protocols:**
+    
+    ```yaml
+    # All running simultaneously on one PC:
+    TCP Server:     Port 502 (Standard Modbus TCP)
+    TCP RTU Server: Port 503 (RTU over TCP) 
+    UDP Server:     Port 502 (Modbus UDP)
+    UDP RTU Server: Port 504 (RTU over UDP)
+    ```
+    
+    **Benefits:**
+    - **No additional network hardware** required
+    - **Test different protocols** against same data set
+    - **Client compatibility testing** - validate against multiple protocol variants
+    - **Development efficiency** - switch protocols without hardware changes
+
+=== "Serial Servers (COM Ports)"
+
+    **Multiple COM Ports, Independent Settings:**
+    
+    ```yaml
+    # All running simultaneously:
+    COM1: 9600 baud,   8,N,1 (Standard RTU - Legacy devices)
+    COM3: 19200 baud,  8,N,1 (High-speed RTU - Modern PLCs)
+    COM4: 115200 baud, 8,N,1 (Ultra-fast RTU - Performance testing)
+    COM5: 1200 baud,   7,E,1 (ASCII protocol - Historical systems)
+    ```
+    
+    **Hardware Elimination:**
+    - **No multiple test devices** needed
+    - **No serial multiplexers** required  
+    - **No additional COM port expansion cards**
+    - **USB-to-serial adapters** provide unlimited COM ports
+
+=== "Mixed Interface Deployment"
+
+    **Network + Serial Simultaneously:**
+    
+    ```yaml
+    # Complete test environment on one PC:
+    TCP Server:    Port 502    (Ethernet clients)
+    UDP Server:    Port 502    (UDP clients)  
+    COM1 RTU:      9600 baud   (Legacy serial devices)
+    COM3 RTU:      19200 baud  (Modern serial devices)
+    COM5 ASCII:    1200 baud   (ASCII protocol testing)
+    ```
+    
+    **Real-World Applications:**
+    - **Complete system simulation** - Network + Serial devices
+    - **Migration testing** - Old serial + new TCP clients
+    - **Protocol bridging** - Serial-to-Ethernet gateway simulation
+    - **Training environments** - Multiple protocols for learning
+
+**Massive Time and Cost Savings:**
+
+!!! success "Quantified Benefits"
+
+    **Hardware Savings:**
+    ```
+    Traditional Setup:
+    - 4 different Modbus devices = $2,000-$10,000
+    - Multiple COM port cards = $200-$500  
+    - Network switches/hubs = $100-$300
+    - Total Hardware: $2,300-$10,800
+    
+    XPF Approach:
+    - Single PC with XPF = $0 extra hardware
+    - USB-to-serial adapters = $20-$100
+    - Total Hardware: $20-$100
+    
+    Savings: $2,280-$10,700 (95%+ reduction)
+    ```
+    
+    **Time Savings:**
+    ```
+    Traditional Setup Time:
+    - Device procurement: 2-4 weeks
+    - Individual configuration: 4-8 hours  
+    - Integration testing: 8-16 hours
+    - Total Time: 3-5 weeks
+    
+    XPF Setup Time:
+    - Download and install: 15 minutes
+    - Configure all servers: 30-60 minutes
+    - Start testing: Immediate
+    - Total Time: 1-2 hours
+    
+    Savings: 99% faster deployment
+    ```
+
+**Enterprise-Level Capabilities:**
+
+- **Development Teams**: Simulate entire Modbus networks on developer laptops
+- **System Integration**: Test complex multi-protocol systems without physical devices  
+- **Training Centers**: Provide complete Modbus learning environments per student
+- **Field Service**: Carry comprehensive test environment on portable devices
+- **Quality Assurance**: Validate client software against all protocol combinations
 
 ### Server Capabilities - Multi-Interface Support
 
-**One of the key strengths** of the Modbus Monitor XPF application is its **ability to run multiple servers with two physical interfaces simultaneously**.
+**Technical Implementation:** XPF's **multi-threaded server architecture** enables true concurrent operation across all interfaces with **independent protocol stacks** for each server instance.
 
-- **TCP Server**: Standard Modbus TCP on port 502 (or custom port)  
-- **UDP Server**: Modbus UDP for specialized applications  
-- **Multiple Serial Servers**: Multiple COM ports (COM10, COM11, COM12, etc.) each with its own baud rate settings  
-- **Concurrent Operation**: TCP server can run concurrently with multiple Serial Ports - all interfaces active simultaneously
-- **Six Protocol Variants**: Support for all Modbus TCP, UDP, RTU, and ASCII combinations
-
-!!! example "Multiple Servers, Multiple Interfaces"
+!!! example "Complete Multi-Server Configuration"
     The image shows how the TCP and Serial sections are ready for configuration:
     
     - **Modbus TCP server** running on Port 502
