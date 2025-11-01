@@ -1354,9 +1354,9 @@ All log controls in one comprehensive table. Labels **1**, **2**, **3a-3h**, and
 **Viewing Tips:**
 
 - **Recent entries appear at bottom** - Scroll down to see latest events
-- **Filtering reduces clutter** - Use Errors toggle (④) to hide successful transactions
-- **Text search narrows focus** - Type in Filter box (④) to find specific device, register, or error type
-- **Copy for analysis** - Click Copy All (③) to export all visible entries to clipboard
+- **Filtering reduces clutter** - Use Errors toggle (4) to hide successful transactions
+- **Text search narrows focus** - Type in Filter box (4) to find specific device, register, or error type
+- **Copy for analysis** - Click Copy All (3) to export all visible entries to clipboard
 
 ##### Understanding Log View Toggle
 
@@ -1381,17 +1381,17 @@ All log controls in one comprehensive table. Labels **1**, **2**, **3a-3h**, and
 
 ```mermaid
 graph TB
-    HOME["① LOG GROUP<br/>(Home Tab)<br/>─────────<br/>Show Button"]
+    HOME["1 LOG GROUP<br/>(Home Tab)<br/>─────────<br/>Show Button"]
     
     CLICK1[" Click Show "]
     
-    OPTIONS["② OPTIONS TAB<br/>(Contextual Ribbon)<br/>─────────<br/>Contains ③ and ④"]
+    OPTIONS["2 OPTIONS TAB<br/>(Contextual Ribbon)<br/>─────────<br/>Contains 3 and 4"]
     
     subgraph GROUPS["Options Tab Contains:"]
         direction LR
-        LOG["③ LOG GROUP<br/>Start/Stop<br/>Copy All<br/>Clear<br/>Save"]
+        LOG["3 LOG GROUP<br/>Start/Stop<br/>Copy All<br/>Clear<br/>Save"]
         
-        FILTER["④ FILTER GROUP<br/>Errors Toggle<br/>Text Filter"]
+        FILTER["4 FILTER GROUP<br/>Errors Toggle<br/>Text Filter"]
     end
     
     WINDOW["WINDOW PORTAL AREA<br/>─────────<br/>Log Entries Display<br/>(timestamped events)"]
@@ -1420,51 +1420,11 @@ graph TB
 
 **Key Relationships:**
 
-- **Section ①** (Home Tab) triggers everything - click **Show** to begin
-- **Section ②** (Options Tab) appears automatically and **contains sections ③ and ④**
-- **Section ③** (Log Group in Options) provides **recording control buttons**
-- **Section ④** (Filter Group in Options) provides **search and filter controls**
+- **Section 1** (Home Tab) triggers everything - click **Show** to begin
+- **Section 2** (Options Tab) appears automatically and **contains sections 3 and 4**
+- **Section 3** (Log Group in Options) provides **recording control buttons**
+- **Section 4** (Filter Group in Options) provides **search and filter controls**
 - **Both 3 and 4** affect what you see in the **Window Portal Area** (log entries display)
-
-##### Logging Workflow
-
-**Complete logging session workflow:**
-
-```mermaid
-graph TB
-    START["1. Click 'Show' Button<br/>(Home Tab → Log Group)"]
-    
-    OPTIONSTAB["2. Options Tab Appears<br/>(Contextual Ribbon Tab)"]
-    
-    STARTLOG["3. Click 'Start' Button<br/>(Options Tab → Log Group)"]
-    
-    LOGGING["4. Event Log Recording<br/>• Modbus traffic captured<br/>• Timestamps added<br/>• Errors highlighted"]
-    
-    FILTER["5. Apply Filters (Optional)<br/>• Toggle 'Errors' for problems only<br/>• Type text in Filter box<br/>• View focused results"]
-    
-    EXPORT["6. Export Logs (Optional)<br/>• Click 'Copy All' → Clipboard<br/>• Enable 'Save' → Auto-save to file<br/>• Paste into analysis tools"]
-    
-    STOPLOG["7. Click 'Stop' Button<br/>(Pause logging)"]
-    
-    CLOSE["8. Click 'Close' or 'Show'<br/>(Return to Monitor Points)"]
-    
-    START ==> OPTIONSTAB
-    OPTIONSTAB ==> STARTLOG
-    STARTLOG ==> LOGGING
-    LOGGING ==> FILTER
-    FILTER ==> EXPORT
-    EXPORT ==> STOPLOG
-    STOPLOG ==> CLOSE
-    
-    style START fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-    style OPTIONSTAB fill:#fff9c4,stroke:#f57f17,stroke-width:2px
-    style STARTLOG fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
-    style LOGGING fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    style FILTER fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
-    style EXPORT fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
-    style STOPLOG fill:#ffccbc,stroke:#d84315,stroke-width:2px
-    style CLOSE fill:#ffebee,stroke:#c62828,stroke-width:2px
-```
 
 ##### Practical Use Cases
 
