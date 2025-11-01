@@ -1838,6 +1838,7 @@ The Value field serves multiple purposes depending on mode and state:
 Click the **three dots (...)** button at the end of each row to access extended options:
 
 **Available Options:**
+
 - **Evaluate Limits**: Set High/Low thresholds with color coding
 - **CustomQ**:Custom Modbus command in hexadecimal
 - **Chart**:Enable charting for this monitor point to display value trends over time
@@ -1857,6 +1858,7 @@ Send raw Modbus PDU commands in hexadecimal format for special function codes or
 ```
 
 **Use Cases:**
+
 - Custom function codes not in standard Modbus
 - Manufacturer-specific diagnostics
 - Advanced MEI commands
@@ -1883,6 +1885,7 @@ Assign monitor point to specific chart axis for multi-scale visualization:
 | **1** | Right axis | Pressure (0-1000 PSI) |
 
 **Benefits of Dual Axis:**
+
 - Compare values with different scales simultaneously
 - Temperature and pressure on same chart
 - Speed and current measurements together
@@ -1899,6 +1902,7 @@ Enable simulation mode to generate test values without requiring an actual Modbu
 **Available Only In:** Server mode - allows testing without physical hardware
 
 **Simulation Patterns:**
+
 - **Ramp**: Incrementing values for testing trending
 - **Sine Wave**: Oscillating pattern for dynamic testing
 - **Random**: Random values within configured range
@@ -2002,6 +2006,7 @@ Critical timing parameters for reliable communication - **these settings are cru
 
 !!! warning "Critical Timing Considerations"
     These parameters directly affect:
+
     - **Network traffic management** - Higher delays = less network load
     - **Error detection speed** - Longer timeouts = slower fault detection  
     - **System responsiveness** - Shorter poll rates = more responsive but higher load
@@ -2018,6 +2023,7 @@ Control how XPF handles value changes in the Value column:
 | **Manual** | Function Select | Choose specific Modbus write function codes |
 
 **Write Function Codes:**
+
 - **Function 5 (0x05)**: Write Single Coil
 - **Function 6 (0x06)**: Write Single Register  
 - **Function 15 (0x0F)**: Write Multiple Coils
@@ -2109,6 +2115,7 @@ Control how XPF handles value changes in the Value column:
 **Automatically saves every scan to CSV files** - essential for data logging and analysis:
 
 **How it works:**
+
 - **Every polling cycle** gets saved automatically
 - **CSV files** created in your Documents folder  
 - **Filenames** generated seamlessly with timestamps
@@ -2116,6 +2123,7 @@ Control how XPF handles value changes in the Value column:
 - **All monitoring points** included in each save
 
 **Benefits:**
+
 - **Zero manual work** - set it and forget it
 - **Perfect for Chart analysis** - export poll data for Excel/MATLAB
 - **Continuous data logging** - never lose important readings
@@ -2133,6 +2141,7 @@ Documents/ModbusScan_2025-10-28_14-32-15.csv
 **Write monitoring data directly into remote Modbus devices** - excellent for production setup:
 
 **Capabilities:**
+
 - **Program remote devices** with preset values from all monitoring points
 - **Production environment tool** for efficient device configuration
 - **Validate configurations** by writing known values and reading back
@@ -2140,6 +2149,7 @@ Documents/ModbusScan_2025-10-28_14-32-15.csv
 - **Quality assurance** - verify device settings match specifications
 
 **Use Cases:**
+
 - **Manufacturing setup**: Program devices with factory configurations
 - **Commissioning**: Set operational parameters on new installations
 - **Testing**: Validate device behavior with known input values
@@ -2238,23 +2248,24 @@ When enabled, the Capture feature monitors incoming Modbus requests from clients
 
 **Use Cases:**
 
-1. **Reverse Engineering**: When you don't have documentation for a Modbus device
-   - Start XPF Server on same network/port
-   - Let existing client connect and communicate
-   - XPF captures all register accesses automatically
-   - Result: Complete Modbus map discovered from live traffic
+1. **Reverse Engineering**: When you don't have documentation for a Modbus device   
+      - Start XPF Server on same network/port
+      - Let existing client connect and communicate
+      - XPF captures all register accesses automatically
+      - Result: Complete Modbus map discovered from live traffic
 
-2. **System Analysis**: Understanding existing Modbus networks
-   - Place XPF between client and server (monitoring mode)
-   - Capture reveals which registers are actually used
-   - Identify active vs. unused registers
+2. **System Analysis**: Understanding existing Modbus networks   
+      - Place XPF between client and server (monitoring mode)
+      - Capture reveals which registers are actually used
+      - Identify active vs. unused registers
 
-3. **Protocol Validation**: Testing client implementations
-   - Enable capture while your client polls the server
-   - Verify client is requesting correct registers
-   - Check function codes and access patterns
+3. **Protocol Validation**: Testing client implementations   
+      - Enable capture while your client polls the server
+      - Verify client is requesting correct registers
+      - Check function codes and access patterns
 
 !!! tip "Capture Best Practices"
+
     - **Start with clean list**: Clear monitor points before enabling capture
     - **Use Default Value 0**: Easier to identify newly captured points
     - **Let it run**: Allow all client operations to complete for full map
@@ -2400,6 +2411,7 @@ WAN/Internet:
 ```
 
 #### Memory Management
+
 - **Disable Logging**: Turn off when not needed
 - **Limit Chart Buffer**: Set samples to reasonable size
 - **Filter Data**: Use evaluate filters to reduce display load
@@ -2417,6 +2429,7 @@ WAN/Internet:
 
 #### Error Message Analysis
 Click on red-bordered Value cells to see detailed error messages:
+
 - **Connection Refused**: Server not running or wrong port
 - **Timeout**: Network issues or device not responding  
 - **Illegal Function**: Unsupported Modbus function code
@@ -2480,9 +2493,10 @@ Click on red-bordered Value cells to see detailed error messages:
     !!! warning "Limited Support"
         Linux support is experimental. Consider native alternatives.
 3. **First Launch**
-- Open Modbus Monitor XPF
-- Configure your first connection
-- Start monitoring!
+   
+   - Open Modbus Monitor XPF
+   - Configure your first connection
+   - Start monitoring!
 
 ## Configuration
 
