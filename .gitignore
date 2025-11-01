@@ -239,3 +239,7 @@ local-config.*
 # OS generated files that might contain personal info
 .DS_Store
 Thumbs.db
+
+#Ignore Sample1A Project
+*.code-workspace
+.vscode/

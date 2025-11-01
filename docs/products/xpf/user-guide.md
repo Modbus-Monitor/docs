@@ -501,17 +501,17 @@ When you launch Modbus Monitor XPF for the first time, the **License window appe
 The main application window of Modbus Monitor XPF is organized into several key sections that work together to provide a comprehensive Modbus communication interface.
 
 ![XPF Application Window with numbered annotations showing Quick Access Toolbar, Ribbon Tabs, Command Groups, Dialog Launcher, and Window Portal Area](../../assets/screenshots/xpf-application-window-annotated.png){ .screenshot-shadow }
-*Figure 3.1: Main application interface showing five key areas (①②③④⑤)*
+*Figure 3.1: Main application interface showing five key areas (1, 2, 3, 4, 5)*
 
 **Interface Component Structure:**
 
 ```mermaid
 graph TB
-    QAT["① Quick Access Toolbar<br/>Customizable one-click commands<br/>Save • Open • Read • Start • Show"]
-    TABS["② Ribbon Tabs<br/>File • Home • Client • Server • IoT"]
-    GROUPS["③ Command Groups<br/>Clipboard • Modbus Wizard • List<br/>Filter • Evaluate • Log"]
-    LAUNCHER["④ Dialog Launcher<br/>Small arrows in group corners<br/>Access extended options"]
-    PORTAL["⑤ Window Portal Area<br/>Monitor Points • Log • Chart • Online Maps"]
+    QAT["1 Quick Access Toolbar<br/>Customizable one-click commands<br/>Save • Open • Read • Start • Show"]
+    TABS["2 Ribbon Tabs<br/>File • Home • Client • Server • IoT"]
+    GROUPS["3 Command Groups<br/>Clipboard • Modbus Wizard • List<br/>Filter • Evaluate • Log"]
+    LAUNCHER["4 Dialog Launcher<br/>Small arrows in group corners<br/>Access extended options"]
+    PORTAL["5 Window Portal Area<br/>Monitor Points • Log • Chart • Online Maps"]
     
     QAT -.-> TABS
     TABS -.-> GROUPS
@@ -528,9 +528,9 @@ graph TB
 **The application window contains five main areas:**
 
 !!! tip "Cross-Reference with Screenshot and Diagram"
-    Each numbered section (**①②③④⑤**) in the annotated screenshot and the diagram above corresponds to the detailed descriptions below. Use these visual guides to quickly locate features in the actual application.
+    Each numbered section (**1, 2, 3, 4, 5**) in the annotated screenshot and the diagram above corresponds to the detailed descriptions below. Use these visual guides to quickly locate features in the actual application.
 
-#### ① Quick Access Toolbar
+#### 1. Quick Access Toolbar
 
 Located at the very top, this toolbar provides one-click access to frequently used commands. **You can customize which buttons appear** by right-clicking the toolbar.
 
@@ -567,7 +567,7 @@ Located at the very top, this toolbar provides one-click access to frequently us
     
     This provides instant access to 90% of common operations without navigating through ribbon tabs.
 
-#### ② Ribbon Tabs
+#### 2. Ribbon Tabs
 
 Below the Quick Access Toolbar, you'll find multiple tabs that organize all application features:
 
@@ -587,7 +587,7 @@ Below the Quick Access Toolbar, you'll find multiple tabs that organize all appl
 
 The active tab is highlighted, making it easy to see which commands are currently available.
 
-#### ③ Command Groups (Ribbon Commands)
+#### 3. Command Groups (Ribbon Commands)
 
 In the middle section of each ribbon tab, you'll find groups of related command buttons:
 
@@ -598,7 +598,7 @@ In the middle section of each ribbon tab, you'll find groups of related command 
 
 Buttons are accompanied by icons and arrows indicating their functions and options.
 
-#### ④ Dialog Launcher
+#### 4. Dialog Launcher
 
 Small buttons in the corner of command groups that open additional settings or options:
 
@@ -608,7 +608,7 @@ Small buttons in the corner of command groups that open additional settings or o
 | **Advanced Options** | Context-specific dialogs | Access detailed settings |
 | **Extended Settings** | Beyond ribbon display | Configure advanced parameters |
 
-#### ⑤ Window Portal Area
+#### 5. Window Portal Area
 
 The main workspace at the bottom displays different information depending on the selected mode:
 
@@ -1256,43 +1256,289 @@ Click the **three dots (...)** button at the end of any monitor point row to ope
 
 **Communication Monitoring and Logging** - View and record all Modbus communication traffic for troubleshooting. Filter errors, export logs to file, and timestamp all events for accurate diagnostics.
 
-![Log Settings](../../assets/screenshots/xpf-home-log.png)
+![Log Group Interface](../../assets/screenshots/xpf-home-log.png){ .screenshot-shadow }
+*Four key areas: 1 Log Group (Home Tab), 2 Options Tab, 3 Quick Access Header (3a-3h), 4 Log Window*
 
-Switch to the Events Log Window to view **Modbus communications and general events**. The Monitoring Points area is switched to show event logs in the same area. Use the **"Log"** button to switch between both views.
+**Complete Log Controls Reference:**
 
-**Log Button Behavior:**
+All log controls in one comprehensive table. Labels **1**, **2**, **3a-3h**, and **4** correspond to the screenshot above.
 
-- **Location**: The Log button is in the **Home tab** or Ribbon Header
-- **Toggle Function**: Switches between Event Log view and Monitoring Point view
-- **Stay-On Indicator**: This button stays on during Log Monitoring
-- **Deactivate**: Click again to turn off the Communication Traffic Monitoring view portal (but communication traffic still monitors if it started already)
+| Label | Control | Location | Type | Function |
+|-------|---------|----------|------|----------|
+| **1** | **Show** | Home Tab → Log Group | Toggle Button | Show/hide Event Log view. **Pressed**: Replaces Monitor Points table with log display, Options tab appears. **Released**: Returns to Monitor Points table. |
+| **2** | **Log/Options Tab** | Contextual Ribbon | Dynamic Tab | Appears when log is active. Contains logging and filter controls. Disappears when log closed (logging continues in background if started). |
+| **2** | **Filter** | Quick Access Header or Options Tab | Text Input Box | Real-time text search. Type to filter log entries, clear to show all. Case-insensitive search. |
+| **2** | **Errors** | Options Tab | Toggle Button | **Checked**: Show errors only (timeouts, exceptions). **Unchecked**: Show all events (success + errors). |
+| **3a or 2** | **Start/Stop** | Quick Access Header or Options Tab | Toggle Button | **Start**: Begin capturing events. **Stop**: Pause recording. Auto-resumes if saved while running. |
+| **3b or 2** | **Auto Save** | Quick Access Header or Options Tab | Toggle Button | **ON**: Continuously writes log to Documents folder. **OFF**: Logs remain in memory only. |
+| **3c or 2** | **Copy All** | Quick Access Header or Options Tab | Button | Export all visible log entries to clipboard (timestamp + details). Paste into Excel, email, or text editor. Click on any log entry to enable this button. |
+| **3d  or 2** | **Clear** | Quick Access Header or Options Tab | Button | Delete all log entries from display. **Warning**: Cannot be undone. Save or copy important logs first. |
+| **3e** | **Save** | Quick Access Header | Button | Save current log entries to a file in Documents folder. |
+| **3f** | **Float** | Quick Access Header | Button | Float the Log window outside the application's main window as a separate window. |
+| **3g** | **Expand** | Quick Access Header | Button | Expand log window to full screen or restore to normal size. |
+| **3h or 2** | **Close** | Quick Access Header or Options Tab | Button | Close Log Window and return to Monitor Points (logging continues in background if started). |
+| **4** | **Log Window** | Window Portal Area | Display Panel | Shows timestamped communication events. Replaces Monitor Points table when log is active. |
 
-**Activating Logging:**
+!!! tip "Quick Start Workflow"
+    1. Click **Show** (1) → Log window appears (4), Options tab (2) opens
+    2. Click **Start** (3a) → Begin recording Modbus traffic
+    3. Optional: Toggle **Errors** (3f) or type in **Filter** (3g) to focus on specific events
+    4. Click **Copy All** (3b) to export, or **Save** (3d) for continuous file backup
+    5. Click **Clear** (3c) between test runs to remove old entries
+    6. Click **Close** (3e) or **Show** (1) again to return to Monitor Points
 
-1. You can enable logging using a configuration or project file
-2. Or by clicking the **Start button** in the contextual Log Options tab
-3. Once enabled, logging remains active during Log Monitoring
+##### Log Entries Display (Window Portal Area)
 
-**Communication Log Features:**
+**Where Log Entries Appear** - When you click the **Show** button (1), the **Window Portal Area** (the main workspace below the ribbon) switches from showing the Monitor Points table to displaying the **Event Log**.
 
-| Button | Function | Description |
-|--------|----------|-------------|
-| **Start/Stop** | Control logging | Click **Start** to begin communication logging in comma-delimited text format. Click **Stop** to pause logging. |
-| **Clear** | Remove entries | Clear all logs from the display window |
-| **Save As** | Export logs | Save displayed log to text file for analysis or archival |
-| **Errors** | Error filter | Show **only communication events with Errors** - filters out successful transactions |
-| **Scroll** | Auto-scroll | Scroll to the **latest communication log** entry automatically |
-| **Timestamps** | UTC time | All events in the window are **time-stamped with UTC** for accurate correlation |
+**Log Entry Display Characteristics:**
+
+| Feature | Description | Details |
+|---------|-------------|---------|
+| **Location** | Window Portal Area | Same area where Monitor Points table normally displays |
+| **Entry Format** | Timestamped rows | Each log entry shows: **Timestamp** • **Event Type** • **Details** • **Status** |
+| **Timestamps** | UTC format | All events time-stamped with UTC for accurate correlation across time zones |
+| **Auto-Update** | Real-time | New entries appear immediately as communication occurs (when logging is started) |
+| **Scroll View** | Vertical scrolling | Older entries scroll up as new ones arrive at bottom |
+| **Capacity** | Memory-based | Limited to 10000 entries before deleting old items (clear periodically for performance) |
+
+**What Gets Logged:**
+
+- **Modbus Requests**: Function code, address, unit ID, data sent
+- **Modbus Responses**: Data received, byte count, success/failure status  
+- **Communication Errors**: Timeouts, CRC errors, exception codes, connection failures
+- **System Events**: Connection established/closed, configuration changes, poll cycle start/stop
+- **Timestamps**: Precise timing for troubleshooting timing-related issues
+
+!!! example "Sample Log Entries"
+    **Complete Poll Cycle with System Events:**
+    ```
+    07:19:56:511585, Poll Once: True
+    07:19:56:766466, Client-STARTING
+    07:19:58:820433, Server Found 127.0.0.1:502
+    07:19:58:825077, Client-RUNNING
+    ```
+    
+    **Successful Read (Holding Registers):**
+    ```
+    07:19:58:833472, TCP TX, 00 01 00 00 00 06 01 03 00 00 00 01, Read Holding Registers, SID:1, FC:3, ADR:0, CNT:1
+    07:19:58:861535, TCP RX, 00 01 00 00 00 05 01 03 02 00 00
+    ```
+    
+    **Modbus Exception Error 1 - Illegal Function (Input Registers):**
+    ```
+    07:19:58:908104, TCP TX, 00 02 00 00 00 06 01 04 00 00 00 01, Read Input Registers, SID:1, FC:4, ADR:0, CNT:1
+    07:19:58:923572, TCP RX, 00 02 00 00 00 03 01 84 01
+    07:19:58:926070, Illegal Function, ERR:1, SID:1 FC:84, Sample Input Register, 300001, 1, 1, 0, INT16, ABCD_BE, 30001,,
+    ```
+    
+    **Modbus Exception Error 1 - Illegal Function (Discrete Inputs):**
+    ```
+    07:19:58:955758, TCP TX, 00 03 00 00 00 06 01 02 00 00 00 01, Read Inputs Registers, SID:1, FC:2, ADR:0, CNT:1
+    07:19:58:970172, TCP RX, 00 03 00 00 00 03 01 82 01
+    07:19:58:970512, Illegal Function, ERR:1, SID:1 FC:82, Discrete Input Register, 100001, 1, 1, 0, BIT, ABCD_BE, 1,,
+    ```
+    
+    **Modbus Exception Error 1 - Illegal Function (Coils):**
+    ```
+    07:19:59:001799, TCP TX, 00 04 00 00 00 06 01 01 00 00 00 01, Read Coils, SID:1, FC:1, ADR:0, CNT:1
+    07:19:59:016788, TCP RX, 00 04 00 00 00 03 01 81 01
+    07:19:59:017054, Illegal Function, ERR:1, SID:1 FC:81, Coil Register, 1, 1, 1, 0, BIT, ABCD_BE, 1,,
+    ```
+    
+    **Client Stop:**
+    ```
+    07:20:00:052399, Client-STOPPED
+    ```
+
+**Viewing Tips:**
+
+- **Recent entries appear at bottom** - Scroll down to see latest events
+- **Filtering reduces clutter** - Use Errors toggle (④) to hide successful transactions
+- **Text search narrows focus** - Type in Filter box (④) to find specific device, register, or error type
+- **Copy for analysis** - Click Copy All (③) to export all visible entries to clipboard
+
+##### Understanding Log View Toggle
+
+| Control | Location | Function | State Indicator |
+|---------|----------|----------|-----------------|
+| **Show Button** | Home tab → Log Group | Toggles between Monitor Points and Event Log views | Button stays pressed/highlighted when Log view is active |
+| **Quick Access** | Can add to Quick Access Toolbar | One-click access without navigating to Home tab | Recommended for frequent troubleshooting |
+
+**View Behavior:**
+
+- **Click Show**: Monitor Points table → Event Log display (button stays pressed)
+- **Click Show Again**: Event Log → Monitor Points table (button released)
+- **Shared Portal**: Both views occupy the same Window Portal Area
+- **Data Preserved**: Switching views doesn't lose Monitor Points or Log data
+
+!!! tip "Quick Access Recommendation"
+    Right-click the **Show** button and add it to your Quick Access Toolbar for one-click switching during active troubleshooting sessions. 
+
+##### Complete Interface Overview
+
+**Visual relationship between all four labeled sections:**
+
+```mermaid
+graph TB
+    HOME["① LOG GROUP<br/>(Home Tab)<br/>─────────<br/>Show Button"]
+    
+    CLICK1[" Click Show "]
+    
+    OPTIONS["② OPTIONS TAB<br/>(Contextual Ribbon)<br/>─────────<br/>Contains ③ and ④"]
+    
+    subgraph GROUPS["Options Tab Contains:"]
+        direction LR
+        LOG["③ LOG GROUP<br/>Start/Stop<br/>Copy All<br/>Clear<br/>Save"]
+        
+        FILTER["④ FILTER GROUP<br/>Errors Toggle<br/>Text Filter"]
+    end
+    
+    WINDOW["WINDOW PORTAL AREA<br/>─────────<br/>Log Entries Display<br/>(timestamped events)"]
+    
+    HOME -->|Click| CLICK1
+    CLICK1 -->|Opens| OPTIONS
+    OPTIONS -.->|Contains| LOG
+    OPTIONS -.->|Contains| FILTER
+    LOG -->|Controls| WINDOW
+    FILTER -->|Filters| WINDOW
+    
+    CLICK2[" Click Show Again "]
+    OPTIONS -->|Close| CLICK2
+    CLICK2 -->|Returns to| MONITOR["Monitor Points Table"]
+    
+    style HOME fill:#e3f2fd,stroke:#1976d2,stroke-width:3px,color:#000
+    style OPTIONS fill:#fff3e0,stroke:#f57c00,stroke-width:3px,color:#000
+    style LOG fill:#c8e6c9,stroke:#388e3c,stroke-width:2px,color:#000
+    style FILTER fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000
+    style WINDOW fill:#fff9c4,stroke:#f57f17,stroke-width:3px,color:#000
+    style GROUPS fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style CLICK1 fill:#bbdefb,stroke:#1976d2,stroke-width:1px
+    style CLICK2 fill:#ffccbc,stroke:#d84315,stroke-width:1px
+    style MONITOR fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+```
+
+**Key Relationships:**
+
+- **Section ①** (Home Tab) triggers everything - click **Show** to begin
+- **Section ②** (Options Tab) appears automatically and **contains sections ③ and ④**
+- **Section ③** (Log Group in Options) provides **recording control buttons**
+- **Section ④** (Filter Group in Options) provides **search and filter controls**
+- **Both 3 and 4** affect what you see in the **Window Portal Area** (log entries display)
+
+##### Logging Workflow
+
+**Complete logging session workflow:**
+
+```mermaid
+graph TB
+    START["1. Click 'Show' Button<br/>(Home Tab → Log Group)"]
+    
+    OPTIONSTAB["2. Options Tab Appears<br/>(Contextual Ribbon Tab)"]
+    
+    STARTLOG["3. Click 'Start' Button<br/>(Options Tab → Log Group)"]
+    
+    LOGGING["4. Event Log Recording<br/>• Modbus traffic captured<br/>• Timestamps added<br/>• Errors highlighted"]
+    
+    FILTER["5. Apply Filters (Optional)<br/>• Toggle 'Errors' for problems only<br/>• Type text in Filter box<br/>• View focused results"]
+    
+    EXPORT["6. Export Logs (Optional)<br/>• Click 'Copy All' → Clipboard<br/>• Enable 'Save' → Auto-save to file<br/>• Paste into analysis tools"]
+    
+    STOPLOG["7. Click 'Stop' Button<br/>(Pause logging)"]
+    
+    CLOSE["8. Click 'Close' or 'Show'<br/>(Return to Monitor Points)"]
+    
+    START ==> OPTIONSTAB
+    OPTIONSTAB ==> STARTLOG
+    STARTLOG ==> LOGGING
+    LOGGING ==> FILTER
+    FILTER ==> EXPORT
+    EXPORT ==> STOPLOG
+    STOPLOG ==> CLOSE
+    
+    style START fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style OPTIONSTAB fill:#fff9c4,stroke:#f57f17,stroke-width:2px
+    style STARTLOG fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style LOGGING fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style FILTER fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
+    style EXPORT fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
+    style STOPLOG fill:#ffccbc,stroke:#d84315,stroke-width:2px
+    style CLOSE fill:#ffebee,stroke:#c62828,stroke-width:2px
+```
+
+##### Practical Use Cases
+
+!!! example "Troubleshooting Connection Issues"
+    **Scenario:** Device not responding
+    
+    **Steps:**
+    1. Click **Show** → Event Log appears
+    2. Click **Start** in Options tab
+    3. Click **Errors** toggle to filter errors only
+    4. Type device name or address in **Filter** box
+    5. Attempt connection from Client tab
+    6. Review log entries for timeout/error messages
+    7. Click **Copy All** to send to support team
+    
+    **Benefits:** Isolated error messages with exact timestamps
+
+!!! example "Monitoring Communication Health"
+    **Scenario:** Verify stable polling operation
+    
+    **Steps:**
+    1. Start logging before beginning poll cycle
+    2. Enable **Save** toggle for automatic file backup
+    3. Run polling for extended period (hours/days)
+    4. Periodically check **Errors** toggle to verify no issues
+    5. Review saved log file for patterns or intermittent errors
+    
+    **Benefits:** Long-term reliability validation with automatic archival
+
+!!! example "Protocol Analysis for Custom Devices"
+    **Scenario:** Reverse-engineering unknown device behavior
+    
+    **Steps:**
+    1. Enable logging and **Save** toggle
+    2. Send test commands to device
+    3. Use **Filter** to search for specific function codes
+    4. Click **Copy All** → Paste into protocol analyzer
+    5. Compare request/response patterns
+    
+    **Benefits:** Complete transaction history for protocol documentation
+
+##### Best Practices
 
 !!! tip "Logging Best Practices"
-    **Hints:**
+    **Optimize Your Workflow:**
     
-    - If the file or project is saved, **traffic monitoring will automatically start** the next time the project is loaded
-    - Communication traffic monitoring will **continue if it has already begun**, even though the communication traffic view is hidden
-    - The Log button only toggles the **view** - logging itself runs independently
+    - **Save Before Logging**: Enable the **Save** toggle before starting long monitoring sessions
+    - **Filter Proactively**: Use **Errors** toggle during troubleshooting to reduce noise
+    - **Clear Regularly**: Click **Clear** between test runs to avoid confusion
+    - **Text Search**: Use specific keywords (register address, function code, device name) for precise filtering
+    - **Quick Access**: Add **Show** and **Clear** to Quick Access Toolbar for rapid access
+    - **Project Auto-Start**: Saved projects remember logging state - automatically resumes if it was active
 
 !!! warning "Performance Impact"
-    The Events log consumes **more processing power and memory** to log data at a high rate. Therefore, **turn off this feature when not needed** for optimal performance, especially during long-term monitoring or when polling many registers at high speed.
+    **Resource Considerations:**
+    
+    - Event logging consumes **CPU cycles** and **memory** to capture high-speed communication
+    - **High poll rates** (many registers per second) increase logging overhead significantly
+    - **Disable logging** when not actively troubleshooting for optimal performance
+    - **Clear logs periodically** during long sessions to free memory
+    - **Text filtering** searches all entries in real-time - may slow down with thousands of entries
+    
+    **Recommendation:** Turn off logging during normal production operation unless you need historical records.
+
+!!! info "Data Persistence"
+    **What Gets Saved:**
+    
+    - **With Save Toggle ON**: Log file continuously updated in Documents folder
+    - **With Save Toggle OFF**: Logs exist only in memory, cleared when:
+        - You click **Clear** button
+        - You close XPF application
+        - You switch to another configuration file
+    
+    **File Location:** Check your Windows Documents folder for auto-saved log files (typically named with timestamp).
 
 #### Online Maps
 
