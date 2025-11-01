@@ -1609,11 +1609,192 @@ Effect: Extracts bit 8 from 16-bit register
 ```
 
 ##### Date/Time Formats
-```
-Codes: DOS | EPOCH | EPOCHMS | DT2 | DT3 | DT4 | DT4P | DT6
-Usage: Timestamp_DT6 + Data Type = DATETIME
-Effect: Converts registers to date/time display
-```
+
+**DATETIME Display Format** - To display Date Time values with Magic Codes, you need to add a Magic Code to the Name field and set the Data Type to **DATETIME**. The processor uses the code (DOS, EPOCH, DT3, DT4, etc.) in the Name field to properly request the number of registers required for this display format to decode and display time properly.
+
+!!! note "No Modbus Standard for DateTime"
+    There is no official Modbus standard for date time representation, so analyze the manufacturer's documentation to determine the number of registers required to fetch date and time. Then, simply choose the correct Magic Code from the table below. Use **Swap Type** settings to match the remote device's byte order.
+
+**DateTime Magic Codes:**
+
+| Magic Code | Registers | Register Layout | Description |
+|------------|-----------|-----------------|-------------|
+| **DOS** | 2 | `[YYMMDD]` `[hhmmss]` | DOS Time Stamp Y1980, 2 Registers |
+| **WIN** | 2 | Same as DOS | Windows compatible DOS format |
+| **EPOCH** | 2 | Unix timestamp (32-bit) | Unix Epoch, 2 Registers |
+| **EPOCHMS** | 4 | Unix timestamp (64-bit ms) | Unix Epoch in Milliseconds (4 Registers) |
+| **DT2** | 2 | `[Date]` `[Time]` | Same as DOS format |
+| **DT3** | 3 | `[YY\|MM]` `[DD\|hh]` `[mm\|ss]` | Date Time, 3 Registers |
+| **DT4** | 4 | `[YY\|MM]` `[DD\|hh]` `[mm\|ss]` `[ms]` | Date Time, 4 Registers |
+| **DT4P** | 4 | `[XX\|YY]` `[MM\|DD]` `[hh\|mm]` `[ms]` | Date Time Y2000 Modbus Plus, 4 Registers |
+| **DT6** | 6 | `[YYYY]` `[MMMM]` `[DDDD]` `[HHHH]` `[MMMM]` `[SSSS]` | Date Time, 6 Registers |
+| **DT7** | 7 | `[Sec\|Min]` `[Hour\|Day]` `[Month\|Year]` `[Weekday]` | Date Time, 7 Registers |
+
+**Detailed Format Specifications:**
+
+=== "DOS Format (2 Registers)"
+
+    **DOS Time Stamp Y1980 - Uses Windows API DosDateTimeToFileTime()**
+    
+    ```
+    Usage: System_Clock_DOS + Data Type = DATETIME
+    Registers: 2
+    ```
+    
+    | Register | Format | Description |
+    |----------|--------|-------------|
+    | N | `YY\|MM\|DD` | Date: Year\|Month\|Day |
+    | N+1 | `hh\|mm\|ss` | Time: Hour\|Minute\|Second |
+    
+    **Windows API Function:**
+    ```c
+    BOOL DosDateTimeToFileTime(
+      [in]  WORD       wFatDate,    // Register N
+      [in]  WORD       wFatTime,    // Register N+1
+      [out] LPFILETIME lpFileTime
+    );
+    ```
+
+=== "DT3 Format (3 Registers)"
+
+    **3-Register DateTime - Common in Samsung Battery Systems**
+    
+    ```
+    Usage: BMS_RTC_DT3 + Data Type = DATETIME
+    Example: Samsung Battery System BMS RTC Write [YY-MM-DD hh:mm:ss]
+    Registers: 3
+    ```
+    
+    | Register | Hex Address | Format | Description |
+    |----------|-------------|--------|-------------|
+    | N | 0x0000 | `YY\|MM` | MSB(Year) - LSB(Month) |
+    | N+1 | 0x0001 | `DD\|hh` | MSB(Day) - LSB(Hour) |
+    | N+2 | 0x0002 | `mm\|ss` | MSB(Minute) - LSB(Second) |
+    
+    **Example Addresses:**
+    ```
+    Reg 1: [Address(Hex): 0x0000] MSB(Year)-LSB(Month)
+    Reg 2: [Address(Hex): 0x0001] MSB(Day)-LSB(Hour)
+    Reg 3: [Address(Hex): 0x0002] MSB(Minute)-LSB(Second)
+    ```
+
+=== "DT4 Format (4 Registers)"
+
+    **4-Register DateTime with Milliseconds**
+    
+    ```
+    Usage: Timestamp_DT4 + Data Type = DATETIME
+    Registers: 4
+    ```
+    
+    | Register | Format | Description |
+    |----------|--------|-------------|
+    | N | `YY\|MM` | Year\|Month |
+    | N+1 | `DD\|hh` | Day\|Hour |
+    | N+2 | `mm\|ss` | Minute\|Second |
+    | N+3 | `fff` | Milliseconds |
+
+=== "DT4P Format (4 Registers)"
+
+    **Modbus Plus Y2000 DateTime Format**
+    
+    ```
+    Usage: ModbusPlus_Time_DT4P + Data Type = DATETIME
+    Registers: 4
+    ```
+    
+    | Register | Format | Description |
+    |----------|--------|-------------|
+    | N | `XX\|YY` | Year (2-digit, base 2000) |
+    | N+1 | `MM\|DD` | Month\|Day |
+    | N+2 | `hh\|mm` | Hour\|Minute |
+    | N+3 | `ms` | Milliseconds |
+
+=== "DT6 Format (6 Registers)"
+
+    **6-Register DateTime - Full Separate Registers**
+    
+    ```
+    Usage: System_Timestamp_DT6 + Data Type = DATETIME
+    Registers: 6
+    ```
+    
+    | Register | Content | Description |
+    |----------|---------|-------------|
+    | N | `YYYY` | Year (4 digits) |
+    | N+1 | `MMMM` | Month (1-12) |
+    | N+2 | `DDDD` | Day (1-31) |
+    | N+3 | `HHHH` | Hour (0-23) |
+    | N+4 | `MMMM` | Minute (0-59) |
+    | N+5 | `SSSS` | Second (0-59) |
+
+=== "DT7 Format (7 Registers)"
+
+    **7-Register DateTime with Weekday**
+    
+    ```
+    Usage: Extended_Clock_DT7 + Data Type = DATETIME
+    Registers: 7
+    ```
+    
+    | Register | Format | Description |
+    |----------|--------|-------------|
+    | N | `Sec\|Min` | Second\|Minute |
+    | N+1 | `Hour\|Day` | Hour\|Day |
+    | N+2 | `Month\|Year` | Month\|Year |
+    | N+3 | `Weekday` | Day of week (0-6) |
+
+=== "EPOCH Formats"
+
+    **Unix Timestamp Formats**
+    
+    **EPOCH (2 Registers):**
+    ```
+    Usage: Unix_Time_EPOCH + Data Type = DATETIME
+    Registers: 2 (32-bit timestamp)
+    ```
+    
+    **EPOCHMS (4 Registers):**
+    ```
+    Usage: Unix_TimeMS_EPOCHMS + Data Type = DATETIME
+    Registers: 4 (64-bit timestamp in milliseconds)
+    ```
+
+**Implementation Examples:**
+
+!!! example "DateTime Configuration Examples"
+
+    **Samsung Battery System:**
+    ```
+    Name: BMS_RTC_DT3
+    Address: 400001
+    Data Type: DATETIME
+    Registers Used: 3 (400001, 400002, 400003)
+    ```
+    
+    **PLC with DOS Format:**
+    ```
+    Name: System_Clock_DOS
+    Address: 400010
+    Data Type: DATETIME
+    Registers Used: 2 (400010, 400011)
+    ```
+    
+    **Industrial Controller with Full DateTime:**
+    ```
+    Name: Controller_Time_DT6
+    Address: 300001
+    Data Type: DATETIME
+    Registers Used: 6 (300001-300006)
+    ```
+
+**Important Notes:**
+
+- Always set **Data Type = DATETIME** when using DateTime Magic Codes
+- Use **Swap Type** settings to match device byte order (ABCD_BE, CDBA_LE, etc.)
+- Consult manufacturer documentation for register layout and byte ordering
+- Test with known timestamps to verify correct interpretation
+- Some devices may use zero-based or one-based addressing - adjust accordingly
 
 ##### Multiple Magic Codes
 ```
