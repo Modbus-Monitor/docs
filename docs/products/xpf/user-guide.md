@@ -1504,20 +1504,22 @@ graph TB
 
 **Cloud-Based Modbus Maps** - View and Download Online Modbus Maps from either **(1) factory-released maps** by Modbus Monitor or **(2) community-uploaded maps** from users. Toggle the **Online** button in the File group located in the Home tab to activate this feature. **An internet connection is required** to use this feature.
 
-![Online Maps Interface](../../assets/screenshots/xpf-online-maps.webp){ .screenshot-shadow }
+![Online Maps Interface](../../assets/screenshots/xpf-home-file-online.webp)
 *How to download pre-defined Modbus Map*
 
 **Interface Components:**
 
 | # | Icon/Button | Function | Description |
 |---|-------------|----------|-------------|
-| **X** | **X (Back)** | Close navigator | Close this Online Map navigator and go back to the previous view |
-| **1** | **Factory** | Maps from Factory | Officially released and validated Modbus Maps |
-| **2** | **Community** | Community Maps | Click to see maps shared by others in the user community |
-| **3** | **Share** | Upload | Upload your Modbus Map and share with the online community |
-| **4** | **Download** | Download | Download selected Online Maps to local system |
-| **5** | **Status** | Progress Indicator | Download or Upload status:<br>**Green Check mark**: All went OK<br>**Red Cross**: Error downloading. Download process interrupted or check the Internet connection. |
-| **6** | **Name** | File display | Name of the map just downloaded or selected |
+| **1** | **Online** | Online Maps | Click the cloud button or Back button to toggle the Online Map navigator open or closed |
+| **2a** | **X (Back)** | Close navigator | Click the cloud button or Back button to toggle the Online Map navigator open or closed |
+| **2b** | **Factory** | Maps from Factory | Officially released and validated Modbus Maps |
+| **2c** | **Community** | Community Maps | View maps shared by others in the user community |
+| **2d** | **Share** | Upload | Upload your Modbus Map and share it with the online community |
+| **2e** | **Download** | Download | Download selected Online Maps to your local system |
+| **2f** | **Status** | Progress Indicator | Download or Upload status:<br>**Green Check mark**: Operation completed successfully<br>**Red Cross**: Error occurred. Download process was interrupted or there's an Internet connection issue. |
+| **2g** | **Name** | File display | Name of the map just downloaded or currently selected |
+| **3** | **Maps** | Online Maps | List of Online Maps available by Manufacturer, Model, and Type. Use the search filter to quickly filter the list by Manufacturer or Model.|
 
 **Downloading Factory Maps:**
 
@@ -1531,10 +1533,16 @@ graph TB
 
 **Uploading Community Maps:**
 
-1. Click on **Community icon [2]**
-2. Click on the **Share Icon [3]** and choose the local XPF Modbus Map data file from your computer
-3. **Green Check** shows **[5]** when the file is successfully uploaded to the cloud
-4. Click on the **Community Files Maps icon [2]** to refresh the list of files in the window and see your contribution
+Users can upload their own custom Modbus Maps to share with the community or store them in the cloud repository for backup and easy access across multiple installations. This collaborative feature helps build a comprehensive library of device configurations.
+
+**[YouTube Video on using Online Maps](https://www.youtube.com/embed/7c_ZKHzH_ew)** - Short demonstrations of features and workflows
+
+**Steps to Upload your Modbus Map:**
+
+1. Click on **Community icon [2c]**
+2. Click on the **Share Icon [2d]** and choose the local XPF Modbus Map data file from your computer
+3. **Green Check** shows **[2f]** when the file is successfully uploaded to the cloud
+4. Click on the **Community Files Maps icon [2c]** to refresh the list of files in the window and see your contribution
 
 !!! example "Sharing Your Work"
     **When to share your maps:**
