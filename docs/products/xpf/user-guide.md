@@ -4,7 +4,7 @@
 
 **A practical guide for controls engineers and technicians**
 
-<!-- [TOC] -->
+[TOC]
 
 ## 1. Introduction
 
@@ -2047,18 +2047,21 @@ Send raw Modbus PDU commands in hexadecimal format for special function codes or
 
 #### 11. Chart (Enable Charting)
 
-Enable time-series charting for this monitor point to visualize value trends over time.
+Enable time-series charting for this monitor point to visualize value trends over time. 
+
+!!! info "Complete Chart Guide"
+    For detailed chart setup, configuration, and advanced features, see the **[Charts - Data Trends Visualization](#charts---data-trends-visualization)** section below.
 
 | State | Result |
 |-------|--------|
-| **Checked** | Values plotted on chart in real-time, See Chart Button to the chart |
+| **Checked** | Values plotted on chart in real-time, click Chart Button in Client tab to view |
 | **Unchecked** | Monitor point excluded from chart (default)|
 
 **Requirements:** Client mode must be running (polling active) for data collection
 
 #### 12. Axis (Chart Axis Assignment)
 
-Assign monitor point to specific chart axis for multi-scale visualization:
+Assign monitor point to specific chart axis for multi-scale visualization: 
 
 | Value | Purpose | Example |
 |-------|---------|---------|
@@ -2070,6 +2073,9 @@ Assign monitor point to specific chart axis for multi-scale visualization:
 - Compare values with different scales simultaneously
 - Temperature and pressure on same chart
 - Speed and current measurements together
+
+!!! info "Chart Axis Configuration"
+    For complete dual-axis setup and multi-signal charting examples, see the **[Charts - Data Trends Visualization](#charts---data-trends-visualization)** section below.
 
 #### 13. Simulate (Simulation Mode)
 
@@ -2125,7 +2131,7 @@ Enable simulation mode to generate test values without requiring an actual Modbu
 | **Write** | Write Operations | Auto/Manual Mode, Function Code Selection | Control how value changes are written to devices - automatic smart selection or manual function code control |
 | **Scanner** | Address Discovery | Start Address, Register Count, Data Type, Swap Type, Unit ID | Systematically discover unknown registers and automatically build monitor point lists |
 | **Value** | Data Management | Clear Values Toggle | Clear previously read values from display for fresh data collection |
-| **Chart** | Data Visualization | Chart Button | Switch to real-time charting view for trending analysis of tagged monitor points |
+| **Chart** | Data Visualization | Chart Button | Switch to real-time charting view for trending analysis of tagged monitor points - see [Charts - Data Trends Visualization](#charts---data-trends-visualization) for complete setup |
 | **Client Poll** | Operation Control | Auto Save, Restore, Write, Read, Statistics, Start/Stop | Main operational controls for polling, data collection, and client status monitoring |
 
 **Detailed Group Breakdown:**
@@ -2398,6 +2404,8 @@ Control how XPF handles value changes in the Value column:
 
 **Modbus charting is essential for anyone working with industrial automation and control systems.** With Modbus Monitor XPF, you can effortlessly visualize your Modbus data through time series, making it easier to analyze trends and patterns.
 
+
+
 **Why Use Charts?**
 
 - **Visualize data values over time** - See trends and patterns emerge
@@ -2406,40 +2414,393 @@ Control how XPF handles value changes in the Value column:
 - **Performance analysis** - Evaluate system behavior under different conditions
 - **Quality control** - Monitor process stability and consistency
 
-**Chart Setup Process:**
+#### Chart Setup & Configuration
 
-1. **Tag Monitor Points**: To see the trending data, the monitoring point **must be tagged and included in the chart**
-2. **Enable Charting**: Access via the extended button (three dots) in each monitor point row
-3. **Choose Axis**: Select either **axis 0 or 1** for different Y-axis scales (useful for comparing values with different ranges)
-4. **Switch View**: Click the **Chart** button in the Client tab to switch to Chart Window
+**Complete step-by-step process to enable and configure charting:**
 
-**Chart Option Context Menu - Controls:**
+##### Step 1: Enable Chart for Monitor Points
 
-| Button | Function | Description |
-|--------|----------|-------------|
-| **Save** | Export data | Saves chart data as a **CSV file** in the user documents folder for post-analysis with Excel, MATLAB, or other tools |
-| **Clear** | Reset buffer | Clears all chart data from the buffer and display |
-| **Fit** | Auto-scale | Adjusts the range to **fit the chart to the current view** automatically |
-| **Samples** | Buffer size | Sets the buffer size to store data:<br>**0** = All data stored (chart does not pan, uses available memory)<br>**Other value** = Controls the size of the window that pans the chart by the buffer size |
+**Configure individual monitor points for charting:**
 
-!!! tip "Chart Best Practices"
-    **Effective charting strategies:**
+![Chart Configuration Dialog](../../assets/screenshots/xpf-client-chart-configuration.webp){ .screenshot-shadow }
+*Monitor Point chart configuration options*
+
+1. **Client**:
+   - Click the **Client Tab** to find the **Chart Group** 
+   
+2. **Access Chart Settings**:
+   - Click the **three dots (...)** button at the end of any monitor point row   
+   - Extended options dialog opens
+
+3. **Enable Charting**:
+   - Check the **Chart** checkbox to include this point in trending
+   - **Unchecked**: Monitor point excluded from chart (default)
+   - **Checked**: Values plotted on chart in real-time
+   - **Select Chart Axis**:
+      - **Axis 0 (Left)**: Primary Y-axis scale (e.g., Temperature 0-100°C)
+      - **Axis 1 (Right)**: Secondary Y-axis scale (e.g., Pressure 0-1000 PSI)
+      - **Benefits**: Compare values with different scales simultaneously
+4. **View Chart**
+   - Click the **Chart** button in the **Chart Group** on the [Client tab](#client-tab-groups--features) to view the floating chart window
+   - For detailed chart controls, see [Chart Controls & Options](#step-4-chart-controls--options) below
+
+5. **Optimize Performance**
+   - Configure timeout settings in the [Client tab](#client-tab-groups--features) to minimize delays between polls
+   - **Nyquist Rate**: Poll rate should be at least 2x faster than the fastest expected data changes for smooth graphs
+   - See [Timeout Settings](#timeout-settings) for optimization guidelines
+
+
+!!! tip "Multi-Point Selection"
+    **Enable charting for multiple points efficiently:**
     
-    - **Use dual axes** when comparing values with vastly different ranges (e.g., temperature 0-100°C on axis 0, pressure 0-3000 PSI on axis 1)
-    - **Set appropriate sample buffer** - Use 0 for short tests, use limited buffer (e.g., 1000 samples) for long-term monitoring to prevent memory issues
-    - **Save regularly** - Export chart data periodically during long tests
-    - **Combine with Auto Save** - Use the Auto Save feature to capture all data points automatically
+    - **Select multiple rows**: Use `Ctrl+Click` for individual points or `Shift+Click` for ranges
+    - **Batch configuration**: All selected points can be configured simultaneously
+    - **Axis assignment strategy**: Group similar ranges on same axis (temperatures on Axis 0, pressures on Axis 1)
 
-!!! example "Real-World Applications"
-    **Process monitoring:**
-    - Chart temperature, pressure, and flow rate over 8-hour shift
-    - Identify process drift or instability
-    - Compare against spec limits
+##### Step 2: Start Data Collection
+
+**Begin polling to collect chart data:**
+
+![Client Polling Controls](../../assets/screenshots/xpf-client-poll-controls.webp){ .screenshot-shadow }
+*Client tab polling controls for chart data collection*
+
+1. **Configure Client Connection**:
+   - Set up TCP, UDP, or Serial connection in Client tab
+   - Configure proper IP address, COM port, and communication parameters
+   - Verify timeout settings for reliable data collection
+
+2. **Start Continuous Polling**:
+   - Click **Start** button in Client Poll group
+   - Polling must be active for chart data collection
+   - Monitor points with Chart enabled begin data accumulation
+
+3. **Verify Data Collection**:
+   - Check TX/RX counters show active communication
+   - Monitor point values should update in real-time
+   - Any communication errors will affect chart data quality
+
+##### Step 3: Access Chart View
+
+**Switch to chart display and configure visualization:**
+![Modbus Monitor XPF Chart](../../assets/screenshots/xpf-client-charts.webp)
+
+![Chart Window Interface](../../assets/screenshots/xpf-chart-window.webp){ .screenshot-shadow }
+*Complete chart window showing dual-axis trending*
+
+1. **Open Chart Window**:
+   - Click **Chart** button in Client tab → Chart group
+   - Chart window replaces Monitor Points table view
+   - All chart-enabled points appear as trending lines
+
+2. **Complete Chart Interface Reference**:
+
+   **Main Chart Interface Components:**
+   
+   | Label | Component | Location | Function | Details |
+   |-------|-----------|----------|----------|---------|
+   | **1** | **Control Toolbar** | Top horizontal bar | Chart operation controls | Contains all chart control buttons (1a-1g) detailed below |
+   | **2** | **Chart Plot Area** | Main display | Time-series visualization | Multi-colored trend lines with dual Y-axes support |
+   | **3** | **Left Y-Axis (Axis 0)** | Left vertical edge | Primary scale | Default axis for most monitor points (e.g., Temperature, Flow) |
+   | **4** | **Right Y-Axis (Axis 1)** | Right vertical edge | Secondary scale | Alternative axis for different value ranges (e.g., Pressure, Current) |
+   | **5** | **X-Axis (Time)** | Bottom horizontal | Time progression | Shows timestamp progression from left (oldest) to right (newest) |
+   | **6** | **Trend Lines** | Within plot area | Data visualization | Color-coded lines representing each monitor point's values over time |
+   | **7** | **Legend Area** | Right side panel | Series identification | Shows monitor point names, colors, and current values for each trend line |
+   | **8** | **Crosshair Lines** | Interactive overlay | Precise measurements | Vertical and horizontal lines showing exact coordinates when activated |
+   | **9** | **Status Display** | Bottom right corner | Point count & coordinates | Shows total chart points and current mouse/crosshair coordinates |
+
+##### Step 4: Chart Controls & Options
+
+**Master chart control and data management:**
+
+![Modbus Monitor XPF Chart](../../assets/screenshots/xpf-client-charts.webp){ .screenshot-shadow }
+*Complete chart interface showing control toolbar and interactive features*
+
+**Control Toolbar Breakdown (Reference Label 1 from interface above):**
+
+The control toolbar contains all chart operation controls. Each button provides specific functionality:
+
+| Label | Control | Function | Description |
+|-------|---------|----------|-------------|
+| **1a** | **Save Toggle** | Auto CSV Export | **Toggle ON**: Automatically saves chart data to CSV files in Documents folder during data collection<br>**Toggle OFF**: No automatic saving (manual export only)<br>**File Location**: `Documents\ChartData_YYYY-MM-DD_HH-MM-SS.csv` |
+| **1b** | **Clear** | Reset Chart Buffer | Immediately clears all chart data from memory and display<br>**Warning**: Cannot be undone - save important data first<br>**Effect**: Chart starts fresh with next data points |
+| **1c** | **Fit** | Auto-Scale Axes | Automatically adjusts both Y-axis ranges to fit all visible data<br>**Smart Scaling**: Considers both Axis 0 (left) and Axis 1 (right) simultaneously<br>**Usage**: Click after data collection or when chart appears off-screen |
+| **1d** | **Samples** | Buffer Size Control | **Value = 0**: Unlimited buffer (all data retained, chart doesn't pan)<br>**Value > 0**: Rolling window buffer (chart pans left as new data arrives)<br>**Range**: 0 to 999,999 samples<br>**Memory Impact**: Larger buffers use more RAM |
+| **1e** | **Start/Pause** | Chart Update Control | **Started State**: Chart updates in real-time with incoming data<br>**Paused State**: Chart display frozen (data collection continues in background)<br>**Button Text**: Shows "Started" or "Paused" dynamically<br>**Visual**: Play icon when paused, Pause icon when running |
+| **1f** | **Clear Crosshairs** | Remove Measurement Lines | Removes crosshair lines and coordinate display from chart<br>**Reset Function**: Clears all placed crosshairs and delta measurements<br>**Delta Reset**: Removes coordinate difference calculations |
+| **1g** | **Coordinate Display** | Live Position Feedback | **Live Coordinates**: Shows X,Y values under mouse cursor<br>**Crosshair Coordinates**: Displays exact X,Y when crosshairs are active<br>**Delta Calculations**: Shows differences between multiple crosshair points<br>**Format**: `X: 123.456  Y: 78.90` |
+
+**Chart Interactive Features & Measurements:**
+
+| Feature | Mouse Action | Visual Result | Data Display | Usage |
+|---------|-------------|---------------|--------------|-------|
+| **Live Coordinate Tracking** | Mouse Hover over Chart | Cursor position indicator | Real-time X,Y display in coordinate area (1g) | Quick value inspection without placing permanent markers |
+| **Crosshair Placement** | Left Click on Chart Plot (Label 2) | Vertical & horizontal lines appear (Label 8) | Exact X,Y coordinates in display area (1g) | Precise value measurement at specific time points |
+| **Delta Measurement** | Multiple Crosshair Clicks | Multiple crosshair sets (Label 8) | Coordinate differences between points (1g) | Calculate change rates, time intervals, and value differences |
+| **Axis 0 Data Reading** | Click on Left Y-Axis area (Label 3) | Crosshair shows Axis 0 scale | Temperature, Flow, Level readings | Monitor primary process variables |
+| **Axis 1 Data Reading** | Click on Right Y-Axis area (Label 4) | Crosshair shows Axis 1 scale | Pressure, Current, Power readings | Monitor secondary scale variables |
+| **Time Point Selection** | Click on X-Axis area (Label 5) | Vertical crosshair line | Timestamp and all values at that time | Analyze specific time moments |
+| **Trend Line Analysis** | Click near Trend Lines (Label 6) | Highlight selected trend | Individual monitor point value | Focus on specific data series |
+| **Legend Interaction** | Click on Legend Area (Label 7) | Highlight/hide trend lines | Monitor point details | Show/hide specific data series |
+| **Pan Navigation** | Mouse Drag on Chart Plot | Scroll through historical data | Updated time range display | Review past trends when buffer is limited |
+| **Zoom Control** | Mouse Wheel on Chart Plot | Zoom in/out on time axis | Focused time period view | Examine specific time intervals in detail |
+
+**Dual-Axis Coordinate System:**
+
+| Axis | Label | Location | Scale Purpose | Coordinate Display | Monitor Point Assignment |
+|------|-------|----------|---------------|-------------------|--------------------------|
+| **Axis 0** | Label 3 | Left Y-Axis | Primary scale | Left side values in crosshair display | Default axis - Temperature, Flow, Level, Percentage |
+| **Axis 1** | Label 4 | Right Y-Axis | Secondary scale | Right side values in crosshair display | Alternative scale - Pressure, Current, Power, Voltage |
+| **X-Axis** | Label 5 | Bottom | Time progression | Time values in crosshair display | Universal time axis for all monitor points |
+
+**Crosshair & Delta Information System:**
+
+| Information Type | Display Location | Content | Format Example |
+|------------------|------------------|---------|----------------|
+| **Live Coordinates** | Coordinate Display (1g) | Real-time mouse position | `X: 14:30:25  Y0: 23.5°C  Y1: 1250 PSI` |
+| **Crosshair Coordinates** | Coordinate Display (1g) | Placed crosshair values | `Point 1 - X: 14:30:25  Y0: 23.5  Y1: 1250` |
+| **Delta Calculations** | Coordinate Display (1g) | Differences between crosshairs | `ΔX: 00:05:30  ΔY0: +2.3  ΔY1: -45` |
+| **Selected Location** | Status Display (Label 9) | Total points and current selection | `X: 123.456  Y: 78.90  Points: 1250` |
+
+**Advanced Control Functions:**
+
+!!! tip "Chart Control Best Practices"
+    **Optimize chart performance for different scenarios:**
     
-    **Equipment commissioning:**
-    - Monitor startup behavior
-    - Verify settling time and stability
-    - Document performance for baseline
+    **Real-Time Monitoring:**
+    - **Save Toggle**: ON (auto-save for audit trail)
+    - **Samples**: 1000-5000 (manageable buffer size)
+    - **Start/Pause**: Started (continuous updates)
+    - **Crosshairs**: Use for spot measurements
+    
+    **Data Analysis:**
+    - **Save Toggle**: ON (capture complete dataset)
+    - **Samples**: 0 (unlimited for complete history)
+    - **Start/Pause**: Paused (freeze for analysis)
+    - **Fit**: Use frequently to optimize view
+    
+    **Performance Testing:**
+    - **Save Toggle**: ON (document test results)
+    - **Samples**: 10000+ (capture complete test)
+    - **Clear**: Reset between test runs
+    - **Crosshairs**: Mark critical events
+
+**Sample Buffer Configuration:**
+
+| Setting | Behavior | Use Case |
+|---------|----------|----------|
+| **0 (Unlimited)** | All data stored, chart doesn't pan | Short tests, complete data retention |
+| **100-1000** | Rolling window, chart pans left | Medium-term monitoring, memory management |
+| **5000+** | Large rolling buffer | Long-term trending, high-frequency data |
+
+!!! warning "Memory Considerations"
+    **Buffer Size Impact:**
+    
+    - **Unlimited (0)**: Uses increasing memory over time - suitable for tests under 1 hour
+    - **Limited buffer**: Fixed memory usage - required for continuous 24/7 monitoring
+    - **High poll rates**: Consider smaller buffers to prevent memory exhaustion
+    - **Multiple axes**: Memory usage increases with number of chart-enabled points
+
+#### Advanced Chart Features
+
+##### Dual-Axis Configuration
+
+**Optimize multi-signal visualization with different scales:**
+
+![Dual Axis Chart Example](../../assets/screenshots/xpf-dual-axis-chart.webp){ .screenshot-shadow }
+*Example showing temperature and pressure on separate axes*
+
+**When to Use Dual Axes:**
+
+- **Different Value Ranges**: Temperature (0-100°C) vs Pressure (0-3000 PSI)
+- **Different Units**: Speed (RPM) vs Current (Amps) vs Temperature (°C)
+- **Correlation Analysis**: Compare process variables with different scales
+
+**Configuration Strategy:**
+
+```yaml
+Axis 0 (Left) - Process Variables:
+  - Temperature: 0-150°C
+  - Flow Rate: 0-500 GPM
+  - Level: 0-100%
+
+Axis 1 (Right) - Electrical Variables:
+  - Motor Current: 0-50 Amps
+  - Power: 0-100 kW
+  - Frequency: 0-60 Hz
+```
+
+##### Real-Time Performance Optimization
+
+**Optimize chart performance for different monitoring scenarios:**
+
+| Scenario | Poll Rate | Buffer Size | Axis Strategy | Best Practices |
+|----------|-----------|-------------|---------------|----------------|
+| **Quick Test** | 100-500ms | 0 (unlimited) | Single axis | Save data before clearing |
+| **Process Monitoring** | 1-5 seconds | 1000-5000 | Dual axis | Enable Auto Save |
+| **Long-term Trending** | 30-60 seconds | 10000+ | Dual axis | Regular CSV export |
+| **High-speed Capture** | 50-100ms | 500-1000 | Single axis | Limited duration |
+
+#### Chart Data Export & Analysis
+
+##### CSV Export Format
+
+**Chart data export structure for external analysis:**
+
+![CSV Export Dialog](../../assets/screenshots/xpf-csv-export.webp){ .screenshot-shadow }
+*CSV export options and file format*
+
+**Export Process:**
+
+1. **Initiate Export**:
+   - Click **Save** button in chart controls
+   - File save dialog opens
+   - Default location: Windows Documents folder
+
+2. **CSV File Structure**:
+   ```csv
+   Timestamp,Monitor_Point_1,Monitor_Point_2,Monitor_Point_3
+   2025-11-02 14:30:00.123,23.5,1250,TRUE
+   2025-11-02 14:30:01.123,23.7,1255,TRUE
+   2025-11-02 14:30:02.123,23.4,1248,FALSE
+   ```
+
+3. **Analysis Applications**:
+   - **Excel**: Statistical analysis, additional charting
+   - **MATLAB**: Advanced signal processing, FFT analysis
+   - **Python/R**: Custom analytics, machine learning
+   - **Process historians**: Long-term data storage
+
+##### Integration with Auto Save
+
+**Combine charting with automatic data logging:**
+
+!!! tip "Complete Data Capture Strategy"
+    **For comprehensive data collection:**
+    
+    1. **Enable Auto Save**: Captures ALL monitor points every poll cycle
+    2. **Enable Charts**: Visual real-time trends for selected points  
+    3. **Export Charts**: Detailed time-series data for specific analysis
+    4. **Result**: Complete audit trail + focused trending analysis
+
+#### Common Chart Use Cases
+
+##### Process Control Applications
+
+**Industrial process monitoring and optimization:**
+
+!!! example "Temperature Control Loop"
+    **Scenario**: Monitor PID temperature controller performance
+    
+    **Chart Configuration:**
+    ```yaml
+    Axis 0 (Temperature):
+      - Setpoint: 400001 (°C)
+      - Process Variable: 400002 (°C) 
+      - Output: 400003 (%)
+    
+    Axis 1 (Status):
+      - Alarm Status: 100001 (Boolean)
+      - Manual Mode: 100002 (Boolean)
+    ```
+    
+    **Benefits**:
+    - Visualize setpoint tracking performance
+    - Monitor controller output response  
+    - Identify oscillations or instability
+    - Correlate alarms with process conditions
+
+##### Equipment Commissioning
+
+**Validate new equipment performance:**
+
+!!! example "Motor Drive Startup"
+    **Scenario**: Commission variable frequency drive
+    
+    **Chart Setup**:
+    ```yaml
+    Axis 0 (Mechanical):
+      - Speed Command: 400010 (RPM)
+      - Actual Speed: 400011 (RPM)
+      - Torque: 400012 (%)
+    
+    Axis 1 (Electrical):
+      - Motor Current: 400020 (Amps)
+      - DC Bus Voltage: 400021 (VDC)
+      - Power: 400022 (kW)
+    ```
+    
+    **Analysis Goals**:
+    - Verify speed tracking accuracy
+    - Check acceleration/deceleration rates
+    - Monitor current during load changes
+    - Document performance baselines
+
+##### Quality Control Testing
+
+**Automated pass/fail validation with visualization:**
+
+!!! example "Batch Process Validation"
+    **Scenario**: Monitor batch reactor parameters
+    
+    **Combined Tools**:
+    - **Charts**: Real-time trending of critical parameters
+    - **Evaluate Limits**: Automatic pass/fail validation  
+    - **Auto Save**: Complete batch record for compliance
+    
+    **Implementation**:
+    1. Set High/Low limits on all critical parameters
+    2. Enable charting for visual confirmation
+    3. Enable Auto Save for audit trail
+    4. Monitor color-coded limit violations in real-time
+
+#### Troubleshooting Chart Issues
+
+##### Common Problems & Solutions
+
+| Problem | Symptoms | Solution |
+|---------|----------|----------|
+| **No data appearing** | Empty chart, no lines | Verify polling is active, check monitor point Chart checkbox |
+| **Chart not updating** | Frozen display | Check Client connection, verify communication success |
+| **Memory issues** | Slow performance, crashes | Reduce buffer size, limit number of chart points |
+| **Wrong scaling** | Data off-screen | Click **Fit** button, check axis assignments |
+| **Export failure** | CSV save errors | Check disk space, verify Documents folder access |
+
+##### Performance Optimization
+
+**Maximize chart performance for your application:**
+
+!!! tip "Chart Performance Best Practices"
+    **Optimize for your monitoring needs:**
+    
+    **High-Speed Monitoring (≤100ms poll rate):**
+    - Limit to 5-10 chart points maximum
+    - Use buffer size 500-1000 samples
+    - Single axis preferred
+    - Export data frequently
+    
+    **Process Monitoring (1-10 second poll rate):**
+    - Up to 20 chart points manageable
+    - Buffer size 1000-5000 samples  
+    - Dual axis effective
+    - Combine with Auto Save
+    
+    **Long-Term Trending (≥30 second poll rate):**
+    - Unlimited chart points
+    - Large buffer (10000+ samples)
+    - Full dual-axis utilization
+    - Regular CSV exports for archival
+
+!!! example "Memory Usage Calculation"
+    **Estimate memory requirements:**
+    
+    ```
+    Memory Usage = Points × Buffer Size × 8 bytes
+    
+    Example: 10 points × 1000 samples × 8 bytes = 80 KB
+    Large Setup: 50 points × 10000 samples × 8 bytes = 4 MB
+    ```
+    
+    **Guidelines**: Keep total chart memory under 50 MB for optimal performance.
 
 ### Auto Save & Restore Features
 
