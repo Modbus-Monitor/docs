@@ -2422,47 +2422,39 @@ Control how XPF handles value changes in the Value column:
 
 **Configure individual monitor points for charting:**
 
-![Chart Configuration Dialog](../../assets/screenshots/xpf-client-chart-configuration.webp){ .screenshot-shadow }
+![Chart Configuration Dialog](../../assets/screenshots/xpf-client-chart-configuration.webp)
 *Monitor Point chart configuration options*
 
 1. **Client**:
-   - Click the **Client Tab** to find the **Chart Group** 
+      - Click the **Client Tab** to find the **Chart Group** 
    
 2. **Access Chart Settings**:
-   - Click the **three dots (...)** button at the end of any monitor point row   
-   - Extended options dialog opens
+      - Click the **three dots (...)** button at the end of any monitor point row   
+      - Extended options dialog opens
 
 3. **Enable Charting**:
-   - Check the **Chart** checkbox to include this point in trending
-   - **Unchecked**: Monitor point excluded from chart (default)
-   - **Checked**: Values plotted on chart in real-time
-   - **Select Chart Axis**:
-      - **Axis 0 (Left)**: Primary Y-axis scale (e.g., Temperature 0-100°C)
-      - **Axis 1 (Right)**: Secondary Y-axis scale (e.g., Pressure 0-1000 PSI)
-      - **Benefits**: Compare values with different scales simultaneously
+      - Check the **Chart** checkbox to include this point in trending
+      - **Unchecked**: Monitor point excluded from chart (default)
+      - **Checked**: Values plotted on chart in real-time
+      - **Select Chart Axis**:
+         - **Axis 0 (Left)**: Primary Y-axis scale (e.g., Temperature 0-100°C)
+         - **Axis 1 (Right)**: Secondary Y-axis scale (e.g., Pressure 0-1000 PSI)
+         - **Benefits**: Compare values with different scales simultaneously
 4. **View Chart**
-   - Click the **Chart** button in the **Chart Group** on the [Client tab](#client-tab-groups--features) to view the floating chart window
-   - For detailed chart controls, see [Chart Controls & Options](#step-4-chart-controls--options) below
+      - Click the **Chart** button in the **Chart Group** on the [Client tab](#client-tab-groups--features) to view the floating chart window
+      - For detailed chart controls, see [Chart Controls & Options](#step-4-chart-controls--options) below
 
 5. **Optimize Performance**
-   - Configure timeout settings in the [Client tab](#client-tab-groups--features) to minimize delays between polls
-   - **Nyquist Rate**: Poll rate should be at least 2x faster than the fastest expected data changes for smooth graphs
-   - See [Timeout Settings](#timeout-settings) for optimization guidelines
+      - Configure timeout settings in the [Client tab](#client-tab-groups--features) to minimize delays between polls
+      - **Nyquist Rate**: Poll rate should be at least 2x faster than the fastest expected data changes for smooth graphs
+      - See [Timeout Settings](#timeout-settings) for optimization guidelines
 
-
-!!! tip "Multi-Point Selection"
-    **Enable charting for multiple points efficiently:**
-    
-    - **Select multiple rows**: Use `Ctrl+Click` for individual points or `Shift+Click` for ranges
-    - **Batch configuration**: All selected points can be configured simultaneously
-    - **Axis assignment strategy**: Group similar ranges on same axis (temperatures on Axis 0, pressures on Axis 1)
 
 ##### Step 2: Start Data Collection
 
 **Begin polling to collect chart data:**
 
-![Client Polling Controls](../../assets/screenshots/xpf-client-poll-controls.webp){ .screenshot-shadow }
-*Client tab polling controls for chart data collection*
+Refer to [Modbus Client Operations](#modbus-client-operations) on locations of Client controls.
 
 1. **Configure Client Connection**:
    - Set up TCP, UDP, or Serial connection in Client tab
@@ -2482,15 +2474,14 @@ Control how XPF handles value changes in the Value column:
 ##### Step 3: Access Chart View
 
 **Switch to chart display and configure visualization:**
-![Modbus Monitor XPF Chart](../../assets/screenshots/xpf-client-charts.webp)
-
-![Chart Window Interface](../../assets/screenshots/xpf-chart-window.webp){ .screenshot-shadow }
-*Complete chart window showing dual-axis trending*
 
 1. **Open Chart Window**:
    - Click **Chart** button in Client tab → Chart group
-   - Chart window replaces Monitor Points table view
+   - Chart pops out as floting winow
    - All chart-enabled points appear as trending lines
+
+![Modbus Monitor XPF Chart](../../assets/screenshots/xpf-client-charts.webp)
+*Complete chart window showing dual-axis trending*
 
 2. **Complete Chart Interface Reference**:
 
@@ -2500,20 +2491,31 @@ Control how XPF handles value changes in the Value column:
    |-------|-----------|----------|----------|---------|
    | **1** | **Control Toolbar** | Top horizontal bar | Chart operation controls | Contains all chart control buttons (1a-1g) detailed below |
    | **2** | **Chart Plot Area** | Main display | Time-series visualization | Multi-colored trend lines with dual Y-axes support |
-   | **3** | **Left Y-Axis (Axis 0)** | Left vertical edge | Primary scale | Default axis for most monitor points (e.g., Temperature, Flow) |
-   | **4** | **Right Y-Axis (Axis 1)** | Right vertical edge | Secondary scale | Alternative axis for different value ranges (e.g., Pressure, Current) |
-   | **5** | **X-Axis (Time)** | Bottom horizontal | Time progression | Shows timestamp progression from left (oldest) to right (newest) |
-   | **6** | **Trend Lines** | Within plot area | Data visualization | Color-coded lines representing each monitor point's values over time |
+   | **3** | **Location Info** | Right Top | Selection Info | Show XY value of selection inside Plot Area |
+   | **4** | **Trend Lines** | Within plot area | Data visualization | Color-coded lines representing each monitor point's values over time |
+   | **5** | **Left Y-Axis (Axis 0)** | Left vertical edge | Primary scale | Default axis for most monitor points (e.g., Temperature, Flow) |
+   | **6** | **Right Y-Axis (Axis 1)** | Right vertical edge | Secondary scale | Alternative axis for different value ranges (e.g., Pressure, Current) |
    | **7** | **Legend Area** | Right side panel | Series identification | Shows monitor point names, colors, and current values for each trend line |
-   | **8** | **Crosshair Lines** | Interactive overlay | Precise measurements | Vertical and horizontal lines showing exact coordinates when activated |
-   | **9** | **Status Display** | Bottom right corner | Point count & coordinates | Shows total chart points and current mouse/crosshair coordinates |
+   
+
+**Chart Interactive Features & Measurements:**
+
+| Feature | Mouse Action | Visual Result | Data Display | Usage |
+|---------|-------------|---------------|--------------|-------|
+| **Crosshair Placement** | Left Click on Chart Plot (Label 2) | Vertical & horizontal lines appear as overlay | Exact X,Y coordinates in display area (1g) | Precise value measurement at specific time points |
+| **Delta Measurement** | Multiple Crosshair Clicks | Multiple crosshair sets as overlay | Coordinate differences between points (1g) | Calculate change rates, time intervals, and value differences |
+| **Axis 0 Data Reading** | Click on Left Y-Axis area (Label 3) | Crosshair shows Axis 0 scale | Temperature, Flow, Level readings | Monitor primary process variables |
+| **Axis 1 Data Reading** | Click on Right Y-Axis area (Label 4) | Crosshair shows Axis 1 scale | Pressure, Current, Power readings | Monitor secondary scale variables |
+| **Time Point Selection** | Click on X-Axis area (Label 5) | Vertical crosshair line | Timestamp and all values at that time | Analyze specific time moments |
+| **Trend Line Analysis** | Click near Trend Lines (Label 6) | Highlight selected trend | Individual monitor point value | Focus on specific data series |
+| **Legend Interaction** | Click on Legend Area (Label 7) | Highlight/hide trend lines | Monitor point details | Show/hide specific data series |
+| **Pan Navigation** | Right-click Mouse Drag on Chart Plot | Scroll through historical data | Updated time range display | Review past trends when buffer is limited |
+| **Zoom Control** | Mouse Wheel on Chart Plot | Zoom in/out on time axis | Focused time period view | Examine specific time intervals in detail |
 
 ##### Step 4: Chart Controls & Options
 
 **Master chart control and data management:**
 
-![Modbus Monitor XPF Chart](../../assets/screenshots/xpf-client-charts.webp){ .screenshot-shadow }
-*Complete chart interface showing control toolbar and interactive features*
 
 **Control Toolbar Breakdown (Reference Label 1 from interface above):**
 
@@ -2529,20 +2531,6 @@ The control toolbar contains all chart operation controls. Each button provides 
 | **1f** | **Clear Crosshairs** | Remove Measurement Lines | Removes crosshair lines and coordinate display from chart<br>**Reset Function**: Clears all placed crosshairs and delta measurements<br>**Delta Reset**: Removes coordinate difference calculations |
 | **1g** | **Coordinate Display** | Live Position Feedback | **Live Coordinates**: Shows X,Y values under mouse cursor<br>**Crosshair Coordinates**: Displays exact X,Y when crosshairs are active<br>**Delta Calculations**: Shows differences between multiple crosshair points<br>**Format**: `X: 123.456  Y: 78.90` |
 
-**Chart Interactive Features & Measurements:**
-
-| Feature | Mouse Action | Visual Result | Data Display | Usage |
-|---------|-------------|---------------|--------------|-------|
-| **Live Coordinate Tracking** | Mouse Hover over Chart | Cursor position indicator | Real-time X,Y display in coordinate area (1g) | Quick value inspection without placing permanent markers |
-| **Crosshair Placement** | Left Click on Chart Plot (Label 2) | Vertical & horizontal lines appear (Label 8) | Exact X,Y coordinates in display area (1g) | Precise value measurement at specific time points |
-| **Delta Measurement** | Multiple Crosshair Clicks | Multiple crosshair sets (Label 8) | Coordinate differences between points (1g) | Calculate change rates, time intervals, and value differences |
-| **Axis 0 Data Reading** | Click on Left Y-Axis area (Label 3) | Crosshair shows Axis 0 scale | Temperature, Flow, Level readings | Monitor primary process variables |
-| **Axis 1 Data Reading** | Click on Right Y-Axis area (Label 4) | Crosshair shows Axis 1 scale | Pressure, Current, Power readings | Monitor secondary scale variables |
-| **Time Point Selection** | Click on X-Axis area (Label 5) | Vertical crosshair line | Timestamp and all values at that time | Analyze specific time moments |
-| **Trend Line Analysis** | Click near Trend Lines (Label 6) | Highlight selected trend | Individual monitor point value | Focus on specific data series |
-| **Legend Interaction** | Click on Legend Area (Label 7) | Highlight/hide trend lines | Monitor point details | Show/hide specific data series |
-| **Pan Navigation** | Mouse Drag on Chart Plot | Scroll through historical data | Updated time range display | Review past trends when buffer is limited |
-| **Zoom Control** | Mouse Wheel on Chart Plot | Zoom in/out on time axis | Focused time period view | Examine specific time intervals in detail |
 
 **Dual-Axis Coordinate System:**
 
@@ -3030,7 +3018,7 @@ Documents/ModbusScan_2025-10-28_14-32-15.csv
 
 ### Powerful Multi-Server Architecture - Revolutionary Time & Hardware Savings
 
-**🚀 Game-Changing Feature:** XPF's most powerful capability is running **multiple Modbus servers simultaneously on different interfaces** - a revolutionary approach that **saves significant time and eliminates the need for extra hardware**.
+**Game-Changing Feature:** XPF's most powerful capability is running **multiple Modbus servers simultaneously on different interfaces** - a revolutionary approach that **saves significant time and eliminates the need for extra hardware**.
 
 **Traditional Approach vs. XPF Multi-Server:**
 
@@ -3105,17 +3093,22 @@ Documents/ModbusScan_2025-10-28_14-32-15.csv
     **Hardware Savings:**
     ```
     Traditional Setup:
-    - 4 different Modbus devices = $2,000-$10,000
-    - Multiple COM port cards = $200-$500  
-    - Network switches/hubs = $100-$300
-    - Total Hardware: $2,300-$10,800
+    - 4 Industrial Modbus devices = $1,200-$4,500
+        (PLCs: $300-$800 each, I/O modules: $150-$400 each, 
+         VFDs: $250-$600 each, HMIs: $500-$1,200 each)
+      - Multi-port serial cards = $75-$250
+      - Ethernet switches/media converters = $150-$450
+      - RS485 repeaters/isolators = $100-$300
+      - Cables and terminators = $50-$200
+      - Total Hardware: $1,575-$5,700
     
     XPF Approach:
-    - Single PC with XPF = $0 extra hardware
-    - USB-to-serial adapters = $20-$100
-    - Total Hardware: $20-$100
+      - Single PC with XPF = $0 extra hardware
+      - USB-to-RS485/RS232 adapters = $25-$150
+      - Basic Ethernet switch (if needed) = $30-$80
+      - Total Hardware: $55-$230
     
-    Savings: $2,280-$10,700 (95%+ reduction)
+    Savings: $1,520-$5,470 (87-96% reduction)
     ```
     
     **Time Savings:**
