@@ -4,7 +4,7 @@
 
 **A practical guide for controls engineers and technicians**
 
-[TOC]
+<!-- [TOC] -->
 
 ## 1. Introduction
 
@@ -567,23 +567,33 @@ Located at the very top, this toolbar provides one-click access to frequently us
     
     This provides instant access to 90% of common operations without navigating through ribbon tabs.
 
-#### 2. Ribbon Tabs
+#### 2. Ribbon Tabs Overview
 
-Below the Quick Access Toolbar, you'll find multiple tabs that organize all application features:
+Below the Quick Access Toolbar, you'll find multiple tabs that organize all application features. The standard Modbus Monitor XPF ribbon contains the following tabs, from left to right:
 
 **Standard Tabs (Always Visible):**
 
-- **File** - Backstage view with file operations, licensing, settings, support, and links
-- **Home** - Most frequently used commands (copy/paste, Modbus Wizard, list management)
-- **Client** - Modbus Client (Master) operations (interface config, polling, scanner, charts)
-- **Server** - Modbus Server (Slave) operations (interface config, Modbus TCP Server, Modbus RTU Server )
-- **IoT** - IoT integration (ThingSpeak cloud logging, MQTT messaging for cloud/device communication)
+| Tab | Purpose | Key Features |
+|-----|---------|--------------|
+| **File** | Backstage view | File operations, licensing, theme settings, recent files, online resources, exit |
+| **Home** | Main Operations | Copy/paste, Modbus Wizard, list management, filtering, evaluation |
+| **Client** | Modbus Client (Master) | Interface selection, timeouts, write functions, scanner, charts, poll controls |
+| **Server** | Modbus Server (Slave) | Interface config, Modbus TCP Server, Modbus RTU Server, traffic capture, simulation |
+| **IoT** | Cloud integration | ThingSpeak logging, MQTT messaging, cloud-to-device communication |
 
-**Contextual Tabs (Appear When Features Active):**
+**Contextual Tabs (Appear Dynamically):**
 
-- **Log Options** - Appears when Event Log is active (filter, export, auto-scroll controls)
-<!-- - **Chart Options** - Appears when Chart view is open (axis config, samples, data export)
-- **Server Options** - Appears when Server mode is running (traffic capture, simulation settings) -->
+| Tab | Trigger | Key Features |
+|-----|---------|--------------|
+| **Log Options** | Event Log active | Filter errors, export logs, auto-scroll, timestamp format, clear history |
+
+!!! note "How Contextual Tabs Work"
+    Contextual tabs (also known as Option Tabs) appear only when you activate specific features, providing relevant controls without cluttering the interface.
+    
+    **Examples:**
+    - Click **Show** button in Home tab → Log group → **Log Options** tab appears
+    
+    When you deactivate the feature (close log, close chart), the contextual tab automatically disappears.
 
 The active tab is highlighted, making it easy to see which commands are currently available.
 
@@ -621,34 +631,280 @@ The main workspace at the bottom displays different information depending on the
 
 Each view provides relevant information for the specific task being performed.
 
-#### Ribbon Tabs Overview
+### Complete Ribbon Tab Reference
 
-The standard Modbus Monitor XPF ribbon contains the following tabs, from left to right:
+This section provides comprehensive coverage of all ribbon tabs and their functionality. Each tab contains groups of related commands organized by function.
 
-**Standard Tabs (Always Visible):**
+#### File Tab
 
-| Tab | Purpose | Key Features |
-|-----|---------|--------------|
-| **File** | Backstage view | File operations, licensing, theme settings, recent files, online resources, exit |
-| **Home** | Main Operations | Copy/paste, Modbus Wizard, list management, filtering, evaluation |
-| **Client** | Modbus Client (Master) | Interface selection, timeouts, write functions, scanner, charts, poll controls |
-| **IoT** | Cloud integration | ThingSpeak logging, MQTT messaging, cloud-to-device communication |
+The **File Tab** provides access to the backstage view containing essential file operations, application settings, license management, and resources. Click the **File** tab to enter this full-screen view.
 
-**Contextual Tabs (Appear Dynamically):**
+##### Home Section
 
-| Tab | Trigger | Key Features |
-|-----|---------|--------------|
-| **Log Options** | Event Log active | Filter errors, export logs, auto-scroll, timestamp format, clear history |
-<!-- | **📈 Chart Options** | Chart view open | Axis configuration, sample buffer size, fit to view, export chart data, clear buffer | -->
+The Home section provides quick access to your file system and document management:
 
+| Feature | Icon/Button | Description |
+|---------|-------------|-------------|
+| **Home** | Home button | Navigate to Documents folder |
+| **Open** | Folder icon | Open folder in Windows Explorer |
+| **Up** | Up arrow | Move up one level in directory tree |
+| **Current Folder** | `<Documents>` | Displays current folder name |
 
-!!! note "How Contextual Tabs Work"
-    Contextual tabs (also known as Option Tabs) appear only when you activate specific features, providing relevant controls without cluttering the interface.
+##### Recent Section
+
+Quick access to recently used Modbus maps and configurations:
+
+| Button | Function | Description |
+|--------|----------|-------------|
+| **Refresh** | Update list | Refresh the recent files list |
+| **Open Folder** | Show location | Opens folder containing selected file |
+| **Open File** | Load map | Loads selected configuration in XPF |
+| **Remove** | Delete entry | Remove selected file from recent list |
+| **Delete** | Clear all | Deletes all entries from recent list |
+
+!!! tip "Quick File Access"
+    The Recent Files list is the fastest way to switch between different device configurations. Your most commonly used maps are always one click away.
+
+##### About Section
+
+Access version information, documentation, and support resources:
+
+| Option | Description | Action |
+|--------|-------------|--------|
+| **Version** | Current application version | Displays installed version number |
+| **Activate** | License activation | Opens license window for activation |
+| **Submit Feedback** | User feedback | Direct feedback to developers |
+| **Documentation** | Online help | Access comprehensive online help |
+| **Videos** | Tutorial videos | Links to YouTube tutorials |
+| **Contact Email** | Support contact | Email address for inquiries |
+| **Privacy Policy** | Data handling | View privacy policy details |
+| **EULA** | License agreement | End User License Agreement terms |
+
+**Quick Actions:**
+
+- **Need help?** Click **Documentation** for online guides
+- **New to XPF?** Click **Videos** for visual tutorials  
+- **License issues?** Click **Activate** to manage licenses
+- **Feature requests?** Use **Submit Feedback**
+
+##### Settings Section
+
+Customize the application theme to match your environment:
+
+| Theme | Description | Best For |
+|-------|-------------|----------|
+| **Light** | Bright interface | Well-lit environments, daytime use |
+| **Dark** | Dark interface | Low-light environments, reduced eye strain |
+| **System Default** | Follows Windows | Automatically matches Windows theme |
+
+**Theme Selection:**
+
+1. Click **File Tab** → **Settings**
+2. Choose theme from dropdown
+3. Theme applies immediately (no restart needed)
+
+!!! tip "Field Work Preference"
+    Many field technicians prefer **Dark theme** when working in dimly lit equipment rooms or cabinets.
+
+##### Exit
+
+**Exit** button safely closes the Modbus Monitor XPF application:
+
+- **Saves** current window position and settings
+- **Prompts** to save unsaved changes (if any)
+- **Terminates** all active connections properly
+- **Releases** serial ports and network resources
+
+#### Home Tab
+
+The **Home Tab** contains the most frequently used commands for essential operations - everything you need for working with Modbus maps and monitoring points.
+
+![Home Tab Interface](../../assets/screenshots/xpf-home-tab.png)
+
+##### File Group
+
+**Import and Export Documents** - Manage Documents, Import and Export Modbus Maps in CSV format. Access pre-built Modbus Maps for common devices (VFDs, Energy Meters, PLCs) from factory-validated or community sources.
+
+| Feature | Description | Details |
+|---------|-------------|---------|
+| **Save** | Save current document in CSV format | Preserves entire Modbus map configuration including monitor points, settings, and extended properties for reuse |
+| **Save As** | Save As New document | Preserves entire Modbus map configuration including monitor points, settings, and extended properties for reuse |
+| **Open** | Open previously saved file | Load saved XPF configuration files (CSV format) from any location |
+| **Online** | Download Modbus Maps from online folder or community | Access pre-configured maps from (1) factory-released validated maps or (2) community-uploaded maps. See detailed explanation below. |
+
+!!! note "CSV Format Benefits"
+    XPF saves configurations as standard CSV files, making them easy to:
     
-    **Examples:**
-    - Click **Show** button in Home tab → Log group → **Log Options** tab appears
+    - **Edit** in Excel or text editors for batch modifications
+    - **Version control** using Git or other systems
+    - **Share** with team members or across sites
+    - **Document** device configurations for compliance
+
+##### Clipboard Group
+
+**Copy and Paste Operations** - Transfer data between XPF and external applications like Excel. Copy, paste, and cut monitor points for quick duplication or reorganization.
+
+| Operation | Shortcut | Description |
+|-----------|----------|-------------|
+| **Paste** | `Ctrl+V` | Paste from clipboard from selected row(s) - either from the application or Microsoft Excel. Adds to end of list. |
+| **Copy** | `Ctrl+C` | Copy selected single or multiple row(s) to clipboard. Multiple sequential rows can be selected with Shift+Click's first and last row. Multiple rows in any order using Control+Click. |
+| **Cut** | `Ctrl+X` | Copy the content of the current item to clipboard and delete the item from the list. |
+
+##### Modbus Wizard Group
+
+The **Modbus Wizard** provides a streamlined interface for configuring monitor points without manually editing the table. Access it by clicking the **Dialog Launcher** (small arrow) in the Modbus Wizard group corner.
+
+![Modbus Wizard Dialog](../../assets/screenshots/xpf-modbus-wizard.webp){ .screenshot-shadow }
+*Modbus Wizard configuration interface*
+
+**Configuration Fields:**
+
+| Field | Purpose | Options/Format |
+|-------|---------|----------------|
+| **Register Name** | Descriptive identifier | Text field - name your monitor point |
+| **Modbus Function** | Register type and access | See [Function Codes](#2-address-field-6-digit-format) reference below |
+| **Sub-Function** | Function variant *(FC8 only)* | Appears for FC8 Diagnostics - e.g., "0 (0x0) Return Query Data" |
+| **Device ID** | Device identification type *(FC43-14 only)* | Appears for FC43-14 - e.g., "01 Get Basic Device ID (stream)" |
+| **Object ID** | MEI object identifier *(FC43-14 only)* | Appears for FC43-14 - Object number (00-FF hexadecimal) |
+| **CustomQ** | Custom Modbus Packet | Add PDU part of the Modbus Command to send any command  |
+| **Data Request** | Request address/value | Address or data value for the request |
+| **Address** |  Modbus Address | Zero or One based Modbus Address (see [6-digit format](#2-address-field-6-digit-format)) |
+| **Data Type** | Data interpretation | See [Data Types](#3-data-type-options) reference below |
+| **Poll Rate Control** | Update frequency | NONE, SKIP, ONCE, INTERVAL (Adjust Poll Rate value) |
+| **Bit Field** | Extract specific bit | 0-15 for 16-bit registers - selects individual bit |
+| **Write Only** | Skip during reads | Checkbox - for write-only registers |
+
+!!! info "Function-Specific Fields"
+    The wizard dynamically displays additional fields based on the selected Modbus Function:
     
-    When you deactivate the feature (close log, close chart), the contextual tab automatically disappears.
+    - **FC8 Diagnostics**: Shows `Sub-Function` dropdown with diagnostic test options
+    - **FC43-14 Read Device Identification**: Shows `Device ID` and `Object ID` fields for MEI object selection
+    - These fields only appear when their corresponding function is selected
+
+##### List Group
+
+**Add and Remove Points** - Add, remove, or modify monitor points in bulk. Change addressing modes (0-based/1-based), swap Unit IDs globally, or set decimal precision for all numeric displays.
+
+The **List Group** provides essential tools for managing your Monitor Points (also called Rows or Items) in the configuration table:
+
+| Button | Function | Description |
+|--------|----------|-------------|
+| **Add** | Add new point | Creates new row with default values. Automatically **increments address by one** from the last row for quick sequential entry. |
+| **Remove** | Delete selected point(s) | Removes selected monitor point(s) from the table. Select multiple with `Ctrl+Click` (non-sequential) or `Shift+Click` (range). |
+| **Delete All** | Clear entire list | Removes **ALL monitor points** from the table. **Use with caution** - this action cannot be undone! |
+| **Offset** | Toggle address base | Switch between **1-based** (1-65536) and **0-based** (0-65535) addressing for all addresses in the list. |
+| **Swap ID** | Change Unit ID globally | Updates **Unit ID** (Slave/Station ID) for **all monitor points** at once. Useful when reconfiguring for a different device. |
+| **Decimal Places** | Set display precision | Configure the number of decimal places for displaying numeric values throughout the application. |
+
+##### Filter Group
+
+**Search and Filter Monitor Points** - Search Name and Address fields to quickly locate specific monitor points. Filter large lists by text search or Unit ID to focus on relevant registers during troubleshooting or configuration.
+
+![Filter Interface](../../assets/screenshots/xpf-home-filter.png){ .screenshot-shadow }
+
+**Filter Components:**
+
+| Label | Component | Description |
+|-------|-----------|-------------|
+| **1** | **Row Index**| Shows the **index of the currently selected row**. Especially useful when the list is filtered to know the true row number. -1 when none Selected.|
+| **2** | **Filter Text Box** | Enter text to search. Filters all **Name** and **Address** fields that contain the entered text. |
+| **3** | **Total Rows** | Shows the **total number of rows** in the current view (filtered or full list). |
+| **4** | **Clear Filter**| Clears the text filter and shows all rows in the list. |
+| **5** | **Clear ID** | Clears the ID filter and shows all rows in the list. |
+| **6** | **ID Dropdown** | Select **Unit ID** (Slave ID or Station ID) to filter by device. Combine with text filter for precise results. |
+
+##### Evaluate Group
+
+**Value Validation and Testing** - Validate register values against configurable limits with automatic color coding. Set pass/fail thresholds for quality control testing or equipment health monitoring.
+
+Change the background colors of the Value cell based on the High, Low, and Nominal Limits. **Quickly validate the value from the Modbus device and test to see if it is within the valid range.**
+
+![Evaluate Settings](../../assets/screenshots/xpf-evaluate-limits.webp){ .screenshot-shadow }
+
+##### Log Group
+
+**Communication Monitoring and Logging** - View and record all Modbus communication traffic for troubleshooting. Filter errors, export logs to file, and timestamp all events for accurate diagnostics.
+
+![Log Group Interface](../../assets/screenshots/xpf-home-log.png){ .screenshot-shadow }
+*Four key areas: 1 Log Group (Home Tab), 2 Options Tab, 3 Quick Access Header (3a-3h), 4 Log Window*
+
+**Complete Log Controls Reference:**
+
+All log controls in one comprehensive table. Labels **1**, **2**, **3a-3h**, and **4** correspond to the screenshot above.
+
+| Label | Control | Location | Type | Function |
+|-------|---------|----------|------|----------|
+| **1** | **Show** | Home Tab → Log Group | Toggle Button | Show/hide Event Log view. **Pressed**: Replaces Monitor Points table with log display, Options tab appears. **Released**: Returns to Monitor Points table. |
+| **2** | **Log/Options Tab** | Contextual Ribbon | Dynamic Tab | Appears when log is active. Contains logging and filter controls. Disappears when log closed (logging continues in background if started). |
+| **2** | **Filter** | Quick Access Header or Options Tab | Text Input Box | Real-time text search. Type to filter log entries, clear to show all. Case-insensitive search. |
+| **2** | **Errors** | Options Tab | Toggle Button | **Checked**: Show errors only (timeouts, exceptions). **Unchecked**: Show all events (success + errors). |
+| **3a or 2** | **Start/Stop** | Quick Access Header or Options Tab | Toggle Button | **Start**: Begin capturing events. **Stop**: Pause recording. Auto-resumes if saved while running. |
+| **3b or 2** | **Auto Save** | Quick Access Header or Options Tab | Toggle Button | **ON**: Continuously writes log to Documents folder. **OFF**: Logs remain in memory only. |
+| **3c or 2** | **Copy All** | Quick Access Header or Options Tab | Button | Export all visible log entries to clipboard (timestamp + details). Paste into Excel, email, or text editor. Click on any log entry to enable this button. |
+| **3d  or 2** | **Clear** | Quick Access Header or Options Tab | Button | Delete all log entries from display. **Warning**: Cannot be undone. Save or copy important logs first. |
+| **3e** | **Save** | Quick Access Header | Button | Save current log entries to a file in Documents folder. |
+| **3f** | **Float** | Quick Access Header | Button | Float the Log window outside the application's main window as a separate window. |
+| **3g** | **Expand** | Quick Access Header | Button | Expand log window to full screen or restore to normal size. |
+| **3h or 2** | **Close** | Quick Access Header or Options Tab | Button | Close Log Window and return to Monitor Points (logging continues in background if started). |
+| **4** | **Log Window** | Window Portal Area | Display Panel | Shows timestamped communication events. Replaces Monitor Points table when log is active. |
+
+##### Online Maps Group
+
+**Cloud-Based Modbus Maps** - View and Download Online Modbus Maps from either **(1) factory-released maps** by Modbus Monitor or **(2) community-uploaded maps** from users. Toggle the **Online** button in the File group located in the Home tab to activate this feature. **An internet connection is required** to use this feature.
+
+![Online Maps Interface](../../assets/screenshots/xpf-home-file-online.webp)
+*How to download pre-defined Modbus Map*
+
+#### Client Tab
+
+**Client Mode Overview:** XPF operates as a Modbus Master (Client) when you want to read data from or write data to remote Modbus devices. In this mode, XPF initiates all communication by sending requests to Modbus Server devices (PLCs, drives, meters, sensors) and processes their responses.
+
+![Modbus Monitor XPF Client](../../assets/screenshots/xpf-client-tab.webp)
+
+##### Client Tab Groups & Features
+
+**Complete reference for all Client tab ribbon groups and their functionality:**
+
+| Group | Purpose | Key Features | Description |
+|-------|---------|--------------|-------------|
+| **Interface** | Protocol Selection | Interface Type, Protocol Options, One-Based Toggle | Choose connection type (TCP/UDP/Serial) and Modbus protocol variant (Standard/RTU/ASCII) |
+| **TCP** | Network Settings | IP Address, Port, Connection Timeout | Configure Ethernet-based connections with IP address, port number, and connection timeout settings |
+| **COM** | Serial Settings | COM Port, Baud Rate, Data Bits, Parity, Stop Bits | Configure serial communication parameters for RTU/ASCII over RS232/RS485 connections |
+| **Timeout** | Timing Control | Response Timeout, Inter-Frame Delay, Poll Rate, Retries | Critical timing parameters for reliable communication and performance optimization |
+| **Write** | Write Operations | Auto/Manual Mode, Function Code Selection | Control how value changes are written to devices - automatic smart selection or manual function code control |
+| **Scanner** | Address Discovery | Start Address, Register Count, Data Type, Swap Type, Unit ID | Systematically discover unknown registers and automatically build monitor point lists |
+| **Value** | Data Management | Clear Values Toggle | **Click**: Immediately clears all values from display. **Toggle ON**: Automatically clears all monitor point values before starting each polling cycle for fresh data collection |
+| **Chart** | Data Visualization | Chart Button | Switch to real-time charting view for trending analysis of tagged monitor points |
+| **Client Poll** | Operation Control | Auto Save, Restore, Write, Read, Statistics, Start/Stop | Main operational controls for polling, data collection, and client status monitoring |
+
+#### Server Tab
+
+**Server Mode Overview:** XPF operates as a Modbus Server (Slave) when you want to simulate Modbus devices or provide data to Modbus Client applications. In this mode, XPF responds to requests from Modbus Master devices (SCADA systems, HMIs, PLCs) by serving data from your configured monitor points.
+
+![Modbus Monitor XPF Server](../../assets/screenshots/xpf-server-tab.webp)
+
+##### Server Tab Groups & Features
+
+**Complete reference for all Server tab ribbon groups and their functionality:**
+
+| Group | Purpose | Key Features | Description |
+|-------|---------|--------------|-------------|
+| **TCP** | Network Server | Interface Type, Port, Protocol Options, IP Configuration, Enable | Configure TCP/UDP Modbus servers with protocol variants and network settings |
+| **Serial** | COM Port Servers | COM Port Selection, Baud Rate, Data Bits, Parity, Stop Bits, Protocol | Configure serial Modbus servers on multiple COM ports with individual settings |
+| **Capture** | Traffic Analysis | On/Off Toggle, Auto Value/Default Value | Automatically capture incoming requests and build Modbus maps from live traffic |
+| **Simulate** | Data Generation | Sample Time, Frequency, Sample Generator, Value Controls | Advanced simulation engine for generating dynamic test data patterns |
+| **Server** | Operation Control | Statistics, Connection Count, Start/Stop | Main server control with connection monitoring and operational status |
+
+#### IoT Tab
+
+**IoT Integration Overview:** The IoT tab provides cloud connectivity features for logging Modbus data to cloud platforms and enabling remote monitoring capabilities.
+
+**Key IoT Features:**
+
+| Group | Purpose | Key Features | Description |
+|-------|---------|--------------|-------------|
+| **ThingSpeak** | Cloud Logging | API Key, Channel ID, Field Mapping | Log monitor point values to ThingSpeak cloud platform for remote monitoring and analysis |
+| **MQTT** | Messaging Protocol | Broker Configuration, Topic Publishing, Real-time Messaging | Publish Modbus data via MQTT for IoT device communication and cloud integration |
 
 #### Key Concepts
 
