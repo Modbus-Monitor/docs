@@ -2818,16 +2818,22 @@ Documents/ModbusScan_2025-10-28_14-32-15.csv
 - **Maintenance**: Restore devices to known-good configurations
 - **Calibration**: Set reference values for sensor calibration
 
-### Poll Controls
+### Client Poll - Controls
 
+![Modbus Monitor XPF Client](../../assets/screenshots/xpf-client-tab.webp)
+
+    
 | Control | Function | Usage |
 |---------|----------|-------|
-| **Start** | Begin continuous polling | Regular monitoring operations |
-| **Stop** | End polling cycle | Stop data collection |
-| **Read Once** | Single scan all points | One-time data snapshot |
-| **Write Once** | Single write operation | Set value without continuous polling |
+| **Auto Save** | CSV data logging | Automatically saves every scan to timestamped CSV files in `My Documents` folder |
+| **Restore** | Upload values | Writes current monitor point values back to remote devices |
+| **Write** | Single write | Writes selected monitor point value once |
+| **Read** | Single poll | Polls all monitor points once and stops |
+| **Statistics** | TX/RX counters | Shows communication statistics and frames per second <br> Click to reset counters to 0 on next poll |
+| **Start/Stop** | Master control | Begins/ends continuous polling operation |
 
-## Modbus Server (Slave) Operations
+
+## Modbus Server (Slave) Operations - Tab
 
 **Server Mode Overview:** XPF operates as a Modbus Server (Slave) when you want to simulate Modbus devices or provide data to Modbus Client applications. In this mode, XPF responds to requests from Modbus Master devices (SCADA systems, HMIs, PLCs) by serving data from your configured monitor points. This is invaluable for development, testing, and device simulation without requiring physical hardware.
 
