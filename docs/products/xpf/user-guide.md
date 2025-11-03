@@ -2489,12 +2489,12 @@ Refer to [Modbus Client Operations](#modbus-client-operations) on locations of C
    
    | Label | Component | Location | Function | Details |
    |-------|-----------|----------|----------|---------|
-   | **1** | **Control Toolbar** | Top horizontal bar | Chart operation controls | Contains all chart control buttons (1a-1g) detailed below |
-   | **2** | **Chart Plot Area** | Main display | Time-series visualization | Multi-colored trend lines with dual Y-axes support |
+   | **1** | **Control Toolbar** | Top horizontal bar | Chart operation controls | Contains all chart control buttons (1a-1g) detailed in [Control Toolbar Breakdown](#control-toolbar-breakdown-reference-label-1-from-interface-above) below |
+   | **2** | **Chart Plot Area**| Main display | Time-series visualization <br> Delta Measurement | Multi-colored trend lines with dual Y-axes support <br> Multiple crosshair sets as overlay |
    | **3** | **Location Info** | Right Top | Selection Info | Show XY value of selection inside Plot Area |
    | **4** | **Trend Lines** | Within plot area | Data visualization | Color-coded lines representing each monitor point's values over time |
-   | **5** | **Left Y-Axis (Axis 0)** | Left vertical edge | Primary scale | Default axis for most monitor points (e.g., Temperature, Flow) |
-   | **6** | **Right Y-Axis (Axis 1)** | Right vertical edge | Secondary scale | Alternative axis for different value ranges (e.g., Pressure, Current) |
+   | **5** | **Left Y-Axis** | Left vertical edge | Primary scale <br> (Axis 0) | Default axis for most monitor points (e.g., Temperature, Flow) |
+   | **6** | **Right Y-Axis** | Right vertical edge | Secondary scale <br>  (Axis 1) | Alternative axis for different value ranges (e.g., Pressure, Current) |
    | **7** | **Legend Area** | Right side panel | Series identification | Shows monitor point names, colors, and current values for each trend line |
    
 
@@ -2534,14 +2534,6 @@ The control toolbar contains all chart operation controls. Each button provides 
 | **Axis 1** | Label 4 | Right Y-Axis | Secondary scale | Right side values in crosshair display | Alternative scale - Pressure, Current, Power, Voltage |
 | **X-Axis** | Label 5 | Bottom | Time progression | Time values in crosshair display | Universal time axis for all monitor points |
 
-**Crosshair & Delta Information System:**
-
-| Information Type | Display Location | Content | Format Example |
-|------------------|------------------|---------|----------------|
-| **Coordinates** | Coordinate Display (1g) | Selected mouse position | `X: 14:30:25  Y0: 23.5°C  Y1: 1250` |
-| **Crosshair Coordinates** | Coordinate Display (1g) | Placed crosshair values | `Point 1 - X: 14:30:25  Y0: 23.5  Y1: 1250` |
-| **Delta Calculations** | Coordinate Display (1g) | Differences between crosshairs | `ΔX: 00:05:30  ΔY0: +2.3  ΔY1: -45` |
-| **Selected Location** | Status Display (Label 9) | Total points and current selection | `X: 123.456  Y: 78.90  Points: 1250` |
 
 **Advanced Control Functions:**
 
@@ -3754,7 +3746,7 @@ Quick reference for Name field enhancement codes:
 | **String Length** | `:nn` | Multi-register strings | `Device_Name:16` |
 | **Poll Rate** | `@nnnn` | Custom timing (ms) | `Status@5000` |
 | **Bit Access** | `.n` | Single bit from register | `Alarm_Status.7` |
-| **Date/Time** | `DTx` | Timestamp conversion | `Timestamp_DT6` |
+| **Date/Time** | `DTx` | Timestamp conversion <br> see [Date/Time Format](#datetime-formats) | `Timestamp_DT6` |
 | **Combined** | Multiple | Complex configurations | `Data@1000:8.5` |
 
 ### Performance Optimization
