@@ -2457,33 +2457,33 @@ Control how XPF handles value changes in the Value column:
 Refer to [Modbus Client Operations](#modbus-client-operations) on locations of Client controls.
 
 1. **Configure Client Connection**:
-   - Set up TCP, UDP, or Serial connection in Client tab
-   - Configure proper IP address, COM port, and communication parameters
-   - Verify timeout settings for reliable data collection
+      - Set up TCP, UDP, or Serial connection in Client tab
+      - Configure proper IP address, COM port, and communication parameters
+      - Verify timeout settings for reliable data collection
 
 2. **Start Continuous Polling**:
-   - Click **Start** button in Client Poll group
-   - Polling must be active for chart data collection
-   - Monitor points with Chart enabled begin data accumulation
+      - Click **Start** button in Client Poll group
+      - Polling must be active for chart data collection
+      - Monitor points with Chart enabled begin data accumulation
 
 3. **Verify Data Collection**:
-   - Check TX/RX counters show active communication
-   - Monitor point values should update in real-time
-   - Any communication errors will affect chart data quality
+      - Check TX/RX counters show active communication
+      - Monitor point values should update in real-time
+      - Any communication errors will affect chart data quality
 
 ##### Step 3: Access Chart View
 
 **Switch to chart display and configure visualization:**
 
-1. **Open Chart Window**:
-   - Click **Chart** button in Client tab → Chart group
-   - Chart pops out as floting winow
-   - All chart-enabled points appear as trending lines
+**Open Chart Window**:
+    - Click **Chart** button in Client tab → Chart group
+    - Chart pops out as floting winow
+    - All chart-enabled points appear as trending lines
 
 ![Modbus Monitor XPF Chart](../../assets/screenshots/xpf-client-charts.webp)
 *Complete chart window showing dual-axis trending*
 
-2. **Complete Chart Interface Reference**:
+**Complete Chart Interface Reference**:
 
    **Main Chart Interface Components:**
    
@@ -2512,11 +2512,6 @@ Refer to [Modbus Client Operations](#modbus-client-operations) on locations of C
 | **Pan Navigation** | Right-click Mouse Drag on Chart Plot | Scroll through historical data | Updated time range display | Review past trends when buffer is limited |
 | **Zoom Control** | Mouse Wheel on Chart Plot | Zoom in/out on time axis | Focused time period view | Examine specific time intervals in detail |
 
-##### Step 4: Chart Controls & Options
-
-**Master chart control and data management:**
-
-
 **Control Toolbar Breakdown (Reference Label 1 from interface above):**
 
 The control toolbar contains all chart operation controls. Each button provides specific functionality:
@@ -2531,7 +2526,6 @@ The control toolbar contains all chart operation controls. Each button provides 
 | **1f** | **Clear Crosshairs** | Remove Measurement Lines | Removes crosshair lines and coordinate display from chart<br>**Reset Function**: Clears all placed crosshairs and delta measurements<br>**Delta Reset**: Removes coordinate difference calculations |
 | **1g** | **Coordinate Display** | Live Position Feedback | **Live Coordinates**: Shows X,Y values under mouse cursor<br>**Crosshair Coordinates**: Displays exact X,Y when crosshairs are active<br>**Delta Calculations**: Shows differences between multiple crosshair points<br>**Format**: `X: 123.456  Y: 78.90` |
 
-
 **Dual-Axis Coordinate System:**
 
 | Axis | Label | Location | Scale Purpose | Coordinate Display | Monitor Point Assignment |
@@ -2544,7 +2538,7 @@ The control toolbar contains all chart operation controls. Each button provides 
 
 | Information Type | Display Location | Content | Format Example |
 |------------------|------------------|---------|----------------|
-| **Live Coordinates** | Coordinate Display (1g) | Real-time mouse position | `X: 14:30:25  Y0: 23.5°C  Y1: 1250 PSI` |
+| **Coordinates** | Coordinate Display (1g) | Selected mouse position | `X: 14:30:25  Y0: 23.5°C  Y1: 1250` |
 | **Crosshair Coordinates** | Coordinate Display (1g) | Placed crosshair values | `Point 1 - X: 14:30:25  Y0: 23.5  Y1: 1250` |
 | **Delta Calculations** | Coordinate Display (1g) | Differences between crosshairs | `ΔX: 00:05:30  ΔY0: +2.3  ΔY1: -45` |
 | **Selected Location** | Status Display (Label 9) | Total points and current selection | `X: 123.456  Y: 78.90  Points: 1250` |
@@ -2593,9 +2587,6 @@ The control toolbar contains all chart operation controls. Each button provides 
 ##### Dual-Axis Configuration
 
 **Optimize multi-signal visualization with different scales:**
-
-![Dual Axis Chart Example](../../assets/screenshots/xpf-dual-axis-chart.webp){ .screenshot-shadow }
-*Example showing temperature and pressure on separate axes*
 
 **When to Use Dual Axes:**
 
