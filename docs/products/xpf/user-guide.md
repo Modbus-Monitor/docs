@@ -2130,7 +2130,7 @@ Enable simulation mode to generate test values without requiring an actual Modbu
 | **Timeout** | Timing Control | Response Timeout, Inter-Frame Delay, Poll Rate, Retries | Critical timing parameters for reliable communication and performance optimization |
 | **Write** | Write Operations | Auto/Manual Mode, Function Code Selection | Control how value changes are written to devices - automatic smart selection or manual function code control |
 | **Scanner** | Address Discovery | Start Address, Register Count, Data Type, Swap Type, Unit ID | Systematically discover unknown registers and automatically build monitor point lists |
-| **Value** | Data Management | Clear Values Toggle | Clear previously read values from display for fresh data collection |
+| **Value** | Data Management | Clear Values Toggle | **Click**: Immediately clears all values from display. **Toggle ON**: Automatically clears all monitor point values before starting each polling cycle for fresh data collection |
 | **Chart** | Data Visualization | Chart Button | Switch to real-time charting view for trending analysis of tagged monitor points - see [Charts - Data Trends Visualization](#charts---data-trends-visualization) for complete setup |
 | **Client Poll** | Operation Control | Auto Save, Restore, Write, Read, Statistics, Start/Stop | Main operational controls for polling, data collection, and client status monitoring |
 
@@ -2245,7 +2245,7 @@ Enable simulation mode to generate test values without requiring an actual Modbu
     | **Restore** | Upload values | Writes current monitor point values back to remote devices |
     | **Write** | Single write | Writes selected monitor point value once |
     | **Read** | Single poll | Polls all monitor points once and stops |
-    | **Statistics** | TX/RX counters | Shows message counts and frames per second |
+    | **Statistics** | TX/RX counters | Shows communication statistics and frames per second <br> Click to reset counters to 0 on next poll |
     | **Start/Stop** | Master control | Begins/ends continuous polling operation |
 
 ### Interface Configuration
@@ -2316,9 +2316,10 @@ Critical timing parameters for reliable communication - **these settings are cru
 
 | Parameter | Default | Range | Purpose & Impact |
 |-----------|---------|-------|------------------|
-| **Response Timeout** | 3000ms | 100-60000ms | Duration to gather all bytes from remote server including complete Modbus frame up to CRC. **Too short = false timeouts, too long = slow error detection** |
-| **Inter-Frame Delay** | 20ms | 0-10000ms | Wait time between each monitor point in the list. **Prevents overwhelming slow devices or networks** |
-| **Poll Rate** | 1000ms | 100-3600000ms | Delay before scanning entire list again. **Controls overall polling frequency** |
+| **Response Timeout** | 3000ms | 0-65535ms | Duration to gather all bytes from remote server including complete Modbus frame up to CRC. **Too short = false timeouts, too long = slow error detection** |
+| **Inter-Frame Delay** | 20ms | 0-65535ms | Wait time between each monitor point in the list. **Prevents overwhelming slow devices or networks** |
+| **Poll Rate** | 1000ms | 0-65535ms | Delay before scanning entire list again. **Controls overall polling frequency**. **WARNING: Setting to 0 may cause UI slowdown/freezing as continuous polling impacts UI responsiveness. Recommended minimum: 20ms** |
+| **Retries** | 3 | 1-65535 | Number of retry attempts for failed requests. **Higher values improve reliability on unreliable networks but increase error recovery time** |
 
 !!! tip "Timeout Optimization by Environment"
     **Fast Local Networks (LAN):**
@@ -2617,9 +2618,6 @@ Axis 1 (Right) - Electrical Variables:
 
 **Chart data export structure for external analysis:**
 
-![CSV Export Dialog](../../assets/screenshots/xpf-csv-export.webp){ .screenshot-shadow }
-*CSV export options and file format*
-
 **Export Process:**
 
 1. **Initiate Export**:
@@ -2629,10 +2627,10 @@ Axis 1 (Right) - Electrical Variables:
 
 2. **CSV File Structure**:
    ```csv
-   Timestamp,Monitor_Point_1,Monitor_Point_2,Monitor_Point_3
-   2025-11-02 14:30:00.123,23.5,1250,TRUE
-   2025-11-02 14:30:01.123,23.7,1255,TRUE
-   2025-11-02 14:30:02.123,23.4,1248,FALSE
+    Timestamp,Monitor_Point_1,Monitor_Point_2...
+    11/3/2025 6:46:08 AM,40001,30001
+    11/3/2025 6:46:10 AM,40001,30001
+    11/3/2025 6:46:11 AM,40001,30001
    ```
 
 3. **Analysis Applications**:
@@ -2665,13 +2663,13 @@ Axis 1 (Right) - Electrical Variables:
     **Chart Configuration:**
     ```yaml
     Axis 0 (Temperature):
-      - Setpoint: 400001 (°C)
-      - Process Variable: 400002 (°C) 
-      - Output: 400003 (%)
+      - Setpoint: 85.0°C (400001)
+      - Process Variable: 84.7°C (400002) 
+      - Output: 67.5% (400003)
     
     Axis 1 (Status):
-      - Alarm Status: 100001 (Boolean)
-      - Manual Mode: 100002 (Boolean)
+      - Alarm Status: False (100001)
+      - Manual Mode: False (100002)
     ```
     
     **Benefits**:
@@ -2690,14 +2688,14 @@ Axis 1 (Right) - Electrical Variables:
     **Chart Setup**:
     ```yaml
     Axis 0 (Mechanical):
-      - Speed Command: 400010 (RPM)
-      - Actual Speed: 400011 (RPM)
-      - Torque: 400012 (%)
+      - Speed Command: 1750 RPM (400010)
+      - Actual Speed: 1748 RPM (400011)
+      - Torque: 78.3% (400012)
     
     Axis 1 (Electrical):
-      - Motor Current: 400020 (Amps)
-      - DC Bus Voltage: 400021 (VDC)
-      - Power: 400022 (kW)
+      - Motor Current: 12.4 Amps (400020)
+      - DC Bus Voltage: 485 VDC (400021)
+      - Power: 8.7 kW (400022)
     ```
     
     **Analysis Goals**:
