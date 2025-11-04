@@ -16,12 +16,12 @@
 
 **What you can do with it:**
 
-- Monitor live data from PLCs, drives, meters, and other Modbus devices
-- Write values to registers and coils for testing or control
-- Simulate Modbus devices for testing your own equipment
-- Scan unknown devices to discover their register maps
-- Log data for analysis and troubleshooting
-- Validate register values against expected ranges
+- Monitor live data from PLCs, drives, meters, and other Modbus devices ([Client Mode](#client-tab))
+- Write values to registers and coils for testing or control ([Monitor Points Configuration](#7-monitor-points-configuration))
+- Simulate Modbus devices for testing your own equipment ([Server Mode](#server-tab))
+- Scan unknown devices to discover their register maps ([Scanner Group](#scanner-group))
+- Log data for analysis and troubleshooting ([Log Group](#log-group))
+- Validate register values against expected ranges ([Evaluate Group](#evaluate-group))
 - **Run Client and Server modes simultaneously** on one PC
 
 **Who this is for:**
@@ -730,7 +730,7 @@ The **Home Tab** contains the most frequently used commands for essential operat
 | **Save** | Save current document in CSV format | Preserves entire Modbus map configuration including monitor points, settings, and extended properties for reuse |
 | **Save As** | Save As New document | Preserves entire Modbus map configuration including monitor points, settings, and extended properties for reuse |
 | **Open** | Open previously saved file | Load saved XPF configuration files (CSV format) from any location |
-| **Online** | Download Modbus Maps from online folder or community | Access pre-configured maps from (1) factory-released validated maps or (2) community-uploaded maps. See detailed explanation below. |
+| **Online** | Download Modbus Maps from online folder or community | Access pre-configured maps from (1) factory-released validated maps or (2) community-uploaded maps. See [Online Maps Feature](#online-maps-feature) below. |
 
 !!! note "CSV Format Benefits"
     XPF saves configurations as standard CSV files, making them easy to:
@@ -739,6 +739,13 @@ The **Home Tab** contains the most frequently used commands for essential operat
     - **Version control** using Git or other systems
     - **Share** with team members or across sites
     - **Document** device configurations for compliance
+
+**Online Maps Feature:**
+
+**Cloud-Based Modbus Maps** - View and Download Online Modbus Maps from either **(1) factory-released maps** by Modbus Monitor or **(2) community-uploaded maps** from users. Toggle the **Online** button (shown in table above) to activate this feature. **An internet connection is required** to use this feature.
+
+![Online Maps Interface](../../assets/screenshots/xpf-home-file-online.webp)
+*How to download pre-defined Modbus Map*
 
 ##### Clipboard Group
 
@@ -762,14 +769,14 @@ The **Modbus Wizard** provides a streamlined interface for configuring monitor p
 | Field | Purpose | Options/Format |
 |-------|---------|----------------|
 | **Register Name** | Descriptive identifier | Text field - name your monitor point |
-| **Modbus Function** | Register type and access | See [Function Codes](#2-address-field-6-digit-format) reference below |
+| **Modbus Function** | Register type and access | See [Address Field - 6-Digit Format](#2-address-field-6-digit-format) in Monitor Points Configuration |
 | **Sub-Function** | Function variant *(FC8 only)* | Appears for FC8 Diagnostics - e.g., "0 (0x0) Return Query Data" |
 | **Device ID** | Device identification type *(FC43-14 only)* | Appears for FC43-14 - e.g., "01 Get Basic Device ID (stream)" |
 | **Object ID** | MEI object identifier *(FC43-14 only)* | Appears for FC43-14 - Object number (00-FF hexadecimal) |
 | **CustomQ** | Custom Modbus Packet | Add PDU part of the Modbus Command to send any command  |
 | **Data Request** | Request address/value | Address or data value for the request |
 | **Address** |  Modbus Address | Zero or One based Modbus Address (see [6-digit format](#2-address-field-6-digit-format)) |
-| **Data Type** | Data interpretation | See [Data Types](#3-data-type-options) reference below |
+| **Data Type** | Data interpretation | See [Data Type Options](#6-data-type-data-interpretation) in Monitor Points Configuration |
 | **Poll Rate Control** | Update frequency | NONE, SKIP, ONCE, INTERVAL (Adjust Poll Rate value) |
 | **Bit Field** | Extract specific bit | 0-15 for 16-bit registers - selects individual bit |
 | **Write Only** | Skip during reads | Checkbox - for write-only registers |
@@ -848,13 +855,6 @@ All log controls in one comprehensive table. Labels **1**, **2**, **3a-3h**, and
 | **3h or 2** | **Close** | Quick Access Header or Options Tab | Button | Close Log Window and return to Monitor Points (logging continues in background if started). |
 | **4** | **Log Window** | Window Portal Area | Display Panel | Shows timestamped communication events. Replaces Monitor Points table when log is active. |
 
-##### Online Maps Group
-
-**Cloud-Based Modbus Maps** - View and Download Online Modbus Maps from either **(1) factory-released maps** by Modbus Monitor or **(2) community-uploaded maps** from users. Toggle the **Online** button in the File group located in the Home tab to activate this feature. **An internet connection is required** to use this feature.
-
-![Online Maps Interface](../../assets/screenshots/xpf-home-file-online.webp)
-*How to download pre-defined Modbus Map*
-
 #### Client Tab
 
 **Client Mode Overview:** XPF operates as a Modbus Master (Client) when you want to read data from or write data to remote Modbus devices. In this mode, XPF initiates all communication by sending requests to Modbus Server devices (PLCs, drives, meters, sensors) and processes their responses.
@@ -869,12 +869,10 @@ All log controls in one comprehensive table. Labels **1**, **2**, **3a-3h**, and
 |-------|---------|--------------|-------------|
 | **Interface** | Protocol Selection | Interface Type, Protocol Options, One-Based Toggle | Choose connection type (TCP/UDP/Serial) and Modbus protocol variant (Standard/RTU/ASCII) |
 | **TCP** | Network Settings | IP Address, Port, Connection Timeout | Configure Ethernet-based connections with IP address, port number, and connection timeout settings |
-| **COM** | Serial Settings | COM Port, Baud Rate, Data Bits, Parity, Stop Bits | Configure serial communication parameters for RTU/ASCII over RS232/RS485 connections |
 | **Timeout** | Timing Control | Response Timeout, Inter-Frame Delay, Poll Rate, Retries | Critical timing parameters for reliable communication and performance optimization |
-| **Write** | Write Operations | Auto/Manual Mode, Function Code Selection | Control how value changes are written to devices - automatic smart selection or manual function code control |
 | **Scanner** | Address Discovery | Start Address, Register Count, Data Type, Swap Type, Unit ID | Systematically discover unknown registers and automatically build monitor point lists |
 | **Value** | Data Management | Clear Values Toggle | **Click**: Immediately clears all values from display. **Toggle ON**: Automatically clears all monitor point values before starting each polling cycle for fresh data collection |
-| **Chart** | Data Visualization | Chart Button | Switch to real-time charting view for trending analysis of tagged monitor points |
+| **Chart** | Data Visualization | Chart Button | Switch to real-time charting view for trending analysis of tagged monitor points - see [Charts - Data Trends Visualization](#charts---data-trends-visualization) |
 | **Client Poll** | Operation Control | Auto Save, Restore, Write, Read, Statistics, Start/Stop | Main operational controls for polling, data collection, and client status monitoring |
 
 #### Server Tab
@@ -904,6 +902,7 @@ All log controls in one comprehensive table. Labels **1**, **2**, **3a-3h**, and
 | Group | Purpose | Key Features | Description |
 |-------|---------|--------------|-------------|
 | **ThingSpeak** | Cloud Logging | API Key, Channel ID, Field Mapping | Log monitor point values to ThingSpeak cloud platform for remote monitoring and analysis |
+| **Publish** | Data Publishing | Publish Controls, Auto-Publish Settings | Control when and how Modbus data is published to cloud platforms and IoT services |
 | **MQTT** | Messaging Protocol | Broker Configuration, Topic Publishing, Real-time Messaging | Publish Modbus data via MQTT for IoT device communication and cloud integration |
 
 #### Key Concepts
@@ -914,7 +913,7 @@ graph TB
     
     subgraph TABLE["Monitor Points Table"]
         direction TB
-        HEADER["<b>NAME | ADDRESS | UNIT ID | GAIN | OFFSET | DATA TYPE | SWAP TYPE | VALUE</b>"]
+        HEADER["<b>NAME | ADDRESS | UNIT ID | GAIN | OFFSET | DATA TYPE | SWAP TYPE | VALUE</b>"]        
         ROW1["Motor Speed | 400001 | 1 | 1.00000 | 0.00000 | UINT16 | ABCD_BE | 1450"]
         ROW2["Line Voltage | 400002 | 1 | 1.00000 | 0.00000 | INT16 | ABCD_BE | 230"]
         ROW3["Pump Status | 100001 | 1 | 1.00000 | 0.00000 | BIT | ABCD_BE | 1"]
@@ -1097,13 +1096,11 @@ graph TB
     - Each mode uses independent interface configuration
     - Perfect for protocol conversion, testing, or acting as a data bridge
 
-**Magic Codes:** Special text you add to the **Name** field of monitor points to enable advanced features like custom poll rates, bit field access, string length control, and date/time conversion (covered in detail in Monitor Points section).
+**Magic Codes:** Special text you add to the **Name** field of monitor points to enable advanced features like custom poll rates, bit field access, string length control, and date/time conversion (covered in detail in [Monitor Points Configuration](#7-monitor-points-configuration) section).
 
-**Dual Functionality:** XPF can operate as both Client and Server simultaneously, making it ideal for testing client-server interactions on a single PC without physical devices. 
+**Dual Functionality:** XPF can operate as both Client and Server simultaneously, making it ideal for testing client-server interactions on a single PC without physical devices.
 
-#### Navigation Tips
-
-**Quick Access Toolbar Customization:**
+#### Navigation Tips**Quick Access Toolbar Customization:**
 
 | Action | Method | Details |
 |--------|--------|---------|
@@ -1153,102 +1150,90 @@ graph TB
     4. Test with "Read Once" before enabling continuous polling
     5. Save frequently - especially before making major changes
 
-### File Tab
+#### Key Concepts
 
-The **File Tab** provides access to the backstage view containing essential file operations, application settings, license management, and resources. Click the **File** tab to enter this full-screen view.
+**Modbus Map / List:** The Modbus Map (or Monitor Points List) is the complete collection of data points you want to communicate with on a Modbus device. Think of it as your "register shopping list" — a centralized view showing all Modbus addresses you plan to read or write. Each entry in this list includes its address, function code, data type, and optional pre- or post-processing settings. Together, these entries form a dictionary of Modbus data that defines what the XPF application will handle. XPF then automatically manages polling, writing, retries, data conversions, byte-swapping, and display formatting across the entire list. See [Monitor Points Configuration](#7-monitor-points-configuration) for complete setup details.
 
-#### Home Section
+**Monitor Point:** A Monitor Point is a single data entry within the Modbus Map — representing one Modbus register or coil you want to read or write. You configure its details (address, function code, data type, scaling, and optional pre/post-processing). Each Monitor Point operates as an independent tag, allowing you to precisely define what data you want and how it should be processed. XPF then performs all background operations for that point: polling, retrying, converting, swapping bytes if needed, and displaying formatted values.
 
-The Home section provides quick access to your file system and document management:
+!!! example "Modbus Map and Monitor Points - Practical Example"
+    **Understanding the relationship between Modbus Map and Monitor Points:**
+    
+    | NAME | ADDRESS | UNIT ID | GAIN | OFFSET | DATA TYPE | SWAP TYPE | VALUE |
+    |------|---------|---------|------|--------|-----------|-----------|-------|
+    | Motor Speed | `400001` | 1 | 1.00000 | 0.00000 | UINT16 | ABCD_BE | 1450 |
+    | Line Voltage | `300001` | 1 | 1.00000 | 0.00000 | INT16 | ABCD_BE | 230 |
+    | Pump Status | `100001` | 1 | 1.00000 | 0.00000 | BIT | ABCD_BE | 1 |
+    | Coil Register | `000001` | 1 | 1.00000 | 0.00000 | BIT | ABCD_BE | 1 |
+    
+    **Key Points:**
+    
+    - The **entire table above** represents your **Modbus Map/List**
+    - **Each row** (e.g., Motor Speed, Line Voltage) represents one **Monitor Point**
+    - Each Monitor Point has all 8 columns: NAME, ADDRESS (6-digit), UNIT ID, GAIN, OFFSET, DATA TYPE, SWAP TYPE, VALUE
+    - Address format: `4xxxxx`=Holding Reg | `3xxxxx`=Input Reg | `1xxxxx`=Discrete Input | `0xxxxx`=Coil
+    - XPF automatically handles all polling, conversions, and formatting for every Monitor Point in the list
 
-| Feature | Icon/Button | Description |
-|---------|-------------|-------------|
-| **Home** | Home button | Navigate to Documents folder |
-| **Open** | Folder icon | Open folder in Windows Explorer |
-| **Up** | Up arrow | Move up one level in directory tree |
-| **Current Folder** | `<Documents>` | Displays current folder name |
+**Client vs Server Mode:** 
 
-#### Recent Section
+- **Client (Master)** - You initiate communication, continuously polling remote devices for data
+- **Server (Slave)** - You simulate a Modbus device, responding to requests from other masters
+- **Simultaneous Operation** - Both modes can run at the same time on different interfaces 
 
-Quick access to recently used Modbus maps and configurations:
+**Magic Codes:** Special text you add to the **Name** field of monitor points to enable advanced features like custom poll rates, bit field access, string length control, and date/time conversion (covered in detail in [Monitor Points Configuration](#7-monitor-points-configuration) section).
 
-| Button | Function | Description |
-|--------|----------|-------------|
-| **Refresh** | Update list | Refresh the recent files list |
-| **Open Folder** | Show location | Opens folder containing selected file |
-| **Open File** | Load map | Loads selected configuration in XPF |
-| **Remove** | Delete entry | Remove selected file from recent list |
-| **Delete** | Clear all | Deletes all entries from recent list |
+**Dual Functionality:** XPF can operate as both Client and Server simultaneously, making it ideal for testing client-server interactions on a single PC without physical devices.
 
-!!! tip "Quick File Access"
-    The Recent Files list is the fastest way to switch between different device configurations. Your most commonly used maps are always one click away.
+#### Navigation Tips
 
-#### About Section
+**Quick Access Toolbar Customization:**
 
-Access version information, documentation, and support resources:
+| Action | Method | Details |
+|--------|--------|---------|
+| **Open Customization Menu** | Right-click anywhere on toolbar | Shows complete list of available buttons (11 options) |
+| **Add/Remove Buttons** | Click button name in menu | Checkmark indicates button is currently visible |
 
-| Option | Description | Action |
-|--------|-------------|--------|
-| **Version** | Current application version | Displays installed version number |
-| **Activate** | License activation | Opens license window for activation |
-| **Submit Feedback** | User feedback | Direct feedback to developers |
-| **Documentation** | Online help | Access comprehensive online help |
-| **Videos** | Tutorial videos | Links to YouTube tutorials |
-| **Contact Email** | Support contact | Email address for inquiries |
-| **Privacy Policy** | Data handling | View privacy policy details |
-| **EULA** | License agreement | End User License Agreement terms |
+**Customization Best Practices:**
 
-**Quick Actions:**
+- **Add buttons you use frequently** - Start, Stop, Read, Save, Show
+- **Remove rarely-used buttons** - Keep toolbar uncluttered for faster access
+- **Field work setup** - Save, Read, Start, Stop, Show (essential operations only)
+- **Development setup** - Add Chart, Write for testing and analysis work
+- **Position preference** - Below ribbon if you prefer buttons closer to data area
 
-- **Need help?** Click **Documentation** for online guides
-- **New to XPF?** Click **Videos** for visual tutorials  
-- **License issues?** Click **Activate** to manage licenses
-- **Feature requests?** Use **Submit Feedback**
+**Right-click Context Menus:**
 
-#### Settings Section
+| Feature | Usage | Behavior |
+|---------|-------|----------|
+| **Table Context Menus** | Right-click any table row | Relevant actions for selected item |
+| **Field Context Menus** | Right-click input fields | Field-specific operations |
+| **Adaptive Menus** | Context-sensitive | Options change based on selection |
 
-Customize the application theme to match your environment:
+**Keyboard Shortcuts:**
 
-| Theme | Description | Best For |
-|-------|-------------|----------|
-| **Light** | Bright interface | Well-lit environments, daytime use |
-| **Dark** | Dark interface | Low-light environments, reduced eye strain |
-| **System Default** | Follows Windows | Automatically matches Windows theme |
+| Shortcut | Function | Usage |
+|----------|----------|-------|
+| `Ctrl+S` | Save configuration | Preserve current setup |
+| `Ctrl+O` | Open configuration | Load saved file |
+| `Ctrl+C` / `Ctrl+V` | Copy/paste | Works with Excel integration |
+| `Ctrl+X` | Cut rows | Move selected items |
+| `Shift+Click` | Select range | Sequential row selection |
+| `Ctrl+Click` | Multi-select | Non-sequential rows |
 
+**Window Portal Switching:**
 
-**Theme Selection:**
+| Feature | Method | Result |
+|---------|--------|--------|
+| **View Toggle** | Ribbon button clicks | Switch between Monitor Points, Log, Chart, Online Maps |
+| **Shared Space** | Same screen area | Each view replaces previous in portal |
+| **Data Persistence** | Background retention | Switching views doesn't lose data |
 
-1. Click **File Tab** → **Settings**
-2. Choose theme from dropdown
-3. Theme applies immediately (no restart needed)
-
-!!! tip "Field Work Preference"
-    Many field technicians prefer **Dark theme** when working in dimly lit equipment rooms or cabinets.
-
-#### Exit
-
-**Exit** button safely closes the Modbus Monitor XPF application:
-
-- **Saves** current window position and settings
-- **Prompts** to save unsaved changes (if any)
-- **Terminates** all active connections properly
-- **Releases** serial ports and network resources
-
-### Home Tab
-
-The **Home Tab** contains the most frequently used commands for essential Operations - everything you need for working with Modbus maps and monitoring points.
-
-![Home Tab Interface](../../assets/screenshots/xpf-home-tab.png)
-
-#### File Group
-
-**Import and Export Documents** - Manage Documents, Import and Export Modbus Maps in CSV format. Access pre-built Modbus Maps for common devices (VFDs, Energy Meters, PLCs) from factory-validated or community sources.
-
-| Feature | Description | Details |
-|---------|-------------|---------|
-| **Save** | Save current document in CSV format | Preserves entire Modbus map configuration including monitor points, settings, and extended properties for reuse |
-| **Save As** | Save As New document | Preserves entire Modbus map configuration including monitor points, settings, and extended properties for reuse |
-| **Open** | Open previously saved file | Load saved XPF configuration files (CSV format) from any location |
+!!! tip "Workflow Best Practice"
+    1. Set up your monitor points first (define what you want to read/write)
+    2. Configure communication settings (TCP/Serial, timeouts)
+    3. Save your configuration before starting polling
+    4. Test with "Read Once" before enabling continuous polling
+    5. Save frequently - especially before making major changes
 | **Online** | Download Modbus Maps from online folder or community | Access pre-configured maps from (1) factory-released validated maps or (2) community-uploaded maps. See detailed explanation below. |
 
 !!! note "CSV Format Benefits"
@@ -1281,14 +1266,14 @@ The **Modbus Wizard** provides a streamlined interface for configuring monitor p
 | Field | Purpose | Options/Format |
 |-------|---------|----------------|
 | **Register Name** | Descriptive identifier | Text field - name your monitor point |
-| **Modbus Function** | Register type and access | See [Function Codes](#2-address-field-6-digit-format) reference below |
+| **Modbus Function** | Register type and access | See [Address Field - 6-Digit Format](#2-address-field-6-digit-format) in Monitor Points Configuration |
 | **Sub-Function** | Function variant *(FC8 only)* | Appears for FC8 Diagnostics - e.g., "0 (0x0) Return Query Data" |
 | **Device ID** | Device identification type *(FC43-14 only)* | Appears for FC43-14 - e.g., "01 Get Basic Device ID (stream)" |
 | **Object ID** | MEI object identifier *(FC43-14 only)* | Appears for FC43-14 - Object number (00-FF hexadecimal) |
 | **CustomQ** | Custom Modbus Packet | Add PDU part of the Modbus Command to send any command  |
 | **Data Request** | Request address/value | Address or data value for the request |
 | **Address** |  Modbus Address | Zero or One based Modbus Address (see [6-digit format](#2-address-field-6-digit-format)) |
-| **Data Type** | Data interpretation | See [Data Types](#3-data-type-options) reference below |
+| **Data Type** | Data interpretation | See [Data Type Options](#6-data-type-data-interpretation) in Monitor Points Configuration |
 | **Poll Rate Control** | Update frequency | NONE, SKIP, ONCE, INTERVAL (Adjust Poll Rate value) |
 | **Bit Field** | Extract specific bit | 0-15 for 16-bit registers - selects individual bit |
 | **Write Only** | Skip during reads | Checkbox - for write-only registers |
@@ -1301,7 +1286,12 @@ The **Modbus Wizard** provides a streamlined interface for configuring monitor p
     - These fields only appear when their corresponding function is selected
 
 !!! tip "Quick Reference"
-    For complete details on Function Codes, Data Types, and address formats, see the **[Monitor Points Configuration](#monitor-points-table-configuration)** section below.
+    For complete details, see the **[Monitor Points Configuration](#7-monitor-points-configuration)** section:
+    
+    - **[Magic Codes](#1-name-field-enhanced-with-magic-codes)** - String length, poll rates, bit access, date/time formats
+    - **[Address Format](#2-address-field-6-digit-format)** - 6-digit addressing explained with examples
+    - **[Data Types](#6-data-type-data-interpretation)** - All supported data types and their usage
+    - **[Custom Commands](#10-customq-custom-modbus-command)** - Send raw Modbus PDU commands
 
 **How to Use:**
 
@@ -1810,548 +1800,7 @@ Users can upload their own custom Modbus Maps to share with the community or sto
     
     Your contributions help the entire community!
 
-## Monitor Points Configuration
-
-**Monitor Points** are similar to PLC tags - each one represents a specific data point you want to read or write on a Modbus device. Just as PLC tags map to memory addresses in a controller, Monitor Points map to Modbus registers and coils with all the configuration needed to access and interpret the data correctly.
-
-This section explains everything you need to know about configuring Monitor Points, including address formats, data types, scaling options, and advanced features. Whether you're setting up a simple temperature sensor or complex multi-register data structures, understanding these configuration options is essential for effective Modbus communication.
-
-### Monitor Points Structure
-
-Each row in the Monitor Points table represents a single Modbus register or group of registers to monitor:
-
-|Number| Column | Data Type | Example | Description |
-|------|--------|-----------|---------|-------------|
-|1| **Name** | String | `Water Temperature:16` | Descriptive name + [magic codes](#1-name-field-enhanced-with-magic-codes) for advanced features |
-|2| **Address** | Integer | `400001` | [6-digit Modbus address format](#2-address-field-6-digit-format) |
-|3| **Unit ID** | Byte (1-247) | `1` | Slave/Station ID (1-247) |
-|4| **Gain** | Float | `1.5` | Scaling multiplier: `Y = (Gain * X) + Offset` |
-|5| **Offset** | Float | `100` | Value offset: `Y = (Gain * X) + Offset` |
-|6| **Data Type** | Enum | `INT16` | [Data interpretation format](#3-data-type-options) (INT16, UINT16, FLOAT32, STRING, etc.) |
-|7| **Swap Type** | Enum | `ABCD_BE` | [Byte/word order](#4-swap-type-for-multi-register-data) for multi-register data |
-|8| **Value** | String/Number | `123.45` | Shows latest polled value, red border for errors, editable for writes |
-|9| **Extra (...)** | Button | `...` | Additional Options such as CommandQ, Chart, Simulate|
-|10| **CustomQ** | Hex String | `11 04 00 6B` | [Custom Modbus command](#custom-commands-customq) in hexadecimal |
-|11| **Chart** | Checkbox | Checked / Unchecked | Enable charting for this monitor point to display value trends over time |
-|12| **Axis** | Integer | `0` or `1` | Assign to chart axis (0 or 1) for multi-scale time-series visualization |
-|13| **Simulate** | Checkbox | Checked / Unchecked | Enable simulation mode (Server mode only) to generate test values without actual device |
-
-### Detailed Field Descriptions
-
-#### 1. Name Field - Enhanced with Magic Codes
-
-The Name field supports special **Magic Key Codes** to enhance functionality:
-
-##### String Length Control
-```
-Format: :xx
-Usage: Water Temperature:16
-Effect: Reads 16 continuous registers as string
-```
-
-##### Poll Rate Control  
-```
-Format: @xxxx (milliseconds)
-Usage: Model Name@1000
-Effect: Polls every 1000ms (1 second)
-Special: @-1 = Poll once at start, @0 = Skip during polling
-```
-
-##### Bit Field Access
-```
-Format: .n (bit index 0-15)
-Usage: Status Register.8  
-Effect: Extracts bit 8 from 16-bit register
-```
-
-##### Date/Time Formats
-
-**DATETIME Display Format** - To display Date Time values with Magic Codes, you need to add a Magic Code to the Name field and set the Data Type to **DATETIME**. The processor uses the code (DOS, EPOCH, DT3, DT4, etc.) in the Name field to properly request the number of registers required for this display format to decode and display time properly.
-
-!!! note "No Modbus Standard for DateTime"
-    There is no official Modbus standard for date time representation, so analyze the manufacturer's documentation to determine the number of registers required to fetch date and time. Then, simply choose the correct Magic Code from the table below. Use **Swap Type** settings to match the remote device's byte order.
-
-**DateTime Magic Codes:**
-
-| Magic Code | Registers | Register Layout | Description |
-|------------|-----------|-----------------|-------------|
-| **DOS** | 2 | `[YYMMDD]` `[hhmmss]` | DOS Time Stamp Y1980, 2 Registers |
-| **WIN** | 2 | Same as DOS | Windows compatible DOS format |
-| **EPOCH** | 2 | Unix timestamp (32-bit) | Unix Epoch, 2 Registers |
-| **EPOCHMS** | 4 | Unix timestamp (64-bit ms) | Unix Epoch in Milliseconds (4 Registers) |
-| **DT2** | 2 | `[Date]` `[Time]` | Same as DOS format |
-| **DT3** | 3 | `[YY\|MM]` `[DD\|hh]` `[mm\|ss]` | Date Time, 3 Registers |
-| **DT4** | 4 | `[YY\|MM]` `[DD\|hh]` `[mm\|ss]` `[ms]` | Date Time, 4 Registers |
-| **DT4P** | 4 | `[XX\|YY]` `[MM\|DD]` `[hh\|mm]` `[ms]` | Date Time Y2000 Modbus Plus, 4 Registers |
-| **DT6** | 6 | `[YYYY]` `[MMMM]` `[DDDD]` `[HHHH]` `[MMMM]` `[SSSS]` | Date Time, 6 Registers |
-| **DT7** | 7 | `[Sec\|Min]` `[Hour\|Day]` `[Month\|Year]` `[Weekday]` | Date Time, 7 Registers |
-
-**Detailed Format Specifications:**
-
-=== "DOS Format (2 Registers)"
-
-    **DOS Time Stamp Y1980 - Uses Windows API DosDateTimeToFileTime()**
-    
-    ```
-    Usage: System_Clock_DOS + Data Type = DATETIME
-    Registers: 2
-    ```
-    
-    | Register | Format | Description |
-    |----------|--------|-------------|
-    | N | `YY\|MM\|DD` | Date: Year\|Month\|Day |
-    | N+1 | `hh\|mm\|ss` | Time: Hour\|Minute\|Second |
-    
-    **Windows API Function:**
-    ```c
-    BOOL DosDateTimeToFileTime(
-      [in]  WORD       wFatDate,    // Register N
-      [in]  WORD       wFatTime,    // Register N+1
-      [out] LPFILETIME lpFileTime
-    );
-    ```
-
-=== "DT3 Format (3 Registers)"
-
-    **3-Register DateTime - Common in Samsung Battery Systems**
-    
-    ```
-    Usage: BMS_RTC_DT3 + Data Type = DATETIME
-    Example: Samsung Battery System BMS RTC Write [YY-MM-DD hh:mm:ss]
-    Registers: 3
-    ```
-    
-    | Register | Hex Address | Format | Description |
-    |----------|-------------|--------|-------------|
-    | N | 0x0000 | `YY\|MM` | MSB(Year) - LSB(Month) |
-    | N+1 | 0x0001 | `DD\|hh` | MSB(Day) - LSB(Hour) |
-    | N+2 | 0x0002 | `mm\|ss` | MSB(Minute) - LSB(Second) |
-    
-    **Example Addresses:**
-    ```
-    Reg 1: [Address(Hex): 0x0000] MSB(Year)-LSB(Month)
-    Reg 2: [Address(Hex): 0x0001] MSB(Day)-LSB(Hour)
-    Reg 3: [Address(Hex): 0x0002] MSB(Minute)-LSB(Second)
-    ```
-
-=== "DT4 Format (4 Registers)"
-
-    **4-Register DateTime with Milliseconds**
-    
-    ```
-    Usage: Timestamp_DT4 + Data Type = DATETIME
-    Registers: 4
-    ```
-    
-    | Register | Format | Description |
-    |----------|--------|-------------|
-    | N | `YY\|MM` | Year\|Month |
-    | N+1 | `DD\|hh` | Day\|Hour |
-    | N+2 | `mm\|ss` | Minute\|Second |
-    | N+3 | `fff` | Milliseconds |
-
-=== "DT4P Format (4 Registers)"
-
-    **Modbus Plus Y2000 DateTime Format**
-    
-    ```
-    Usage: ModbusPlus_Time_DT4P + Data Type = DATETIME
-    Registers: 4
-    ```
-    
-    | Register | Format | Description |
-    |----------|--------|-------------|
-    | N | `XX\|YY` | Year (2-digit, base 2000) |
-    | N+1 | `MM\|DD` | Month\|Day |
-    | N+2 | `hh\|mm` | Hour\|Minute |
-    | N+3 | `ms` | Milliseconds |
-
-=== "DT6 Format (6 Registers)"
-
-    **6-Register DateTime - Full Separate Registers**
-    
-    ```
-    Usage: System_Timestamp_DT6 + Data Type = DATETIME
-    Registers: 6
-    ```
-    
-    | Register | Content | Description |
-    |----------|---------|-------------|
-    | N | `YYYY` | Year (4 digits) |
-    | N+1 | `MMMM` | Month (1-12) |
-    | N+2 | `DDDD` | Day (1-31) |
-    | N+3 | `HHHH` | Hour (0-23) |
-    | N+4 | `MMMM` | Minute (0-59) |
-    | N+5 | `SSSS` | Second (0-59) |
-
-=== "DT7 Format (7 Registers)"
-
-    **7-Register DateTime with Weekday**
-    
-    ```
-    Usage: Extended_Clock_DT7 + Data Type = DATETIME
-    Registers: 7
-    ```
-    
-    | Register | Format | Description |
-    |----------|--------|-------------|
-    | N | `Sec\|Min` | Second\|Minute |
-    | N+1 | `Hour\|Day` | Hour\|Day |
-    | N+2 | `Month\|Year` | Month\|Year |
-    | N+3 | `Weekday` | Day of week (0-6) |
-
-=== "EPOCH Formats"
-
-    **Unix Timestamp Formats**
-    
-    **EPOCH (2 Registers):**
-    ```
-    Usage: Unix_Time_EPOCH + Data Type = DATETIME
-    Registers: 2 (32-bit timestamp)
-    ```
-    
-    **EPOCHMS (4 Registers):**
-    ```
-    Usage: Unix_TimeMS_EPOCHMS + Data Type = DATETIME
-    Registers: 4 (64-bit timestamp in milliseconds)
-    ```
-
-**Implementation Examples:**
-
-!!! example "DateTime Configuration Examples"
-
-    **Samsung Battery System:**
-    ```
-    Name: BMS_RTC_DT3
-    Address: 400001
-    Data Type: DATETIME
-    Registers Used: 3 (400001, 400002, 400003)
-    ```
-    
-    **PLC with DOS Format:**
-    ```
-    Name: System_Clock_DOS
-    Address: 400010
-    Data Type: DATETIME
-    Registers Used: 2 (400010, 400011)
-    ```
-    
-    **Industrial Controller with Full DateTime:**
-    ```
-    Name: Controller_Time_DT6
-    Address: 300001
-    Data Type: DATETIME
-    Registers Used: 6 (300001-300006)
-    ```
-
-**Important Notes:**
-
-- Always set **Data Type = DATETIME** when using DateTime Magic Codes
-- Use **Swap Type** settings to match device byte order (ABCD_BE, CDBA_LE, etc.)
-- Consult manufacturer documentation for register layout and byte ordering
-- Test with known timestamps to verify correct interpretation
-- Some devices may use zero-based or one-based addressing - adjust accordingly
-
-##### Multiple Magic Codes
-```
-Example: System_Status@-1:31.5
-Effect: Poll once (@-1), 32 registers (:31), bit 5 (.5)
-```
-
-#### 2. Address Field - 6-Digit Format
-
-The **6-digit addressing format** provides an explicit and standardized way to identify both the register type and its address in a single number. This format is used in XPF and many other Modbus tools to simplify configuration.
-
-**Format Structure:**
-
-```
-[Type Prefix Digit] [5-Digit Register Address]
-```
-
-**Example: 400001 breaks down as:**
-- **4** = Register Type Indicator (Holding Register)
-- **00001** = Register Number (1)
-
-!!! info "Prefix Digit ≠ Function Code"
-    **Important:** The first digit is a **register type indicator**, not the Modbus function code itself (though they're related). 
-    
-    - **Type Prefix** → Tells you what kind of register (Coil, Discrete Input, Input Register, Holding Register)
-    - **Function Code** → The actual Modbus command used to read/write that register type
-    
-    For example, address `400001` uses type prefix `4` (Holding Register), which is typically accessed using **Function Code 03** (Read) or **06/16** (Write).
-
-**Register Type Prefix Table:**
-
-| Prefix Digit | Register Type | Typical Function Codes | Address Range (6-Digit) | Access |
-|--------------|---------------|------------------------|-------------------------|---------|
-| **0xxxxx** | Coils | FC01 (Read) / FC05, FC15 (Write) | 000001–065536 | Read/Write |
-| **1xxxxx** | Discrete Inputs | FC02 (Read) | 100001–165536 | Read Only |
-| **3xxxxx** | Input Registers | FC04 (Read) | 300001–365536 | Read Only |
-| **4xxxxx** | Holding Registers | FC03 (Read) / FC06, FC16 (Write) | 400001–465536 | Read/Write |
-
-**Visual Breakdown:**
-
-```mermaid
-graph LR
-    ADDR["400001"] -->|"Split into"| TYPE["4<br/>Holding Register"]
-    ADDR -->|"Split into"| NUM["00001<br/>Register #1"]
-    
-    TYPE -.->|"Uses"| FC["Function Codes:<br/>03 (Read)<br/>06/16 (Write)"]
-    NUM -.->|"Actual Address"| ZERO["Zero-based: 0<br/>One-based: 1"]
-    
-    style ADDR fill:#e3f2fd,stroke:#1976d2,stroke-width:3px,font-size:16px
-    style TYPE fill:#fff3e0,stroke:#f57c00,stroke-width:2px
-    style NUM fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    style FC fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
-    style ZERO fill:#ffebee,stroke:#c62828,stroke-width:2px
-```
-
-**Key Concepts:**
-
-- **First digit (0, 1, 3, or 4)**: Indicates **register type** (not function code directly)
-- **Last five digits (00000–65535)**: The **actual register address**
-- **Zero-based vs One-based**: Devices may start counting from 0 or 1
-  - **Zero-based:** First register = 0 (e.g., `400000`)
-  - **One-based:** First register = 1 (e.g., `400001`)
-
-!!! example "Address Examples - Understanding the Format"
-    
-    **Complete breakdown showing all components:**
-    
-    | 6-Digit Address | Type Prefix | Register # | Function Code | Physical Location | Zero-Based |
-    |-----------------|-------------|------------|---------------|-------------------|------------|
-    | `400001` | 4 (Holding) | 1 | FC03 (Read) | First holding register | 0 |
-    | `400123` | 4 (Holding) | 123 | FC03 (Read) | 123rd holding register | 122 |
-    | `300005` | 3 (Input) | 5 | FC04 (Read) | 5th input register | 4 |
-    | `000013` | 0 (Coil) | 13 | FC01 (Read) | 13th coil | 12 |
-    | `100008` | 1 (Discrete) | 8 | FC02 (Read) | 8th discrete input | 7 |
-
-!!! tip "Converting from Other Modbus Tools"
-    **If you're used to entering "Function Code + Address" separately (like Modbus Poll):**
-    
-    | Your Tool Shows | XPF 6-Digit Format | Conversion |
-    |-----------------|-------------------|------------|
-    | FC03, Address 123 | `400123` | Prefix `4` + `00123` |
-    | FC04, Address 5 | `300005` | Prefix `3` + `00005` |
-    | FC01, Address 13 | `000013` | Prefix `0` + `00013` |
-    | FC02, Address 8 | `100008` | Prefix `1` + `00008` |
-    
-    **Quick Reference:**
-    - **FC01/05/15** (Coils) → Prefix **0**
-    - **FC02** (Discrete Inputs) → Prefix **1**  
-    - **FC03/06/16** (Holding Registers) → Prefix **4**
-    - **FC04** (Input Registers) → Prefix **3**
-
-**Special Function Codes (Do NOT Use 6-Digit Address Format):**
-
-| Function Code | Hex | Description | Use Case |
-|---------------|-----|-------------|----------|
-| **FC07** | 0x07 | Read Exception Status | Device error/status flags |
-| **FC08** | 0x08 | Diagnostics | Device diagnostic tests (requires Sub-Function) |
-| **FC11** | 0x0B | Get Comm Event Counter | Communication event counter |
-| **FC12** | 0x0C | Get Comm Event Log | Communication event log retrieval |
-| **FC17** | 0x11 | Report Server ID | Server/slave identification |
-| **FC43** | 0x2B | Encapsulated Interface Transport | MEI - Device ID, date/time sync |
-| **FC43-14** | 0x2B-0x0E | Read Device Identification | Manufacturer, model, serial strings (requires Device ID & Object ID) |
-| **FC43-15** | 0x2B-0x0F | Read Date and Time | Clock read |
-| **FC43-16** | 0x2B-0x10 | Write Date and Time | Clock synchronization |
-
-!!! info "Why No 6-Digit Format for Special Functions?"
-    Special function codes (FC07, FC08, FC11, FC12, FC17, FC43) don't follow the 6-digit addressing scheme because they:
-    
-    - Operate on device-level data (not specific registers)
-    - Use different request/response structures
-    - Require additional parameters (Sub-Function, Object ID, Device ID)
-    - Are configured through the **Modbus Wizard** with specialized fields
-
-!!! tip "Choosing Address Mode: Zero-Based vs One-Based"
-    **Most devices use 1-based addressing** (addresses start at 1), but some use 0-based (addresses start at 0). 
-    
-    - Check your device documentation for its addressing convention
-    - Use the **Offset** button in the List Group to switch between modes globally
-    - `400001` (1-based) and `400000` (0-based) both refer to the first physical holding register
-
-#### 3. Unit ID (Slave/Station ID)
-
-The Unit ID identifies which Modbus slave device to communicate with on the network:
-
-| Range | Description | Common Usage |
-|-------|-------------|--------------|
-| **1-247** | Valid Slave IDs | Standard Modbus device addressing |
-| **0** | Broadcast address | Not recommended for normal operations |
-| **248-255** | Reserved | Not used in standard Modbus |
-
-**Key Points:**
-- Each device on a Modbus network must have a unique Unit ID
-- Use the **Swap ID** button in List Group to change all monitor points at once
-- TCP/IP devices often use Unit ID 1 or match their IP last octet
-
-#### 4. Gain (Scaling Multiplier)
-
-Apply linear scaling to raw Modbus values using the formula: **`Y = (Gain * X) + Offset`**
-
-| Value | Effect | Example |
-|-------|--------|---------|
-| **1.0** | No scaling (default) | Raw value displayed as-is |
-| **0.1** | Divide by 10 | Convert tenths to units (e.g., 235 → 23.5) |
-| **10** | Multiply by 10 | Amplify small values |
-| **-1** | Invert sign | Convert positive to negative |
-
-**Common Applications:**
-- Temperature conversion: Gain = 0.1 (tenths of degree to degrees)
-- Pressure scaling: Gain = 0.01 (convert to proper decimal places)
-- Current measurement: Gain = 0.001 (milliamps to amps)
-
-#### 5. Offset (Value Adjustment)
-
-Add or subtract a constant from the scaled value: **`Y = (Gain * X) + Offset`**
-
-| Value | Effect | Example |
-|-------|--------|---------|
-| **0** | No offset (default) | Scaled value used as-is |
-| **-273.15** | Celsius to Kelvin | Temperature conversion |
-| **32** | Celsius to Fahrenheit | After gain of 1.8 |
-
-**Processing Order:** Raw Value → Gain (multiply) → Offset (add) → Display
-
-#### 6. Data Type (Data Interpretation)
-
-Defines how to interpret the raw Modbus register data.
-
-**Available Data Types:**
-
-| Type | Size | Range | Usage |
-|------|------|-------|-------|
-| **BIT** | 1 bit | 0/1 | Boolean values |
-| **INT16** | 16-bit | -32,768 to 32,767 | Signed integers |
-| **UINT16** | 16-bit | 0 to 65,535 | Unsigned integers (default) |
-| **INT32** | 32-bit | +/- 2.1 billion | Large signed numbers |
-| **UINT32** | 32-bit | 0 to 4.2 billion | Large unsigned numbers |
-| **FLOAT32** | 32-bit | IEEE 754 | Floating point numbers |
-| **INT64** | 64-bit | +/- 9.2 x 10^18 | Very large integers |
-| **UINT64** | 64-bit | 0 to 1.8 x 10^19 | Very large unsigned |
-| **DOUBLE64** | 64-bit | IEEE 754 | Double precision float |
-| **HEX** | Variable | Hexadecimal | Raw hex display |
-| **STRING** | Variable | Text | Character strings |
-| **DATETIME** | Variable | Date/Time | Formatted timestamps |
-
-**Most Common Types:**
-- **UINT16**: Unsigned 16-bit integer (0-65535) - default for most registers
-- **INT16**: Signed 16-bit integer (-32768 to 32767) - for negative values
-- **FLOAT32**: 32-bit floating point - for decimal precision
-- **STRING**: Text data - use with `:xx` magic code for length
-
-#### 7. Swap Type (Byte/Word Order)
-
-Controls byte ordering for multi-register data (32-bit, 64-bit values spanning multiple registers).
-
-**Available Swap Types:**
-
-| Swap Type | Description | Byte Order |
-|-----------|-------------|------------|
-| **ABCD_BE** | Big-Endian (Default) | Most significant first |
-| **CDBA_LE** | Little-Endian | Least significant first |
-| **BADC_BEBS** | Big-Endian Byte Swap | Bytes swapped within words |
-| **CDAB_LEBS** | Little-Endian Word Swap | Words swapped |
-
-**Quick Selection Guide:**
-- **ABCD_BE** (Big-Endian): Try this first for most devices
-- **CDBA_LE** (Little-Endian): If ABCD shows wrong values
-- **BADC_BEBS / CDAB_LEBS**: For devices with swapped byte/word order
-
-#### 8. Value (Current/Display Value)
-
-The Value field serves multiple purposes depending on mode and state:
-
-| Mode | Display | Interaction |
-|------|---------|-------------|
-| **Client Mode** | Shows latest polled value | Read-only, auto-updates during polling |
-| **Server Mode** | Editable field | Click to edit, sends value to requesting clients |
-| **Error State** | Empty with red border | Click cell to view error message details |
-| **Evaluate Mode** | Color-coded background | Indicates pass/fail based on limits |
-
-#### 9. Extra (...) Button
-
-Click the **three dots (...)** button at the end of each row to access extended options:
-
-**Available Options:**
-
-- **Evaluate Limits**: Set High/Low thresholds with color coding
-- **CustomQ**:Custom Modbus command in hexadecimal
-- **Chart**:Enable charting for this monitor point to display value trends over time
-- **Simulate**:Simulation mode
-
-#### 10. CustomQ (Custom Modbus Command)
-
-Send raw Modbus PDU commands in hexadecimal format for special function codes or manufacturer-specific commands.
-
-**Format:** Space-separated hex bytes (PDU only, no MBAP header or CRC)
-
-**Examples:**
-```
-11 04 00 6B 00 03    # Read File Record
-14 0E 06 ...         # Write File Record
-2B 0E 01 00          # Read Device Identification
-```
-
-**Use Cases:**
-
-- Custom function codes not in standard Modbus
-- Manufacturer-specific diagnostics
-- Advanced MEI commands
-- File transfer operations
-
-#### 11. Chart (Enable Charting)
-
-Enable time-series charting for this monitor point to visualize value trends over time. 
-
-!!! info "Complete Chart Guide"
-    For detailed chart setup, configuration, and advanced features, see the **[Charts - Data Trends Visualization](#charts---data-trends-visualization)** section below.
-
-| State | Result |
-|-------|--------|
-| **Checked** | Values plotted on chart in real-time, click Chart Button in Client tab to view |
-| **Unchecked** | Monitor point excluded from chart (default)|
-
-**Requirements:** Client mode must be running (polling active) for data collection
-
-#### 12. Axis (Chart Axis Assignment)
-
-Assign monitor point to specific chart axis for multi-scale visualization: 
-
-| Value | Purpose | Example |
-|-------|---------|---------|
-| **0** | Left axis | Temperature (0-100°C) |
-| **1** | Right axis | Pressure (0-1000 PSI) |
-
-**Benefits of Dual Axis:**
-
-- Compare values with different scales simultaneously
-- Temperature and pressure on same chart
-- Speed and current measurements together
-
-!!! info "Chart Axis Configuration"
-    For complete dual-axis setup and multi-signal charting examples, see the **[Charts - Data Trends Visualization](#charts---data-trends-visualization)** section below.
-
-#### 13. Simulate (Simulation Mode)
-
-Enable simulation mode to generate test values without requiring an actual Modbus device.
-
-| State | Mode | Behavior |
-|-------|------|----------|
-| **Checked** | Simulation ON | Generates test patterns (ramp, sine, random) |
-| **Unchecked** | Normal mode | Uses actual device communication |
-
-**Available Only In:** Server mode - allows testing without physical hardware
-
-**Simulation Patterns:**
-
-- **Ramp**: Incrementing values for testing trending
-- **Sine Wave**: Oscillating pattern for dynamic testing
-- **Random**: Random values within configured range
-- **Static**: User-defined constant value
-
-## Modbus Client Operations
+## 4. Modbus Client Operations
 
 **Client Mode Overview:** XPF operates as a Modbus Master (Client) when you want to read data from or write data to remote Modbus devices. In this mode, XPF initiates all communication by sending requests to Modbus Server devices (PLCs, drives, meters, sensors) and processes their responses. You can simultaneously connect to multiple devices using different interfaces and protocols.
 
@@ -2426,25 +1875,6 @@ Enable simulation mode to generate test values without requiring an actual Modbu
     Custom Port: 10.0.1.50:1502
     ```
 
-=== "COM Group"
-
-    **Serial communication parameters**
-    
-    | Parameter | Options | Typical Values |
-    |-----------|---------|----------------|
-    | **COM Port** | Available ports | COM1, COM3, USB-Serial adapters |
-    | **Baud Rate** | 300-921600 | 9600, 19200, 38400, 115200 |
-    | **Data Bits** | 7, 8 | 8 (most common) |
-    | **Parity** | None, Even, Odd, Mark, Space | None (most common) |
-    | **Stop Bits** | None, One, Two, 1.5 | One (standard) |
-    
-    **Standard Serial Settings:**
-    ```yaml
-    Common RTU: 9600,8,N,1
-    High Speed: 115200,8,N,1
-    Legacy ASCII: 1200,7,E,1
-    ```
-
 === "Timeout Group"
 
     **Critical communication timing parameters**
@@ -2455,22 +1885,6 @@ Enable simulation mode to generate test values without requiring an actual Modbu
     | **Inter-Frame Delay** | 0-10000ms | 20ms | Delay between monitor point requests |
     | **Poll Rate** | 100-3600000ms | 1000ms | Delay before repeating full scan |
     | **Retries** | 1-65535 | 3 | Number of retry attempts for failed requests |
-
-=== "Write Group"
-
-    **Value writing control and function code selection**
-    
-    | Mode | Function | Behavior |
-    |------|----------|----------|
-    | **Auto** | Smart Selection | Automatically chooses single/multiple write functions |
-    | **Manual** | User Control | Manually select Function 05/06/15/16 |
-    | **Disabled** | Read Only | Prevents accidental writes, values revert on scan |
-    
-    **Available Write Functions:**
-    - **FC05** - Write Single Coil
-    - **FC06** - Write Single Register
-    - **FC15** - Write Multiple Coils
-    - **FC16** - Write Multiple Registers
 
 === "Scanner Group"
 
@@ -3089,7 +2503,7 @@ Documents/ModbusScan_2025-10-28_14-32-15.csv
 | **Start/Stop** | Master control | Begins/ends continuous polling operation |
 
 
-## Modbus Server (Slave) Operations - Tab
+## 5. Modbus Server Operations
 
 **Server Mode Overview:** XPF operates as a Modbus Server (Slave) when you want to simulate Modbus devices or provide data to Modbus Client applications. In this mode, XPF responds to requests from Modbus Master devices (SCADA systems, HMIs, PLCs) by serving data from your configured monitor points. This is invaluable for development, testing, and device simulation without requiring physical hardware.
 
@@ -3522,13 +2936,13 @@ Each instance:
 - **Device Simulation**: Each server represents different device type or model
 - **Load Testing**: Multiple servers for testing client handling of multiple devices
 
-## IoT Integration - MQTT & Cloud Connectivity
+## 6. IoT Integration
 
 Modbus Monitor XPF includes comprehensive **MQTT messaging** capabilities for cloud and device communication, enabling Industrial IoT integration scenarios. Connect your Modbus devices to cloud platforms, publish data to MQTT brokers, and enable bi-directional communication between industrial equipment and cloud services.
 
 ### Quick Start
 
-1. **Access MQTT Panel**: Open Modbus Monitor XPF and locate the **IoT** tab on the ribbon (available when MQTT connector is installed)
+1. **Access MQTT Panel**: Open Modbus Monitor XPF and locate the **IoT** tab on the ribbon (see [IoT Tab](#iot-tab) for interface overview)
 2. **Configure Broker**: Enter broker **Host** (e.g., `broker.hivemq.com`) and **Port** (typically `1883` for standard, `8883` for TLS)
 3. **Set Client ID**: Enter a unique **Client ID** for your connection (e.g., `ModbusMonitor-MyPC-01`)
 4. **Authenticate** (optional): Enter username and password if required by broker
@@ -3994,6 +3408,561 @@ channels/<channel_id>/publish
 
 !!! note "ThingSpeak Documentation"
     Detailed ThingSpeak integration guide with channel setup, API key configuration, and data formatting will be added in a future update. Visit [ThingSpeak.com](https://thingspeak.com) for platform documentation.
+
+## 7. Monitor Points Configuration
+
+**Monitor Points** are similar to PLC tags - each one represents a specific data point you want to read or write on a Modbus device. Just as PLC tags map to memory addresses in a controller, Monitor Points map to Modbus registers and coils with all the configuration needed to access and interpret the data correctly.
+
+This section explains everything you need to know about configuring Monitor Points, including address formats, data types, scaling options, and advanced features. Whether you're setting up a simple temperature sensor or complex multi-register data structures, understanding these configuration options is essential for effective Modbus communication.
+
+!!! tip "Quick Navigation - Monitor Points Configuration"
+    **Most Common Topics:**
+    
+    | Topic | Link | Use Case |
+    |-------|------|----------|
+    | **Magic Codes** | [Name Field Enhanced](#1-name-field-enhanced-with-magic-codes) | String length, poll rates, bit access, date/time |
+    | **Address Format** | [6-Digit Format](#2-address-field-6-digit-format) | Understanding 400001, 300001, etc. |
+    | **Data Types** | [Data Interpretation](#6-data-type-data-interpretation) | INT16, FLOAT32, STRING, DATETIME |
+    | **Byte Order** | [Swap Type](#7-swap-type-byteword-order) | Big/Little Endian for 32-bit+ values |
+    | **Scaling** | [Gain & Offset](#4-gain-scaling-multiplier) | Convert raw values to engineering units |
+    | **Custom Commands** | [CustomQ Field](#10-customq-custom-modbus-command) | Send raw PDU commands |
+    | **Charts** | [Chart Options](#11-chart-enable-charting) | Real-time data visualization |
+    | **Simulation** | [Simulate Mode](#13-simulate-simulation-mode) | Generate test data patterns |
+
+### Monitor Points Structure
+
+Each row in the Monitor Points table represents a single Modbus register or group of registers to monitor:
+
+|Number| Column | Data Type | Example | Description |
+|------|--------|-----------|---------|-------------|
+|1| **Name** | String | `Water Temperature:16` | Descriptive name + [magic codes](#1-name-field-enhanced-with-magic-codes) for advanced features |
+|2| **Address** | Integer | `400001` | [6-digit Modbus address format](#2-address-field-6-digit-format) |
+|3| **Unit ID** | Byte (1-247) | `1` | Slave/Station ID (1-247) |
+|4| **Gain** | Float | `1.5` | Scaling multiplier: `Y = (Gain * X) + Offset` |
+|5| **Offset** | Float | `100` | Value offset: `Y = (Gain * X) + Offset` |
+|6| **Data Type** | Enum | `INT16` | [Data interpretation format](#3-data-type-options) (INT16, UINT16, FLOAT32, STRING, etc.) |
+|7| **Swap Type** | Enum | `ABCD_BE` | [Byte/word order](#4-swap-type-for-multi-register-data) for multi-register data |
+|8| **Value** | String/Number | `123.45` | Shows latest polled value, red border for errors, editable for writes |
+|9| **Extra (...)** | Button | `...` | Additional Options such as CommandQ, Chart, Simulate|
+|10| **CustomQ** | Hex String | `11 04 00 6B` | [Custom Modbus command](#custom-commands-customq) in hexadecimal |
+|11| **Chart** | Checkbox | Checked / Unchecked | Enable charting for this monitor point to display value trends over time |
+|12| **Axis** | Integer | `0` or `1` | Assign to chart axis (0 or 1) for multi-scale time-series visualization |
+|13| **Simulate** | Checkbox | Checked / Unchecked | Enable simulation mode (Server mode only) to generate test values without actual device |
+
+### Detailed Field Descriptions
+
+#### 1. Name Field - Enhanced with Magic Codes
+
+The Name field supports special **Magic Key Codes** to enhance functionality:
+
+##### String Length Control
+```
+Format: :xx
+Usage: Water Temperature:16
+Effect: Reads 16 continuous registers as string
+```
+
+##### Poll Rate Control  
+```
+Format: @xxxx (milliseconds)
+Usage: Model Name@1000
+Effect: Polls every 1000ms (1 second)
+Special: @-1 = Poll once at start, @0 = Skip during polling
+```
+
+##### Bit Field Access
+```
+Format: .n (bit index 0-15)
+Usage: Status Register.8  
+Effect: Extracts bit 8 from 16-bit register
+```
+
+##### Date/Time Formats
+
+**DATETIME Display Format** - To display Date Time values with Magic Codes, you need to add a Magic Code to the Name field and set the Data Type to **DATETIME**. The processor uses the code (DOS, EPOCH, DT3, DT4, etc.) in the Name field to properly request the number of registers required for this display format to decode and display time properly.
+
+!!! note "No Modbus Standard for DateTime"
+    There is no official Modbus standard for date time representation, so analyze the manufacturer's documentation to determine the number of registers required to fetch date and time. Then, simply choose the correct Magic Code from the table below. Use **Swap Type** settings to match the remote device's byte order.
+
+**DateTime Magic Codes:**
+
+| Magic Code | Registers | Register Layout | Description |
+|------------|-----------|-----------------|-------------|
+| **DOS** | 2 | `[YYMMDD]` `[hhmmss]` | DOS Time Stamp Y1980, 2 Registers |
+| **WIN** | 2 | Same as DOS | Windows compatible DOS format |
+| **EPOCH** | 2 | Unix timestamp (32-bit) | Unix Epoch, 2 Registers |
+| **EPOCHMS** | 4 | Unix timestamp (64-bit ms) | Unix Epoch in Milliseconds (4 Registers) |
+| **DT2** | 2 | `[Date]` `[Time]` | Same as DOS format |
+| **DT3** | 3 | `[YY\|MM]` `[DD\|hh]` `[mm\|ss]` | Date Time, 3 Registers |
+| **DT4** | 4 | `[YY\|MM]` `[DD\|hh]` `[mm\|ss]` `[ms]` | Date Time, 4 Registers |
+| **DT4P** | 4 | `[XX\|YY]` `[MM\|DD]` `[hh\|mm]` `[ms]` | Date Time Y2000 Modbus Plus, 4 Registers |
+| **DT6** | 6 | `[YYYY]` `[MMMM]` `[DDDD]` `[HHHH]` `[MMMM]` `[SSSS]` | Date Time, 6 Registers |
+| **DT7** | 7 | `[Sec\|Min]` `[Hour\|Day]` `[Month\|Year]` `[Weekday]` | Date Time, 7 Registers |
+
+**Detailed Format Specifications:**
+
+=== "DOS Format (2 Registers)"
+
+    **DOS Time Stamp Y1980 - Uses Windows API DosDateTimeToFileTime()**
+    
+    ```
+    Usage: System_Clock_DOS + Data Type = DATETIME
+    Registers: 2
+    ```
+    
+    | Register | Format | Description |
+    |----------|--------|-------------|
+    | N | `YY\|MM\|DD` | Date: Year\|Month\|Day |
+    | N+1 | `hh\|mm\|ss` | Time: Hour\|Minute\|Second |
+    
+    **Windows API Function:**
+    ```c
+    BOOL DosDateTimeToFileTime(
+      [in]  WORD       wFatDate,    // Register N
+      [in]  WORD       wFatTime,    // Register N+1
+      [out] LPFILETIME lpFileTime
+    );
+    ```
+
+=== "DT3 Format (3 Registers)"
+
+    **3-Register DateTime - Common in Samsung Battery Systems**
+    
+    ```
+    Usage: BMS_RTC_DT3 + Data Type = DATETIME
+    Example: Samsung Battery System BMS RTC Write [YY-MM-DD hh:mm:ss]
+    Registers: 3
+    ```
+    
+    | Register | Hex Address | Format | Description |
+    |----------|-------------|--------|-------------|
+    | N | 0x0000 | `YY\|MM` | MSB(Year) - LSB(Month) |
+    | N+1 | 0x0001 | `DD\|hh` | MSB(Day) - LSB(Hour) |
+    | N+2 | 0x0002 | `mm\|ss` | MSB(Minute) - LSB(Second) |
+    
+    **Example Addresses:**
+    ```
+    Reg 1: [Address(Hex): 0x0000] MSB(Year)-LSB(Month)
+    Reg 2: [Address(Hex): 0x0001] MSB(Day)-LSB(Hour)
+    Reg 3: [Address(Hex): 0x0002] MSB(Minute)-LSB(Second)
+    ```
+
+=== "DT4 Format (4 Registers)"
+
+    **4-Register DateTime with Milliseconds**
+    
+    ```
+    Usage: Timestamp_DT4 + Data Type = DATETIME
+    Registers: 4
+    ```
+    
+    | Register | Format | Description |
+    |----------|--------|-------------|
+    | N | `YY\|MM` | Year\|Month |
+    | N+1 | `DD\|hh` | Day\|Hour |
+    | N+2 | `mm\|ss` | Minute\|Second |
+    | N+3 | `fff` | Milliseconds |
+
+=== "DT4P Format (4 Registers)"
+
+    **Modbus Plus Y2000 DateTime Format**
+    
+    ```
+    Usage: ModbusPlus_Time_DT4P + Data Type = DATETIME
+    Registers: 4
+    ```
+    
+    | Register | Format | Description |
+    |----------|--------|-------------|
+    | N | `XX\|YY` | Year (2-digit, base 2000) |
+    | N+1 | `MM\|DD` | Month\|Day |
+    | N+2 | `hh\|mm` | Hour\|Minute |
+    | N+3 | `ms` | Milliseconds |
+
+=== "DT6 Format (6 Registers)"
+
+    **6-Register DateTime - Full Separate Registers**
+    
+    ```
+    Usage: System_Timestamp_DT6 + Data Type = DATETIME
+    Registers: 6
+    ```
+    
+    | Register | Content | Description |
+    |----------|---------|-------------|
+    | N | `YYYY` | Year (4 digits) |
+    | N+1 | `MMMM` | Month (1-12) |
+    | N+2 | `DDDD` | Day (1-31) |
+    | N+3 | `HHHH` | Hour (0-23) |
+    | N+4 | `MMMM` | Minute (0-59) |
+    | N+5 | `SSSS` | Second (0-59) |
+
+=== "DT7 Format (7 Registers)"
+
+    **7-Register DateTime with Weekday**
+    
+    ```
+    Usage: Extended_Clock_DT7 + Data Type = DATETIME
+    Registers: 7
+    ```
+    
+    | Register | Format | Description |
+    |----------|--------|-------------|
+    | N | `Sec\|Min` | Second\|Minute |
+    | N+1 | `Hour\|Day` | Hour\|Day |
+    | N+2 | `Month\|Year` | Month\|Year |
+    | N+3 | `Weekday` | Day of week (0-6) |
+
+=== "EPOCH Formats"
+
+    **Unix Timestamp Formats**
+    
+    **EPOCH (2 Registers):**
+    ```
+    Usage: Unix_Time_EPOCH + Data Type = DATETIME
+    Registers: 2 (32-bit timestamp)
+    ```
+    
+    **EPOCHMS (4 Registers):**
+    ```
+    Usage: Unix_TimeMS_EPOCHMS + Data Type = DATETIME
+    Registers: 4 (64-bit timestamp in milliseconds)
+    ```
+
+**Implementation Examples:**
+
+!!! example "DateTime Configuration Examples"
+
+    **Samsung Battery System:**
+    ```
+    Name: BMS_RTC_DT3
+    Address: 400001
+    Data Type: DATETIME
+    Registers Used: 3 (400001, 400002, 400003)
+    ```
+    
+    **PLC with DOS Format:**
+    ```
+    Name: System_Clock_DOS
+    Address: 400010
+    Data Type: DATETIME
+    Registers Used: 2 (400010, 400011)
+    ```
+    
+    **Industrial Controller with Full DateTime:**
+    ```
+    Name: Controller_Time_DT6
+    Address: 300001
+    Data Type: DATETIME
+    Registers Used: 6 (300001-300006)
+    ```
+
+**Important Notes:**
+
+- Always set **Data Type = DATETIME** when using DateTime Magic Codes
+- Use **Swap Type** settings to match device byte order (ABCD_BE, CDBA_LE, etc.)
+- Consult manufacturer documentation for register layout and byte ordering
+- Test with known timestamps to verify correct interpretation
+- Some devices may use zero-based or one-based addressing - adjust accordingly
+
+##### Multiple Magic Codes
+```
+Example: System_Status@-1:31.5
+Effect: Poll once (@-1), 32 registers (:31), bit 5 (.5)
+```
+
+#### 2. Address Field - 6-Digit Format
+
+The **6-digit addressing format** provides an explicit and standardized way to identify both the register type and its address in a single number. This format is used in XPF and many other Modbus tools to simplify configuration.
+
+**Format Structure:**
+
+```
+[Type Prefix Digit] [5-Digit Register Address]
+```
+
+**Example: 400001 breaks down as:**
+- **4** = Register Type Indicator (Holding Register)
+- **00001** = Register Number (1)
+
+!!! info "Prefix Digit ≠ Function Code"
+    **Important:** The first digit is a **register type indicator**, not the Modbus function code itself (though they're related). 
+    
+    - **Type Prefix** → Tells you what kind of register (Coil, Discrete Input, Input Register, Holding Register)
+    - **Function Code** → The actual Modbus command used to read/write that register type
+    
+    For example, address `400001` uses type prefix `4` (Holding Register), which is typically accessed using **Function Code 03** (Read) or **06/16** (Write).
+
+**Register Type Prefix Table:**
+
+| Prefix Digit | Register Type | Typical Function Codes | Address Range (6-Digit) | Access |
+|--------------|---------------|------------------------|-------------------------|---------|
+| **0xxxxx** | Coils | FC01 (Read) / FC05, FC15 (Write) | 000001–065536 | Read/Write |
+| **1xxxxx** | Discrete Inputs | FC02 (Read) | 100001–165536 | Read Only |
+| **3xxxxx** | Input Registers | FC04 (Read) | 300001–365536 | Read Only |
+| **4xxxxx** | Holding Registers | FC03 (Read) / FC06, FC16 (Write) | 400001–465536 | Read/Write |
+
+**Visual Breakdown:**
+
+```mermaid
+graph LR
+    ADDR["400001"] -->|"Split into"| TYPE["4<br/>Holding Register"]
+    ADDR -->|"Split into"| NUM["00001<br/>Register #1"]
+    
+    TYPE -.->|"Uses"| FC["Function Codes:<br/>03 (Read)<br/>06/16 (Write)"]
+    NUM -.->|"Actual Address"| ZERO["Zero-based: 0<br/>One-based: 1"]
+    
+    style ADDR fill:#e3f2fd,stroke:#1976d2,stroke-width:3px,font-size:16px
+    style TYPE fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style NUM fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style FC fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style ZERO fill:#ffebee,stroke:#c62828,stroke-width:2px
+```
+
+**Key Concepts:**
+
+- **First digit (0, 1, 3, or 4)**: Indicates **register type** (not function code directly)
+- **Last five digits (00000–65535)**: The **actual register address**
+- **Zero-based vs One-based**: Devices may start counting from 0 or 1
+  - **Zero-based:** First register = 0 (e.g., `400000`)
+  - **One-based:** First register = 1 (e.g., `400001`)
+
+!!! example "Address Examples - Understanding the Format"
+    
+    **Complete breakdown showing all components:**
+    
+    | 6-Digit Address | Type Prefix | Register # | Function Code | Physical Location | Zero-Based |
+    |-----------------|-------------|------------|---------------|-------------------|------------|
+    | `400001` | 4 (Holding) | 1 | FC03 (Read) | First holding register | 0 |
+    | `400123` | 4 (Holding) | 123 | FC03 (Read) | 123rd holding register | 122 |
+    | `300005` | 3 (Input) | 5 | FC04 (Read) | 5th input register | 4 |
+    | `000013` | 0 (Coil) | 13 | FC01 (Read) | 13th coil | 12 |
+    | `100008` | 1 (Discrete) | 8 | FC02 (Read) | 8th discrete input | 7 |
+
+!!! tip "Converting from Other Modbus Tools"
+    **If you're used to entering "Function Code + Address" separately (like Modbus Poll):**
+    
+    | Your Tool Shows | XPF 6-Digit Format | Conversion |
+    |-----------------|-------------------|------------|
+    | FC03, Address 123 | `400123` | Prefix `4` + `00123` |
+    | FC04, Address 5 | `300005` | Prefix `3` + `00005` |
+    | FC01, Address 13 | `000013` | Prefix `0` + `00013` |
+    | FC02, Address 8 | `100008` | Prefix `1` + `00008` |
+    
+    **Quick Reference:**
+    - **FC01/05/15** (Coils) → Prefix **0**
+    - **FC02** (Discrete Inputs) → Prefix **1**  
+    - **FC03/06/16** (Holding Registers) → Prefix **4**
+    - **FC04** (Input Registers) → Prefix **3**
+
+**Special Function Codes (Do NOT Use 6-Digit Address Format):**
+
+| Function Code | Hex | Description | Use Case |
+|---------------|-----|-------------|----------|
+| **FC07** | 0x07 | Read Exception Status | Device error/status flags |
+| **FC08** | 0x08 | Diagnostics | Device diagnostic tests (requires Sub-Function) |
+| **FC11** | 0x0B | Get Comm Event Counter | Communication event counter |
+| **FC12** | 0x0C | Get Comm Event Log | Communication event log retrieval |
+| **FC17** | 0x11 | Report Server ID | Server/slave identification |
+| **FC43** | 0x2B | Encapsulated Interface Transport | MEI - Device ID, date/time sync |
+| **FC43-14** | 0x2B-0x0E | Read Device Identification | Manufacturer, model, serial strings (requires Device ID & Object ID) |
+| **FC43-15** | 0x2B-0x0F | Read Date and Time | Clock read |
+| **FC43-16** | 0x2B-0x10 | Write Date and Time | Clock synchronization |
+
+!!! info "Why No 6-Digit Format for Special Functions?"
+    Special function codes (FC07, FC08, FC11, FC12, FC17, FC43) don't follow the 6-digit addressing scheme because they:
+    
+    - Operate on device-level data (not specific registers)
+    - Use different request/response structures
+    - Require additional parameters (Sub-Function, Object ID, Device ID)
+    - Are configured through the **Modbus Wizard** with specialized fields
+
+!!! tip "Choosing Address Mode: Zero-Based vs One-Based"
+    **Most devices use 1-based addressing** (addresses start at 1), but some use 0-based (addresses start at 0). 
+    
+    - Check your device documentation for its addressing convention
+    - Use the **Offset** button in the List Group to switch between modes globally
+    - `400001` (1-based) and `400000` (0-based) both refer to the first physical holding register
+
+#### 3. Unit ID (Slave/Station ID)
+
+The Unit ID identifies which Modbus slave device to communicate with on the network:
+
+| Range | Description | Common Usage |
+|-------|-------------|--------------|
+| **1-247** | Valid Slave IDs | Standard Modbus device addressing |
+| **0** | Broadcast address | Not recommended for normal operations |
+| **248-255** | Reserved | Not used in standard Modbus |
+
+**Key Points:**
+- Each device on a Modbus network must have a unique Unit ID
+- Use the **Swap ID** button in List Group to change all monitor points at once
+- TCP/IP devices often use Unit ID 1 or match their IP last octet
+
+#### 4. Gain (Scaling Multiplier)
+
+Apply linear scaling to raw Modbus values using the formula: **`Y = (Gain * X) + Offset`**
+
+| Value | Effect | Example |
+|-------|--------|---------|
+| **1.0** | No scaling (default) | Raw value displayed as-is |
+| **0.1** | Divide by 10 | Convert tenths to units (e.g., 235 → 23.5) |
+| **10** | Multiply by 10 | Amplify small values |
+| **-1** | Invert sign | Convert positive to negative |
+
+**Common Applications:**
+- Temperature conversion: Gain = 0.1 (tenths of degree to degrees)
+- Pressure scaling: Gain = 0.01 (convert to proper decimal places)
+- Current measurement: Gain = 0.001 (milliamps to amps)
+
+#### 5. Offset (Value Adjustment)
+
+Add or subtract a constant from the scaled value: **`Y = (Gain * X) + Offset`**
+
+| Value | Effect | Example |
+|-------|--------|---------|
+| **0** | No offset (default) | Scaled value used as-is |
+| **-273.15** | Celsius to Kelvin | Temperature conversion |
+| **32** | Celsius to Fahrenheit | After gain of 1.8 |
+
+**Processing Order:** Raw Value → Gain (multiply) → Offset (add) → Display
+
+#### 6. Data Type (Data Interpretation)
+
+Defines how to interpret the raw Modbus register data.
+
+**Available Data Types:**
+
+| Type | Size | Range | Usage |
+|------|------|-------|-------|
+| **BIT** | 1 bit | 0/1 | Boolean values |
+| **INT16** | 16-bit | -32,768 to 32,767 | Signed integers |
+| **UINT16** | 16-bit | 0 to 65,535 | Unsigned integers (default) |
+| **INT32** | 32-bit | +/- 2.1 billion | Large signed numbers |
+| **UINT32** | 32-bit | 0 to 4.2 billion | Large unsigned numbers |
+| **FLOAT32** | 32-bit | IEEE 754 | Floating point numbers |
+| **INT64** | 64-bit | +/- 9.2 x 10^18 | Very large integers |
+| **UINT64** | 64-bit | 0 to 1.8 x 10^19 | Very large unsigned |
+| **DOUBLE64** | 64-bit | IEEE 754 | Double precision float |
+| **HEX** | Variable | Hexadecimal | Raw hex display |
+| **STRING** | Variable | Text | Character strings |
+| **DATETIME** | Variable | Date/Time | Formatted timestamps |
+
+**Most Common Types:**
+- **UINT16**: Unsigned 16-bit integer (0-65535) - default for most registers
+- **INT16**: Signed 16-bit integer (-32768 to 32767) - for negative values
+- **FLOAT32**: 32-bit floating point - for decimal precision
+- **STRING**: Text data - use with `:xx` magic code for length
+
+#### 7. Swap Type (Byte/Word Order)
+
+Controls byte ordering for multi-register data (32-bit, 64-bit values spanning multiple registers).
+
+**Available Swap Types:**
+
+| Swap Type | Description | Byte Order |
+|-----------|-------------|------------|
+| **ABCD_BE** | Big-Endian (Default) | Most significant first |
+| **CDBA_LE** | Little-Endian | Least significant first |
+| **BADC_BEBS** | Big-Endian Byte Swap | Bytes swapped within words |
+| **CDAB_LEBS** | Little-Endian Word Swap | Words swapped |
+
+**Quick Selection Guide:**
+- **ABCD_BE** (Big-Endian): Try this first for most devices
+- **CDBA_LE** (Little-Endian): If ABCD shows wrong values
+- **BADC_BEBS / CDAB_LEBS**: For devices with swapped byte/word order
+
+#### 8. Value (Current/Display Value)
+
+The Value field serves multiple purposes depending on mode and state:
+
+| Mode | Display | Interaction |
+|------|---------|-------------|
+| **Client Mode** | Shows latest polled value | Read-only, auto-updates during polling |
+| **Server Mode** | Editable field | Click to edit, sends value to requesting clients |
+| **Error State** | Empty with red border | Click cell to view error message details |
+| **Evaluate Mode** | Color-coded background | Indicates pass/fail based on limits |
+
+#### 9. Extra (...) Button
+
+Click the **three dots (...)** button at the end of each row to access extended options:
+
+**Available Options:**
+
+- **Evaluate Limits**: Set High/Low thresholds with color coding
+- **CustomQ**:Custom Modbus command in hexadecimal
+- **Chart**:Enable charting for this monitor point to display value trends over time
+- **Simulate**:Simulation mode
+
+#### 10. CustomQ (Custom Modbus Command)
+
+Send raw Modbus PDU commands in hexadecimal format for special function codes or manufacturer-specific commands.
+
+**Format:** Space-separated hex bytes (PDU only, no MBAP header or CRC)
+
+**Examples:**
+```
+11 04 00 6B 00 03    # Read File Record
+14 0E 06 ...         # Write File Record
+2B 0E 01 00          # Read Device Identification
+```
+
+**Use Cases:**
+
+- Custom function codes not in standard Modbus
+- Manufacturer-specific diagnostics
+- Advanced MEI commands
+- File transfer operations
+
+#### 11. Chart (Enable Charting)
+
+Enable time-series charting for this monitor point to visualize value trends over time. 
+
+!!! info "Complete Chart Guide"
+    For detailed chart setup, configuration, and advanced features, see the **[Charts - Data Trends Visualization](#charts---data-trends-visualization)** section below.
+
+| State | Result |
+|-------|--------|
+| **Checked** | Values plotted on chart in real-time, click Chart Button in Client tab to view |
+| **Unchecked** | Monitor point excluded from chart (default)|
+
+**Requirements:** Client mode must be running (polling active) for data collection
+
+#### 12. Axis (Chart Axis Assignment)
+
+Assign monitor point to specific chart axis for multi-scale visualization: 
+
+| Value | Purpose | Example |
+|-------|---------|---------|
+| **0** | Left axis | Temperature (0-100°C) |
+| **1** | Right axis | Pressure (0-1000 PSI) |
+
+**Benefits of Dual Axis:**
+
+- Compare values with different scales simultaneously
+- Temperature and pressure on same chart
+- Speed and current measurements together
+
+!!! info "Chart Axis Configuration"
+    For complete dual-axis setup and multi-signal charting examples, see the **[Charts - Data Trends Visualization](#charts---data-trends-visualization)** section below.
+
+#### 13. Simulate (Simulation Mode)
+
+Enable simulation mode to generate test values without requiring an actual Modbus device.
+
+| State | Mode | Behavior |
+|-------|------|----------|
+| **Checked** | Simulation ON | Generates test patterns (ramp, sine, random) |
+| **Unchecked** | Normal mode | Uses actual device communication |
+
+**Available Only In:** Server mode - allows testing without physical hardware
+
+**Simulation Patterns:**
+
+- **Ramp**: Incrementing values for testing trending
+- **Sine Wave**: Oscillating pattern for dynamic testing
+- **Random**: Random values within configured range
+- **Static**: User-defined constant value
 
 ## Advanced Features & Tips
 
