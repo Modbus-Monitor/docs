@@ -2519,7 +2519,7 @@ Documents/ModbusScan_2025-10-28_14-32-15.csv
 
 **Key Server Capabilities:**
 
-- **Multi-Interface Concurrent Operation** - Run TCP and multiple Serial servers simultaneously
+- **Multi-Interface Concurrent Operation** - Run TCP **and** multiple Serial servers **simultaneously**
 - **Traffic Capture & Learning** - Automatically build Modbus maps from incoming client requests
 - **Advanced Simulation Engine** - Generate dynamic test data with sine waves, ramps, and patterns
 - **Real Device Simulation** - Millisecond response times for realistic device behavior
@@ -2637,8 +2637,8 @@ Documents/ModbusScan_2025-10-28_14-32-15.csv
     
     | Control | Range | Purpose |
     |---------|-------|---------|
-    | **Ts (Sample Time)** | 1-1000000 ms | Update rate for simulation engine |
-    | **Freq (Frequency)** | 0.01-1000000 Hz | Sine wave frequency for dynamic simulation |
+    | **Ts (Sample Time)** | 1-65535 ms | Update rate for simulation engine |
+    | **Freq (Frequency)** | 0.01-1000 Hz | Sine wave frequency for dynamic simulation |
     | **Sample Button** | Action | Add sample monitor point with sine wave pattern |
     | **Toggle Button** | Action | Enable/disable simulation on all monitor points |
     | **Max/Default/Min** | Actions | Set all simulated values to maximum/default/minimum ranges |
@@ -2675,7 +2675,7 @@ Documents/ModbusScan_2025-10-28_14-32-15.csv
 
 ### Powerful Multi-Server Architecture - Revolutionary Time & Hardware Savings
 
-**Game-Changing Feature:** XPF's most powerful capability is running **multiple Modbus servers simultaneously on different interfaces** - a revolutionary approach that **saves significant time and eliminates the need for extra hardware**.
+**Game-Changing Feature:** XPF's most powerful capability is running **one network server (TCP or UDP) plus multiple serial servers simultaneously** - a revolutionary approach that **saves significant time and eliminates the need for extra hardware**.
 
 **Traditional Approach vs. XPF Multi-Server:**
 
@@ -2688,22 +2688,27 @@ Documents/ModbusScan_2025-10-28_14-32-15.csv
 
 **What XPF Can Run Simultaneously:**
 
-=== "Network Servers (TCP/UDP)"
+=== "Network Servers (TCP or UDP)"
 
-    **Single Network Interface, Multiple Protocols:**
+    **Single Network Interface - Choose TCP OR UDP:**
     
     ```yaml
-    # All running simultaneously on one PC:
-    TCP Server:     Port 502 (Standard Modbus TCP)
-    TCP RTU Server: Port 503 (RTU over TCP) 
-    UDP Server:     Port 502 (Modbus UDP)
-    UDP RTU Server: Port 504 (RTU over UDP)
+    # Choose ONE network interface per XPF instance:
+    TCP Server:       Port 502 (Standard Modbus TCP)
+    OR
+    UDP Server:       Port 502 (Standard Modbus UDP)
+    
+    # With protocol variants:
+    TCP + RTU:        Port 502 (Modbus RTU over TCP)
+    TCP + ASCII:      Port 502 (Modbus ASCII over TCP)
+    UDP + RTU:        Port 502 (Modbus RTU over UDP)  
+    UDP + ASCII:      Port 502 (Modbus ASCII over UDP)
     ```
     
-    **Benefits:**
-    - **No additional network hardware** required
-    - **Test different protocols** against same data set
-    - **Client compatibility testing** - validate against multiple protocol variants
+    **Network Interface Limitation:**
+    - **TCP OR UDP**: Cannot run TCP and UDP servers simultaneously in single XPF instance
+    - **Protocol Options**: Can select Default, RTU, or ASCII over chosen interface
+    - **Multiple Instances**: Use separate XPF instances for TCP and UDP if both needed
     - **Development efficiency** - switch protocols without hardware changes
 
 === "Serial Servers (COM Ports)"
@@ -2729,19 +2734,25 @@ Documents/ModbusScan_2025-10-28_14-32-15.csv
     **Network + Serial Simultaneously:**
     
     ```yaml
-    # Complete test environment on one PC:
+    # Single XPF instance supports:
     TCP Server:    Port 502    (Ethernet clients)
-    UDP Server:    Port 502    (UDP clients)  
+    AND
     COM1 RTU:      9600 baud   (Legacy serial devices)
     COM3 RTU:      19200 baud  (Modern serial devices)
     COM5 ASCII:    1200 baud   (ASCII protocol testing)
+    
+    # OR alternatively:
+    UDP Server:    Port 502    (UDP clients)
+    AND  
+    COM1 RTU:      9600 baud   (Legacy serial devices)
+    COM3 RTU:      19200 baud  (Modern serial devices)
     ```
     
-    **Real-World Applications:**
-    - **Complete system simulation** - Network + Serial devices
-    - **Migration testing** - Old serial + new TCP clients
-    - **Protocol bridging** - Serial-to-Ethernet gateway simulation
-    - **Training environments** - Multiple protocols for learning
+    **Interface Capabilities:**
+    - **One Network + Multiple Serial** - TCP OR UDP plus multiple COM ports
+    - **Network Choice** - Select either TCP or UDP (not both simultaneously)
+    - **Unlimited Serial** - Support for multiple COM ports with independent settings
+    - **Protocol Flexibility** - Mix RTU and ASCII on different COM ports
 
 **Massive Time and Cost Savings:**
 
@@ -2798,14 +2809,15 @@ Documents/ModbusScan_2025-10-28_14-32-15.csv
 **Technical Implementation:** XPF's **multi-threaded server architecture** enables true concurrent operation across all interfaces with **independent protocol stacks** for each server instance.
 
 !!! example "Complete Multi-Server Configuration"
-    The image shows how the TCP and Serial sections are ready for configuration:
+    XPF supports one network interface plus multiple serial interfaces:
     
-    - **Modbus TCP server** running on Port 502
-    - **Modbus RTU on COM10** at 9600 baud
+    **Single Instance Configuration:**
+    - **Modbus TCP server** running on Port 502 (OR UDP server)
+    - **Modbus RTU on COM10** at 9600 baud  
     - **Modbus RTU on COM11** at 19200 baud
     - **Modbus RTU on COM12** at 115200 baud
     
-    All servers run **simultaneously** with independent settings!
+    **Network + Serial run simultaneously** with independent settings!
 
 ### TCP/UDP Server Configuration
 
@@ -2889,9 +2901,9 @@ When enabled, the Capture feature monitors incoming Modbus requests from clients
 **Server Control:**
 
 - **Single Button**: One Start/Stop control manages all enabled servers
-- **TCP Server**: Starts if Interface is set to TCP or UDP and Enable is checked
+- **Network Server**: Starts either TCP or UDP server (not both) when Interface is configured and Enable is checked
 - **Serial Servers**: Start automatically for all selected COM ports
-- **Simultaneous Start**: All configured servers start together
+- **Simultaneous Start**: Network server (TCP or UDP) plus all serial servers start together
 - **Independent Operation**: Each server operates independently once started
 - **Clean Shutdown**: Stop button properly closes all server connections
 
@@ -2911,17 +2923,25 @@ When enabled, the Capture feature monitors incoming Modbus requests from clients
 
 #### Multiple Server Instances - Advanced Setup
 
-Run multiple servers for complex testing scenarios:
+Run multiple XPF instances for complex testing scenarios:
 
-**Multiple Servers, Single Interface:**
+**Interface Limitations per Instance:**
 
-It is common practice to run **multiple instances** of the server on the same interface, such as TCP, by running multiple instances of the Modbus Monitor XPF application, each with different TCP port numbers.
+Each XPF instance can run:
+- **One Network Server**: Either TCP OR UDP (not both)
+- **Multiple Serial Servers**: Unlimited COM ports with independent settings
 
-**Example Configuration:**
+**Multiple Instance Strategies:**
 
-- **Instance 1**: Modbus TCP on Port 502 (standard)
-- **Instance 2**: Modbus RTU over TCP on Port 602
-- **Instance 3**: Modbus TCP on Port 503 (alternate device)
+**Strategy 1 - Different Network Protocols:**
+- **Instance 1**: TCP Server on Port 502 + Serial servers (COM1, COM3)
+- **Instance 2**: UDP Server on Port 502 + Serial servers (COM5, COM7)
+- **Instance 3**: TCP Server on Port 503 + Serial servers (COM9, COM11)
+
+**Strategy 2 - Protocol Variants:**
+- **Instance 1**: TCP Default on Port 502
+- **Instance 2**: TCP RTU on Port 602  
+- **Instance 3**: UDP ASCII on Port 503
 
 Each instance:
 - Runs as separate XPF application window
@@ -2931,10 +2951,10 @@ Each instance:
 
 **Benefits:**
 
-- **Different Ports**: Multiple TCP servers on different ports
-- **Mixed Protocols**: TCP + multiple serial interfaces simultaneously
-- **Device Simulation**: Each server represents different device type or model
-- **Load Testing**: Multiple servers for testing client handling of multiple devices
+- **TCP and UDP Together**: Use separate instances for both TCP and UDP servers
+- **Different Ports**: Multiple network servers on different ports
+- **Device Simulation**: Each instance represents different device type or model
+- **Protocol Testing**: Compare TCP vs UDP performance with same data
 
 ## 6. IoT Integration
 
