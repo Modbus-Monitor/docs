@@ -78,7 +78,7 @@ If you need to update manually:
 
 ### What Updates Automatically
 - **Build Date**: Updated by GitHub Actions on every deployment
-- **WordPress Content**: Imported content refreshed automatically
+- **Documentation Content**: Static content updated manually
 - **Site Deployment**: Happens on every push to main branch
 
 ### What Requires Manual Update

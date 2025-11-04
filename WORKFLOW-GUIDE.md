@@ -3,9 +3,9 @@
 ## Your Complete Setup (Simple & Future-Proof)
 
 ### What You Have Now
-✅ GitHub repository with auto-import from WordPress  
+✅ GitHub repository with static documentation files  
 ✅ MkDocs Material theme with clean navigation  
-✅ Auto-commit of generated Markdown files  
+✅ Auto-build and deployment to GitHub Pages  
 ✅ Live documentation at: https://modbus-monitor.github.io/docs/  
 
 ### Daily Editing Workflow
@@ -62,26 +62,26 @@ docs/
 ├── WORKFLOW-GUIDE.md       # This guide
 ├── docs/
 │   ├── index.md           # Homepage
-│   └── imported/          # Auto-generated from WordPress
+│   └── imported/          # Static legacy files (no longer auto-updated)
 │       ├── xpf-help.md
 │       ├── advanced-help.md
 │       ├── mapper-help.md
 │       └── android-help.md
 └── .github/
     └── workflows/
-        └── deploy.yml     # Auto-build & import system
+        └── deploy.yml     # Auto-build & deployment system
 ```
 
 ## Editing Tips
 
-### 1. **Edit Imported Files Safely**
-The files in `docs/imported/` are auto-generated from WordPress.
-- ✅ You can edit them locally for testing
-- ⚠️ Changes will be overwritten on next WordPress import
-- 💡 For permanent changes: edit in WordPress, then re-import
+### 1. **Edit Imported Files**
+The files in `docs/imported/` are now static files (auto-import disabled).
+- ✅ You can edit them directly and changes will persist
+- ✅ These files are now fully under your control
+- 💡 Consider moving content to more organized locations under `products/`
 
 ### 2. **Add New Documentation**
-For new manuals not imported from WordPress:
+For new documentation:
 ```
 docs/
 ├── products/
@@ -99,7 +99,7 @@ Edit `mkdocs.yml` to add new pages to the sidebar:
 ```yaml
 nav:
   - Home: index.md
-  - Imported (from WordPress):
+  - Legacy Documentation:
       - XPF Help: imported/xpf-help.md
   - Product Manuals:
       - XPF User Guide: products/xpf/user-guide.md
@@ -126,7 +126,6 @@ git push origin main
 2. **Test thoroughly** at http://localhost:8000
 3. **Commit & push** to GitHub
 4. **GitHub Actions automatically**:
-   - Re-imports from WordPress
    - Builds MkDocs site
    - Deploys to GitHub Pages
 5. **Live site updates** at https://modbus-monitor.github.io/docs/

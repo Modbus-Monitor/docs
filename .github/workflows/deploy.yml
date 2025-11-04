@@ -48,83 +48,25 @@ jobs:
             pymdown-extensions
 
       # ────────────────────────────────
-      # 2️⃣ Install pandoc + curl
+      # 2️⃣ Basic system updates (pandoc/curl no longer needed)
       # ────────────────────────────────
-      - name: Install pandoc and curl
-        run: sudo apt-get update && sudo apt-get install -y pandoc curl
+      - name: Update system packages
+        run: sudo apt-get update
 
       # ────────────────────────────────
-      # 3️⃣ Import & sanitize WordPress Help pages
+      # 3️⃣ Ensure imported folder exists (no longer auto-importing)
       # ────────────────────────────────
-      - name: Import WordPress Help pages
+      - name: Ensure imported folder exists
         run: |
           mkdir -p docs/imported
-          declare -A pages=(
-            ["xpf-help"]="https://quantumbitsolutions.com/xpf-help"
-            ["advanced-help"]="https://quantumbitsolutions.com/guide"
-            ["mapper-help"]="https://quantumbitsolutions.com/sniff-help"
-            ["android-help"]="https://quantumbitsolutions.com/mmhelp"
-          )
-
-          for name in "${!pages[@]}"; do
-            echo "Importing ${name}..."
-            curl -fsSL "${pages[$name]}" -o "docs/imported/${name}.html" || { echo "Skipping ${name} (not found)"; continue; }
-            pandoc -f html -t gfm "docs/imported/${name}.html" -o "docs/imported/${name}.md"
-
-            # 🔧 Fix absolute paths & remove tracking pixels
-            sed -i \
-              -e 's#src="/#src="https://quantumbitsolutions.com/#g' \
-              -e 's#href="/#href="https://quantumbitsolutions.com/#g' \
-              -e 's#\!\[\](//bat\.bing\.com[^)]*)##g' \
-              "docs/imported/${name}.md"
-
-            # 🧹 Remove inline scripts or noscript blocks
-            sed -i '/<script/,/<\/script>/d' "docs/imported/${name}.md"
-            sed -i '/<noscript/,/<\/noscript>/d' "docs/imported/${name}.md"
-          done
+          # Keep existing imported files but don't auto-update them
+          echo "📂 Imported folder maintained (auto-import disabled)"
 
       # ────────────────────────────────
-      # 3️⃣b Commit imported Markdown files back to repo (only if changed)
-      # 3️⃣b Commit imported Markdown files back to repo (guaranteed)
-      #     👉 Safe for your repo; skipped automatically on forks or PRs
+      # 3️⃣b Auto-import disabled - no longer committing imported files
       # ────────────────────────────────
-      - name: Commit imported Markdown files back to repo
-        if: github.ref == 'refs/heads/main' && github.repository == 'Modbus-Monitor/docs'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-
-          # Authenticate using the GitHub token
-          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}"
-
-          # Ensure we're on the main branch and have full history
-          git fetch origin main
-          git checkout main
-
-          # 🧩 Make sure imported folder exists and has content
-          echo "📂 Verifying generated files..."
-          ls -la docs/imported || echo "⚠️ No imported folder found!"
-          
-          # 🧩 Create placeholder if empty (forces Git to track folder)
-          if [ -z "$(ls -A docs/imported)" ]; then
-            echo "⚠️ No imported Markdown files detected. Creating placeholder..."
-            echo "_Placeholder file to keep folder tracked_" > docs/imported/.keep
-          fi
-
-          # ✅ Add new or modified files explicitly
-          git add docs/imported/*.md || echo "⚠️ No Markdown files found to add"
-          git add docs/imported/.keep || true
-
-          # ✅ Commit only if there are staged changes
-          if ! git diff --cached --quiet; then
-            echo "🔄 Changes detected — committing updates..."
-            git commit -m "Auto-update imported Markdown files ($(date -u +'%Y-%m-%d %H:%M UTC'))"
-            git push origin main || echo "⚠️ Push failed (check branch protection or token permissions)"
-          else
-            echo "✅ No new or modified Markdown changes to commit."
-          fi
+      # Automated import functionality has been removed
+      # Existing imported files are preserved but no longer auto-updated
 
       # ────────────────────────────────
       # 3️⃣c Update build date in version file
