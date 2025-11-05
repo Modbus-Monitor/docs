@@ -206,7 +206,7 @@ Configure the ThingSpeak Add-on within Modbus Monitor XPF:
    - Enable logging to see ThingSpeak data transmission
 
 2. **Send Sample Command**
-   - Use XPF's [:material-send: **SEND**](#){ .md-button .md-button--primary } command feature to test data sending
+   - Use XPF's **SEND** command feature to test data sending
    - Watch the communication log for ThingSpeak API calls
    - Verify the JSON payload shows correct field1-8 values
 
@@ -214,7 +214,7 @@ Configure the ThingSpeak Add-on within Modbus Monitor XPF:
    ```
    11/5/2025 7:25:50 PM,Starting Sample Data to ThingSpeak
    11/5/2025 7:25:50 PM,field1 (Date)=5 field2(Month)=11 field3(Year)=2025 field4(Hour)=14 field5(Min)=25 field6(Seconds)=50 field7(Ticks)=27850906 field8(ASCII ComputerName)=16708 
-   11/5/2025 7:25:51 PM,https://api.thingspeak.com/update.json?api_key=R3ERUXXXZ4I6XXXX&field1=11&field2=2025&field3=5&field4=14&field5=25&field6=50&field7=27850906&field8=16708&
+   11/5/2025 7:25:51 PM,https://api.thingspeak.com/update.js    on?api_key=R3ERUXXXZ4I6XXXX&field1=11&field2=2025&field3=5&field4=14&field5=25&field6=50&field7=27850906&field8=16708&
    11/5/2025 7:25:51 PM,Response OK
    11/5/2025 7:25:51 PM,Sample Data Successfully Written
    ```
