@@ -1,31 +1,75 @@
+!!! note "Navigation"
+    **📚 [Documentation Home](../../) → [XPF User Guide](../products/xpf/user-guide.md) → ThingSpeak Add-on**
+
 # ThingSpeak Add-on
 
-**Complete step-by-step guide for integrating Modbus Monitor XPF with ThingSpeak cloud platform**
+**Cloud data logging and visualization add-on for Modbus Monitor XPF**
+
+![ThingSpeak Channel](../assets/screenshots/xpf-iot-thingspeak.webp)
 
 ## Overview
 
-ThingSpeak is a cloud-based Internet of Things (IoT) platform that provides data collection, visualization, and analytics services. When integrated with Modbus Monitor XPF, you can:
+The ThingSpeak Add-on enables Modbus Monitor XPF to automatically log your industrial data to ThingSpeak's cloud platform. This add-on provides:
 
-- **Log industrial data to the cloud** for remote monitoring
-- **Create real-time dashboards** accessible from anywhere
-- **Analyze trends** using ThingSpeak's MATLAB integration  
-- **Set up alerts** based on data thresholds
-- **Export data** for compliance and reporting
+- **Automatic Cloud Logging**: Send monitor point data directly to ThingSpeak channels
+- **Real-time Dashboards**: Create professional visualizations accessible from anywhere
+- **Historical Analysis**: Long-term data storage with trend analysis capabilities
+- **MATLAB Integration**: Advanced analytics and machine learning on your industrial data
+- **Alert Systems**: Automated notifications based on data thresholds
+- **Export Capabilities**: Download data in multiple formats for reporting
+
+!!! info "Add-on vs Core Features"
+    **ThingSpeak Add-on** is separate from the core MQTT functionality. While MQTT is a general messaging protocol, this add-on specifically handles ThingSpeak cloud integration with dedicated features for channel management and data publishing.
+
+## Quick Start
+
+### 1. Purchase Add-on
+
+You need both a ThingSpeak account (for the cloud platform) and the XPF ThingSpeak Add-on (for the integration):
+
+#### A. ThingSpeak Account (Cloud Platform)
+- **Free Account**: Create free ThingSpeak account at [thingspeak.com](https://thingspeak.com)
+  - Includes free channel creation and API keys
+  - Basic limits: 3 million messages/year, 1 message per 15 seconds
+  - Perfect for testing and small deployments
+- **Commercial License**: Upgrade at [ThingSpeak Pricing](https://thingspeak.com/prices) for higher limits
+
+#### B. Modbus Monitor XPF ThingSpeak Add-on (Integration Software)
+- **Purchase Required**: Buy ThingSpeak Add-on from [Quantum Bit Solutions Shop](https://quantumbitsolutions.com/shop/)
+  - Search for "ThingSpeak Add-on" or "XPF ThingSpeak Integration"
+  - Enables XPF to connect and publish data to ThingSpeak
+  - Includes dedicated ThingSpeak configuration interface
+- **Installation**: Follow add-on installation instructions after purchase
+
+### 2. Configure Add-on
+- [Create ThingSpeak channel](#step-1-create-thingspeak-channel) with your data fields
+- [Configure XPF ThingSpeak settings](#step-2-configure-xpf-thingspeak-settings)
+- [Map monitor points to channel fields](#step-3-field-mapping)
+
+### 3. Configure Monitor Points
+- **See**: [Monitor Points Configuration](../products/xpf/user-guide.md#7-monitor-points-configuration) in main user guide
+- **Focus**: Ensure monitor points are collecting the data you want to log to ThingSpeak
+
+### 4. Start Logging & Verify
+- [Enable ThingSpeak logging](#step-4-enable-logging)
+- [Verify data flow](#verification-checklist) to ThingSpeak dashboard
+- [Monitor status](#monitoring-and-maintenance) and troubleshoot if needed
 
 ## Prerequisites
 
 Before starting, ensure you have:
 
-- [ ] Active ThingSpeak account (free at [thingspeak.com](https://thingspeak.com))
-- [ ] Modbus Monitor XPF installed and configured
-- [ ] Monitor points configured for the data you want to log
-- [ ] Internet connection for cloud communication
+- [ ] **Modbus Monitor XPF** installed with ThingSpeak Add-on enabled
+- [ ] **ThingSpeak account** (free at [thingspeak.com](https://thingspeak.com))
+- [ ] **Monitor points configured** for the data you want to log
+- [ ] **Internet connection** for cloud communication
+- [ ] **Valid licensing** for commercial use (if applicable)
 
-## Part 1: ThingSpeak Channel Creation
+## Step 1: Create ThingSpeak Channel
 
-### Step-by-Step Channel Setup
+### Channel Creation Process
 
-Follow these detailed steps to create a new ThingSpeak channel for your Modbus Monitor XPF data:
+Create your ThingSpeak data channel following these detailed steps:
 
 1. **Navigate to ThingSpeak**
    - Go to [https://thingspeak.mathworks.com/channels](https://thingspeak.mathworks.com/channels)
@@ -63,7 +107,7 @@ Follow these detailed steps to create a new ThingSpeak channel for your Modbus M
 
 6. **Save Channel**
    - Click "Save Channel" to create your new channel
-   - Note your Channel ID from the resulting URL (e.g., 3148861)
+   - Note your Channel ID from the resulting URL (e.g., 1103706)
 
 7. **Get API Keys**
    - Click the "API Keys" tab after channel creation
@@ -73,7 +117,7 @@ Follow these detailed steps to create a new ThingSpeak channel for your Modbus M
 !!! success "Channel Created Successfully"
     Your ThingSpeak channel is now ready! You should see:
     
-    - Channel ID in the URL (e.g., `/channels/3148861/private_show`)
+    - Channel ID in the URL (e.g., `/channels/1103706/`)
     - 8 configured data fields matching your Modbus registers
     - Write API Key for data publishing
     
@@ -87,60 +131,38 @@ Follow these detailed steps to create a new ThingSpeak channel for your Modbus M
 - **Future Planning**: Enable only active fields but plan for expansion
 - **Data Types**: Match ThingSpeak field types with your Modbus data formats
 
-## Part 2: XPF Configuration for ThingSpeak
+## Step 2: Configure XPF ThingSpeak Settings
 
-### MQTT Connection Setup
+### ThingSpeak Add-on Configuration
 
-Configure XPF to connect to ThingSpeak's MQTT broker:
+Configure the ThingSpeak Add-on within Modbus Monitor XPF:
 
-```yaml
-Host: mqtt3.thingspeak.com
-Port: 1883 (non-secure) or 8883 (TLS secure)
-Client ID: (unique identifier - can be any string)
-Username: (your ThingSpeak MQTT username)
-Password: (your ThingSpeak MQTT API key)
-Keep Alive: 60 seconds
-```
+!!! note "ThingSpeak vs MQTT"
+    The ThingSpeak Add-on has its own dedicated configuration separate from the general MQTT functionality. Don't confuse this with MQTT broker settings.
 
-### Topic Configuration
+### XPF ThingSpeak Setup
 
-**Publishing Topic Format:**
-```
-channels/<CHANNEL_ID>/publish
-```
+1. **Open ThingSpeak Add-on Settings**
+   - Navigate to **Add-ons** → **ThingSpeak** in XPF
+   - Or go to **Client** tab → **ThingSpeak** group
 
-**Message Format (JSON):**
-```json
-{
-  "field1": 23.5,
-  "field2": 65.2,
-  "field3": 1,
-  "status": "MQTTPUBLISH"
-}
-```
+![ThingSpeak API Key](../assets/screenshots/xpf-iot-thingspeak-api-key.webp)
+2. **Enter ThingSpeak Connection Details**
+   - **Channel ID**: Your ThingSpeak channel ID (e.g., 3148861)
+   - **Write API Key**: The API key copied from ThingSpeak
+   - **Update Rate**: How often to send data (minimum 15 seconds or 15000 for free accounts)
+   - **Enable**: Toggle Enable to automatically push data to cloud based on the timer.
 
-### XPF MQTT Setup Steps
+### Connection Parameters
 
-1. **Open XPF MQTT Configuration**
-   - Navigate to Client tab → MQTT group
-   - Click MQTT settings button
+| Setting | Value | Description |
+|---------|-------|-------------|
+| **Write API Key** | `XXXXXXXXXXXXXXXX` | 16-character API key from ThingSpeak |
+| **Update Rate** | `30 seconds` | Minimum 15s for free accounts |
 
-2. **Enter ThingSpeak Broker Details**
-   - Host: `mqtt3.thingspeak.com`
-   - Port: `1883`
-   - Enter your ThingSpeak credentials
+## Step 3: Field Mapping
 
-3. **Configure Publishing Topic**
-   - Topic: `channels/YOUR_CHANNEL_ID/publish`
-   - Replace `YOUR_CHANNEL_ID` with your actual channel ID
-
-4. **Map Monitor Points to Fields**
-   - Configure which monitor points map to which ThingSpeak fields
-   - Set appropriate data formatting
-
-## Part 3: Data Mapping and Testing
-
-### Field Mapping Strategy
+### Monitor Point to ThingSpeak Field Mapping
 
 **Recommended mapping approach:**
 
@@ -153,22 +175,52 @@ channels/<CHANNEL_ID>/publish
 | **field5** | Setpoint | FLOAT32 | Control setpoint |
 | **field6** | Output (%) | FLOAT32 | Control output percentage |
 
-### Testing Data Flow
+### Configure Field Mappings
 
-1. **Start XPF Client**
-   - Ensure monitor points are collecting data
-   - Verify MQTT connection is established
+1. **Open Field Mapping Interface**
+   - In ThingSpeak Add-on settings, click **Field Mapping**
+   - Map each monitor point to a ThingSpeak field
 
-2. **Enable MQTT Publishing**
-   - Start MQTT publishing in XPF
-   - Monitor connection status
+2. **Map Monitor Points to Fields**
+   - **Field 1**: Select monitor point for "Setpoint HEX 03B3 RW"
+   - **Field 2**: Select monitor point for "Probe 1 Temperature HEX 108"
+   - **Field 3**: Select monitor point for "Probe 2 Temperature HEX 109"
+   - Continue for all 8 fields as needed
 
-3. **Verify Data in ThingSpeak**
-   - Check your ThingSpeak channel
-   - Confirm data is appearing in real-time
-   - Verify field mappings are correct
+3. **Configure Data Formatting**
+   - Set decimal places for numeric values
+   - Configure unit conversions if needed
+   - Set data validation rules
 
-## Part 4: Advanced Configuration
+!!! tip "Monitor Points Configuration"
+    **Need to configure monitor points first?** See the comprehensive [Monitor Points Configuration](../products/xpf/user-guide.md#7-monitor-points-configuration) section in the main user guide.
+
+## Step 4: Enable Logging & Verify
+
+### Start ThingSpeak Logging
+
+1. **Enable the Add-on**
+   - In ThingSpeak Add-on settings, check **Enable Logging**
+   - Click **Start** to begin data transmission
+
+2. **Monitor Connection Status**
+   - Verify **Connected** status indicator is green
+   - Check that **Messages Sent** counter is incrementing
+
+3. **Verify Data Flow**
+   - Open your ThingSpeak channel dashboard
+   - Confirm data is appearing in real-time charts
+   - Verify field values match your monitor point data
+
+### Verification Checklist
+
+- [ ] **ThingSpeak channel** shows recent data updates
+- [ ] **Field values** match expected monitor point readings
+- [ ] **Timestamps** are current and correct
+- [ ] **Update rate** matches configured interval
+- [ ] **No error messages** in XPF status window
+
+## Advanced Configuration
 
 ### Update Rates and Timing
 
@@ -196,7 +248,7 @@ channels/<CHANNEL_ID>/publish
 - **Export options**: CSV, JSON, XML formats
 - **API access**: Programmatic data retrieval
 
-## Part 5: Visualization and Analytics
+## Visualization and Analytics
 
 ### Creating Charts and Widgets
 
@@ -224,39 +276,41 @@ ThingSpeak integrates with MATLAB for advanced analytics:
 
 | Issue | Cause | Solution |
 |-------|-------|----------|
-| MQTT connection fails | Incorrect credentials | Verify username/password in ThingSpeak |
-| Data not appearing | Wrong channel ID | Check channel ID in topic string |
+| ThingSpeak connection fails | Incorrect API key | Verify Write API Key in ThingSpeak channel |
+| Data not appearing | Wrong channel ID | Check Channel ID in ThingSpeak add-on settings |
 | Intermittent updates | Rate limiting | Increase update interval to >15 seconds |
-| Authentication errors | Expired API key | Regenerate MQTT API key in ThingSpeak |
+| Authentication errors | Expired API key | Regenerate Write API Key in ThingSpeak |
 
 **Data Quality Issues:**
 
 | Issue | Cause | Solution |
 |-------|-------|----------|
-| Missing data points | Network interruptions | Enable XPF auto-reconnect |
-| Incorrect values | Field mapping errors | Verify monitor point to field assignments |
-| Timestamp issues | Time zone differences | Configure proper time zone settings |
+| Missing data points | Network interruptions | Enable ThingSpeak add-on auto-reconnect |
+| Incorrect values | Field mapping errors | Verify monitor point to ThingSpeak field assignments |
+| Timestamp issues | Time zone differences | Configure proper time zone in both XPF and ThingSpeak |
+| Data format errors | Type mismatches | Check data type compatibility between monitor points and fields |
 
 ### Diagnostic Tools
 
-**XPF Diagnostics:**
-- MQTT connection status indicator
-- Message send/receive counters
+**XPF ThingSpeak Add-on Diagnostics:**
+- ThingSpeak connection status indicator
+- Message transmission counters
+- Field mapping validation
 - Error logging and reporting
 
-**ThingSpeak Diagnostics:**
+**ThingSpeak Platform Diagnostics:**
 - Channel activity logs
-- API usage statistics
+- API usage statistics and limits
 - Message success/failure rates
+- Data visualization health checks
 
 ## Best Practices
 
 ### Security Recommendations
 
-1. **Use TLS/SSL**: Enable secure connections (port 8883)
-2. **Rotate API Keys**: Regularly update MQTT credentials
-3. **Limit Permissions**: Use read-only keys where possible
-4. **Monitor Access**: Review channel access logs regularly
+1. **Rotate API Keys**: Regularly update MQTT credentials
+2. **Limit Permissions**: Use read-only keys where possible
+3. **Monitor Access**: Review channel access logs regularly
 
 ### Performance Optimization
 
@@ -265,30 +319,43 @@ ThingSpeak integrates with MATLAB for advanced analytics:
 3. **Error Handling**: Implement robust reconnection logic
 4. **Data Validation**: Verify data quality before publishing
 
-### Maintenance Procedures
-
-1. **Regular Monitoring**: Check data flow daily
-2. **Backup Configuration**: Save XPF and ThingSpeak settings
-3. **Update Management**: Keep API keys and settings current
-4. **Documentation**: Maintain field mapping documentation
-
 ## Support and Resources
 
 ### Official Documentation
 
 - **ThingSpeak Documentation**: [mathworks.com/help/thingspeak](https://www.mathworks.com/help/thingspeak/)
-- **MQTT API Guide**: ThingSpeak MQTT API reference
-- **XPF MQTT Guide**: [Reference main user guide MQTT section](../user-guide.md#mqtt-integration)
+- **ThingSpeak REST API**: Official API reference for advanced integration
+- **XPF User Guide**: [Main user guide](../products/xpf/user-guide.md) for core XPF functionality
+- **Monitor Points**: [Configuration guide](../products/xpf/user-guide.md#7-monitor-points-configuration) for data source setup
 
 ### Community Resources
 
 - **ThingSpeak Community**: Official support forums
 - **Modbus Monitor Community**: User discussions and examples
-- **GitHub Examples**: Integration code samples and templates
+
 
 ---
 
+## Additional Add-ons
+
+This ThingSpeak Add-on is part of a growing ecosystem of XPF add-ons:
+
+- **MQTT Add-on**: General MQTT broker connectivity (separate from ThingSpeak)
+
+
+---
+
+## Navigation
+
+!!! tip "Return to Main Guide"
+    **[← Back to XPF User Guide](../products/xpf/user-guide.md)**
+    
+    **Related Sections:**
+    - [Monitor Points Configuration](../products/xpf/user-guide.md#7-monitor-points-configuration) - Configure data sources
+    - [ThingSpeak Overview](../products/xpf/user-guide.md#thingspeak-add-on-cloud-logging) - Main guide ThingSpeak section
+    - [Other Add-ons](../products/xpf/user-guide.md#add-ons-and-integrations) - Explore additional XPF add-ons
+
 **Next Steps:**
-- Return to [main user guide](../user-guide.md) for other XPF features
-- Explore [advanced MQTT configurations](../user-guide.md#advanced-mqtt-features)
-- Check out [other cloud integrations](../user-guide.md#cloud-integrations)
+- Return to [main user guide](../products/xpf/user-guide.md) for core XPF features
+- Explore [Monitor Points configuration](../products/xpf/user-guide.md#7-monitor-points-configuration)
+- Check out other available add-ons for XPF

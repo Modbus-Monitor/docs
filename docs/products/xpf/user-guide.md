@@ -3715,38 +3715,39 @@ A: MQTT protocol supports up to 256MB per message, but practical limits depend o
 **Q: Can I use wildcards when publishing?**  
 A: No, wildcards (`+`, `#`) are only supported for subscriptions. Publishing requires a specific topic without wildcards.
 
-### ThingSpeak Cloud Integration
+### ThingSpeak Add-on (Cloud Logging)
 
-**ThingSpeak provides cloud-based data logging, visualization, and MATLAB analytics integration.** Transform your industrial data into powerful cloud-based dashboards and analytics platforms accessible from anywhere in the world.
+**ThingSpeak Add-on provides dedicated cloud logging and visualization capabilities.** This add-on is separate from general MQTT functionality and specifically designed for ThingSpeak platform integration.
 
-**Quick Configuration Overview:**
-
-```yaml
-Host: mqtt3.thingspeak.com
-Port: 1883 (or 8883 for TLS)
-Client ID: (any unique ID)
-Username: (your ThingSpeak username or MQTT device credentials)
-Password: (your MQTT API key)
-Topic: channels/<channel_id>/publish
-```
+!!! info "Add-on vs Core Feature"
+    **ThingSpeak Add-on** is a specialized add-on for ThingSpeak cloud integration, distinct from the core MQTT messaging capabilities. Each serves different purposes:
+    
+    - **MQTT**: General messaging protocol for any MQTT broker
+    - **ThingSpeak Add-on**: Dedicated ThingSpeak cloud platform integration
 
 **Key Benefits:**
-- **Remote Monitoring**: Access your industrial data from anywhere
-- **Historical Analysis**: Automatic cloud-based data storage and trending
+- **Automatic Cloud Logging**: Direct data transmission to ThingSpeak channels
+- **Professional Dashboards**: Real-time visualization accessible from anywhere
 - **MATLAB Integration**: Advanced analytics and machine learning capabilities
+- **Historical Analysis**: Long-term data storage and trend analysis
 - **Alert Systems**: Automated notifications based on data thresholds
-- **Professional Dashboards**: Create publication-ready visualizations
+
+**Quick Setup:**
+1. **Purchase/Enable**: ThingSpeak Add-on (free tier available)
+2. **Configure**: Create ThingSpeak channel and configure XPF add-on settings
+3. **Map Data**: Link monitor points to ThingSpeak fields  
+4. **Verify**: Start logging and confirm data flow
 
 !!! info "Complete ThingSpeak Add-on Guide"
     **📖 [Comprehensive ThingSpeak Add-on Setup](../../guides/thingspeak-addon.md)**
     
     **Includes:**
+    - 4-step add-on setup workflow (Purchase → Configure → Map → Verify)
     - Step-by-step channel creation (from Chrome recorder)
-    - Complete XPF configuration walkthrough
+    - Complete XPF add-on configuration walkthrough
     - Field mapping strategies and best practices
     - Advanced visualization and analytics setup
     - Troubleshooting guide and optimization tips
-    - Security recommendations and maintenance procedures
     
     **Perfect for:** First-time setup, troubleshooting, and advanced configuration
 
