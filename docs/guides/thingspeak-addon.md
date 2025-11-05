@@ -160,37 +160,70 @@ Configure the ThingSpeak Add-on within Modbus Monitor XPF:
 | **Write API Key** | `XXXXXXXXXXXXXXXX` | 16-character API key from ThingSpeak |
 | **Update Rate** | `30 seconds` | Minimum 15s for free accounts |
 
-## Step 3: Field Mapping
+## Step 3: Field Mapping (Automatic Row-to-Field)
 
-### Monitor Point to ThingSpeak Field Mapping
+### How XPF Maps to ThingSpeak Fields
 
-**Recommended mapping approach:**
+**XPF automatically maps monitor point rows to ThingSpeak fields:**
 
-| ThingSpeak Field | Monitor Point Example | Data Type | Description |
-|------------------|----------------------|-----------|-------------|
-| **field1** | Temperature (°C) | FLOAT32 | Process temperature |
-| **field2** | Pressure (PSI) | FLOAT32 | System pressure |
-| **field3** | Flow Rate (GPM) | FLOAT32 | Flow measurement |
-| **field4** | Status | UINT16 | Equipment status code |
-| **field5** | Setpoint | FLOAT32 | Control setpoint |
-| **field6** | Output (%) | FLOAT32 | Control output percentage |
+![Modbus Monitor XPF Thingspeak Configuration](../assets/screenshots/xpf-iot-thingspeak-samples.webp)
 
-### Configure Field Mappings
+| XPF Monitor Point Row | ThingSpeak Field | Example Data | Description |
+|----------------------|------------------|--------------|-------------|
+| **Row 1** → | **field1** | Date (5) | First monitor point in your list |
+| **Row 2** → | **field2** | Month (11) | Second monitor point in your list |
+| **Row 3** → | **field3** | Year (2025) | Third monitor point in your list |
+| **Row 4** → | **field4** | Hour (14) | Fourth monitor point in your list |
+| **Row 5** → | **field5** | Min (25) | Fifth monitor point in your list |
+| **Row 6** → | **field6** | Seconds (50) | Sixth monitor point in your list |
+| **Row 7** → | **field7** | Ticks (27850906) | Seventh monitor point in your list |
+| **Row 8** → | **field8** | ASCII ComputerName (16708) | Eighth monitor point in your list |
 
-1. **Open Field Mapping Interface**
-   - In ThingSpeak Add-on settings, click **Field Mapping**
-   - Map each monitor point to a ThingSpeak field
+!!! warning "Row Order is Critical"
+    **XPF maps by row position, not by name!** The first monitor point (Row 1) always goes to field1, the second (Row 2) goes to field2, etc.
 
-2. **Map Monitor Points to Fields**
-   - **Field 1**: Select monitor point for "Setpoint HEX 03B3 RW"
-   - **Field 2**: Select monitor point for "Probe 1 Temperature HEX 108"
-   - **Field 3**: Select monitor point for "Probe 2 Temperature HEX 109"
-   - Continue for all 8 fields as needed
+### Configure Monitor Point Order
 
-3. **Configure Data Formatting**
-   - Set decimal places for numeric values
-   - Configure unit conversions if needed
-   - Set data validation rules
+1. **Arrange Your Monitor Points**
+   - **Move important data to the top rows** (1-8 for all ThingSpeak fields)
+   - **Order matches your ThingSpeak field labels** for easy identification
+   - **Only the first 8 rows** will be sent to ThingSpeak (field1-field8)
+
+2. **Match ThingSpeak Channel Fields**
+   - Ensure Row 1 data matches what you labeled as Field 1 in ThingSpeak
+   - Ensure Row 2 data matches what you labeled as Field 2 in ThingSpeak
+   - Continue for all 8 fields that you enabled in your ThingSpeak channel
+
+3. **Test the Mapping**
+   - Use **Communication Log** in XPF to monitor data transmission
+   - Click **Send** to verify values are correctly mapped
+   - Check ThingSpeak dashboard to confirm field1-8 show expected data
+
+### Verify Field Mapping with Communication Log
+
+1. **Open Communication Log**
+   - In XPF, go to **View** → **Communication Log**
+   - Enable logging to see ThingSpeak data transmission
+
+2. **Send Sample Command**
+   - Use XPF's [:material-send: **SEND**](#){ .md-button .md-button--primary } command feature to test data sending
+   - Watch the communication log for ThingSpeak API calls
+   - Verify the JSON payload shows correct field1-8 values
+
+3. **Example Communication Log Output**
+   ```
+   11/5/2025 7:25:50 PM,Starting Sample Data to ThingSpeak
+   11/5/2025 7:25:50 PM,field1 (Date)=5 field2(Month)=11 field3(Year)=2025 field4(Hour)=14 field5(Min)=25 field6(Seconds)=50 field7(Ticks)=27850906 field8(ASCII ComputerName)=16708 
+   11/5/2025 7:25:51 PM,https://api.thingspeak.com/update.json?api_key=R3ERUXXXZ4I6XXXX&field1=11&field2=2025&field3=5&field4=14&field5=25&field6=50&field7=27850906&field8=16708&
+   11/5/2025 7:25:51 PM,Response OK
+   11/5/2025 7:25:51 PM,Sample Data Successfully Written
+   ```
+
+   **What this shows:**
+   - **Field Mapping**: XPF automatically maps rows 1-8 to field1-8
+   - **API Call**: Uses GET request with URL parameters (not JSON POST)
+   - **Response**: "Response OK" confirms successful transmission
+   - **Values**: Real data sent to each ThingSpeak field
 
 !!! tip "Monitor Points Configuration"
     **Need to configure monitor points first?** See the comprehensive [Monitor Points Configuration](../products/xpf/user-guide.md#7-monitor-points-configuration) section in the main user guide.
@@ -200,8 +233,8 @@ Configure the ThingSpeak Add-on within Modbus Monitor XPF:
 ### Start ThingSpeak Logging
 
 1. **Enable the Add-on**
-   - In ThingSpeak Add-on settings, check **Enable Logging**
-   - Click **Start** to begin data transmission
+   - ThingSpeak Add-on settings, check **Enable Logging**
+   - **Start** the client to begin data transmission. The data is sent to cloud based on the interval set during configuration. 
 
 2. **Monitor Connection Status**
    - Verify **Connected** status indicator is green
@@ -214,11 +247,11 @@ Configure the ThingSpeak Add-on within Modbus Monitor XPF:
 
 ### Verification Checklist
 
-- [ ] **ThingSpeak channel** shows recent data updates
-- [ ] **Field values** match expected monitor point readings
-- [ ] **Timestamps** are current and correct
-- [ ] **Update rate** matches configured interval
-- [ ] **No error messages** in XPF status window
+- [x] **ThingSpeak channel** shows recent data updates
+- [x] **Field values** match expected monitor point readings
+- [x] **Timestamps** are current and correct
+- [x] **Update rate** matches configured interval
+- [x] **No error messages** in XPF status window
 
 ## Advanced Configuration
 
