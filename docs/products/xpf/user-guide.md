@@ -2893,6 +2893,316 @@ When enabled, the Capture feature monitors incoming Modbus requests from clients
     - **Review results**: Captured points may need refinement (names, data types)
     - **Save immediately**: Export captured map before making changes
 
+#### Simulate - Advanced Waveform Generator & Client Testing Engine
+
+**XPF's unmatched waveform generator provides the ability to test your Modbus client, capture performance data, and validate system behavior with precision-engineered mathematical patterns.** This advanced simulation engine transforms XPF into the ultimate Modbus testing platform, generating sophisticated dynamic data that no physical device can match.
+
+**Revolutionary Testing Capabilities:**
+
+- **Unmatched Precision**: Generate mathematically perfect waveforms impossible to achieve with physical devices
+- **Comprehensive Client Testing**: Stress-test your Modbus clients with predictable, repeatable data patterns
+- **Performance Benchmarking**: Measure client response times, polling efficiency, and data processing capabilities
+- **Data Capture Integration**: Combine simulation with XPF's capture and logging features for complete test documentation
+- **Advanced Pattern Generation**: Seven distinct mathematical patterns provide comprehensive test coverage
+- **Real-World Simulation**: Replicate complex industrial processes without expensive hardware
+
+**Why XPF's Simulation is Unmatched:**
+
+- **Mathematical Perfection**: Generate ideal sine waves, exponential curves, and complex patterns with floating-point precision
+- **Simultaneous Multi-Pattern Testing**: Run hundreds of different waveforms concurrently for comprehensive system validation
+- **Performance Analytics**: Built-in data capture and charting reveal client performance characteristics
+- **Zero Hardware Dependency**: Complete testing environment requires only software - no physical devices needed
+- **Repeatable Test Conditions**: Identical test patterns ensure consistent, comparable results across test runs
+- **Dynamic Load Testing**: Variable frequency and amplitude patterns test client adaptability under changing conditions
+
+##### Simulation Control Groups
+
+**Master Simulation Controls (Server Tab → Simulate Group):**
+
+| Control | Function | Range/Options | Purpose |
+|---------|----------|---------------|---------|
+| **Ts (Sample Time)** | Update Rate | 1-1000000ms | How often simulation values update (Nyquist rate: values change twice per Ts period) |
+| **Freq (Frequency)** | Waveform Frequency | 0.01-1000000 Hz | Frequency of generated waveforms (e.g., 60Hz for power simulation) |
+| **Sample Button** | Add Sample Point | Action | Creates a sample monitor point with sine wave pattern for testing |
+| **Toggle Button** | Global Enable/Disable | On/Off | Enable or disable simulation on   monitor points simultaneously |
+| **Max Button** | Set Maximum Values | Action | Sets all simulated monitor points to their maximum data type values |
+| **Default Button** | Set Default Values | Action | Sets all simulated monitor points to their default/middle values |
+| **Min Button** | Set Minimum Values | Action | Sets all simulated monitor points to their minimum data type values |
+
+##### Individual Monitor Point Simulation Settings
+
+**Per-Point Simulation Configuration (Monitor Points Extended Options):**
+
+To configure simulation for individual monitor points:
+
+1. **Access Extended Options**:
+   - Click the **three dots (...)** button at the end of any monitor point row
+   - Extended options dialog opens
+
+2. **Enable Point Simulation**:
+   - Check the **Simulate** checkbox to enable simulation for this specific point
+   - **Unchecked**: Point uses static values or real device data
+   - **Checked**: Point generates dynamic simulated values
+
+3. **Select Simulation Pattern**:
+   - Choose from the **Simulate Type** dropdown menu
+   - Each pattern creates different mathematical behaviors
+
+##### Available Simulation Patterns
+
+**Mathematical Waveform Types:**
+
+| Pattern | Formula | Behavior | Use Case |
+|---------|---------|----------|----------|
+| **Linear** | `Value = m × t + b` | Straight line increase/decrease over time | Ramp signals, gradual changes, startup sequences |
+| **Sine** | `Value = Amplitude × sin(2π × Freq × t)` | Smooth oscillating wave | AC power simulation, cyclic processes, vibration |
+| **Triangle** | Triangular wave function | Linear rise and fall pattern | Sawtooth generators, scanning signals |
+| **Square** | Digital high/low alternating | Sharp on/off transitions | Digital signals, relay operations, binary states |
+| **Impulse** | Short duration peaks | Brief spikes returning to zero | Event triggers, fault injection, pulse counting |
+| **Parabola** | `Value = a × t² + b × t + c` | Curved acceleration/deceleration | Non-linear processes, acceleration curves |
+| **Exponential** | `Value = A × e^(k × t)` | Exponential growth/decay | Temperature curves, charging/discharging, chemical reactions |
+
+##### Advanced Client Testing & Performance Capture
+
+**Comprehensive Modbus Client Validation Platform:**
+
+XPF's simulation engine provides unparalleled capabilities for testing, validating, and benchmarking Modbus client applications. The combination of advanced waveform generation with integrated capture and analysis tools creates the industry's most comprehensive testing environment.
+
+**Client Performance Testing Capabilities:**
+
+| Test Category | XPF Capability | Client Validation | Performance Metrics |
+|---------------|----------------|-------------------|-------------------|
+| **Response Time Testing** | Variable Ts (1-65535ms) | Measure client polling efficiency | Identify optimal poll rates, detect timeouts |
+| **Data Pattern Handling** | 7 mathematical waveforms | Verify client processes all data types correctly | Test floating-point precision, range validation |
+| **Load Testing** | Hundreds of simultaneous points | Stress-test client under heavy data loads | Measure throughput limits, memory usage |
+| **Frequency Response** | 0.01-1000Hz patterns | Test client adaptation to data rate changes | Analyze filtering, sampling, aliasing effects |
+| **Error Recovery** | Impulse/fault injection | Validate client error handling capabilities | Document recovery times, fault tolerance |
+| **Network Performance** | TCP/UDP/Serial protocols | Test client across all interface types | Compare protocol efficiency, latency analysis |
+| **Scalability Analysis** | Multi-server architecture | Test client with multiple simultaneous connections | Evaluate connection management, resource scaling |
+
+**Integrated Data Capture & Analysis:**
+
+**Real-Time Performance Monitoring:**
+- **TX/RX Statistics**: Monitor message throughput and communication efficiency
+- **Response Time Analysis**: Measure client polling intervals and response latency  
+- **Error Rate Tracking**: Capture communication failures and timeout events
+- **Data Integrity Validation**: Verify client receives and processes simulated values correctly
+- **Network Load Assessment**: Analyze bandwidth utilization and protocol overhead
+
+**Automated Test Documentation:**
+- **Auto Save Integration**: Automatically log all simulation data and client responses to timestamped CSV files
+- **Chart Integration**: Real-time visualization of client performance metrics and response patterns
+- **Capture Integration**: Record which registers clients actually access during testing
+- **Statistics Export**: Export comprehensive test results for analysis in Excel, MATLAB, or custom tools
+
+##### Simulation Engine Technical Features
+
+**Advanced Waveform Generation:**
+
+- **Mathematical Precision**: IEEE 754 floating-point calculations ensure accurate waveform generation
+- **Nyquist Rate Processing**: Values update twice per sample time (Ts) for accurate waveform generation and anti-aliasing
+- **Data Type Awareness**: Simulation automatically respects INT16, UINT32, FLOAT32 value ranges and scaling
+- **Real-Time Updates**: Connected clients see live changing data with microsecond precision timing
+- **Per-Point Control**: Enable simulation individually for each monitor point with independent patterns
+- **Performance Optimized**: Efficient multi-threaded calculations support hundreds of simultaneous simulations
+- **Deterministic Behavior**: Reproducible waveforms ensure consistent test results across multiple runs
+- **Dynamic Range Control**: Automatic amplitude scaling prevents data type overflow while maintaining pattern integrity
+
+##### Practical Simulation Applications
+
+!!! example "Industrial Process Simulation"
+    **Scenario**: Simulate a temperature control system
+    
+    **Configuration:**
+    ```yaml
+    Setpoint (40001): Static = 85.0°C (no simulation)
+    Process Variable (40002): Sine wave = 83-87°C oscillation
+    Heater Output (40003): Parabola = non-linear response curve  
+    Alarm Status (10001): Square wave = periodic alarm testing
+    ```
+    
+    **Benefits**:
+    - Test PID controller tuning algorithms
+    - Validate HMI alarm handling
+    - Simulate process disturbances
+    - Train operators on system behavior
+
+!!! example "Power Grid Simulation"
+    **Scenario**: Simulate electrical power monitoring
+    
+    **Configuration:**
+    ```yaml
+    Voltage (30001): Sine = 240V ± 5% @ 60Hz
+    Current (30002): Sine = Load-dependent amplitude  
+    Frequency (30003): Linear = 59.95-60.05 Hz drift
+    Power Factor (30004): Triangle = 0.8-1.0 oscillation
+    ```
+    
+    **Benefits**:
+    - Test SCADA power quality monitoring
+    - Validate protection relay logic
+    - Simulate grid disturbances
+    - Demonstrate power calculation accuracy
+
+!!! example "Motor Drive Testing"
+    **Scenario**: Variable frequency drive simulation
+    
+    **Configuration:**
+    ```yaml
+    Speed Command (40010): Linear ramp = 0-1800 RPM acceleration
+    Actual Speed (40011): Exponential = realistic acceleration curve
+    Motor Current (40012): Parabola = torque-dependent current
+    Fault Status (10010): Impulse = periodic fault injection
+    ```
+    
+    **Benefits**:
+    - Test drive commissioning procedures
+    - Validate safety logic responses
+    - Simulate motor startup sequences
+    - Train maintenance personnel
+
+##### Simulation Best Practices
+
+!!! tip "Optimization Guidelines"
+    **Performance Considerations:**
+    
+    **Sample Time (Ts) Selection:**
+    - **Fast processes**: 50-100ms for high-speed control loops
+    - **Normal processes**: 1000ms (1 second) for typical industrial monitoring
+    - **Slow processes**: 5000ms+ for temperature, level, or flow applications
+    - **Network considerations**: Longer Ts reduces network traffic
+    
+    **Frequency Selection:**
+    - **Power systems**: 50/60 Hz for electrical simulation
+    - **Mechanical systems**: 0.1-10 Hz for typical machinery
+    - **Process control**: 0.01-1 Hz for chemical/thermal processes
+    - **Test signals**: 1-100 Hz for calibration and testing
+
+!!! warning "Simulation Limitations"
+    **Resource Considerations:**
+    
+    - **CPU Usage**: Many simultaneous simulations may impact system performance
+    - **Network Load**: High-frequency simulations generate continuous network traffic
+    - **Data Type Limits**: Simulation values are constrained by monitor point data types
+    - **Mathematical Precision**: Floating-point calculations may have minor rounding effects
+    
+    **Recommendations**: 
+    - Start with fewer simulation points and increase gradually
+    - Use appropriate sample times for your application
+    - Monitor system performance during heavy simulation loads
+
+##### Advanced Testing Scenarios & Methodologies
+
+**Comprehensive Client Validation Workflows:**
+
+!!! example "Complete SCADA System Validation"
+    **Scenario**: Validate a new SCADA application before production deployment
+    
+    **XPF Testing Strategy:**
+    ```yaml
+    Phase 1 - Basic Connectivity:
+      - Static values: Verify basic Modbus communication
+      - Capture mode: Document actual register usage
+      - Single pattern: Test with simple sine wave
+    
+    Phase 2 - Dynamic Response:
+      - Multiple patterns: Sine, triangle, linear ramps
+      - Variable frequencies: 0.1Hz to 10Hz testing
+      - Data type validation: INT16, UINT32, FLOAT32
+    
+    Phase 3 - Stress Testing:
+      - 100+ simultaneous points: Maximum load testing
+      - High-frequency patterns: Performance limits
+      - Error injection: Impulse patterns for fault testing
+    
+    Phase 4 - Performance Analysis:
+      - Auto save enabled: Complete data logging
+      - Charts active: Real-time performance visualization
+      - Statistics monitoring: TX/RX analysis
+    ```
+    
+    **Validation Results:**
+    - **Response Time Baseline**: Document optimal polling intervals
+    - **Load Capacity**: Identify maximum sustainable data points
+    - **Error Recovery**: Validate fault handling and recovery times
+    - **Data Accuracy**: Verify floating-point precision and range handling
+    - **Network Efficiency**: Measure protocol overhead and bandwidth usage
+
+!!! example "Industrial Protocol Benchmarking"
+    **Scenario**: Compare Modbus TCP vs RTU vs ASCII performance
+    
+    **Multi-Protocol Testing:**
+    ```yaml
+    TCP Server (Port 502):
+      - Linear ramps: 0-65535 over 60 seconds
+      - Sine waves: 50Hz power simulation
+      - Exponential: Temperature rise curves
+    
+    Serial RTU (COM1 @ 115200):
+      - Identical patterns as TCP
+      - Same timing parameters
+      - Parallel execution
+    
+    Serial ASCII (COM2 @ 9600):
+      - Identical patterns with lower baud
+      - Protocol overhead comparison
+      - Legacy compatibility testing
+    ```
+    
+    **Performance Comparison:**
+    - **Throughput Analysis**: Messages per second across protocols
+    - **Latency Measurement**: Response time differences
+    - **Error Rates**: Protocol reliability under stress
+    - **Bandwidth Efficiency**: Data overhead comparison
+    - **Scalability Limits**: Maximum points per protocol
+
+!!! success "Competitive Advantages - Why XPF is Unmatched"
+    **No Other Tool Provides This Level of Testing Capability:**
+    
+    **Mathematical Precision:**
+    - **Perfect Waveforms**: Generate ideal mathematical patterns impossible with hardware
+    - **Floating-Point Accuracy**: IEEE 754 precision for scientific applications  
+    - **Deterministic Patterns**: Reproducible test conditions for validation
+    - **Multi-Pattern Synthesis**: Complex waveform combinations for comprehensive testing
+    
+    **Comprehensive Integration:**
+    - **Capture + Simulation**: Reverse engineer while generating test patterns
+    - **Charts + Performance**: Real-time visualization of client behavior
+    - **Auto Save + Analysis**: Automatic test documentation and data export
+    - **Multi-Server + Protocols**: Complete protocol stack validation
+    
+    **Enterprise-Level Capabilities:**
+    - **Zero Hardware Dependency**: Complete testing environment in software
+    - **Unlimited Scalability**: Hundreds of simultaneous simulation points
+    - **Professional Documentation**: Automated test reports and compliance records
+    - **Cost Effectiveness**: Eliminates need for expensive test equipment
+    
+    **Time-to-Market Acceleration:**
+    - **Instant Environment**: No hardware setup or procurement delays
+    - **Parallel Development**: Multiple team members can test simultaneously
+    - **Continuous Integration**: Automated testing in CI/CD pipelines
+    - **Risk Reduction**: Comprehensive validation before hardware deployment
+
+!!! info "Integration with Other XPF Features"
+    **Combining Simulation with Complete Testing Ecosystem:**
+    
+    **Data Analysis Pipeline:**
+    - **Charts**: Real-time waveform visualization and client response analysis
+    - **Auto Save**: Automatic CSV export for statistical analysis in Excel/MATLAB/Python
+    - **Capture**: Simultaneously record client access patterns while generating test data
+    - **Statistics**: Monitor communication performance and identify bottlenecks
+    
+    **Multi-Interface Testing:**
+    - **Multiple Servers**: Run different patterns on TCP vs Serial for protocol comparison
+    - **Mixed Protocols**: Test RTU, ASCII, and TCP simultaneously with identical data
+    - **Network Analysis**: Compare IPv4, IPv6, and serial communication efficiency
+    
+    **Advanced Validation:**
+    - **Limits Evaluation**: Set High/Low limits to test alarm and exception handling
+    - **Dynamic Scaling**: Vary amplitude and frequency during testing for adaptive algorithm validation
+    - **Pattern Synchronization**: Coordinate multiple simulation points for complex system testing
+    - **Error Injection**: Use impulse patterns to test client fault tolerance and recovery
+
 #### Server Start/Stop - Concurrent Operation
 
 **Both the Modbus TCP server (when Enabled) and Modbus RTU server start simultaneously (when the COM port is selected).**
@@ -3407,9 +3717,9 @@ A: No, wildcards (`+`, `#`) are only supported for subscriptions. Publishing req
 
 ### ThingSpeak Cloud Integration
 
-ThingSpeak provides cloud-based data logging, visualization, and MATLAB analytics integration.
+**ThingSpeak provides cloud-based data logging, visualization, and MATLAB analytics integration.** Transform your industrial data into powerful cloud-based dashboards and analytics platforms accessible from anywhere in the world.
 
-**ThingSpeak MQTT Configuration:**
+**Quick Configuration Overview:**
 
 ```yaml
 Host: mqtt3.thingspeak.com
@@ -3417,16 +3727,28 @@ Port: 1883 (or 8883 for TLS)
 Client ID: (any unique ID)
 Username: (your ThingSpeak username or MQTT device credentials)
 Password: (your MQTT API key)
+Topic: channels/<channel_id>/publish
 ```
 
-**Topic Format for ThingSpeak:**
+**Key Benefits:**
+- **Remote Monitoring**: Access your industrial data from anywhere
+- **Historical Analysis**: Automatic cloud-based data storage and trending
+- **MATLAB Integration**: Advanced analytics and machine learning capabilities
+- **Alert Systems**: Automated notifications based on data thresholds
+- **Professional Dashboards**: Create publication-ready visualizations
 
-```
-channels/<channel_id>/publish
-```
-
-!!! note "ThingSpeak Documentation"
-    Detailed ThingSpeak integration guide with channel setup, API key configuration, and data formatting will be added in a future update. Visit [ThingSpeak.com](https://thingspeak.com) for platform documentation.
+!!! info "Complete ThingSpeak Add-on Guide"
+    **📖 [Comprehensive ThingSpeak Add-on Setup](../../guides/thingspeak-addon.md)**
+    
+    **Includes:**
+    - Step-by-step channel creation (from Chrome recorder)
+    - Complete XPF configuration walkthrough
+    - Field mapping strategies and best practices
+    - Advanced visualization and analytics setup
+    - Troubleshooting guide and optimization tips
+    - Security recommendations and maintenance procedures
+    
+    **Perfect for:** First-time setup, troubleshooting, and advanced configuration
 
 ## 7. Monitor Points Configuration
 
