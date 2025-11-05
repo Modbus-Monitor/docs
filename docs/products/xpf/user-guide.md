@@ -887,7 +887,7 @@ All log controls in one comprehensive table. Labels **1**, **2**, **3a-3h**, and
 
 | Group | Purpose | Key Features | Description |
 |-------|---------|--------------|-------------|
-| **TCP** | Network Server | Interface Type, Port, Protocol Options, IP Configuration, Enable | Configure TCP/UDP Modbus servers with protocol variants and network settings |
+| **TCP** | Network Server | **Interface Options:** TCP, UDP<br/>**Protocol Options:** Default, RTU, ASCII<br/>**Additional:** Port, IP Configuration, Enable | Configure TCP/UDP Modbus servers with protocol variants and network settings |
 | **Serial** | COM Port Servers | COM Port Selection, Baud Rate, Data Bits, Parity, Stop Bits, Protocol | Configure serial Modbus servers on multiple COM ports with individual settings |
 | **Capture** | Traffic Analysis | On/Off Toggle, Auto Value/Default Value | Automatically capture incoming requests and build Modbus maps from live traffic |
 | **Simulate** | Data Generation | Sample Time, Frequency, Sample Generator, Value Controls | Advanced simulation engine for generating dynamic test data patterns |
@@ -2537,18 +2537,17 @@ Documents/ModbusScan_2025-10-28_14-32-15.csv
 - **Training**: Provide safe learning environment for Modbus communication
 
 
-
 ### Server Tab Groups & Features
 
-**Complete reference for all Server tab ribbon groups and their functionality:**
+**Complete reference for all Server tab ribbon groups - expert-level technical capabilities:**
 
-| Group | Purpose | Key Features | Description |
-|-------|---------|--------------|-------------|
-| **TCP** | Network Server | Interface Type, Port, Protocol Options, IP Configuration, Enable | Configure TCP/UDP Modbus servers with protocol variants and network settings |
-| **Serial** | COM Port Servers | COM Port Selection, Baud Rate, Data/Parity/Stop Bits, Protocol | Configure serial Modbus servers on multiple COM ports with individual settings |
-| **Capture** | Traffic Analysis | On/Off Toggle, Auto Value/Default Value | Automatically capture incoming requests and build Modbus maps from live traffic |
-| **Simulate** | Data Generation | Sample Time, Frequency, Sample Generator, Value Controls | Advanced simulation engine for generating dynamic test data patterns |
-| **Server** | Operation Control | Statistics, Connection Count, Start/Stop | Main server control with connection monitoring and operational status |
+| Group | Key Technical Options | Advanced Capabilities | Details |
+|-------|----------------------|----------------------|---------|
+| **TCP** | **Interface:** TCP/UDP<br>**Port:** 502 (configurable)<br>**Protocol:** Default/RTU/ASCII | Six protocol combinations • IPv4/IPv6/Both/Loopback binding • Concurrent TCP OR UDP (not both) | [TCP Details ↓](#detailed-group-breakdown) |
+| **Serial** | **Ports:** Multiple simultaneous<br>**Rates:** 300-921600 bps<br>**Protocol:** RTU/ASCII | Independent settings per COM port • Mixed protocol support • USB-serial scaling | [Serial Details ↓](#detailed-group-breakdown) |
+| **Capture** | **Mode:** On/Off<br>**Fill:** Auto Value/Default Value | Automatic map building from client requests • Live traffic analysis • Reverse engineering capability | [Capture Details ↓](#detailed-group-breakdown) |
+| **Simulate** | **Timing:** Ts(1-65535ms), Freq(0.01-1000Hz)<br>**Patterns:** Mathematical functions | Sine/Ramp/Random/Static/Step waves • Per-point control • Data type aware simulation | [Simulate Details ↓](#detailed-group-breakdown) |
+| **Server** | **Operation:** Start/Stop all servers<br>**Stats:** TX/RX counters<br>**Monitor:** Connection count | Multi-threaded architecture • Concurrent TCP+Serial operation • Performance monitoring | [Server Details ↓](#detailed-group-breakdown) |
 
 **Detailed Group Breakdown:**
 
