@@ -3858,18 +3858,29 @@ A: MQTT protocol supports up to 256MB per message, but practical limits depend o
 **Q: Can I use wildcards when publishing?**  
 A: No, wildcards (`+`, `#`) are only supported for subscriptions. Publishing requires a specific topic without wildcards.
 
+### Add-ons Overview
+
+**XPF Add-ons extend the core Modbus functionality with specialized integrations and cloud connectivity.** Add-ons are separate purchasable components that integrate with XPF to provide specific platform connectivity, data logging, and IoT capabilities.
+
+!!! info "Core vs Add-ons"
+    **Core Features** (included with XPF):
+    - Modbus TCP/RTU/ASCII communication
+    - Monitor Points management and data visualization
+    - Built-in MQTT messaging protocol support for any broker
+    - Charts, logs, scanning, and device simulation
+    
+    **Add-ons** (separate purchase):
+    - **ThingSpeak Add-on**: Specialized ThingSpeak cloud platform integration
+    - **MQTT Add-on**: Advanced MQTT broker connectivity with enhanced features
+    - Additional cloud platform integrations (future releases)
+
 ### ThingSpeak Add-on (Cloud Logging)
 
-**ThingSpeak Add-on provides dedicated cloud logging and visualization capabilities.** This add-on is separate from general MQTT functionality and specifically designed for ThingSpeak platform integration.
-
-!!! info "Add-on vs Core Feature"
-    **ThingSpeak Add-on** is a specialized add-on for ThingSpeak cloud integration, distinct from the core MQTT messaging capabilities. Each serves different purposes:
-    
-    - **MQTT**: General messaging protocol for any MQTT broker
-    - **ThingSpeak Add-on**: Dedicated ThingSpeak cloud platform integration
+**ThingSpeak Add-on provides dedicated cloud logging and visualization capabilities.** This add-on is separate from general MQTT functionality and specifically designed for ThingSpeak platform integration with automatic field mapping.
 
 **Key Benefits:**
 - **Automatic Cloud Logging**: Direct data transmission to ThingSpeak channels
+- **Automatic Field Mapping**: Row-based mapping (Row 1→field1, Row 2→field2, etc.)
 - **Professional Dashboards**: Real-time visualization accessible from anywhere
 - **MATLAB Integration**: Advanced analytics and machine learning capabilities
 - **Historical Analysis**: Long-term data storage and trend analysis
@@ -3878,7 +3889,7 @@ A: No, wildcards (`+`, `#`) are only supported for subscriptions. Publishing req
 **Quick Setup:**
 1. **Purchase/Enable**: ThingSpeak Add-on (free tier available)
 2. **Configure**: Create ThingSpeak channel and configure XPF add-on settings
-3. **Map Data**: Link monitor points to ThingSpeak fields  
+3. **Map Data**: Link monitor points to ThingSpeak fields automatically
 4. **Verify**: Start logging and confirm data flow
 
 !!! info "Complete ThingSpeak Add-on Guide"
@@ -3888,11 +3899,52 @@ A: No, wildcards (`+`, `#`) are only supported for subscriptions. Publishing req
     - 4-step add-on setup workflow (Purchase → Configure → Map → Verify)
     - Step-by-step channel creation (from Chrome recorder)
     - Complete XPF add-on configuration walkthrough
-    - Field mapping strategies and best practices
+    - Automatic field mapping (Row 1→field1) strategies
     - Advanced visualization and analytics setup
     - Troubleshooting guide and optimization tips
     
     **Perfect for:** First-time setup, troubleshooting, and advanced configuration
+
+### MQTT Add-on (Advanced Broker Connectivity)
+
+**MQTT Add-on provides enhanced MQTT broker connectivity with advanced features for IoT integration.** This add-on extends beyond the core MQTT messaging with specialized broker management, advanced security, and enterprise-grade features.
+
+**Key Benefits:**
+- **Multi-Broker Support**: Connect to multiple MQTT brokers simultaneously
+- **Advanced Security**: Enterprise TLS/SSL, client certificates, and authentication
+- **Topic Management**: Advanced topic mapping and dynamic topic generation
+- **Quality of Service**: Comprehensive QoS 0, 1, and 2 support with persistence
+- **Cloud Integration**: Pre-configured templates for AWS IoT, Azure IoT, HiveMQ
+- **Message Persistence**: Offline message queuing and automatic reconnection
+
+**Quick Setup:**
+1. **Purchase/Enable**: MQTT Add-on (enhanced features)
+2. **Configure**: Connect to MQTT brokers with advanced security
+3. **Map Topics**: Configure topic publishing and subscription patterns
+4. **Verify**: Test connectivity and message flow
+
+!!! info "Complete MQTT Add-on Guide"
+    **📖 [Comprehensive MQTT Add-on Setup](../../guides/mqtt-addon.md)**
+    
+    **Includes:**
+    - 4-step add-on setup workflow (Purchase → Configure → Map → Verify)
+    - Multi-broker configuration and management
+    - Advanced security setup (TLS/SSL, certificates)
+    - Topic mapping strategies and best practices
+    - Cloud platform integration (AWS IoT, Azure IoT, HiveMQ)
+    - Troubleshooting guide and performance optimization
+    
+    **Perfect for:** Enterprise IoT deployments, multi-broker environments, and advanced security requirements
+
+**Choosing Between Add-ons:**
+
+| Scenario | Recommended Add-on | Reason |
+|----------|-------------------|--------|
+| **Simple ThingSpeak cloud logging** | ThingSpeak Add-on | Automatic field mapping, simplified setup |
+| **Multiple cloud platforms** | MQTT Add-on | Multi-broker support, flexible topic mapping |
+| **Enterprise IoT deployment** | MQTT Add-on | Advanced security, persistence, QoS management |
+| **AWS IoT / Azure IoT** | MQTT Add-on | Pre-configured cloud templates |
+| **Basic single broker MQTT** | Core MQTT (included) | No add-on needed for simple messaging |
 
 ## 7. Monitor Points Configuration
 
