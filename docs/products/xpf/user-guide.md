@@ -3462,90 +3462,29 @@ Each instance:
 - **Device Simulation**: Each instance represents different device type or model
 - **Protocol Testing**: Compare TCP vs UDP performance with same data
 
-## 6. IoT Integration
+## 6. IoT Features
 
-Modbus Monitor XPF includes comprehensive **MQTT messaging** capabilities for cloud and device communication, enabling Industrial IoT integration scenarios. Connect your Modbus devices to cloud platforms, publish data to MQTT brokers, and enable bi-directional communication between industrial equipment and cloud services.
+**XPF provides IoT connectivity through licensed features accessed via the IoT Tab.** These features enable cloud integration, MQTT messaging, and specialized platform connectivity for Industrial IoT scenarios.
 
-### Quick Start
+### Available IoT Features
 
-1. **Access MQTT Panel**: Open Modbus Monitor XPF and locate the **IoT** tab on the ribbon (see [IoT Tab](#iot-tab) for interface overview)
-2. **Configure Broker**: Enter broker **Host** (e.g., `broker.hivemq.com`) and **Port** (typically `1883` for standard, `8883` for TLS)
-3. **Set Client ID**: Enter a unique **Client ID** for your connection (e.g., `ModbusMonitor-MyPC-01`)
-4. **Authenticate** (optional): Enter username and password if required by broker
-5. **Enable TLS** (optional): Check **TLS/SSL** and select certificates for encrypted connections
-6. **Subscribe to Topics**: Add topics to monitor (e.g., `devices/+/status`), then click **Subscribe**
-7. **Test Connection**: Click **Send** to publish a test message
+**ThingSpeak Feature:** Specialized ThingSpeak cloud platform integration with automatic field mapping and professional visualization capabilities.
 
-### Accessing the MQTT Panel
+📖 **[Complete ThingSpeak Feature Setup Guide](../../guides/thingspeak-addon.md)**
 
-The MQTT controls are located in the **IoT** tab on the ribbon interface. The entire MQTT group appears only when your installation includes the MQTT connector feature.
+**MQTT Feature:** Advanced MQTT broker connectivity with multi-broker support, enterprise security, and cloud platform templates.
 
-**Panel Organization:**
-- **Broker Settings** (top section): Connection parameters and authentication
-- **Topic Management** (middle section): Subscribe/unsubscribe to MQTT topics
-- **Utilities** (bottom section): Send, console, logging, and connection controls
+📖 **[Complete MQTT Feature Setup Guide](../../guides/mqtt-addon.md)**
 
-### Broker Connection Settings
+### Feature Licensing
 
-Configure your MQTT broker connection with the following parameters:
+Both IoT features require separate license purchases to unlock full functionality. Access feature configuration through the IoT Tab groups after licensing.
 
-| Setting | Description | Example / Notes |
-|---------|-------------|-----------------|
-| **Host** | MQTT broker address (domain or IP) | `broker.hivemq.com`, `192.168.1.10`, `mqtt.example.com` |
-| **Port** | Broker port number | `1883` (standard), `8883` (TLS/SSL), `8083`/`8084` (WebSocket) |
-| **Timeout (ms)** | Connection timeout in milliseconds | `5000` (5 seconds) - increase for slow networks |
-| **KeepAlive (s)** | MQTT keep-alive interval in seconds | `60` - maintains connection, detects disconnects |
-| **Version** | MQTT protocol version | `3.1.1` (most common), `5.0` (latest), `3.1` (legacy) |
-| **Client ID** | Unique identifier for this MQTT client | Must be unique per connection to avoid conflicts |
-| **Username** | Authentication username | Leave empty for anonymous brokers |
-| **Password** | Authentication password | Leave empty for anonymous brokers |
+## 7. Monitor Points Configuration
 
-**Connection Settings Best Practices:**
+**Monitor Points** are similar to PLC tags - each one represents a specific data point you want to read or write on a Modbus device. Just as PLC tags map to memory addresses in a controller, Monitor Points map to Modbus registers and coils with all the configuration needed to access and interpret the data correctly.
 
-- **Client ID**: Use descriptive, unique IDs like `ModbusMonitor-Site1-PLC1`
-- **Timeout**: Increase for cellular/satellite connections (10000ms+)
-- **KeepAlive**: Standard is 60 seconds; increase to 300+ for unreliable networks
-- **Version**: Use 3.1.1 unless broker specifically requires 5.0 or 3.1
-
-!!! tip "Public Test Brokers"
-    For testing MQTT functionality, use these public brokers:
-    
-    - **HiveMQ**: `broker.hivemq.com` : `1883` (no authentication)
-    - **Eclipse Mosquitto**: `test.mosquitto.org` : `1883` (no authentication)
-    - **EMQX**: `broker.emqx.io` : `1883` (no authentication)
-    
-    **Note:** Public brokers are for testing only - never send sensitive data!
-
-### TLS/SSL Secure Connections
-
-Enable encrypted MQTT connections for production deployments and cloud platforms.
-
-**TLS/SSL Configuration:**
-
-| Setting | Purpose | Details |
-|---------|---------|---------|
-| **TLS/SSL Checkbox** | Enable encrypted transport | Check to activate TLS (typically uses port 8883) |
-| **CA Certificate** | Validate broker identity | Click **CA** button to select CA certificate file (`.crt`, `.pem`) |
-| **Client Certificate** | Mutual authentication | Click **Client** button to select client cert/key (`.pfx`, `.p12`, `.pem`) |
-| **WebSocket Checkbox** | MQTT over WebSocket | Enable for browser-based or cloud connections requiring WebSocket transport |
-
-**Certificate Setup Steps:**
-
-1. **Enable TLS**: Check the **TLS/SSL** checkbox
-2. **CA Certificate** (broker validation):
-   - Public CA: Not required if broker uses certificates from trusted CAs (Let's Encrypt, DigiCert, etc.)
-   - Self-signed: Click **CA** button and select broker's CA certificate file
-3. **Client Certificate** (mutual TLS):
-   - If broker requires client authentication, click **Client** button
-   - Select client certificate file (PFX/PKCS12 with private key, or separate cert/key files)
-4. **Verify Hostname**: Ensure broker hostname matches certificate CN or SAN
-
-**Common Certificate Formats:**
-
-| Format | Extension | Usage |
-|--------|-----------|-------|
-| **PEM** | `.pem`, `.crt` | CA certificates, public certificates (text format) |
-| **PKCS12** | `.pfx`, `.p12` | Client certificates with private key (binary, password-protected) |
+This section explains everything you need to know about configuring Monitor Points, including address formats, data types, scaling options, and advanced features. Whether you're setting up a simple temperature sensor or complex multi-register data structures, understanding these configuration options is essential for effective Modbus communication.
 | **DER** | `.der`, `.cer` | Binary certificate format (less common) |
 
 !!! warning "Certificate Security"
