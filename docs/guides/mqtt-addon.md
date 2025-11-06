@@ -116,7 +116,8 @@ You need both an MQTT broker (cloud or local) and the XPF MQTT Add-on:
   - Search for "MQTT Add-on" or "XPF MQTT Integration"
   - Enables XPF to connect to any MQTT broker
   - Includes advanced security and topic management features
-- **Installation**: Follow add-on installation instructions after purchase
+- **Installation**: Activate the Add-on and restart the App to enable the feature.
+  - **See**: [License Activation](../products/xpf/user-guide.md#license-activation) in the main user guide for step-by-step activation instructions
 
 ### 2. Configure Add-on
 - [Configure MQTT broker connection](#step-1-configure-mqtt-broker-connection)

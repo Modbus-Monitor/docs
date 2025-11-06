@@ -144,3 +144,78 @@
   font-size: 0.8rem;
   margin-left: 0.5rem;
 }
+
+/* ===== OPTIMIZED SEARCH RESULTS ===== */
+/* Shorter, more concise search result snippets */
+
+.md-search-result {
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem !important;
+}
+
+.md-search-result__teaser {
+  line-height: 1.4 !important;
+  max-height: 2.8em !important;
+  overflow: hidden !important;
+  font-size: 0.85rem !important;
+  color: var(--md-default-fg-color--light) !important;
+}
+
+.md-search-result__title {
+  font-weight: 600 !important;
+  margin-bottom: 0.25rem !important;
+  line-height: 1.3 !important;
+}
+
+.md-search-result__meta {
+  font-size: 0.8rem !important;
+  opacity: 0.7 !important;
+  margin-top: 0.25rem !important;
+  color: var(--md-default-fg-color--lighter) !important;
+}
+
+/* Enhanced search term highlighting */
+.md-search-result__teaser mark,
+.md-search-result__title mark {
+  background-color: rgba(255, 235, 59, 0.6) !important;
+  color: inherit !important;
+  padding: 0 2px !important;
+  border-radius: 2px !important;
+  font-weight: 600 !important;
+}
+
+/* Dark mode search highlights */
+[data-md-color-scheme="slate"] .md-search-result__teaser mark,
+[data-md-color-scheme="slate"] .md-search-result__title mark {
+  background-color: rgba(255, 193, 7, 0.3) !important;
+}
+
+/* Compact search results */
+.md-search-result__list {
+  max-height: 70vh !important;
+  overflow-y: auto !important;
+}
+
+.md-search-result__item {
+  padding: 0.75rem !important;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest) !important;
+}
+
+.md-search-result__item:last-child {
+  border-bottom: none !important;
+}
+
+/* Better search result structure */
+.md-search-result__article {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.25rem !important;
+}
+
+/* Hide overly long URLs in search meta */
+.md-search-result__meta .md-search-result__terms {
+  max-width: 300px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
