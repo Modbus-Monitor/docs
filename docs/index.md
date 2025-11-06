@@ -12,8 +12,11 @@
 
     Professional Windows application for Modbus monitoring and analysis.
 
-    [:octicons-arrow-right-24: User Guide](products/xpf/user-guide.md)
-    [:octicons-arrow-right-24: Quick Start](products/xpf/quick-start.md)
+    **Core Guides:**  
+    [:octicons-arrow-right-24: User Guide](products/xpf/user-guide.md) · [:octicons-arrow-right-24: Quick Start](products/xpf/quick-start.md)
+
+    **Add-on Features:**  
+    [:octicons-arrow-right-24: MQTT Add-on](guides/mqtt-addon.md) · [:octicons-arrow-right-24: ThingSpeak Add-on](guides/thingspeak-addon.md)
 
 -   :material-android:{ .lg } **Android Monitor**
 
@@ -87,6 +90,8 @@
 !!! tip "Popular Resources"
     
     - **[Modbus Monitor XPF - Complete Guide](products/xpf/user-guide.md)** - Most comprehensive guide
+    - **[MQTT Add-on Guide](guides/mqtt-addon.md)** - IoT connectivity and cloud integration
+    - **[ThingSpeak Add-on Guide](guides/thingspeak-addon.md)** - Direct ThingSpeak cloud publishing
     - **[Quick Start Demo](products/mapper/quick-start.md)** - 5-minute setup for Mapper Pro
     - **[Error Codes Reference](technical/error-codes.md)** - Troubleshooting guide
     - **[Hardware Compatibility](technical/hardware.md)** - Supported devices and adapters
