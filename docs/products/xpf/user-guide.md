@@ -696,6 +696,7 @@ Customize the application theme to match your environment:
 | **Light** | Bright interface | Well-lit environments, daytime use |
 | **Dark** | Dark interface | Low-light environments, reduced eye strain |
 | **System Default** | Follows Windows | Automatically matches Windows theme |
+| **Reset** | Factory Reset | Restore all application settings to default values |
 
 **Theme Selection:**
 
