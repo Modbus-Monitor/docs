@@ -5,6 +5,178 @@
 
 **General-purpose messaging and IoT connectivity add-on for Modbus Monitor XPF**
 
+<figure markdown>
+  ![XPF MQTT Configuration Interface](../assets/screenshots/xpf-iot-mqtt.webp)
+  <figcaption>XPF MQTT Configuration showing connection to public broker </figcaption>
+</figure>
+
+## Quick Start: Connect to Public MQTT Brokers
+
+The fastest way to get started with MQTT is to connect to free public test brokers. This section shows how to configure XPF to connect to popular public MQTT brokers for testing and development.
+
+### Supported Public Brokers
+
+=== "HiveMQ Public (Recommended)"
+
+    **Recommended for beginners - reliable and well-maintained**
+    
+    | Connection Type | Host | Port | Security | Notes |
+    |----------------|------|------|----------|-------|
+    | **TCP** | `broker.hivemq.com` | `1883` | Unencrypted | Basic testing |
+    | **TCP + TLS** | `broker.hivemq.com` | `8883` | Encrypted | Recommended for production testing |
+    | **WebSocket** | `broker.hivemq.com` | `8000` | Unencrypted | Web browser compatible |
+    | **WebSocket + TLS** | `broker.hivemq.com` | `8884` | Encrypted | Secure web browser compatible |
+    
+    **Authentication:** None required (anonymous access)  
+    **Reliability:** High uptime, actively maintained by HiveMQ  
+    **Best For:** Learning MQTT, initial testing, proof of concepts
+
+=== "Eclipse Mosquitto"
+
+    **Alternative option for testing**
+    
+    | Connection Type | Host | Port | Security | Notes |
+    |----------------|------|------|----------|-------|
+    | **TCP** | `test.mosquitto.org` | `1883` | Unencrypted | Basic testing |
+    | **TCP + TLS** | `test.mosquitto.org` | `8883` | Encrypted | Secure testing |
+    
+    **Authentication:** None required (anonymous access)  
+    **Reliability:** Good uptime, community maintained  
+    **Best For:** Alternative testing option, Mosquitto-specific features
+
+=== "EMQX Public"
+
+    **Additional testing option**
+    
+    | Connection Type | Host | Port | Security | Notes |
+    |----------------|------|------|----------|-------|
+    | **TCP** | `broker.emqx.io` | `1883` | Unencrypted | Basic testing |
+    | **TCP + TLS** | `broker.emqx.io` | `8883` | Encrypted | Secure testing |
+    | **WebSocket** | `broker.emqx.io` | `8083` | Unencrypted | Web browser compatible |
+    | **WebSocket + TLS** | `broker.emqx.io` | `8084` | Encrypted | Secure web browser compatible |
+    
+    **Authentication:** None required (anonymous access)  
+    **Reliability:** Good uptime, EMQX maintained  
+    **Best For:** Testing EMQX-specific features, alternative broker option
+
+=== "Local Mosquitto"
+
+    **Run your own broker locally**
+    
+    | Connection Type | Host | Port | Security | Setup Required |
+    |----------------|------|------|----------|----------------|
+    | **TCP** | `localhost` | `1883` | Unencrypted | Install Mosquitto locally |
+    | **TCP + TLS** | `localhost` | `8883` | Encrypted | Configure TLS certificates |
+    
+    **Authentication:** Configurable (can require username/password)  
+    **Reliability:** Depends on your setup  
+    **Best For:** Development, learning broker administration, offline testing
+    
+    **Quick Setup:**
+    ```bash
+    # Windows (using Chocolatey)
+    choco install mosquitto
+    
+    # Start broker
+    mosquitto -v
+    ```
+
+!!! warning "Public Broker Security"
+    Public brokers are intended for **testing only**. Never send sensitive data or use them for production applications. Anyone can subscribe to your topics and see your messages.
+
+### Step-by-Step Connection Guide
+
+This section provides a complete walkthrough for connecting XPF to an MQTT broker. **We'll use HiveMQ's public broker (`broker.hivemq.com`) as our example** since it requires no registration and is perfect for learning and initial testing.
+
+!!! example "Example Configuration Notice"
+    **The following steps demonstrate connecting to `broker.hivemq.com` as an example.** You can substitute any broker from the [Supported Public Brokers](#supported-public-brokers) tabs above, or use your own private broker by replacing the host, port, and authentication details as needed.
+
+#### Prerequisites
+- Modbus Monitor XPF with MQTT Add-on installed and licensed
+- Internet connection for accessing public brokers
+- Basic understanding of MQTT topics and messages
+
+#### Configuration Steps      
+
+1. **Open MQTT Configuration**
+   - Launch Modbus Monitor XPF
+   - Navigate to the MQTT Add-on settings
+   - **Example**: We'll connect to `broker.hivemq.com` on port `1883` 
+
+
+2. **Enter Broker Details**
+      - **Broker Address**: Enter `broker.hivemq.com`
+      - **Port**: Use `1883` for unencrypted or `8883` for TLS
+      - **Protocol**: Select `TCP` or `TLS TCP` based on your port choice
+      - **Client ID**: Enter a unique identifier (e.g., `XPF-Test-001`)
+
+3. **Authentication Settings**
+      - **Username**: Leave blank (public broker requires no authentication)
+      - **Password**: Leave blank
+      - **Certificate**: Not required for basic connection
+
+4. **Test Connection**
+      - Click "Test Connection" to verify connectivity
+      - Should show "Connected" status if successful
+
+5. **Configure Topics**
+      - **Publish Topic**: `xpf/test/data` (example)
+      - **Subscribe Topic**: `xpf/test/commands` (example)
+
+!!! tip "Topic Best Practices"
+    Use unique topic prefixes to avoid conflicts with other users:
+    - Good: `yourname/xpf/device1/data`
+    - Avoid: `data` or `test` (too generic)
+
+#### Validating Your Connection with MQTT Explorer
+
+To verify that your XPF MQTT connection is working correctly, use **MQTT Explorer** - a free desktop application that provides a visual interface for monitoring MQTT traffic.
+
+<figure markdown>
+  ![MQTT Explorer Connection Setup](../assets/screenshots/xpf-iot-mqtt-explorer-test.webp)
+  <figcaption>Connection setup showing XPF MQTT configuration (left) and MQTT Explorer (right). Both must use the same: (1) Host/Broker address and (2) Port number for successful communication</figcaption>
+</figure>
+
+**MQTT Explorer Setup:**
+
+1. **Download and Install MQTT Explorer**
+      - Visit: [MQTT Explorer Official Site](http://mqtt-explorer.com/)
+      - Download the installer for Windows
+      - Install and launch the application
+
+2. **Connect MQTT Explorer to the Same Broker**
+      - **Name**: `HiveMQ Public Test` (or any descriptive name)
+      - **Host**: `broker.hivemq.com`
+      - **Port**: `1883`
+      - **Protocol**: `mqtt://`
+      - Click "Connect"
+
+3. **Monitor XPF Message Publishing**
+      - In MQTT Explorer, navigate to your topic tree (e.g., `xpf/test/data`)
+      - Start publishing from XPF
+      - Verify messages appear in MQTT Explorer in real-time
+      - Check message content and timestamps
+
+4. **Test Bidirectional Communication**
+      - Use MQTT Explorer to publish a test message to your subscribe topic
+      - Verify XPF receives the message
+      - Confirm message format and content in XPF
+
+!!! success "Validation Checklist"
+    **Your MQTT connection is working correctly when:**
+    
+    - MQTT Explorer shows "Connected" status
+    - Messages from XPF appear in MQTT Explorer
+    - Messages published from MQTT Explorer reach XPF
+    - Message timestamps are current
+    - JSON formatting is correct (if using structured data)
+
+*[Detailed configuration steps with screenshots will be added here]*
+
+*[MQTT Explorer validation screenshots will be added here]*
+
+---
+
 ## Overview
 
 The MQTT Add-on enables Modbus Monitor XPF to publish and subscribe to MQTT brokers for general IoT messaging, cloud integration, and distributed system communication. This add-on provides:
