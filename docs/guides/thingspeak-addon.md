@@ -373,7 +373,7 @@ ThingSpeak integrates with MATLAB for advanced analytics:
 
 This ThingSpeak Add-on is part of a growing ecosystem of XPF add-ons:
 
-- **MQTT Add-on**: General MQTT broker connectivity (separate from ThingSpeak)
+- **[MQTT Add-on](mqtt-addon.md)**: General MQTT broker connectivity for AWS IoT, Azure IoT, HiveMQ, and custom brokers
 
 
 ---
