@@ -10,7 +10,7 @@
 
 **Modbus Monitor XPF** is a versatile Windows application for facilitating communication between a Windows-based PC and Modbus Client or Server devices. It handles both Client (Master) and Server (Slave) operations and supports all common Modbus variants: TCP/IP, Serial RTU, Serial ASCII, and RTU/ASCII over TCP.
 
-![Modbus Monitor XPF Main Interface](../../assets/screenshots/xpf-main-interface.png){ .screenshot-shadow }
+![Modbus Monitor XPF Main Interface](../../assets/screenshots/xpf-main-interface.png){ .screenshot-shadow loading="lazy" }
 
 **One of the standout features** of Modbus Monitor XPF is its **dual functionality** - it encompasses both a Modbus Client and a Modbus Server **within a single application, running simultaneously**. This dual capability, combined with support for both Modbus Serial and Modbus TCP protocols, makes it an invaluable tool for various Modbus communication needs.
 
@@ -313,7 +313,7 @@ When you launch Modbus Monitor XPF for the first time, the **License window appe
     - **"Connection Error":** Activation requires internet connection - check firewall settings
     - **Key not working:** Ensure you're entering the key in the Activate dialog, not the Trial field
     
-    ![License Activation Window](../../assets/screenshots/xpf-license-window.webp){ .screenshot-shadow }
+    ![License Activation Window](../../assets/screenshots/xpf-license-window.webp){ .screenshot-shadow loading="lazy" }
     
     <!-- Additional screenshot needs:
          - xpf-license-dialog-annotated.png: Shows all buttons (Store, Shop, Activate, Load, Trial, Exit) with UID field and Copy button labeled
@@ -500,7 +500,7 @@ When you launch Modbus Monitor XPF for the first time, the **License window appe
 
 The main application window of Modbus Monitor XPF is organized into several key sections that work together to provide a comprehensive Modbus communication interface.
 
-![XPF Application Window with numbered annotations showing Quick Access Toolbar, Ribbon Tabs, Command Groups, Dialog Launcher, and Window Portal Area](../../assets/screenshots/xpf-application-window-annotated.png){ .screenshot-shadow }
+![XPF Application Window with numbered annotations showing Quick Access Toolbar, Ribbon Tabs, Command Groups, Dialog Launcher, and Window Portal Area](../../assets/screenshots/xpf-application-window-annotated.png){ .screenshot-shadow loading="lazy" }
 *Figure 3.1: Main application interface showing five key areas (1, 2, 3, 4, 5)*
 
 **Interface Component Structure:**
@@ -720,7 +720,7 @@ Customize the application theme to match your environment:
 
 The **Home Tab** contains the most frequently used commands for essential operations - everything you need for working with Modbus maps and monitoring points.
 
-![Home Tab Interface](../../assets/screenshots/xpf-home-tab.png)
+![Home Tab Interface](../../assets/screenshots/xpf-home-tab.png){ loading="lazy" }
 
 ##### File Group
 
@@ -745,7 +745,7 @@ The **Home Tab** contains the most frequently used commands for essential operat
 
 **Cloud-Based Modbus Maps** - View and Download Online Modbus Maps from either **(1) factory-released maps** by Modbus Monitor or **(2) community-uploaded maps** from users. Toggle the **Online** button (shown in table above) to activate this feature. **An internet connection is required** to use this feature.
 
-![Online Maps Interface](../../assets/screenshots/xpf-home-file-online.webp)
+![Online Maps Interface](../../assets/screenshots/xpf-home-file-online.webp){ loading="lazy" }
 *How to download pre-defined Modbus Map*
 
 ##### Clipboard Group
@@ -762,7 +762,7 @@ The **Home Tab** contains the most frequently used commands for essential operat
 
 The **Modbus Wizard** provides a streamlined interface for configuring monitor points without manually editing the table. Access it by clicking the **Dialog Launcher** (small arrow) in the Modbus Wizard group corner.
 
-![Modbus Wizard Dialog](../../assets/screenshots/xpf-modbus-wizard.webp){ .screenshot-shadow }
+![Modbus Wizard Dialog](../../assets/screenshots/xpf-modbus-wizard.webp){ .screenshot-shadow loading="lazy" }
 *Modbus Wizard configuration interface*
 
 **Configuration Fields:**
@@ -808,7 +808,7 @@ The **List Group** provides essential tools for managing your Monitor Points (al
 
 **Search and Filter Monitor Points** - Search Name and Address fields to quickly locate specific monitor points. Filter large lists by text search or Unit ID to focus on relevant registers during troubleshooting or configuration.
 
-![Filter Interface](../../assets/screenshots/xpf-home-filter.png){ .screenshot-shadow }
+![Filter Interface](../../assets/screenshots/xpf-home-filter.png){ .screenshot-shadow loading="lazy" }
 
 **Filter Components:**
 
@@ -827,13 +827,13 @@ The **List Group** provides essential tools for managing your Monitor Points (al
 
 Change the background colors of the Value cell based on the High, Low, and Nominal Limits. **Quickly validate the value from the Modbus device and test to see if it is within the valid range.**
 
-![Evaluate Settings](../../assets/screenshots/xpf-evaluate-limits.webp){ .screenshot-shadow }
+![Evaluate Settings](../../assets/screenshots/xpf-evaluate-limits.webp){ .screenshot-shadow loading="lazy" }
 
 ##### Log Group
 
 **Communication Monitoring and Logging** - View and record all Modbus communication traffic for troubleshooting. Filter errors, export logs to file, and timestamp all events for accurate diagnostics.
 
-![Log Group Interface](../../assets/screenshots/xpf-home-log.png){ .screenshot-shadow }
+![Log Group Interface](../../assets/screenshots/xpf-home-log.png){ .screenshot-shadow loading="lazy" }
 *Four key areas: 1 Log Group (Home Tab), 2 Options Tab, 3 Quick Access Header (3a-3h), 4 Log Window*
 
 **Complete Log Controls Reference:**
@@ -860,7 +860,7 @@ All log controls in one comprehensive table. Labels **1**, **2**, **3a-3h**, and
 
 **Client Mode Overview:** XPF operates as a Modbus Master (Client) when you want to read data from or write data to remote Modbus devices. In this mode, XPF initiates all communication by sending requests to Modbus Server devices (PLCs, drives, meters, sensors) and processes their responses.
 
-![Modbus Monitor XPF Client](../../assets/screenshots/xpf-client-tab.webp)
+![Modbus Monitor XPF Client](../../assets/screenshots/xpf-client-tab.webp){ loading="lazy" }
 
 ##### Client Tab Groups & Features
 
@@ -880,7 +880,7 @@ All log controls in one comprehensive table. Labels **1**, **2**, **3a-3h**, and
 
 **Server Mode Overview:** XPF operates as a Modbus Server (Slave) when you want to simulate Modbus devices or provide data to Modbus Client applications. In this mode, XPF responds to requests from Modbus Master devices (SCADA systems, HMIs, PLCs) by serving data from your configured monitor points.
 
-![Modbus Monitor XPF Server](../../assets/screenshots/xpf-server-tab.webp)
+![Modbus Monitor XPF Server](../../assets/screenshots/xpf-server-tab.webp){ loading="lazy" }
 
 ##### Server Tab Groups & Features
 
@@ -1313,7 +1313,7 @@ graph TB
 
 The **Modbus Wizard** provides a streamlined interface for configuring monitor points without manually editing the table. Access it by clicking the **Dialog Launcher** (small arrow) in the Modbus Wizard group corner.
 
-![Modbus Wizard Dialog](../../assets/screenshots/xpf-modbus-wizard.webp){ .screenshot-shadow }
+![Modbus Wizard Dialog](../../assets/screenshots/xpf-modbus-wizard.webp){ .screenshot-shadow loading="lazy" }
 *Modbus Wizard configuration interface*
 
 **Configuration Fields:**
@@ -1446,7 +1446,7 @@ The **List Group** provides essential tools for managing your Monitor Points (al
 
 **Search and Filter Monitor Points** - Search Name and Address fields to quickly locate specific monitor points. Filter large lists by text search or Unit ID to focus on relevant registers during troubleshooting or configuration.
 
-![Filter Interface](../../assets/screenshots/xpf-home-filter.png){ .screenshot-shadow }
+![Filter Interface](../../assets/screenshots/xpf-home-filter.png){ .screenshot-shadow loading="lazy" }
 
 **Filter Components:**
 
@@ -1503,7 +1503,7 @@ The **List Group** provides essential tools for managing your Monitor Points (al
 
 Change the background colors of the Value cell based on the High, Low, and Nominal Limits. **Quickly validate the value from the Modbus device and test to see if it is within the valid range.**
 
-![Evaluate Settings](../../assets/screenshots/xpf-evaluate-limits.webp){ .screenshot-shadow }
+![Evaluate Settings](../../assets/screenshots/xpf-evaluate-limits.webp){ .screenshot-shadow loading="lazy" }
 
 **Evaluate Filter Area**
 
@@ -1520,7 +1520,7 @@ Change the background colors of the Value cell based on the High, Low, and Nomin
 
 Fine-tune validation thresholds for individual monitor points. Each point can have custom limits and color coding independent of others in your list.
 
-![Evaluate Settings](../../assets/screenshots/xpf-home-evaluate.png)
+![Evaluate Settings](../../assets/screenshots/xpf-home-evaluate.png){ loading="lazy" }
 
 Click the **three dots (...)** button at the end of any monitor point row to open the Evaluate Limits dialog shown above.
 
@@ -1557,7 +1557,7 @@ Click the **three dots (...)** button at the end of any monitor point row to ope
 
 **Communication Monitoring and Logging** - View and record all Modbus communication traffic for troubleshooting. Filter errors, export logs to file, and timestamp all events for accurate diagnostics.
 
-![Log Group Interface](../../assets/screenshots/xpf-home-log.png){ .screenshot-shadow }
+![Log Group Interface](../../assets/screenshots/xpf-home-log.png){ .screenshot-shadow loading="lazy" }
 *Four key areas: 1 Log Group (Home Tab), 2 Options Tab, 3 Quick Access Header (3a-3h), 4 Log Window*
 
 **Complete Log Controls Reference:**
@@ -1805,7 +1805,7 @@ graph TB
 
 **Cloud-Based Modbus Maps** - View and Download Online Modbus Maps from either **(1) factory-released maps** by Modbus Monitor or **(2) community-uploaded maps** from users. Toggle the **Online** button in the File group located in the Home tab to activate this feature. **An internet connection is required** to use this feature.
 
-![Online Maps Interface](../../assets/screenshots/xpf-home-file-online.webp)
+![Online Maps Interface](../../assets/screenshots/xpf-home-file-online.webp){ loading="lazy" }
 *How to download pre-defined Modbus Map*
 
 **Interface Components:**
@@ -1876,7 +1876,7 @@ Users can upload their own custom Modbus Maps to share with the community or sto
 - **Real-Time Charting** - Visualize data trends and patterns over time
 - **Auto Save & Restore** - Automatic data logging and value restoration to devices
 
-![Modbus Monitor XPF Client](../../assets/screenshots/xpf-client-tab.webp)
+![Modbus Monitor XPF Client](../../assets/screenshots/xpf-client-tab.webp){ loading="lazy" }
 
 ### Client Tab Groups & Features
 
@@ -2148,7 +2148,7 @@ Control how XPF handles value changes in the Value column:
 
 **Configure individual monitor points for charting:**
 
-![Chart Configuration Dialog](../../assets/screenshots/xpf-client-chart-configuration.webp)
+![Chart Configuration Dialog](../../assets/screenshots/xpf-client-chart-configuration.webp){ loading="lazy" }
 *Monitor Point chart configuration options*
 
 1. **Client**:
@@ -2206,7 +2206,7 @@ Refer to [Modbus Client Operations](#modbus-client-operations) on locations of C
     - Chart pops out as floting winow
     - All chart-enabled points appear as trending lines
 
-![Modbus Monitor XPF Chart](../../assets/screenshots/xpf-client-charts.webp)
+![Modbus Monitor XPF Chart](../../assets/screenshots/xpf-client-charts.webp){ loading="lazy" }
 *Complete chart window showing dual-axis trending*
 
 **Complete Chart Interface Reference**:
@@ -2688,7 +2688,7 @@ Restore solves a critical industrial automation challenge: **efficiently configu
 
 ### Client Poll - Controls
 
-![Modbus Monitor XPF Client](../../assets/screenshots/xpf-client-tab.webp)
+![Modbus Monitor XPF Client](../../assets/screenshots/xpf-client-tab.webp){ loading="lazy" }
 
     
 | Control | Function | Usage |
@@ -2705,7 +2705,7 @@ Restore solves a critical industrial automation challenge: **efficiently configu
 
 **Server Mode Overview:** XPF operates as a Modbus Server (Slave) when you want to simulate Modbus devices or provide data to Modbus Client applications. In this mode, XPF responds to requests from Modbus Master devices (SCADA systems, HMIs, PLCs) by serving data from your configured monitor points. This is invaluable for development, testing, and device simulation without requiring physical hardware.
 
-![Modbus Monitor XPF Server](../../assets/screenshots/xpf-server-tab.webp)
+![Modbus Monitor XPF Server](../../assets/screenshots/xpf-server-tab.webp){ loading="lazy" }
 
 **Supported Server Interfaces & Protocols:**
 
