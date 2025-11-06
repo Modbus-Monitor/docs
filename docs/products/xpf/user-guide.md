@@ -1504,7 +1504,7 @@ Change the background colors of the Value cell based on the High, Low, and Nomin
 
 ![Evaluate Settings](../../assets/screenshots/xpf-evaluate-limits.webp){ .screenshot-shadow }
 
-#### Evaluate Filter Area
+**Evaluate Filter Area**
 
 | Button | Function | Description |
 |--------|----------|-------------|
@@ -1515,7 +1515,7 @@ Change the background colors of the Value cell based on the High, Low, and Nomin
 | **Auto** | Automatic update | **Automatically update** the UI with selected filters after each scan |
 | **Off** | Toggle evaluate mode | Toggle Evaluate (Test) Mode **on or off** for all monitoring points |
 
-#### Evaluate Limits Settings (Per Monitor Point)
+**Evaluate Limits Settings (Per Monitor Point)**
 
 Fine-tune validation thresholds for individual monitor points. Each point can have custom limits and color coding independent of others in your list.
 
