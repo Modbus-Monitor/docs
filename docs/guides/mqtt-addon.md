@@ -1,5 +1,5 @@
 !!! note "Navigation"
-    **📚 [Documentation Home](../../) → [XPF User Guide](../products/xpf/user-guide.md) → MQTT Add-on**
+    **[Documentation Home](../../) > [XPF User Guide](../products/xpf/user-guide.md) > MQTT Add-on**
 
 # MQTT Add-on
 
@@ -19,6 +19,83 @@ The MQTT Add-on enables Modbus Monitor XPF to publish and subscribe to MQTT brok
 
 !!! info "Add-on vs Core Features"
     **MQTT Add-on** provides general MQTT messaging capabilities for any broker, while **ThingSpeak Add-on** is specifically designed for ThingSpeak cloud platform integration with dedicated features for channel management.
+
+## XPF's Revolutionary MQTT Capabilities
+
+**Modbus Monitor XPF is the only tool that provides complete bidirectional MQTT integration in both Client and Server modes** - eliminating the need for multiple software tools and dramatically simplifying MQTT development and deployment.
+
+### Unique Bidirectional Architecture
+
+!!! success "Industry-First Capabilities"
+    **XPF combines Publisher + Subscriber + MQTT Test Tools in one application:**
+    
+    **Publisher Mode (Client Mode Active)**
+    - XPF polls Modbus devices and publishes data to MQTT broker
+    - Perfect for: Sending sensor data, status updates, alarms to cloud
+    
+    **Subscriber Mode (Server Mode Active)**  
+    - XPF receives MQTT messages and writes values to Modbus devices
+    - Perfect for: Remote setpoint changes, control commands, configuration updates
+    
+    **Built-in MQTT Test Tools**
+    - Integrated MQTT client for testing and debugging
+    - No need for separate test applications
+    - Save hours of setup time and eliminate tool confusion
+
+### Why This is Revolutionary
+
+| Traditional Approach | XPF Integrated Approach | Time Savings |
+|---------------------|-------------------------|--------------|
+| **Modbus Client Software** | **XPF Client Mode** | |
+| + **Separate MQTT Publisher** | (Built into XPF) | **60-80% faster** |
+| + **Separate MQTT Subscriber** | **XPF Server Mode** | |
+| + **MQTT Test Client** | **Built-in Test Tools** | |
+| + **Integration Coding** | (No coding needed) | |
+| = 4+ separate tools | = **One XPF License** | **75% cost reduction** |
+
+### Bidirectional Use Cases
+
+**Industrial Automation (Both Directions)**
+```yaml
+Uplink (XPF Client to MQTT):
+  - Temperature sensors to Cloud dashboard
+  - Production counts to Analytics platform  
+  - Alarm states to Notification system
+
+Downlink (MQTT to XPF Server):
+  - Setpoint changes to PLC registers
+  - Recipe updates to Process controllers
+  - Emergency stops to Safety systems
+```
+
+**IoT Edge Gateway (Complete Solution)**
+```yaml
+Edge Processing:
+  - Collect from multiple Modbus devices (Client mode)
+  - Aggregate and process data locally  
+  - Publish summaries to cloud (Publisher)
+  - Receive cloud commands (Subscriber)
+  - Distribute commands to devices (Server mode)
+```
+
+**Development & Testing (Integrated Tools)**
+```yaml
+Development Workflow:
+  1. Use XPF Server mode to simulate devices
+  2. Test MQTT publishing with built-in tools
+  3. Verify cloud connectivity with integrated client
+  4. Deploy same XPF configuration to production
+```
+
+!!! tip "No Other Tool Does This"
+    **XPF eliminates the complexity of:**
+    - Learning multiple MQTT client applications
+    - Integrating separate publisher/subscriber tools  
+    - Writing custom code to bridge Modbus and MQTT
+    - Managing multiple software licenses and configurations
+    - Debugging communication between separate tools
+
+This guide will show you how to leverage both directions plus the integrated test tools for complete MQTT solutions.
 
 ## Quick Start
 
@@ -78,8 +155,8 @@ Configure the MQTT Add-on to connect to your chosen MQTT broker:
 ### XPF MQTT Setup
 
 1. **Open MQTT Add-on Settings**
-   - Navigate to **Add-ons** → **MQTT** in XPF
-   - Or go to **Client** tab → **MQTT** group
+   - Navigate to **Add-ons** > **MQTT** in XPF
+   - Or go to **Client** tab > **MQTT** group
 
 2. **Enter Broker Connection Details**
    - **Broker Host**: Your MQTT broker hostname or IP address
@@ -111,7 +188,7 @@ Configure the MQTT Add-on to connect to your chosen MQTT broker:
 
 Configure topic patterns for publishing and subscribing:
 
-**Publishing Topics (XPF → Broker):**
+**Publishing Topics (XPF to Broker):**
 
 | Topic Pattern | Example | Data Source | Description |
 |---------------|---------|-------------|-------------|
@@ -119,7 +196,7 @@ Configure topic patterns for publishing and subscribing:
 | **Dynamic Topics** | `{UnitID}/holding/{Address}` | Any Monitor Point | Variable substitution |
 | **JSON Topics** | `data/json` | Multiple Points | Structured JSON payload |
 
-**Subscription Topics (Broker → XPF):**
+**Subscription Topics (Broker to XPF):**
 
 | Topic Pattern | Example | Target | Description |
 |---------------|---------|--------|-------------|
@@ -154,24 +231,24 @@ Configure topic patterns for publishing and subscribing:
 **Industrial Process Monitoring:**
 ```yaml
 Publishing Topics:
-  - "plant/line1/temperature" → Temperature sensor data
-  - "plant/line1/pressure" → Pressure measurement
-  - "plant/line1/flow" → Flow rate data
+  - "plant/line1/temperature" - Temperature sensor data
+  - "plant/line1/pressure" - Pressure measurement
+  - "plant/line1/flow" - Flow rate data
 
 Subscription Topics:
-  - "plant/line1/setpoints/+" → Receive setpoint changes
-  - "commands/emergency/#" → Emergency stop commands
+  - "plant/line1/setpoints/+" - Receive setpoint changes
+  - "commands/emergency/#" - Emergency stop commands
 ```
 
 **Multi-Device Installation:**
 ```yaml
 Publishing Topics:
-  - "devices/{UnitID}/data/{Address}" → Dynamic device data
-  - "status/devices" → JSON status summary
+  - "devices/{UnitID}/data/{Address}" - Dynamic device data
+  - "status/devices" - JSON status summary
 
 Subscription Topics:
-  - "config/devices/{UnitID}/+" → Device-specific configuration
-  - "commands/broadcast" → System-wide commands
+  - "config/devices/{UnitID}/+" - Device-specific configuration
+  - "commands/broadcast" - System-wide commands
 ```
 
 ## Step 3: Message Mapping
@@ -183,7 +260,7 @@ Subscription Topics:
 | Message Format | Content Example | Use Case |
 |----------------|-----------------|----------|
 | **Raw Value** | `25.4` | Simple numeric publishing |
-| **JSON Object** | `{"value": 25.4, "timestamp": "2025-11-05T14:30:15Z", "unit": "°C"}` | Structured data with metadata |
+| **JSON Object** | `{"value": 25.4, "timestamp": "2025-11-05T14:30:15Z", "unit": "C"}` | Structured data with metadata |
 | **Custom JSON** | `{"temperature": 25.4, "status": "normal"}` | Application-specific format |
 
 ### Configure Message Mappings
@@ -240,6 +317,328 @@ Subscription Topics:
 - [ ] **Subscribed topics** update monitor point values
 - [ ] **Message timing** matches configured intervals
 - [ ] **No error messages** in XPF communication log
+
+## Testing and Verification Tools
+
+!!! info "Documentation Approach"
+    **This guide uses external tools (MQTT Explorer) for verification screenshots to provide clear visual separation between:**
+    - **XPF** = Publisher/Subscriber (the main application)  
+    - **MQTT Explorer** = External verification tool (for documentation clarity)
+    
+    **In real-world usage, you can use XPF's built-in test tools exclusively** - no external applications needed!
+
+### XPF's Built-in MQTT Test Tools
+
+**XPF includes integrated MQTT testing capabilities** that save hours of setup time and eliminate the need for separate test applications:
+
+!!! success "Built-in Test Features"
+    **Integrated MQTT Client**
+    - Test broker connectivity without external tools
+    - Send test messages to verify subscription handling  
+    - Monitor message flow directly in XPF console
+    - Debug topic mapping and message formatting issues
+    
+    **Real-time Message Monitoring**
+    - View live MQTT traffic (TX/RX counters)
+    - Console logging with timestamped message details
+    - Connection status indicators and error reporting
+    - Quality of Service (QoS) confirmation tracking
+    
+    **Rapid Development Workflow**
+    - Configure > Test > Debug > Deploy in single application
+    - No context switching between multiple tools
+    - Immediate feedback on configuration changes
+    - Built-in message validation and formatting checks
+
+### External Verification Tools (For Documentation Clarity)
+
+**In this guide, we use MQTT Explorer as external verification** to clearly show the separation between XPF (publisher/subscriber) and verification tool:
+
+| Tool Role | Application | Purpose in Guide |
+|-----------|-------------|------------------|
+| **MQTT Publisher** | **XPF (Client Mode)** | Sending Modbus data to broker |
+| **MQTT Subscriber** | **XPF (Server Mode)** | Receiving commands from broker |
+| **Verification Tool** | **MQTT Explorer** | Visual confirmation of message flow |
+
+**Why MQTT Explorer for Documentation:**
+- **Visual Clarity**: Tree view shows topic structure clearly
+- **Popular & Free**: Most widely used MQTT test client  
+- **Clean Interface**: Perfect for screenshots and tutorials
+- **Cross-Platform**: Windows/Mac/Linux compatibility
+- **No Registration**: Immediate download and use
+
+**MQTT Explorer TLS Support:**
+- **Basic TLS/SSL**: Supports standard TLS connections (port 8883)
+- **CA Certificates**: Can validate broker certificates
+- **Username/Password over TLS**: Works with HiveMQ Cloud
+- **Client Certificates**: No mutual TLS support
+- **Advanced PKI**: Limited certificate management
+
+!!! note "For Advanced TLS"
+    For client certificate examples, we'll use **HiveMQ WebSocket Client** (built into broker dashboard) or **XPF's built-in tools**, as MQTT Explorer doesn't support mutual TLS authentication.
+
+!!! tip "Real-World Usage"
+    **In production, you can use XPF's built-in test tools exclusively** - no external applications needed! We use MQTT Explorer in this guide only to provide clear visual separation for learning purposes.
+
+## Complete Setup Examples
+
+### Example 1: HiveMQ Public Broker (Basic Setup)
+
+**Perfect for testing and learning** - No registration required, completely free.
+
+![XPF MQTT Configuration - Basic Setup](../../assets/screenshots/xpf-mqtt-basic-setup.webp)
+
+#### Step 1: Configure Basic Connection
+
+1. **Open XPF MQTT Add-on Settings**
+   - Navigate to **Add-ons** > **MQTT Configuration**
+   - Or use **Client Tab** > **MQTT Group** > **Settings**
+
+2. **Enter HiveMQ Public Broker Details**
+   ```yaml
+   Broker Host: broker.hivemq.com
+   Port: 1883
+   Client ID: XPF-YourName-001    # Make this unique!
+   Username: (leave empty)
+   Password: (leave empty)
+   TLS/SSL: Unchecked
+   Keep Alive: 60
+   ```
+
+3. **Configure Basic Topics**
+   ```yaml
+   Publishing Topic: test/xpf/yourname/data
+   Subscription Topic: test/xpf/yourname/commands
+   Message Format: JSON Standard
+   QoS Level: 1
+   ```
+
+#### Step 2: Test the Connection
+
+1. **In XPF**: Click **Connect** - Status should show "Connected"
+
+2. **Set up MQTT Explorer** (external verification tool):
+   - Download [MQTT Explorer](https://mqtt-explorer.com/) (free)
+   - In MQTT Explorer: Connect to `broker.hivemq.com:1883`
+   - Subscribe to your topic: `test/xpf/yourname/data`
+
+![MQTT Explorer Setup](../../assets/screenshots/mqtt-explorer-setup.webp)
+
+#### Step 3: Verify Message Flow
+
+1. **In XPF**: Start Modbus polling - XPF publishes data to broker
+
+2. **In MQTT Explorer**: You should see incoming messages like:
+   ```json
+   {
+     "value": 25.4,
+     "timestamp": "2025-11-05T14:30:15Z",
+     "address": "40001",
+     "unit": "°C"
+   }
+   ```
+
+!!! success "Basic Setup Complete!"
+    You now have XPF publishing to MQTT! This setup is perfect for testing but **not secure for production**.
+
+#### Alternative: Using XPF's Built-in Test Tools
+
+**Instead of MQTT Explorer, you can verify everything using XPF's integrated tools:**
+
+!!! tip "XPF-Only Verification (No External Tools Needed)"
+    **1. Check Connection Status**
+    - XPF Status: Look for "Connected" indicator
+    - TX Counter: Should increment as data is published
+    
+    **2. Use XPF's Built-in MQTT Console**
+    - Open **MQTT Console** in XPF
+    - Enable **Debug Logging** 
+    - Watch real-time TX/RX message flow
+    
+    **3. Test Bidirectional Communication**
+    - **Publisher Test**: XPF Client mode publishes to broker
+    - **Subscriber Test**: Switch to XPF Server mode receives from broker
+    - **Built-in Test Messages**: Use XPF's test message sender
+    
+    This eliminates the need for any external MQTT tools!
+
+### Example 2: HiveMQ Cloud with TLS (Production Setup)
+
+**Recommended for production** - Secure, reliable, free tier available.
+
+![XPF MQTT Configuration - TLS Setup](../../assets/screenshots/xpf-mqtt-tls-setup.webp)
+
+#### Step 1: Set Up HiveMQ Cloud Account
+
+1. **Create Free Account**
+   - Go to [HiveMQ Cloud](https://www.hivemq.com/cloud/)
+   - Click **"Get Started Free"**
+   - Create account (no credit card required)
+
+2. **Create Cluster**
+   - Click **"Create Cluster"**
+   - Select **"Free"** plan (100 connections)
+   - Choose region closest to your location
+   - Wait 2-3 minutes for cluster creation
+
+3. **Get Connection Details**
+   - Click your cluster name
+   - Note the **Cluster URL** (e.g., `abc123def.s2.eu.hivemq.cloud`)
+   - Click **"Access Management"** > **"Add Credentials"**
+   - Create username/password (save these!)
+
+![HiveMQ Cloud Cluster Details](../../assets/screenshots/hivemq-cloud-cluster.webp)
+
+#### Step 2: Configure TLS Connection in XPF
+
+1. **Open XPF MQTT Settings**
+   - **Broker Host**: `your-cluster.s2.eu.hivemq.cloud` (from Step 1)
+   - **Port**: `8883` (TLS port)
+   - **Client ID**: `XPF-Plant1-Device001` (unique identifier)
+   - **Username**: (from HiveMQ credentials)
+   - **Password**: (from HiveMQ credentials)
+
+2. **Enable TLS Security**
+   - **Check** **TLS/SSL** checkbox
+   - **CA Certificate**: **Auto-detect** (HiveMQ uses standard certificates)
+   - **Client Certificate**: Leave empty (username/password auth)
+   - **Verify Hostname**: Checked
+
+![XPF TLS Configuration](../../assets/screenshots/xpf-mqtt-tls-config.webp)
+
+#### Step 3: Configure Production Topics
+
+```yaml
+Publishing Topics:
+  - "factory/line1/plc/{Address}" - Individual register data
+  - "factory/line1/status" - JSON summary every 30 seconds
+  - "factory/line1/alarms" - Alert messages only
+
+Subscription Topics:
+  - "factory/line1/setpoints/+" - Receive setpoint changes
+  - "factory/line1/commands/emergency" - Emergency stop commands
+```
+
+#### Step 4: Test Secure Connection
+
+1. **Click Connect** - Should show **"Connected (TLS)"**
+2. **Verify in HiveMQ Cloud Console**:
+   - Go to your cluster dashboard
+   - Click **"Client Details"**
+   - Should see your Client ID connected
+
+![HiveMQ Cloud Connected Clients](../../assets/screenshots/hivemq-cloud-clients.webp)
+
+#### Step 5: Verify Encrypted Communication
+
+**Option A: MQTT Explorer (Basic TLS)**
+1. **Configure MQTT Explorer for TLS**:
+   - Host: `your-cluster.s2.eu.hivemq.cloud`
+   - Port: `8883`
+   - Protocol: `mqtts://` (TLS)
+   - Username/Password: (your HiveMQ credentials)
+   - Subscribe to: `factory/line1/plc/+`
+
+**Option B: HiveMQ WebSocket Client (Recommended for TLS)**
+1. **Use Built-in WebSocket Client**:
+   - In HiveMQ cluster dashboard, click **"Try out Websocket Client"**
+   - Automatically uses secure connection (WSS)
+   - Subscribe to your topics: `factory/line1/plc/+`
+   - You should see encrypted data flowing
+
+![HiveMQ WebSocket Client](../../assets/screenshots/hivemq-websocket-client.webp)
+
+2. **Monitor XPF Communication Log**:
+   - Messages show **"Published (TLS)"**
+   - No certificate errors
+   - Connection remains stable
+
+!!! success "Production Setup Complete!"
+    You now have **secure, encrypted MQTT** communication suitable for production environments!
+
+### Example 3: Advanced TLS with Client Certificates
+
+**For high-security environments** requiring mutual TLS authentication.
+
+#### When to Use Client Certificates
+
+- **Industrial environments** with strict security policies
+- **Multi-tenant brokers** requiring device authentication
+- **Compliance requirements** (ISO 27001, IEC 62443)
+- **Zero-trust networks** where identity verification is mandatory
+
+#### Step 1: Generate Client Certificates
+
+**Option A: Use OpenSSL (Self-Signed)**
+```bash
+# Generate private key
+openssl genpkey -algorithm RSA -out client-key.pem -pkcs8
+
+# Generate certificate signing request
+openssl req -new -key client-key.pem -out client.csr \
+  -subj "/CN=XPF-Plant1-Device001/O=YourCompany/C=US"
+
+# Generate self-signed certificate
+openssl x509 -req -in client.csr -signkey client-key.pem \
+  -out client-cert.pem -days 365
+```
+
+**Option B: Use Your PKI/CA System**
+- Generate certificate through your organization's PKI
+- Ensure certificate includes **Client Authentication** key usage
+- Common Name should match your device identifier
+
+#### Step 2: Convert to PFX Format (Windows)
+
+XPF requires PFX format for client certificates:
+
+```bash
+# Combine certificate and private key into PFX
+openssl pkcs12 -export -out client.pfx \
+  -inkey client-key.pem -in client-cert.pem \
+  -name "XPF-Plant1-Device001"
+# Enter export password when prompted
+```
+
+#### Step 3: Configure XPF with Client Certificate
+
+![XPF Client Certificate Configuration](../../assets/screenshots/xpf-mqtt-client-cert.webp)
+
+1. **TLS Configuration**:
+   - **TLS/SSL**: Checked
+   - **CA Certificate**: `ca.crt` (broker's CA certificate)
+   - **Client Certificate**: `client.pfx` (your device certificate)
+   - **Certificate Password**: (PFX password from Step 2)
+
+2. **Broker Configuration**:
+   ```yaml
+   Broker Host: secure-broker.yourcompany.com
+   Port: 8883
+   Client ID: XPF-Plant1-Device001  # Must match certificate CN
+   Username: (may be required depending on broker)
+   Password: (may be required depending on broker)
+   ```
+
+#### Step 4: Verify Mutual TLS
+
+1. **Connection Log Should Show**:
+   ```
+   [INFO] TLS Handshake successful
+   [INFO] Client certificate presented
+   [INFO] Mutual authentication completed
+   [INFO] Connected to secure-broker.yourcompany.com:8883
+   ```
+
+2. **Broker Logs Should Confirm**:
+   - Client certificate validation successful
+   - Device authenticated via certificate
+   - Connection authorized for configured topics
+
+!!! warning "Certificate Management"
+    - **Monitor expiration dates** - Set calendar reminders
+    - **Secure private keys** - Store PFX files securely
+    - **Test certificate renewal** before expiration
+    - **Backup certificates** in secure location
 
 ## Advanced Configuration
 
@@ -374,9 +773,9 @@ Topics: User-defined structure
 **Configuration**:
 ```yaml
 Publishing Topics:
-  - "factory/line-{UnitID}/temperature" → Temperature sensors
-  - "factory/line-{UnitID}/pressure" → Pressure transmitters  
-  - "factory/summary/json" → Combined status JSON
+  - "factory/line-{UnitID}/temperature" - Temperature sensors
+  - "factory/line-{UnitID}/pressure" - Pressure transmitters  
+  - "factory/summary/json" - Combined status JSON
 
 Message Format: JSON with timestamp and metadata
 QoS: 1 (at least once delivery)
@@ -390,12 +789,12 @@ Retain: Enabled for status messages
 **Configuration**:
 ```yaml
 Subscription Topics:
-  - "control/setpoints/+" → Individual setpoint changes
-  - "commands/emergency" → Emergency shutdown commands
+  - "control/setpoints/+" - Individual setpoint changes
+  - "commands/emergency" - Emergency shutdown commands
 
 Publishing Topics:
-  - "status/ack" → Command acknowledgments
-  - "alarms/critical" → Critical alarm notifications
+  - "status/ack" - Command acknowledgments
+  - "alarms/critical" - Critical alarm notifications
 ```
 
 ### Edge-to-Cloud Integration
@@ -445,7 +844,7 @@ This MQTT Add-on is part of a growing ecosystem of XPF add-ons:
 ## Navigation
 
 !!! tip "Return to Main Guide"
-    **🔙 [← Back to XPF User Guide](../products/xpf/user-guide.md)**
+    **[Back to XPF User Guide](../products/xpf/user-guide.md)**
     
     **Related Sections:**
     - [Monitor Points Configuration](../products/xpf/user-guide.md#7-monitor-points-configuration) - Configure data sources
