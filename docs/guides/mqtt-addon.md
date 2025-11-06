@@ -6,8 +6,8 @@
 **General-purpose messaging and IoT connectivity add-on for Modbus Monitor XPF**
 
 <figure markdown>
-  ![XPF MQTT Configuration Interface](../assets/screenshots/xpf-iot-mqtt.webp)
-  <figcaption>XPF MQTT Configuration showing connection to public broker </figcaption>
+  ![XPF MQTT Configuration Interface](../assets/screenshots/xpf-iot-mqtt.webp){ loading="lazy" }
+  <figcaption style="font-size: 0.9em; color: #666;">XPF MQTT Configuration showing connection to public broker</figcaption>
 </figure>
 
 ## Quick Start: Connect to Public MQTT Brokers
@@ -133,11 +133,11 @@ This section provides a complete walkthrough for connecting XPF to an MQTT broke
 To verify that your XPF MQTT connection is working correctly, use **MQTT Explorer** - a free desktop application that provides a visual interface for monitoring MQTT traffic.
 
 <figure markdown>
-  ![MQTT Explorer Connection Setup](../assets/screenshots/xpf-iot-mqtt-explorer-test.webp)
-  <figcaption>Connection setup showing XPF MQTT configuration (left) and MQTT Explorer (right). Both must use the same: (1) Host/Broker address and (2) Port number for successful communication</figcaption>
+  ![MQTT Explorer Connection Setup](../assets/screenshots/xpf-iot-mqtt-explorer-test.webp){ loading="lazy" }
+  <figcaption style="font-size: 0.9em; color: #666;">Connection setup showing XPF MQTT configuration (left) and MQTT Explorer (right). Both must use the same: (1) Host/Broker address and (2) Port number for successful communication</figcaption>
 </figure>
 
-**MQTT Explorer Setup:**
+#### Step 1: Configure MQTT Explorer
 
 1. **Download and Install MQTT Explorer**
       - Visit: [MQTT Explorer Official Site](http://mqtt-explorer.com/)
@@ -150,17 +150,48 @@ To verify that your XPF MQTT connection is working correctly, use **MQTT Explore
       - **Port**: `1883`
       - **Protocol**: `mqtt://`
       - Click "Connect"
+      - MQTT Explorer shows **Connected** status
 
-3. **Monitor XPF Message Publishing**
+3. **Prepare for Message Monitoring**
       - In MQTT Explorer, navigate to your topic tree (e.g., `xpf/test/data`)
-      - Start publishing from XPF
-      - Verify messages appear in MQTT Explorer in real-time
-      - Check message content and timestamps
+      - Leave MQTT Explorer running to monitor incoming messages
+      - Position windows so you can see both XPF and MQTT Explorer
+
+#### Step 2: Start Modbus Monitor XPF
+
+1. **Enable Communication Logging** to see detailed MQTT activity
+      - In XPF, go to **Home Tab** > **Log** > **Show** 
+      - Click **Start** to begin logging
+      - **For detailed logging setup**: See [Communication Logging](../products/xpf/user-guide.md#log-group) in the XPF User Guide
+
+2. **Start MQTT Communication**
+      - Click the **Start** button in XPF's main toolbar
+      - Verify connection success by checking:
+        - XPF displays "Connected" status
+        - MQTT icon changes to green (connected state)
+        - Watch the Communication Log for MQTT connection messages:
+          ```
+          04:19:08:614000,MQTT Start/Stop Toggle
+          04:19:09:379150,Connected to MQTT Broker
+          ```
+
+        <figure markdown>
+          ![MQTT Connected](../assets/screenshots/xpf-iot-mqtt-connected.webp){ width="800" loading="lazy" }
+          <figcaption style="font-size: 0.9em; color: #666;">
+            Connected state showing MQTT Explorer (left) and XPF with successful MQTT connection (right). Green connected status visible in both applications confirming successful broker communication
+          </figcaption>
+        </figure>
+
+3. **Monitor Message Publishing**
+      - XPF begins publishing monitor point data to MQTT topics
+      - In MQTT Explorer, verify messages appear in real-time under your topic tree
+      - Check message content, timestamps, and publishing frequency
+      - Communication Log shows published message details
 
 4. **Test Bidirectional Communication**
       - Use MQTT Explorer to publish a test message to your subscribe topic
-      - Verify XPF receives the message
-      - Confirm message format and content in XPF
+      - Verify XPF receives the message (check Communication Log)
+      - Confirm message format and content updates in XPF monitor points
 
 !!! success "Validation Checklist"
     **Your MQTT connection is working correctly when:**
@@ -559,7 +590,7 @@ Subscription Topics:
 
 **Perfect for testing and learning** - No registration required, completely free.
 
-![XPF MQTT Configuration - Basic Setup](../../assets/screenshots/xpf-mqtt-basic-setup.webp)
+![XPF MQTT Configuration - Basic Setup](../../assets/screenshots/xpf-mqtt-basic-setup.webp){ loading="lazy" }
 
 #### Step 1: Configure Basic Connection
 
@@ -595,7 +626,7 @@ Subscription Topics:
    - In MQTT Explorer: Connect to `broker.hivemq.com:1883`
    - Subscribe to your topic: `test/xpf/yourname/data`
 
-![MQTT Explorer Setup](../../assets/screenshots/mqtt-explorer-setup.webp)
+![MQTT Explorer Setup](../../assets/screenshots/mqtt-explorer-setup.webp){ loading="lazy" }
 
 #### Step 3: Verify Message Flow
 
@@ -639,7 +670,7 @@ Subscription Topics:
 
 **Recommended for production** - Secure, reliable, free tier available.
 
-![XPF MQTT Configuration - TLS Setup](../../assets/screenshots/xpf-mqtt-tls-setup.webp)
+![XPF MQTT Configuration - TLS Setup](../../assets/screenshots/xpf-mqtt-tls-setup.webp){ loading="lazy" }
 
 #### Step 1: Set Up HiveMQ Cloud Account
 
@@ -660,7 +691,7 @@ Subscription Topics:
    - Click **"Access Management"** > **"Add Credentials"**
    - Create username/password (save these!)
 
-![HiveMQ Cloud Cluster Details](../../assets/screenshots/hivemq-cloud-cluster.webp)
+![HiveMQ Cloud Cluster Details](../../assets/screenshots/hivemq-cloud-cluster.webp){ loading="lazy" }
 
 #### Step 2: Configure TLS Connection in XPF
 
@@ -677,7 +708,7 @@ Subscription Topics:
    - **Client Certificate**: Leave empty (username/password auth)
    - **Verify Hostname**: Checked
 
-![XPF TLS Configuration](../../assets/screenshots/xpf-mqtt-tls-config.webp)
+![XPF TLS Configuration](../../assets/screenshots/xpf-mqtt-tls-config.webp){ loading="lazy" }
 
 #### Step 3: Configure Production Topics
 
@@ -700,7 +731,7 @@ Subscription Topics:
    - Click **"Client Details"**
    - Should see your Client ID connected
 
-![HiveMQ Cloud Connected Clients](../../assets/screenshots/hivemq-cloud-clients.webp)
+![HiveMQ Cloud Connected Clients](../../assets/screenshots/hivemq-cloud-clients.webp){ loading="lazy" }
 
 #### Step 5: Verify Encrypted Communication
 
@@ -719,7 +750,7 @@ Subscription Topics:
    - Subscribe to your topics: `factory/line1/plc/+`
    - You should see encrypted data flowing
 
-![HiveMQ WebSocket Client](../../assets/screenshots/hivemq-websocket-client.webp)
+![HiveMQ WebSocket Client](../../assets/screenshots/hivemq-websocket-client.webp){ loading="lazy" }
 
 2. **Monitor XPF Communication Log**:
    - Messages show **"Published (TLS)"**
@@ -775,7 +806,7 @@ openssl pkcs12 -export -out client.pfx \
 
 #### Step 3: Configure XPF with Client Certificate
 
-![XPF Client Certificate Configuration](../../assets/screenshots/xpf-mqtt-client-cert.webp)
+![XPF Client Certificate Configuration](../../assets/screenshots/xpf-mqtt-client-cert.webp){ loading="lazy" }
 
 1. **TLS Configuration**:
    - **TLS/SSL**: Checked
