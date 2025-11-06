@@ -895,15 +895,69 @@ All log controls in one comprehensive table. Labels **1**, **2**, **3a-3h**, and
 
 #### IoT Tab
 
-**IoT Integration Overview:** The IoT tab provides cloud connectivity features for logging Modbus data to cloud platforms and enabling remote monitoring capabilities.
+**IoT Tab Overview:** The IoT tab provides cloud connectivity features for logging Modbus data to cloud platforms and enabling remote monitoring capabilities. It contains both core MQTT functionality and access to specialized add-ons.
 
-**Key IoT Features:**
+**IoT Tab Groups:**
 
-| Group | Purpose | Key Features | Description |
-|-------|---------|--------------|-------------|
-| **ThingSpeak** | Cloud Logging | API Key, Channel ID, Field Mapping | Log monitor point values to ThingSpeak cloud platform for remote monitoring and analysis |
-| **Publish** | Data Publishing | Publish Controls, Auto-Publish Settings | Control when and how Modbus data is published to cloud platforms and IoT services |
-| **MQTT** | Messaging Protocol | Broker Configuration, Topic Publishing, Real-time Messaging | Publish Modbus data via MQTT for IoT device communication and cloud integration |
+| Group | Type | Purpose | Details |
+|-------|------|---------|---------|
+| **MQTT** | Requires License | Advanced MQTT messaging | Enhanced MQTT connectivity with enterprise features |
+| **ThingSpeak** | Requires License | ThingSpeak integration | ThingSpeak cloud logging with automatic field mapping |
+
+
+**Licensed Features in IoT Tab:**
+
+=== "MQTT Feature (Requires License)"
+
+    **Advanced MQTT connectivity with enhanced capabilities:**
+    
+    - Multi-broker support (simultaneous connections)
+    - Advanced security (TLS/SSL, client certificates)
+    - Complex topic mapping and dynamic generation
+    - Enterprise QoS management with persistence
+    - Pre-configured cloud templates (AWS IoT, Azure IoT, HiveMQ)
+    - Connection status monitoring and diagnostics
+    
+    **Use for:** Enterprise IoT deployments, multi-broker environments, advanced security requirements
+    
+    **License Required:** Purchase MQTT feature license to unlock full functionality
+    
+    **Setup Guide:** 📖 [Complete MQTT Feature Setup Guide](../../guides/mqtt-addon.md)
+
+=== "ThingSpeak Feature (Requires License)"
+
+    **Specialized ThingSpeak cloud platform integration:**
+    
+    - Automatic field mapping (Row 1→field1, Row 2→field2, etc.)
+    - ThingSpeak-specific API optimization
+    - Channel management and configuration
+    - Professional visualization and analytics
+    - MATLAB integration capabilities
+    - **Publish Group**: Publishing controls and settings integrated with ThingSpeak
+    
+    **Use for:** ThingSpeak cloud logging, automatic data visualization, professional dashboards
+    
+    **License Required:** Purchase ThingSpeak feature license to unlock full functionality
+    
+    **Setup Guide:** 📖 [Complete ThingSpeak Feature Setup Guide](../../guides/thingspeak-addon.md)
+
+**Choosing Your IoT Solution:**
+
+| Scenario | Recommended Feature | Reason |
+|----------|---------------------|--------|
+| **ThingSpeak cloud logging** | ThingSpeak Feature | Automatic field mapping, optimized for ThingSpeak platform |
+| **Multiple MQTT brokers** | MQTT Feature | Multi-broker support, flexible topic mapping |
+| **Enterprise IoT deployment** | MQTT Feature | Advanced security, persistence, enterprise features |
+| **AWS IoT / Azure IoT** | MQTT Feature | Pre-configured cloud templates |
+| **General MQTT messaging** | MQTT Feature | Professional MQTT connectivity with advanced features |
+| **Cloud analytics and visualization** | ThingSpeak Feature | Professional dashboards and MATLAB integration |
+
+**Quick Navigation:**
+
+- **MQTT Feature Setup**: [MQTT Feature Guide](../../guides/mqtt-addon.md) - Multi-broker connectivity and enterprise features
+- **ThingSpeak Feature Setup**: [ThingSpeak Feature Guide](../../guides/thingspeak-addon.md) - Cloud logging and visualization
+- **IoT Tab Configuration**: Use IoT Tab → MQTT/ThingSpeak Groups in ribbon for licensed feature access
+- **Feature Licensing**: Purchase feature licenses to unlock IoT Tab functionality
 
 #### Key Concepts
 
@@ -3858,42 +3912,43 @@ A: MQTT protocol supports up to 256MB per message, but practical limits depend o
 **Q: Can I use wildcards when publishing?**  
 A: No, wildcards (`+`, `#`) are only supported for subscriptions. Publishing requires a specific topic without wildcards.
 
-### Add-ons Overview
+### IoT Features Overview
 
-**XPF Add-ons extend the core Modbus functionality with specialized integrations and cloud connectivity.** Add-ons are separate purchasable components that integrate with XPF to provide specific platform connectivity, data logging, and IoT capabilities.
+**XPF IoT Features extend the core Modbus functionality with specialized IoT integrations and cloud connectivity.** These features are built into XPF but require separate license purchases to unlock full functionality for platform connectivity, data logging, and IoT capabilities.
 
-!!! info "Core vs Add-ons"
-    **Core Features** (included with XPF):
+!!! info "Core vs IoT Features"
+    **Core Features** (included with XPF base license):
     - Modbus TCP/RTU/ASCII communication
     - Monitor Points management and data visualization
-    - Built-in MQTT messaging protocol support for any broker
-    - Charts, logs, scanning, and device simulation
+    - Basic charting, logs, scanning, and device simulation
+    - Standard file import/export capabilities
     
-    **Add-ons** (separate purchase):
-    - **ThingSpeak Add-on**: Specialized ThingSpeak cloud platform integration
-    - **MQTT Add-on**: Advanced MQTT broker connectivity with enhanced features
+    **IoT Features** (require separate license purchase):
+    - **ThingSpeak Feature**: Specialized ThingSpeak cloud platform integration with Publish controls
+    - **MQTT Feature**: Advanced MQTT broker connectivity with enterprise features
     - Additional cloud platform integrations (future releases)
 
-### ThingSpeak Add-on (Cloud Logging)
+### ThingSpeak Feature (Cloud Logging)
 
-**ThingSpeak Add-on provides dedicated cloud logging and visualization capabilities.** This add-on is separate from general MQTT functionality and specifically designed for ThingSpeak platform integration with automatic field mapping.
+**ThingSpeak Feature provides dedicated cloud logging and visualization capabilities.** This feature requires a separate license and includes the ThingSpeak Group and Publish Group in the IoT Tab, specifically designed for ThingSpeak platform integration with automatic field mapping.
 
 **Key Benefits:**
 - **Automatic Cloud Logging**: Direct data transmission to ThingSpeak channels
 - **Automatic Field Mapping**: Row-based mapping (Row 1→field1, Row 2→field2, etc.)
+- **Integrated Publish Controls**: Publish Group provides publishing settings and controls
 - **Professional Dashboards**: Real-time visualization accessible from anywhere
 - **MATLAB Integration**: Advanced analytics and machine learning capabilities
 - **Historical Analysis**: Long-term data storage and trend analysis
 - **Alert Systems**: Automated notifications based on data thresholds
 
 **Quick Setup:**
-1. **Purchase/Enable**: ThingSpeak Add-on (free tier available)
-2. **Configure**: Create ThingSpeak channel and configure XPF add-on settings
-3. **Map Data**: Link monitor points to ThingSpeak fields automatically
+1. **Purchase License**: ThingSpeak Feature license (ThingSpeak account also required)
+2. **Configure**: Create ThingSpeak channel and configure XPF feature settings
+3. **Map Data**: Link monitor points to ThingSpeak fields automatically using Publish controls
 4. **Verify**: Start logging and confirm data flow
 
-!!! info "Complete ThingSpeak Add-on Guide"
-    **📖 [Comprehensive ThingSpeak Add-on Setup](../../guides/thingspeak-addon.md)**
+!!! info "Complete ThingSpeak Feature Guide"
+    **📖 [Comprehensive ThingSpeak Feature Setup](../../guides/thingspeak-addon.md)**
     
     **Includes:**
     - 4-step add-on setup workflow (Purchase → Configure → Map → Verify)
@@ -3905,9 +3960,9 @@ A: No, wildcards (`+`, `#`) are only supported for subscriptions. Publishing req
     
     **Perfect for:** First-time setup, troubleshooting, and advanced configuration
 
-### MQTT Add-on (Advanced Broker Connectivity)
+### MQTT Feature (Advanced Broker Connectivity)
 
-**MQTT Add-on provides enhanced MQTT broker connectivity with advanced features for IoT integration.** This add-on extends beyond the core MQTT messaging with specialized broker management, advanced security, and enterprise-grade features.
+**MQTT Feature provides enhanced MQTT broker connectivity with advanced features for IoT integration.** This feature requires a separate license and provides the MQTT Group in the IoT Tab with specialized broker management, advanced security, and enterprise-grade features.
 
 **Key Benefits:**
 - **Multi-Broker Support**: Connect to multiple MQTT brokers simultaneously
@@ -3918,16 +3973,16 @@ A: No, wildcards (`+`, `#`) are only supported for subscriptions. Publishing req
 - **Message Persistence**: Offline message queuing and automatic reconnection
 
 **Quick Setup:**
-1. **Purchase/Enable**: MQTT Add-on (enhanced features)
+1. **Purchase License**: MQTT Feature license (enhanced functionality)
 2. **Configure**: Connect to MQTT brokers with advanced security
 3. **Map Topics**: Configure topic publishing and subscription patterns
 4. **Verify**: Test connectivity and message flow
 
-!!! info "Complete MQTT Add-on Guide"
-    **📖 [Comprehensive MQTT Add-on Setup](../../guides/mqtt-addon.md)**
+!!! info "Complete MQTT Feature Guide"
+    **📖 [Comprehensive MQTT Feature Setup](../../guides/mqtt-addon.md)**
     
     **Includes:**
-    - 4-step add-on setup workflow (Purchase → Configure → Map → Verify)
+    - 4-step feature setup workflow (Purchase → Configure → Map → Verify)
     - Multi-broker configuration and management
     - Advanced security setup (TLS/SSL, certificates)
     - Topic mapping strategies and best practices
@@ -3936,15 +3991,16 @@ A: No, wildcards (`+`, `#`) are only supported for subscriptions. Publishing req
     
     **Perfect for:** Enterprise IoT deployments, multi-broker environments, and advanced security requirements
 
-**Choosing Between Add-ons:**
+**Choosing Between Licensed Features:**
 
-| Scenario | Recommended Add-on | Reason |
+| Scenario | Recommended Feature | Reason |
 |----------|-------------------|--------|
-| **Simple ThingSpeak cloud logging** | ThingSpeak Add-on | Automatic field mapping, simplified setup |
-| **Multiple cloud platforms** | MQTT Add-on | Multi-broker support, flexible topic mapping |
-| **Enterprise IoT deployment** | MQTT Add-on | Advanced security, persistence, QoS management |
-| **AWS IoT / Azure IoT** | MQTT Add-on | Pre-configured cloud templates |
-| **Basic single broker MQTT** | Core MQTT (included) | No add-on needed for simple messaging |
+| **ThingSpeak cloud logging** | ThingSpeak Feature | Automatic field mapping, integrated Publish controls |
+| **Multiple MQTT cloud platforms** | MQTT Feature | Multi-broker support, flexible topic mapping |
+| **Enterprise IoT deployment** | MQTT Feature | Advanced security, persistence, QoS management |
+| **AWS IoT / Azure IoT** | MQTT Feature | Pre-configured cloud templates |
+| **Professional MQTT connectivity** | MQTT Feature | Enterprise-grade MQTT with advanced features |
+| **Cloud analytics and visualization** | ThingSpeak Feature | Professional dashboards and MATLAB integration |
 
 ## 7. Monitor Points Configuration
 
