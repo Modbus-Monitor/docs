@@ -10,6 +10,25 @@
   <figcaption style="font-size: 0.9em; color: #666;">XPF MQTT Configuration showing connection to public broker</figcaption>
 </figure>
 
+!!! tip "📋 Table of Contents - Quick Navigation"
+    **🚀 Getting Started (Recommended Path)**
+    
+    - **[📚 Broker Options](#supported-public-brokers)** → Choose your MQTT broker
+    - **[🎯 Quick Tutorial](#quick-setup-tutorial)** → Complete setup walkthrough
+        - **[🔧 Part A: Configure XPF](#part-a-configure-xpf-mqtt-connection)** → Set up XPF connection
+        - **[🔍 Part B: Verification Tool](#part-b-set-up-mqtt-explorer-for-verification)** → Install MQTT Explorer  
+        - **[✅ Part C: Test & Verify](#part-c-test-and-verify-connection)** → Test your setup
+    
+    **📖 Complete Documentation**
+    
+    - **[🌟 XPF Features](#xpfs-revolutionary-mqtt-capabilities)** → Unique bidirectional capabilities
+    - **[⚡ Quick Start](#quick-start)** → Purchase and basic setup
+    - **[📋 Prerequisites](#prerequisites)** → What you need before starting
+    - **[🔧 Configuration Steps](#step-1-configure-mqtt-broker-connection)** → Detailed configuration
+    - **[🛠️ Advanced Examples](#complete-setup-examples)** → Production setups (TLS, certificates)
+    - **[❓ Troubleshooting](#troubleshooting)** → Common issues and solutions
+    - **[📚 Resources](#support-and-resources)** → Documentation and community
+
 ## Quick Start: Connect to Public MQTT Brokers
 
 The fastest way to get started with MQTT is to connect to free public test brokers. This section shows how to configure XPF to connect to popular public MQTT brokers for testing and development.
@@ -84,25 +103,35 @@ The fastest way to get started with MQTT is to connect to free public test broke
 !!! warning "Public Broker Security"
     Public brokers are intended for **testing only**. Never send sensitive data or use them for production applications. Anyone can subscribe to your topics and see your messages.
 
-### Step-by-Step Connection Guide
+### 🚀 Quick Setup Tutorial
 
-This section provides a complete walkthrough for connecting XPF to an MQTT broker. **We'll use HiveMQ's public broker (`broker.hivemq.com`) as our example** since it requires no registration and is perfect for learning and initial testing.
+This complete tutorial walks you through connecting XPF to an MQTT broker and verifying the connection. **We'll use HiveMQ's public broker (`broker.hivemq.com`)** since it requires no registration and is perfect for learning.
 
 !!! example "Example Configuration Notice"
     **The following steps demonstrate connecting to `broker.hivemq.com` as an example.** You can substitute any broker from the [Supported Public Brokers](#supported-public-brokers) tabs above, or use your own private broker by replacing the host, port, and authentication details as needed.
+
+!!! tip "Quick Navigation"
+    **Choose your path:**
+    
+    - **🔧 [Part A: Configure XPF](#part-a-configure-xpf-mqtt-connection)** - Set up XPF MQTT connection
+    - **🔍 [Part B: Set up Verification Tool](#part-b-set-up-mqtt-explorer-for-verification)** - Configure MQTT Explorer for testing  
+    - **✅ [Part C: Test & Verify](#part-c-test-and-verify-connection)** - Publish test data and verify
 
 #### Prerequisites
 - Modbus Monitor XPF with MQTT Add-on installed and licensed
 - Internet connection for accessing public brokers
 - Basic understanding of MQTT topics and messages
 
-#### Configuration Steps      
+---
+
+## Part A: Configure XPF MQTT Connection
+
+**Configure XPF to connect to the MQTT broker:**
 
 1. **Open MQTT Configuration**
    - Launch Modbus Monitor XPF
    - Navigate to the MQTT Add-on settings
    - **Example**: We'll connect to `broker.hivemq.com` on port `1883` 
-
 
 2. **Enter Broker Details**
       - **Broker Address**: Enter `broker.hivemq.com`
@@ -121,6 +150,7 @@ This section provides a complete walkthrough for connecting XPF to an MQTT broke
 
 5. **Configure Topics**
       - **Publish Topic**: `xpf/test/data` (example)
+      - **Publish Topic**: `xpf/` (used in Example below)
       - **Subscribe Topic**: `xpf/test/commands` (example)
 
 !!! tip "Topic Best Practices"
@@ -128,7 +158,11 @@ This section provides a complete walkthrough for connecting XPF to an MQTT broke
     - Good: `yourname/xpf/device1/data`
     - Avoid: `data` or `test` (too generic)
 
-#### Validating Your Connection with MQTT Explorer
+---
+
+## Part B: Set up MQTT Explorer for Verification
+
+**Set up MQTT Explorer to monitor and verify your MQTT messages:**
 
 To verify that your XPF MQTT connection is working correctly, use **MQTT Explorer** - a free desktop application that provides a visual interface for monitoring MQTT traffic.
 
@@ -137,12 +171,14 @@ To verify that your XPF MQTT connection is working correctly, use **MQTT Explore
   <figcaption style="font-size: 0.9em; color: #666;">Connection setup showing XPF MQTT configuration (left) and MQTT Explorer (right). Both must use the same: (1) Host/Broker address and (2) Port number for successful communication</figcaption>
 </figure>
 
-#### Step 1: Configure MQTT Explorer
+### Step 1: Download and Install MQTT Explorer
 
 1. **Download and Install MQTT Explorer**
       - Visit: [MQTT Explorer Official Site](http://mqtt-explorer.com/)
       - Download the installer for Windows
       - Install and launch the application
+
+### Step 2: Configure MQTT Explorer Connection
 
 2. **Configure MQTT Explorer Connection and Subscriptions**
       - **Name**: `HiveMQ Public Test` (or any descriptive name)
@@ -159,6 +195,8 @@ To verify that your XPF MQTT connection is working correctly, use **MQTT Explore
       - Click "Connect", `4`
       - MQTT Explorer shows **Connected** status
 
+### Step 3: Verify MQTT Explorer Setup
+
 3. **Verify Subscription Setup**
       - MQTT Explorer should show the `xpf/#` topic in the subscription list
       - This will monitor all messages from your XPF configuration
@@ -173,7 +211,13 @@ To verify that your XPF MQTT connection is working correctly, use **MQTT Explore
     
     **Always check your specific MQTT client's requirements.** Our examples use MQTT Explorer, which needs pre-connection setup. See [Step 2: Configure Topics](#step-2-configure-topics) for detailed XPF topic configuration.
 
-#### Step 2: Configure Modbus Monitor XPF
+---
+
+## Part C: Test and Verify Connection
+
+**Configure XPF monitor points and test the complete MQTT flow:**
+
+### Step 1: Configure XPF Monitor Points for MQTT
 
 1. **Configure Monitor Points for MQTT Publishing**
    - In XPF, locate the monitor points you want to publish to MQTT
@@ -184,12 +228,16 @@ To verify that your XPF MQTT connection is working correctly, use **MQTT Explore
      - `xpf/Discrete Input Register`
      - `xpf/Coil Register`
      - This ensures the published MQTT messages appear under the correct topic tree in MQTT Explorer      
-      ![Modbus Monitor XPF MQTT Topics Subscribe](../assets/screenshots/xpf-iot-topics-publish.webp){ width="600" loading="lazy" }      
+      ![Modbus Monitor XPF MQTT Topics Subscribe](../assets/screenshots/xpf-iot-topics-publish.webp){ width="600" loading="lazy" }
+
+### Step 2: Enable Communication Logging
 
 2. **Enable Communication Logging** to see detailed MQTT activity
       - In XPF, go to **Home Tab** > **Log** > **Show** 
       - Click **Start** to begin logging
       - **For detailed logging setup**: See [Communication Logging](../products/xpf/user-guide.md#log-group) in the XPF User Guide
+
+### Step 3: Start MQTT Communication
 
 3. **Start MQTT Communication**
       - Click the **Start** button in IoT Tab > MQTT Group > Start
@@ -205,7 +253,8 @@ To verify that your XPF MQTT connection is working correctly, use **MQTT Explore
             03:33:13:290243,xpf/Discrete Input Register : 1
             03:33:13:290382,xpf/Coil Register : 1
           ```
-#### Step 3: Publish Sample Data to MQTT Broker
+
+### Step 4: Publish Sample Data to MQTT Broker
 1. **Use XPF's Test/Sample Publishing Feature**
       - In XPF MQTT interface, locate the **Send Sample** or **Test Publish** button
       - Click the button to publish all configured monitor points as sample data
@@ -229,8 +278,7 @@ To verify that your XPF MQTT connection is working correctly, use **MQTT Explore
 <figcaption style="font-size: 0.9em; color: #666;">Successful MQTT publishing test demonstrating the complete flow: XPF publishes monitor point data using the test/sample button, which sends all monitoring points to the MQTT broker, and MQTT Explorer receives and displays these messages in its topic tree view for verification.</figcaption>
 </figure>
 
-
-
+### Step 5: Enable Continuous Publishing (Client Mode)
 
 1. **Enable Automatic Message Publishing**
       - Click **Start** from the **Client Tab** to automatically publish these topics on every iteration when the full monitor point list is polled
@@ -239,39 +287,24 @@ To verify that your XPF MQTT connection is working correctly, use **MQTT Explore
       - Monitor message content, timestamps, and publishing frequency to ensure proper operation
       - Communication Log shows detailed publish confirmation for ongoing operations
 
-
-!!! success "Validation Checklist"
+!!! success "🎉 Tutorial Complete! Validation Checklist"
     **Your MQTT connection is working correctly when:**
     
-    - MQTT Explorer shows "Connected" status
-    - Messages from XPF appear in MQTT Explorer
-    - Messages published from MQTT Explorer reach XPF
-    - Message timestamps are current
-    - JSON formatting is correct (if using structured data)
+    - ✅ MQTT Explorer shows "Connected" status
+    - ✅ Test messages from XPF appear in MQTT Explorer immediately  
+    - ✅ Message content matches your monitor point values
+    - ✅ Message timestamps are current
+    - ✅ Communication Log shows successful publish confirmations
 
-#### Step 3: Configure XPF Topics and Publishing
+---
 
-Now that both MQTT Explorer and XPF are connected to the same broker, configure XPF's topic structure and publishing settings.
+## Next Steps: Advanced Configuration
 
-!!! info "XPF Topic Configuration"
-    **This section will guide you through:**
-    - Configuring publishing topics in XPF
-    - Setting up subscription topics for incoming commands
-    - Verifying message flow between XPF and MQTT Explorer
-    
-    **Screenshots and detailed steps for XPF topic configuration will be added here.**
+Now that you have basic MQTT communication working, you can explore advanced features:
 
-##### Publishing Topics Setup
-
-*[XPF publishing topic configuration steps and screenshots will be added here]*
-
-##### Subscription Topics Setup  
-
-*[XPF subscription topic configuration steps and screenshots will be added here]*
-
-##### Verify Topic Configuration
-
-*[XPF topic verification steps and screenshots will be added here]*
+- **🔐 [Secure TLS Setup](#example-2-hivemq-cloud-with-tls-production-setup)** - Production-ready encrypted connections
+- **🏭 [Advanced Topics Configuration](#step-2-configure-topics)** - Custom topic structures and message formatting  
+- **🛠️ [Production Deployment](#complete-setup-examples)** - Real-world configuration examples
 
 ---
 
