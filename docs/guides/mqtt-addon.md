@@ -29,6 +29,21 @@
     - **[❓ Troubleshooting](#troubleshooting)** → Common issues and solutions
     - **[📚 Resources](#support-and-resources)** → Documentation and community
 
+## Overview
+
+The MQTT Add-on enables Modbus Monitor XPF to publish and subscribe to MQTT brokers for general IoT messaging, cloud integration, and distributed system communication. This add-on provides:
+
+- **Universal MQTT Connectivity**: Connect to any MQTT broker (AWS IoT, Azure IoT, HiveMQ, Mosquitto, etc.)
+- **Bi-directional Communication**: Both publish monitor point data and subscribe to control commands
+- **Advanced Security**: TLS/SSL encryption, client certificates, and authentication support
+- **Flexible Topic Management**: Custom topic structures with dynamic variable substitution
+- **JSON Message Support**: Structured data publishing with configurable JSON formatting
+- **Quality of Service**: QoS 0, 1, and 2 support for reliable message delivery
+- **Retained Messages**: Store last known values for new subscribers
+
+!!! info "Add-on vs Core Features"
+    **MQTT Add-on** provides general MQTT messaging capabilities for any broker, while **ThingSpeak Add-on** is specifically designed for ThingSpeak cloud platform integration with dedicated features for channel management.
+
 ## Quick Start: Connect to Public MQTT Brokers
 
 The fastest way to get started with MQTT is to connect to free public test brokers. This section shows how to configure XPF to connect to popular public MQTT brokers for testing and development.
@@ -307,21 +322,6 @@ Now that you have basic MQTT communication working, you can explore advanced fea
 - **🛠️ [Production Deployment](#complete-setup-examples)** - Real-world configuration examples
 
 ---
-
-## Overview
-
-The MQTT Add-on enables Modbus Monitor XPF to publish and subscribe to MQTT brokers for general IoT messaging, cloud integration, and distributed system communication. This add-on provides:
-
-- **Universal MQTT Connectivity**: Connect to any MQTT broker (AWS IoT, Azure IoT, HiveMQ, Mosquitto, etc.)
-- **Bi-directional Communication**: Both publish monitor point data and subscribe to control commands
-- **Advanced Security**: TLS/SSL encryption, client certificates, and authentication support
-- **Flexible Topic Management**: Custom topic structures with dynamic variable substitution
-- **JSON Message Support**: Structured data publishing with configurable JSON formatting
-- **Quality of Service**: QoS 0, 1, and 2 support for reliable message delivery
-- **Retained Messages**: Store last known values for new subscribers
-
-!!! info "Add-on vs Core Features"
-    **MQTT Add-on** provides general MQTT messaging capabilities for any broker, while **ThingSpeak Add-on** is specifically designed for ThingSpeak cloud platform integration with dedicated features for channel management.
 
 ## XPF's Revolutionary MQTT Capabilities
 
