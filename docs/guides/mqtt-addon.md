@@ -18,11 +18,12 @@
         - **[🔧 Part A: Configure XPF](#part-a-configure-xpf-mqtt-connection)** → Set up XPF connection
         - **[🔍 Part B: Verification Tool](#part-b-set-up-mqtt-explorer-for-verification)** → Install MQTT Explorer  
         - **[✅ Part C: Test & Verify](#part-c-test-and-verify-connection)** → Test your setup
+    - **[🔐 Secure Setup](#secure-setup-guide)** → TLS/SSL, WebSocket, and certificate authentication
+    - **[📡 Server Mode](#server-mode-guide-mqtt-command-reception)** → Receive MQTT commands and write to Modbus
     
     **📖 Complete Documentation**
     
     - **[🌟 XPF Features](#xpfs-revolutionary-mqtt-capabilities)** → Unique bidirectional capabilities
-    - **[⚡ Quick Start](#quick-start)** → Purchase and basic setup
     - **[📋 Prerequisites](#prerequisites)** → What you need before starting
     - **[🔧 Configuration Steps](#step-1-configure-mqtt-broker-connection)** → Detailed configuration
     - **[🛠️ Advanced Examples](#complete-setup-examples)** → Production setups (TLS, certificates)
@@ -394,47 +395,257 @@ To verify that your XPF MQTT connection is working correctly, use **MQTT Explore
 
 Now that you have basic MQTT communication working, you can explore advanced features:
 
-- **🔐 [Secure TLS Setup](#example-2-hivemq-cloud-with-tls-production-setup)** - Production-ready encrypted connections
-- **🏭 [Advanced Topics Configuration](#step-2-configure-topics)** - Custom topic structures and message formatting  
-- **🛠️ [Production Deployment](#complete-setup-examples)** - Real-world configuration examples
+- **🔐 [Secure Setup Guide](#secure-setup-guide)** - TLS/SSL encryption, WebSocket, and certificate authentication
+- **📡 [Server Mode Guide](#server-mode-guide-mqtt-command-reception)** - Receive MQTT commands and write to Modbus devices
+- **🏭 [Advanced Configuration](#step-2-configure-topics)** - Custom topic structures and message formatting  
+- **🛠️ [Production Examples](#complete-setup-examples)** - Real-world configuration examples with detailed steps
 
 ---
 
-## Quick Start
+## Secure Setup Guide
 
-### 1. Purchase Add-on
+Once you've completed the [Quick Setup Tutorial](#quick-setup-tutorial), you can implement secure connections for production environments.
 
-You need both an MQTT broker (cloud or local) and the XPF MQTT Add-on:
+### TLS/SSL Encrypted Connections
 
-#### A. MQTT Broker Service
-- **Free Options**: 
-  - Local: [Eclipse Mosquitto](https://mosquitto.org/) (free local broker)
-  - Cloud: [HiveMQ Cloud](https://www.hivemq.com/cloud/) (free tier available)
-  - AWS IoT Core (pay-as-you-go)
-- **Commercial Brokers**: AWS IoT, Azure IoT Hub, Google Cloud IoT Core
-- **Enterprise**: Private MQTT broker installations
+For production systems, always use encrypted MQTT connections to protect your data.
 
-#### B. Modbus Monitor XPF MQTT Add-on (Integration Software)
-- **Purchase Required**: Buy MQTT Add-on from [Quantum Bit Solutions Shop](https://quantumbitsolutions.com/shop/)
-  - Search for "MQTT Add-on" or "XPF MQTT Integration"
-  - Enables XPF to connect to any MQTT broker
-  - Includes advanced security and topic management features
-- **Installation**: Activate the Add-on and restart the App to enable the feature.
-  - **See**: [License Activation](../products/xpf/user-guide.md#license-activation) in the main user guide for step-by-step activation instructions
+#### Option 1: HiveMQ Cloud (Recommended for Beginners)
 
-### 2. Configure Add-on
-- [Configure MQTT broker connection](#step-1-configure-mqtt-broker-connection)
-- [Set up topics for publishing and subscribing](#step-2-configure-topics)
-- [Map monitor points to MQTT messages](#step-3-message-mapping)
+**Quick secure setup with managed cloud broker:**
 
-### 3. Configure Monitor Points
-- **See**: [Monitor Points Configuration](../products/xpf/user-guide.md#7-monitor-points-configuration) in main user guide
-- **Focus**: Ensure monitor points are collecting the data you want to publish via MQTT
+1. **Create Free HiveMQ Cloud Account**
+   - Visit [HiveMQ Cloud](https://www.hivemq.com/cloud/)
+   - Create cluster (2-3 minutes)
+   - Note cluster URL: `your-cluster.s2.eu.hivemq.cloud`
+![alt text](../assets/screenshots/xpf-mqtt-secure.webp)
+2. **Configure XPF for TLS**
+   ```yaml
+   Broker Host: your-cluster.s2.eu.hivemq.cloud
+   Port: 8883 (TLS port)
+   Client ID: XPF-YourCompany-001
+   Username: (from HiveMQ credentials)
+   Password: (from HiveMQ credentials)
+   TLS/SSL: ✓ Enabled
+   CA Certificate: Auto-detect
+   ```
 
-### 4. Start Messaging & Verify
-- [Enable MQTT communication](#step-4-enable-mqtt-communication)
-- [Verify message flow](#verification-checklist) to/from broker
-- [Monitor connection status](#monitoring-and-maintenance) and troubleshoot if needed
+3. **Test Secure Connection**
+   - XPF shows "Connected (TLS)" status
+   - Use HiveMQ WebSocket client in dashboard for verification
+
+#### Option 2: Public Broker with TLS
+
+**Use public brokers with encryption:**
+
+1. **Configure TLS Connection**
+   ```yaml
+   Broker Host: broker.hivemq.com
+   Port: 8883 (TLS port)
+   Client ID: XPF-Secure-001
+   Username: (leave blank)
+   Password: (leave blank)
+   TLS/SSL: ✓ Enabled
+   CA Certificate: Auto-detect
+   ```
+
+### WebSocket Connections
+
+For firewall-friendly connections or web-based integration:
+
+#### Standard WebSocket (Testing Only)
+```yaml
+Broker Host: broker.hivemq.com
+Port: 8000 (WebSocket)
+Protocol: ws://
+TLS/SSL: ✗ Disabled
+```
+
+#### Secure WebSocket (Production)
+```yaml
+Broker Host: broker.hivemq.com  
+Port: 8884 (WebSocket + TLS)
+Protocol: wss://
+TLS/SSL: ✓ Enabled
+```
+
+### Client Certificate Authentication
+
+For high-security environments requiring mutual authentication:
+
+!!! warning "Advanced Setup"
+    Client certificates require PKI knowledge and certificate management. Only recommended for enterprise environments with proper certificate infrastructure.
+
+#### Generate Client Certificate
+```bash
+# Create private key and certificate
+openssl genpkey -algorithm RSA -out client-key.pem
+openssl req -new -key client-key.pem -out client.csr
+openssl x509 -req -in client.csr -signkey client-key.pem -out client-cert.pem
+
+# Convert to PFX for XPF
+openssl pkcs12 -export -out client.pfx -inkey client-key.pem -in client-cert.pem
+```
+
+#### Configure XPF with Certificates
+```yaml
+Broker Host: secure-broker.yourcompany.com
+Port: 8883
+Client ID: XPF-Device-001
+TLS/SSL: ✓ Enabled
+CA Certificate: ca.crt (broker's CA)
+Client Certificate: client.pfx
+Certificate Password: (your PFX password)
+```
+
+### Verification
+
+**Secure connection indicators:**
+- XPF status shows "Connected (TLS)" or "Connected (WSS)"
+- Communication log shows no certificate errors
+- Message traffic encrypted (use Wireshark to verify)
+
+!!! success "Production Ready"
+    **Your MQTT connection is now production-ready with:**
+    - ✅ Encrypted data transmission
+    - ✅ Server authentication  
+    - ✅ Optional client authentication
+    - ✅ Firewall-friendly options
+
+**For detailed configuration steps, see**: [Complete Setup Examples](#complete-setup-examples) section below.
+
+---
+
+## Server Mode Guide: MQTT Command Reception
+
+XPF's Server Mode allows receiving commands from MQTT brokers and writing them to Modbus devices - enabling remote control capabilities.
+
+!!! info "Bidirectional MQTT"
+    **Client Mode**: XPF polls Modbus → publishes to MQTT (data collection)  
+    **Server Mode**: XPF receives MQTT → writes to Modbus (remote control)
+
+### Server Mode Setup
+
+#### Step 1: Basic Server Configuration
+
+1. **Switch to Server Mode**
+   - Open XPF **Server** tab
+   - Configure Modbus server settings (Unit ID, register ranges)
+   - **See**: [Server Mode Configuration](../products/xpf/user-guide.md#5-modbus-server-operations) in main user guide
+
+2. **Configure MQTT Subscriptions**
+   ```yaml
+   Subscription Topics:
+     - "commands/plant1/setpoint" - Temperature setpoint changes
+     - "control/emergency/stop" - Emergency commands  
+     - "config/device/{UnitID}/+" - Device configuration updates
+   
+   Message Handling:
+     - JSON parsing for structured commands
+     - Direct value mapping for simple setpoints
+     - Validation and acknowledgment publishing
+   ```
+
+#### Step 2: Command Message Format
+
+**Simple Value Commands:**
+```json
+Topic: "commands/plant1/setpoint"
+Message: "75.5"
+Result: Writes 75.5 to configured Modbus register
+```
+
+**Structured JSON Commands:**
+```json
+Topic: "commands/plant1/config"
+Message: {
+  "register": "40001",
+  "value": 1250,
+  "unit": "°F",
+  "timestamp": "2025-11-07T14:30:00Z"
+}
+```
+
+#### Step 3: Test Server Mode
+
+1. **Start XPF Server Mode**
+   - Click **Start** in Server tab
+   - Verify Modbus server listening on configured port
+
+2. **Send Test Commands**
+   - Use MQTT client to publish to subscription topics
+   - Monitor XPF Communication Log for received messages
+   - Verify register values change in XPF Server view
+
+3. **Bidirectional Testing**
+   - **Client Mode**: Read current values → Publish to MQTT
+   - **Server Mode**: Receive MQTT commands → Update values  
+   - **Client Mode**: Read updated values → Confirm changes
+
+### Server Mode Use Cases
+
+**Remote Setpoint Control:**
+```yaml
+Scenario: Cloud dashboard adjusts PLC setpoints
+MQTT Topic: "control/plant1/temperature/setpoint"
+Message: "68.5"
+XPF Action: Write 68.5 to holding register 40001
+Confirmation: Publish acknowledgment to "status/plant1/setpoint/ack"
+```
+
+**Emergency Stop Systems:**
+```yaml
+Scenario: Cloud monitoring detects problem
+MQTT Topic: "emergency/plant1/stop" 
+Message: "EMERGENCY_STOP"
+XPF Action: Write 1 to emergency stop coil 00001
+Confirmation: Publish "STOPPED" to "status/plant1/emergency"
+```
+
+**Recipe/Configuration Updates:**
+```yaml
+Scenario: Push new process parameters
+MQTT Topic: "config/devices/001/recipe"
+Message: {"temp": 150, "time": 3600, "pressure": 25}
+XPF Action: Write multiple registers with recipe values
+Confirmation: Publish success status
+```
+
+### Security Considerations for Server Mode
+
+!!! warning "Server Mode Security"
+    **Server Mode receives write commands - implement proper security:**
+    
+    - ✅ **Use TLS/SSL** for all MQTT connections
+    - ✅ **Implement authentication** (usernames, certificates)
+    - ✅ **Validate command sources** and message formats
+    - ✅ **Log all command executions** for audit trails
+    - ✅ **Set register write permissions** carefully
+    - ✅ **Test emergency stop procedures** thoroughly
+
+### Bidirectional Integration Example
+
+**Complete IoT control system:**
+
+```yaml
+Data Collection (Client Mode):
+  - XPF polls temperature sensor (register 30001)
+  - Publishes to "sensors/plant1/temperature"
+  - Cloud receives and displays current temperature
+
+Remote Control (Server Mode):  
+  - Cloud operator adjusts setpoint in dashboard
+  - Dashboard publishes to "commands/plant1/setpoint"
+  - XPF receives command and writes to setpoint register (40001)
+  - Process controller uses new setpoint
+
+Verification Loop:
+  - XPF continues polling actual temperature
+  - Publishes updated readings showing setpoint change effect
+  - Cloud dashboard shows real-time response to control action
+```
+
+**For comprehensive Server Mode configuration, see**: [Server Operations](../products/xpf/user-guide.md#5-modbus-server-operations) in the main user guide.
 
 ## Prerequisites
 
@@ -1150,9 +1361,14 @@ This MQTT Add-on is part of a growing ecosystem of XPF add-ons:
 !!! tip "Return to Main Guide"
     **[Back to XPF User Guide](../products/xpf/user-guide.md)**
     
-    **Related Sections:**
+    **This Guide's Key Sections:**
+    - [Quick Setup Tutorial](#quick-setup-tutorial) - Complete beginner walkthrough
+    - [Secure Setup Guide](#secure-setup-guide) - TLS/SSL and production security
+    - [Server Mode Guide](#server-mode-guide-mqtt-command-reception) - Bidirectional MQTT control
+    
+    **Related User Guide Sections:**
     - [Monitor Points Configuration](../products/xpf/user-guide.md#7-monitor-points-configuration) - Configure data sources
-    - [ThingSpeak Add-on](thingspeak-addon.md) - Dedicated cloud platform integration
+    - [Server Operations](../products/xpf/user-guide.md#5-modbus-server-operations) - Modbus server setup
     - [Client Operations](../products/xpf/user-guide.md#4-modbus-client-operations) - Core client functionality
 
 **Next Steps:**
