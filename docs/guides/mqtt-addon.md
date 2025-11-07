@@ -44,6 +44,83 @@ The MQTT Add-on enables Modbus Monitor XPF to publish and subscribe to MQTT brok
 !!! info "Add-on vs Core Features"
     **MQTT Add-on** provides general MQTT messaging capabilities for any broker, while **ThingSpeak Add-on** is specifically designed for ThingSpeak cloud platform integration with dedicated features for channel management.
 
+## XPF's Revolutionary MQTT Capabilities
+
+**Modbus Monitor XPF is the only tool that provides complete bidirectional MQTT integration in both Client and Server modes** - eliminating the need for multiple software tools and dramatically simplifying MQTT development and deployment.
+
+### Unique Bidirectional Architecture
+
+!!! success "Industry-First Capabilities"
+    **XPF combines Publisher + Subscriber + MQTT Test Tools in one application:**
+    
+    **Publisher Mode (Client Mode Active)**
+    - XPF polls Modbus devices and publishes data to MQTT broker
+    - Perfect for: Sending sensor data, status updates, alarms to cloud
+    
+    **Subscriber Mode (Server Mode Active)**  
+    - XPF receives MQTT messages and writes values to Modbus devices
+    - Perfect for: Remote setpoint changes, control commands, configuration updates
+    
+    **Built-in MQTT Test Tools**
+    - Integrated MQTT client for testing and debugging
+    - No need for separate test applications
+    - Save hours of setup time and eliminate tool confusion
+
+### Why This is Revolutionary
+
+| Traditional Approach | XPF Integrated Approach | Time Savings |
+|---------------------|-------------------------|--------------|
+| **Modbus Client Software** | **XPF Client Mode** | |
+| + **Separate MQTT Publisher** | (Built into XPF) | **60-80% faster** |
+| + **Separate MQTT Subscriber** | **XPF Server Mode** | |
+| + **MQTT Test Client** | **Built-in Test Tools** | |
+| + **Integration Coding** | (No coding needed) | |
+| = 4+ separate tools | = **One XPF License** | **75% cost reduction** |
+
+### Bidirectional Use Cases
+
+**Industrial Automation (Both Directions)**
+```yaml
+Uplink (XPF Client to MQTT):
+  - Temperature sensors to Cloud dashboard
+  - Production counts to Analytics platform  
+  - Alarm states to Notification system
+
+Downlink (MQTT to XPF Server):
+  - Setpoint changes to PLC registers
+  - Recipe updates to Process controllers
+  - Emergency stops to Safety systems
+```
+
+**IoT Edge Gateway (Complete Solution)**
+```yaml
+Edge Processing:
+  - Collect from multiple Modbus devices (Client mode)
+  - Aggregate and process data locally  
+  - Publish summaries to cloud (Publisher)
+  - Receive cloud commands (Subscriber)
+  - Distribute commands to devices (Server mode)
+```
+
+**Development & Testing (Integrated Tools)**
+```yaml
+Development Workflow:
+  1. Use XPF Server mode to simulate devices
+  2. Test MQTT publishing with built-in tools
+  3. Verify cloud connectivity with integrated client
+  4. Deploy same XPF configuration to production
+```
+
+!!! tip "No Other Tool Does This"
+    **XPF eliminates the complexity of:**
+    - Learning multiple MQTT client applications
+    - Integrating separate publisher/subscriber tools  
+    - Writing custom code to bridge Modbus and MQTT
+    - Managing multiple software licenses and configurations
+    - Debugging communication between separate tools
+
+This guide will show you how to leverage both directions plus the integrated test tools for complete MQTT solutions.
+
 ## Quick Start: Connect to Public MQTT Brokers
 
 The fastest way to get started with MQTT is to connect to free public test brokers. This section shows how to configure XPF to connect to popular public MQTT brokers for testing and development.
@@ -322,83 +399,6 @@ Now that you have basic MQTT communication working, you can explore advanced fea
 - **🛠️ [Production Deployment](#complete-setup-examples)** - Real-world configuration examples
 
 ---
-
-## XPF's Revolutionary MQTT Capabilities
-
-**Modbus Monitor XPF is the only tool that provides complete bidirectional MQTT integration in both Client and Server modes** - eliminating the need for multiple software tools and dramatically simplifying MQTT development and deployment.
-
-### Unique Bidirectional Architecture
-
-!!! success "Industry-First Capabilities"
-    **XPF combines Publisher + Subscriber + MQTT Test Tools in one application:**
-    
-    **Publisher Mode (Client Mode Active)**
-    - XPF polls Modbus devices and publishes data to MQTT broker
-    - Perfect for: Sending sensor data, status updates, alarms to cloud
-    
-    **Subscriber Mode (Server Mode Active)**  
-    - XPF receives MQTT messages and writes values to Modbus devices
-    - Perfect for: Remote setpoint changes, control commands, configuration updates
-    
-    **Built-in MQTT Test Tools**
-    - Integrated MQTT client for testing and debugging
-    - No need for separate test applications
-    - Save hours of setup time and eliminate tool confusion
-
-### Why This is Revolutionary
-
-| Traditional Approach | XPF Integrated Approach | Time Savings |
-|---------------------|-------------------------|--------------|
-| **Modbus Client Software** | **XPF Client Mode** | |
-| + **Separate MQTT Publisher** | (Built into XPF) | **60-80% faster** |
-| + **Separate MQTT Subscriber** | **XPF Server Mode** | |
-| + **MQTT Test Client** | **Built-in Test Tools** | |
-| + **Integration Coding** | (No coding needed) | |
-| = 4+ separate tools | = **One XPF License** | **75% cost reduction** |
-
-### Bidirectional Use Cases
-
-**Industrial Automation (Both Directions)**
-```yaml
-Uplink (XPF Client to MQTT):
-  - Temperature sensors to Cloud dashboard
-  - Production counts to Analytics platform  
-  - Alarm states to Notification system
-
-Downlink (MQTT to XPF Server):
-  - Setpoint changes to PLC registers
-  - Recipe updates to Process controllers
-  - Emergency stops to Safety systems
-```
-
-**IoT Edge Gateway (Complete Solution)**
-```yaml
-Edge Processing:
-  - Collect from multiple Modbus devices (Client mode)
-  - Aggregate and process data locally  
-  - Publish summaries to cloud (Publisher)
-  - Receive cloud commands (Subscriber)
-  - Distribute commands to devices (Server mode)
-```
-
-**Development & Testing (Integrated Tools)**
-```yaml
-Development Workflow:
-  1. Use XPF Server mode to simulate devices
-  2. Test MQTT publishing with built-in tools
-  3. Verify cloud connectivity with integrated client
-  4. Deploy same XPF configuration to production
-```
-
-!!! tip "No Other Tool Does This"
-    **XPF eliminates the complexity of:**
-    - Learning multiple MQTT client applications
-    - Integrating separate publisher/subscriber tools  
-    - Writing custom code to bridge Modbus and MQTT
-    - Managing multiple software licenses and configurations
-    - Debugging communication between separate tools
-
-This guide will show you how to leverage both directions plus the integrated test tools for complete MQTT solutions.
 
 ## Quick Start
 
