@@ -24,9 +24,8 @@
     **📖 Complete Documentation**
     
     - **[🌟 XPF Features](#xpfs-revolutionary-mqtt-capabilities)** → Unique bidirectional capabilities
-    - **[📋 Prerequisites](#prerequisites)** → What you need before starting
-    - **[🔧 Configuration Steps](#step-1-configure-mqtt-broker-connection)** → Detailed configuration
-    - **[🛠️ Advanced Examples](#complete-setup-examples)** → Production setups (TLS, certificates)
+    - **[� Advanced Configuration](#advanced-configuration-reference)** → Topic and message configuration reference
+    - **[🛠️ Production Examples](#complete-setup-examples)** → Real-world setups (HiveMQ Cloud, EMQX, certificates)
     - **[❓ Troubleshooting](#troubleshooting)** → Common issues and solutions
     - **[📚 Resources](#support-and-resources)** → Documentation and community
 
@@ -506,11 +505,13 @@ Websocket: ✓ Enabled
 Certificate authentication provides enhanced security for MQTT connections through cryptographic validation. There are two types of certificates used in MQTT security:
 
 **1. CA (Certificate Authority) Certificate**
-   - **Purpose**: Validates the broker's identity (server authentication)
+
+   - **Purpose**: Validates the broker's identity (server authentication)      
    - **When to use**: When connecting to brokers with custom/private certificates
    - **Security benefit**: Prevents man-in-the-middle attacks by verifying broker authenticity
 
 **2. Client Certificate**
+
    - **Purpose**: Authenticates your device to the broker (client authentication)
    - **When to use**: When broker requires mutual TLS (mTLS) authentication
    - **Security benefit**: Ensures only authorized devices can connect
@@ -947,57 +948,14 @@ Verification Loop:
 
 **For comprehensive Server Mode configuration, see**: [Server Operations](../products/xpf/user-guide.md#5-modbus-server-operations) in the main user guide.
 
-## Prerequisites
+## Advanced Configuration Reference
 
-Before starting, ensure you have:
+For comprehensive configuration beyond the tutorials, see the detailed sections below:
 
-- [ ] **Modbus Monitor XPF** installed with MQTT Add-on enabled
-- [ ] **MQTT broker access** (cloud service or local installation)
-- [ ] **Broker credentials** (username, password, certificates if required)
-- [ ] **Monitor points configured** for the data you want to publish
-- [ ] **Network connectivity** to MQTT broker
-- [ ] **Valid licensing** for commercial use (if applicable)
+!!! tip "Start with Tutorials First"
+    **New users should complete the [Quick Setup Tutorial](#quick-setup-tutorial) or [Secure Setup Guide](#secure-setup-guide) before using these advanced references.**
 
-## Step 1: Configure MQTT Broker Connection
-
-### MQTT Broker Configuration
-
-Configure the MQTT Add-on to connect to your chosen MQTT broker:
-
-!!! note "MQTT vs ThingSpeak"
-    The MQTT Add-on provides general MQTT protocol connectivity to any broker, while ThingSpeak Add-on is specifically designed for ThingSpeak platform integration.
-
-### XPF MQTT Setup
-
-1. **Open MQTT Add-on Settings**
-   - Navigate to **Add-ons** > **MQTT** in XPF
-   - Or go to **Client** tab > **MQTT** group
-
-2. **Enter Broker Connection Details**
-   - **Broker Host**: Your MQTT broker hostname or IP address
-   - **Port**: MQTT port (1883 for non-secure, 8883 for TLS)
-   - **Client ID**: Unique identifier for this XPF instance
-   - **Username**: MQTT broker username (if required)
-   - **Password**: MQTT broker password (if required)
-
-3. **Configure Security Settings**
-   - **TLS/SSL**: Enable for encrypted connections
-   - **Client Certificates**: Upload certificates for mutual authentication
-   - **CA Certificate**: Upload broker's certificate authority
-   - **Ignore Certificate Errors**: For testing only (not recommended for production)
-
-### Connection Parameters
-
-| Setting | Example Value | Description |
-|---------|---------------|-------------|
-| **Broker Host** | `mqtt.hivemq.com` | MQTT broker hostname or IP address |
-| **Port** | `8883` | 1883 (non-TLS) or 8883 (TLS) |
-| **Client ID** | `XPF-Plant1-001` | Unique identifier for this connection |
-| **Username** | `your-username` | Broker authentication username |
-| **Password** | `your-password` | Broker authentication password |
-| **TLS/SSL** | `Enabled` | Secure encrypted connection |
-
-## Step 2: Configure Topics
+### Advanced Topic Configuration
 
 ### MQTT Topic Structure
 
@@ -1066,11 +1024,9 @@ Subscription Topics:
   - "commands/broadcast" - System-wide commands
 ```
 
-## Step 3: Message Mapping
+### Advanced Message Format Configuration
 
-### Monitor Point to MQTT Message Mapping
-
-**XPF automatically maps monitor points to MQTT messages based on your topic configuration:**
+**For detailed message mapping and publishing options beyond the basic tutorials:**
 
 | Message Format | Content Example | Use Case |
 |----------------|-----------------|----------|
@@ -1078,60 +1034,18 @@ Subscription Topics:
 | **JSON Object** | `{"value": 25.4, "timestamp": "2025-11-05T14:30:15Z", "unit": "C"}` | Structured data with metadata |
 | **Custom JSON** | `{"temperature": 25.4, "status": "normal"}` | Application-specific format |
 
-### Configure Message Mappings
+**Advanced Configuration Options:**
+- **Individual Topics**: Each monitor point gets its own topic
+- **Batched Topics**: Multiple points in single JSON message
+- **Filtered Publishing**: Only publish when values change
+- **QoS Settings**: Configure Quality of Service (0, 1, or 2)
+- **Retained Messages**: Store last value for new subscribers
 
-1. **Select Message Format**
-   - **Raw Value**: Publishes monitor point value directly
-   - **JSON Standard**: Includes value, timestamp, and metadata
-   - **JSON Custom**: User-defined JSON structure
-
-2. **Map Publishing Data**
-   - **Individual Topics**: Each monitor point gets its own topic
-   - **Batched Topics**: Multiple points in single JSON message
-   - **Filtered Publishing**: Only publish when values change
-
-3. **Configure Subscription Handling**
-   - **Direct Value Mapping**: Incoming messages directly update monitor point values
-   - **JSON Parsing**: Extract values from JSON message structures
-   - **Command Processing**: Handle structured command messages
-
-### Verify Message Mapping
-
-1. **Use MQTT Test Tools**
-   - **MQTT Explorer**: Connect to broker and monitor message flow
-   - **Mosquitto Client**: Command-line tools for testing
-   - **Online MQTT Clients**: Web-based testing tools
-
-2. **Monitor XPF Communication Log**
-   - View outgoing publish messages
-   - See incoming subscription messages
-   - Track connection status and errors
-
-## Step 4: Enable MQTT Communication
-
-### Start MQTT Communication
-
-1. **Enable the Add-on**
-   - In MQTT Add-on settings, check **Enable MQTT**
-   - Click **Connect** to establish broker connection
-
-2. **Monitor Connection Status**
-   - Verify **Connected** status indicator is green
-   - Check that **Messages Published** counter is incrementing
-   - Monitor **Messages Received** for subscriptions
-
-3. **Verify Message Flow**
-   - Use MQTT testing tools to confirm published messages
-   - Send test messages to subscription topics
-   - Verify monitor point values update from received messages
-
-### Verification Checklist
-
-- [ ] **MQTT broker connection** shows as connected
-- [ ] **Published messages** appear on configured topics
-- [ ] **Subscribed topics** update monitor point values
-- [ ] **Message timing** matches configured intervals
-- [ ] **No error messages** in XPF communication log
+!!! tip "Complete Configuration Guide"
+    **For step-by-step configuration instructions, see:**
+    - **[Quick Setup Tutorial](#quick-setup-tutorial)** - Basic setup walkthrough
+    - **[Secure Setup Guide](#secure-setup-guide)** - Production security configuration
+    - **[Complete Setup Examples](#complete-setup-examples)** - Real-world implementation examples
 
 ## Testing and Verification Tools
 
@@ -1197,87 +1111,10 @@ Subscription Topics:
 
 ## Complete Setup Examples
 
-### Example 1: HiveMQ Public Broker (Basic Setup)
+!!! tip "Tutorial Prerequisites"
+    **These examples assume you've completed the [Quick Setup Tutorial](#quick-setup-tutorial) for basic MQTT concepts.** If you're new to MQTT, start with the tutorial first.
 
-**Perfect for testing and learning** - No registration required, completely free.
-
-![XPF MQTT Configuration - Basic Setup](../../assets/screenshots/xpf-mqtt-basic-setup.webp){ loading="lazy" }
-
-#### Step 1: Configure Basic Connection
-
-1. **Open XPF MQTT Add-on Settings**
-   - Navigate to **Add-ons** > **MQTT Configuration**
-   - Or use **Client Tab** > **MQTT Group** > **Settings**
-
-2. **Enter HiveMQ Public Broker Details**
-   ```yaml
-   Broker Host: broker.hivemq.com
-   Port: 1883
-   Client ID: XPF-YourName-001    # Make this unique!
-   Username: (leave empty)
-   Password: (leave empty)
-   TLS/SSL: Unchecked
-   Keep Alive: 60
-   ```
-
-3. **Configure Basic Topics**
-   ```yaml
-   Publishing Topic: test/xpf/yourname/data
-   Subscription Topic: test/xpf/yourname/commands
-   Message Format: JSON Standard
-   QoS Level: 1
-   ```
-
-#### Step 2: Test the Connection
-
-1. **In XPF**: Click **Connect** - Status should show "Connected"
-
-2. **Set up MQTT Explorer** (external verification tool):
-   - Download [MQTT Explorer](https://mqtt-explorer.com/) (free)
-   - In MQTT Explorer: Connect to `broker.hivemq.com:1883`
-   - Subscribe to your topic: `test/xpf/yourname/data`
-
-![MQTT Explorer Setup](../../assets/screenshots/mqtt-explorer-setup.webp){ loading="lazy" }
-
-#### Step 3: Verify Message Flow
-
-1. **In XPF**: Start Modbus polling - XPF publishes data to broker
-
-2. **In MQTT Explorer**: You should see incoming messages like:
-   ```json
-   {
-     "value": 25.4,
-     "timestamp": "2025-11-05T14:30:15Z",
-     "address": "40001",
-     "unit": "°C"
-   }
-   ```
-
-!!! success "Basic Setup Complete!"
-    You now have XPF publishing to MQTT! This setup is perfect for testing but **not secure for production**.
-
-#### Alternative: Using XPF's Built-in Test Tools
-
-**Instead of MQTT Explorer, you can verify everything using XPF's integrated tools:**
-
-!!! tip "XPF-Only Verification (No External Tools Needed)"
-    **1. Check Connection Status**
-    - XPF Status: Look for "Connected" indicator
-    - TX Counter: Should increment as data is published
-    
-    **2. Use XPF's Built-in MQTT Logging**
-    - **General Log**: Open **Home Tab** > **Log** > **Show** for overall communication status
-    - **MQTT Debug Log**: Use **IoT Tab** > **MQTT Group** > **Debug Log** for detailed MQTT-specific information
-    - Watch real-time connection status, authentication, and TX/RX message flow
-    
-    **3. Test Bidirectional Communication**
-    - **Publisher Test**: XPF Client mode publishes to broker
-    - **Subscriber Test**: Switch to XPF Server mode receives from broker
-    - **Built-in Test Messages**: Use XPF's test message sender
-    
-    This eliminates the need for any external MQTT tools!
-
-### Example 2: HiveMQ Cloud with TLS (Production Setup)
+### Example 1: HiveMQ Cloud with TLS (Production Setup)
 
 **Recommended for production** - Secure, reliable, free tier available.
 
@@ -1520,71 +1357,6 @@ openssl pkcs12 -export -out client.pfx \
     - **Secure private keys** - Store PFX files securely
     - **Test certificate renewal** before expiration
     - **Backup certificates** in secure location
-
-## Advanced Configuration
-
-### Security and Authentication
-
-**TLS/SSL Configuration:**
-
-| Security Level | Configuration | Use Case |
-|----------------|---------------|----------|
-| **No Encryption** | Port 1883, no certificates | Local testing only |
-| **TLS Encryption** | Port 8883, CA certificate | Standard cloud brokers |
-| **Mutual TLS** | Client certificates required | High-security environments |
-| **Custom CA** | Private certificate authority | Enterprise deployments |
-
-**Authentication Methods:**
-
-- **Username/Password**: Basic authentication for most brokers
-- **Client Certificates**: X.509 certificates for device authentication
-- **API Keys**: Token-based authentication (AWS IoT, Azure IoT)
-- **OAuth 2.0**: Modern authentication for cloud services
-
-### Message Formatting and QoS
-
-**Quality of Service Levels:**
-
-| QoS | Delivery Guarantee | Use Case | Overhead |
-|-----|-------------------|----------|----------|
-| **QoS 0** | At most once | Non-critical data | Minimal |
-| **QoS 1** | At least once | Important data | Low |
-| **QoS 2** | Exactly once | Critical commands | High |
-
-**Message Retention:**
-
-- **Retained Messages**: Last value stored by broker for new subscribers
-- **Session Persistence**: Maintain subscriptions across disconnections
-- **Last Will and Testament**: Automatic status messages on unexpected disconnection
-
-### Broker-Specific Configurations
-
-#### AWS IoT Core
-```yaml
-Host: your-endpoint.iot.us-east-1.amazonaws.com
-Port: 8883
-TLS: Required
-Authentication: X.509 Client Certificate
-Topics: Must follow AWS IoT policies
-```
-
-#### Azure IoT Hub
-```yaml
-Host: your-hub.azure-devices.net
-Port: 8883
-TLS: Required
-Authentication: Device Connection String or Certificate
-Topics: devices/{deviceId}/messages/events/
-```
-
-#### HiveMQ Cloud
-```yaml
-Host: your-cluster.hivemq.cloud
-Port: 8883
-TLS: Required
-Authentication: Username/Password
-Topics: User-defined structure
-```
 
 ## Troubleshooting
 
