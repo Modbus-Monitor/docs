@@ -3570,28 +3570,60 @@ Step 3: Verify Console  → Confirm TX count increased
 
 Monitor MQTT communication and diagnose connection issues with the built-in console and logging features.
 
+**Two Types of Logging Available:**
+
+1. **General Communication Log** (Home Tab > Log > Show)
+   - Overall application communication status
+   - All protocol communications (Modbus, MQTT, etc.)
+   - General connection and error information
+
+2. **MQTT-Specific Debug Log** (IoT Tab > MQTT Group > Debug Log Button)
+   - Detailed MQTT-only information
+   - Connection handshake details, TLS certificate validation
+   - MQTT protocol-specific messages and authentication
+   - Message publishing/subscription confirmation
+
 **Console Features:**
 
-| Button/Control | Function | Purpose |
-|----------------|----------|---------|
-| **Console Button** | Open MQTT console | View incoming/outgoing messages in real-time |
-| **Log Toggle** | Enable/disable debug logging | Enable for troubleshooting, disable for production |
-| **Message Display** | Timestamped entries | Shows TX (transmitted) and RX (received) messages |
+| Button/Control | Location | Function | Purpose |
+|----------------|----------|----------|---------|
+| **Console Button** | IoT Tab > MQTT | Open MQTT console | View incoming/outgoing messages in real-time |
+| **Log Toggle** | Home Tab > Log | Enable/disable general logging | Overall communication troubleshooting |
+| **Debug Log Button** | IoT Tab > MQTT Group | Enable MQTT-specific debug logging | Detailed MQTT protocol troubleshooting |
+| **Message Display** | Console window | Timestamped entries | Shows TX (transmitted) and RX (received) messages |
 
 **What Gets Logged:**
 
-- **Connection Events**: Connected, disconnected, reconnection attempts
-- **Published Messages**: Topics and payloads sent (TX)
-- **Received Messages**: Topics and payloads received (RX)
-- **Errors**: Connection failures, authentication errors, timeouts
-- **Subscription Changes**: Topic subscriptions and unsubscriptions
+**General Log (Home Tab > Log):**
+- Overall application status and errors
+- General connection events across all protocols
+- Basic MQTT connection status ("Connected", "Disconnected")
+
+**MQTT Debug Log (IoT Tab > MQTT Group > Debug Log):**
+- **Connection Events**: Connected, disconnected, reconnection attempts with detailed handshake
+- **TLS/SSL Information**: Certificate validation, encryption protocol details
+- **Authentication**: Username/password validation, certificate authentication
+- **Published Messages**: Topics and payloads sent (TX) with timestamps
+- **Received Messages**: Topics and payloads received (RX) with confirmation
+- **Protocol Details**: MQTT configuration, QoS levels, keep-alive status
+- **Errors**: Connection failures, authentication errors, timeouts with specific error codes
 
 **Debug Log Usage:**
 
-1. Click **Log** toggle to enable debug logging
+**For General Troubleshooting:**
+1. Enable **Home Tab** > **Log** > **Show** and click **Start**
+2. Monitor overall application communication status
+
+**For MQTT-Specific Issues:**
+1. Enable **IoT Tab** > **MQTT Group** > **Debug Log** and click **Start**
 2. Perform MQTT operations (connect, subscribe, publish)
-3. Review console for detailed TX/RX information
-4. Disable logging after troubleshooting to reduce overhead
+3. Review detailed MQTT protocol information including TLS handshake and authentication
+4. Monitor message publishing confirmation and subscription status
+5. Disable logging after troubleshooting to reduce overhead
+
+!!! tip "When to Use Each Log"
+    - **General Log**: Use for overall connectivity issues, basic status monitoring
+    - **MQTT Debug Log**: Use for MQTT-specific problems like TLS issues, authentication failures, message delivery problems
 
 ### Connection Status and Counters
 
