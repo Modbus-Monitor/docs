@@ -832,11 +832,26 @@ Phase 4: Client certificates (device identity)
 
 ## Server Mode Guide: MQTT Command Reception
 
-XPF's Server Mode allows receiving commands from MQTT brokers and writing them to Modbus devices - enabling remote control capabilities.
+XPF's Server Mode allows receiving commands from MQTT brokers and writing them to Modbus devices - enabling remote control capabilities. This powerful feature transforms XPF into a **Modbus server** that can receive control commands via MQTT and write values directly to its internal Modbus registers, which can then be read by other Modbus clients.
+
+**How MQTT Server Mode Works:**
+- XPF creates virtual Modbus registers (holding registers, input registers, coils, discrete inputs)
+- MQTT messages received from the broker are processed and written to these virtual registers
+- Other Modbus clients (PLCs, HMIs, SCADA systems) can connect to XPF via TCP/RTU and read the updated values
+- This creates a **bridge between MQTT and Modbus networks**, enabling cloud-to-device control
+
+**Practical Applications:**
+- **Cloud Control**: Receive setpoint changes from cloud dashboards and make them available to local PLCs
+- **Remote Configuration**: Update device parameters via MQTT that are then read by Modbus devices
+- **Inter-System Communication**: Bridge different protocols by receiving MQTT data and serving it via Modbus
+- **Testing & Simulation**: Use another XPF instance in Client mode to send MQTT messages, then read the values from the Server mode instance
+
+!!! tip "Bidirectional Testing Setup"
+    **Perfect for testing:** Use two XPF instances - one in Client mode publishing MQTT data, and another in Server mode receiving the data and serving it via Modbus. This creates a complete local test environment without needing external hardware.
 
 !!! info "Bidirectional MQTT"
-    **Client Mode**: XPF polls Modbus → publishes to MQTT (data collection)  
-    **Server Mode**: XPF receives MQTT → writes to Modbus (remote control)
+    **Client Mode**: XPF polls Modbus → publishes to MQTT as discuseed in the previous sections. (data collection)  
+    **Server Mode**: XPF receives MQTT → writes to Modbus registers → serves data via Modbus (remote control)
 
 ### Server Mode Setup
 
