@@ -527,6 +527,16 @@ Certificate authentication provides enhanced security for MQTT connections throu
 
 #### EMQX Cloud Certificate Configuration
 
+**EMQX provides downloadable CA certificates for secure connections** - making it an excellent example for demonstrating explicit certificate configuration:
+
+!!! info "Why EMQX for CA Certificate Example"
+    **EMQX Cloud offers free CA certificate downloads** with clear visibility of expiration dates, making it perfect for learning certificate management:
+    
+    - **HiveMQ Cloud**: Uses auto-detect certificates (easier but less transparent)
+    - **EMQX Cloud**: Provides downloadable CA certificates (explicit trust chain)
+    - **Learning benefit**: Shows proper certificate management workflow
+    - **Production ready**: Same approach used in enterprise environments
+
 **EMQX provides downloadable CA certificates for secure connections:**
 
 ![EMQX CA Certificate](../assets/screenshots/xpf-iot-emqx-ca2.webp){ loading="lazy"}
@@ -600,21 +610,21 @@ openssl pkcs12 -export -out client.pfx -inkey client-key.pem -in client-cert.pem
 
 **XPF Certificate Configuration Steps:**
 
-1. **Open XPF MQTT Settings**
-   - Navigate to **IoT Tab** > **MQTT Group** > **Settings**
-   - Enable **TLS/SSL** checkbox first
+1. **Open XPF MQTT Settings**   
+      - Navigate to **IoT Tab** > **MQTT Group** > **Settings**
+      - Enable **TLS/SSL** checkbox first
 
 2. **Set CA Certificate Path**
-   - Click the **CA Certificate** button (file certificate icon)
-   - Browse to your downloaded CA certificate file
-   - Select the certificate file (e.g., `ca.crt`, `emqx-ca.pem`, `your-company-ca.crt`)
-   - XPF displays the full path in the field
+      - Click the **CA Certificate** button (file certificate icon)
+      - Browse to your downloaded CA certificate file
+      - Select the certificate file (e.g., `ca.crt`, `emqx-ca.pem`, `your-company-ca.crt`)
+      - XPF displays the full path in the field
 
 3. **Set Client Certificate Path** (if required)
-   - Click the **Client Certificate** button (file certificate icon)  
-   - Browse to your client certificate file (must be in PFX format)
-   - Select the certificate file (e.g., `client.pfx`, `device-cert.pfx`)
-   - Enter the certificate password when prompted
+      - Click the **Client Certificate** button (file certificate icon)  
+      - Browse to your client certificate file (must be in PFX format)
+      - Select the certificate file (e.g., `client.pfx`, `device-cert.pfx`)
+      - Enter the certificate password when prompted
 
 4. **Complete Configuration**
    ```yaml
@@ -637,6 +647,7 @@ openssl pkcs12 -export -out client.pfx -inkey client-key.pem -in client-cert.pem
 
 !!! tip "Certificate Management in XPF"
     **XPF Certificate UI Features:**
+    
     - **File Browser Integration**: Certificate buttons open standard file dialogs
     - **Path Validation**: XPF validates certificate file format and accessibility  
     - **Secure Storage**: Certificate paths stored in XPF configuration (passwords not stored)
@@ -802,18 +813,20 @@ Phase 4: Client certificates (device identity)
 ### Verification
 
 **Secure connection indicators:**
+
 - XPF status shows "Connected (TLS)" or "Connected (WSS)"
 - Communication log shows no certificate errors
 - Message traffic encrypted (use Wireshark to verify)
 
 !!! success "Production Ready"
     **Your MQTT connection is now production-ready with:**
+
     - ✅ Encrypted data transmission
     - ✅ Server authentication  
     - ✅ Optional client authentication
     - ✅ Firewall-friendly options
 
-**For detailed configuration steps, see**: [Complete Setup Examples](#complete-setup-examples) section below.
+**For detailed configuration steps, see**: [Complete Setup Examples](#complete-setup-examples) section.
 
 ---
 
