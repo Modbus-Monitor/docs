@@ -473,6 +473,7 @@ For production systems, always use encrypted MQTT connections to protect your da
    Username: (leave blank)
    Password: (leave blank)
    TLS/SSL: ✓ Enabled
+   Websocket: ✗ Disabled
    CA Certificate: Auto-detect
    ```
 
@@ -486,6 +487,7 @@ Broker Host: broker.hivemq.com
 Port: 8000 (WebSocket)
 Protocol: ws://
 TLS/SSL: ✗ Disabled
+Websocket: ✓ Enabled
 ```
 
 #### Secure WebSocket (Production)
@@ -494,6 +496,7 @@ Broker Host: broker.hivemq.com
 Port: 8884 (WebSocket + TLS)
 Protocol: wss://
 TLS/SSL: ✓ Enabled
+Websocket: ✓ Enabled
 ```
 
 ### Client Certificate Authentication
