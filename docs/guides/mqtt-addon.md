@@ -87,7 +87,7 @@ Uplink (XPF Client to MQTT):
   - Production counts to Analytics platform  
   - Alarm states to Notification system
 
-**Downlink (MQTT to XPF Monitor Points):**
+Downlink (MQTT to XPF Monitor Points):
   - External sensor data to Monitor Points grid
   - Cloud service data to unified monitoring view
   - Test data injection for dashboard development
@@ -114,6 +114,7 @@ Development Workflow:
 
 !!! tip "No Other Tool Does This"
     **XPF eliminates the complexity of:**
+
     - Learning multiple MQTT client applications
     - Integrating separate publisher/subscriber tools  
     - Writing custom code to bridge Modbus and MQTT
@@ -575,6 +576,7 @@ For high-security environments requiring mutual authentication:
 #### When Client Certificates Are Required
 
 **Industrial & Enterprise Scenarios:**
+
 - **Manufacturing Plants**: PLCs and SCADA systems requiring device authentication
 - **Critical Infrastructure**: Power plants, water treatment, transportation systems
 - **Compliance Environments**: ISO 27001, IEC 62443, SOX, HIPAA requirements
@@ -582,6 +584,7 @@ For high-security environments requiring mutual authentication:
 - **Multi-Tenant Brokers**: Shared MQTT infrastructure requiring device isolation
 
 **Security Benefits:**
+
 - **Device Identity Verification**: Each device has unique cryptographic identity
 - **Non-Repudiation**: Cryptographic proof of device actions and commands
 - **Access Control**: Fine-grained permissions based on certificate attributes
@@ -775,12 +778,14 @@ Topic Permissions (configured in broker):
     ```
     
     **Benefits:**
+
     - Cryptographic device identity
     - No shared credentials
     - Granular certificate-based permissions
     - Audit trails for all device actions
     
     **When to use:**
+
     - Critical infrastructure
     - Compliance environments (IEC 62443, ISO 27001)
     - Zero-trust networks
@@ -1277,6 +1282,7 @@ Subscription Topics:
 | **Verification Tool** | **MQTT Explorer** | Visual confirmation of message flow |
 
 **Why MQTT Explorer for Documentation:**
+
 - **Visual Clarity**: Tree view shows topic structure clearly
 - **Popular & Free**: Most widely used MQTT test client  
 - **Clean Interface**: Perfect for screenshots and tutorials
@@ -1284,6 +1290,7 @@ Subscription Topics:
 - **No Registration**: Immediate download and use
 
 **MQTT Explorer TLS Support:**
+
 - **Basic TLS/SSL**: Supports standard TLS connections (port 8883)
 - **CA Certificates**: Can validate broker certificates
 - **Username/Password over TLS**: Works with HiveMQ Cloud
@@ -1310,40 +1317,43 @@ Subscription Topics:
 #### Step 1: Set Up HiveMQ Cloud Account
 
 1. **Create Free Account**
-   - Go to [HiveMQ Cloud](https://www.hivemq.com/cloud/)
-   - Click **"Get Started Free"**
-   - Create account (no credit card required)
+   
+      - Go to [HiveMQ Cloud](https://www.hivemq.com/cloud/)
+      - Click **"Get Started Free"**
+      - Create account (no credit card required)
 
 2. **Create Cluster**
-   - Click **"Create Cluster"**
-   - Select **"Free"** plan (100 connections)
-   - Choose region closest to your location
-   - Wait 2-3 minutes for cluster creation
+   
+      - Click **"Create Cluster"**
+      - Select **"Free"** plan (100 connections)
+      - Choose region closest to your location
+      - Wait 2-3 minutes for cluster creation
 
 3. **Get Connection Details**
-   - Click your cluster name
-   - Note the **Cluster URL** (e.g., `abc123def.s2.eu.hivemq.cloud`)
-   - Click **"Access Management"** > **"Add Credentials"**
-   - Create username/password (save these!)
-
-![HiveMQ Cloud Cluster Details](../../assets/screenshots/hivemq-cloud-cluster.webp){ loading="lazy" }
+   
+      - Click your cluster name
+      - Note the **Cluster URL** (e.g., `abc123def.s2.eu.hivemq.cloud`)
+      - Click **"Access Management"** > **"Add Credentials"**
+      - Create username/password (save these!)
 
 #### Step 2: Configure TLS Connection in XPF
 
 1. **Open XPF MQTT Settings**
-   - **Broker Host**: `your-cluster.s2.eu.hivemq.cloud` (from Step 1)
-   - **Port**: `8883` (TLS port)
-   - **Client ID**: `XPF-Plant1-Device001` (unique identifier)
-   - **Username**: (from HiveMQ credentials)
-   - **Password**: (from HiveMQ credentials)
+   
+      - **Broker Host**: `your-cluster.s2.eu.hivemq.cloud` (from Step 1)
+      - **Port**: `8883` (TLS port)
+      - **Client ID**: `XPF-Plant1-Device001` (unique identifier)
+      - **Username**: (from HiveMQ credentials)
+      - **Password**: (from HiveMQ credentials)
 
 2. **Enable TLS Security**
-   - **Check** **TLS/SSL** checkbox
-   - **CA Certificate**: **Auto-detect** (HiveMQ uses standard certificates)
-   - **Client Certificate**: Leave empty (username/password auth)
-   - **Verify Hostname**: Checked
+   
+      - **Check** **TLS/SSL** checkbox
+      - **CA Certificate**: **Auto-detect** (HiveMQ uses standard certificates)
+      - **Client Certificate**: Leave empty (username/password auth)
+      - **Verify Hostname**: Checked
 
-![XPF TLS Configuration](../../assets/screenshots/xpf-mqtt-tls-config.webp){ loading="lazy" }
+![XPF TLS Configuration](../../assets/screenshots/xpf-mqtt-secure.webp){ loading="lazy" }
 
 #### Step 3: Configure Production Topics
 
@@ -1362,35 +1372,36 @@ Subscription Topics:
 
 1. **Click Connect** - Should show **"Connected (TLS)"**
 2. **Verify in HiveMQ Cloud Console**:
-   - Go to your cluster dashboard
-   - Click **"Client Details"**
-   - Should see your Client ID connected
-
-![HiveMQ Cloud Connected Clients](../../assets/screenshots/hivemq-cloud-clients.webp){ loading="lazy" }
+   
+      - Go to your cluster dashboard
+      - Click **"Client Details"**
+      - Should see your Client ID connected
 
 #### Step 5: Verify Encrypted Communication
 
 **Option A: MQTT Explorer (Basic TLS)**
 1. **Configure MQTT Explorer for TLS**:
-   - Host: `your-cluster.s2.eu.hivemq.cloud`
-   - Port: `8883`
-   - Protocol: `mqtts://` (TLS)
-   - Username/Password: (your HiveMQ credentials)
-   - Subscribe to: `factory/line1/plc/+`
+
+      - Host: `your-cluster.s2.eu.hivemq.cloud`
+      - Port: `8883`
+      - Protocol: `mqtts://` (TLS)
+      - Username/Password: (your HiveMQ credentials)
+      - Subscribe to: `factory/line1/plc/+`
 
 **Option B: HiveMQ WebSocket Client (Recommended for TLS)**
-1. **Use Built-in WebSocket Client**:
-   - In HiveMQ cluster dashboard, click **"Try out Websocket Client"**
-   - Automatically uses secure connection (WSS)
-   - Subscribe to your topics: `factory/line1/plc/+`
-   - You should see encrypted data flowing
 
-![HiveMQ WebSocket Client](../../assets/screenshots/hivemq-websocket-client.webp){ loading="lazy" }
+1. **Use Built-in WebSocket Client**:
+
+      - In HiveMQ cluster dashboard, click **"Try out Websocket Client"**
+      - Automatically uses secure connection (WSS)
+      - Subscribe to your topics: `factory/line1/plc/+`
+      - You should see encrypted data flowing
 
 2. **Monitor XPF Communication Log**:
-   - Messages show **"Published (TLS)"**
-   - No certificate errors
-   - Connection remains stable
+   
+      - Messages show **"Published (TLS)"**
+      - No certificate errors
+      - Connection remains stable
 
 !!! success "Production Setup Complete!"
     You now have **secure, encrypted MQTT** communication suitable for production environments!
@@ -1402,15 +1413,17 @@ Subscription Topics:
 #### Step 1: Set Up EMQX Cloud Deployment
 
 1. **Create EMQX Cloud Account**
-   - Visit [EMQX Cloud](https://www.emqx.com/cloud) and create account
-   - Create a new deployment (Serverless or Dedicated)
-   - Note your deployment endpoint (e.g., `caxxxx4e.ala.us-east-1.emqxsl.com`)
+   
+      - Visit [EMQX Cloud](https://www.emqx.com/cloud) and create account
+      - Create a new deployment (Serverless or Dedicated)
+      - Note your deployment endpoint (e.g., `caxxxx4e.ala.us-east-1.emqxsl.com`)
 
 2. **Download CA Certificate**
-   - In EMQX console, go to **Deployment Overview**
-   - Find **MQTT Connection Information** section
-   - Click **CA Certificate** download link
-   - Save the certificate file (e.g., `emqx-ca.crt`)
+   
+      - In EMQX console, go to **Deployment Overview**
+      - Find **MQTT Connection Information** section
+      - Click **CA Certificate** download link
+      - Save the certificate file (e.g., `emqx-ca.crt`)
 
 #### Step 2: Configure XPF with EMQX CA Certificate
 
@@ -1426,33 +1439,37 @@ Subscription Topics:
    ```
 
 2. **Configure CA Certificate**
-   - Enable **TLS/SSL** checkbox
-   - Click **CA Certificate** button (file certificate icon)
-   - Browse to downloaded `emqx-ca.crt` file
-   - Select the certificate file
-   - XPF displays certificate path
+   
+      - Enable **TLS/SSL** checkbox
+      - Click **CA Certificate** button (file certificate icon)
+      - Browse to downloaded `emqx-ca.crt` file
+      - Select the certificate file
+      - XPF displays certificate path
 
 #### Step 3: Test EMQX Connection
 
 1. **Verify Certificate Configuration**
-   - CA Certificate path should be displayed in XPF
-   - TLS/SSL should be enabled
-   - All connection details should be entered
+   
+      - CA Certificate path should be displayed in XPF
+      - TLS/SSL should be enabled
+      - All connection details should be entered
 
 2. **Connect and Verify**
-   - Click **Connect** - should show **"Connected (TLS)"**
-   - Check MQTT Debug Log for certificate validation:
-   ```
-   Certificate validation approved. Errors: None.
-   Subject: CN=*.ala.us-east-1.emqxsl.com
-   TLS encryption enabled. Using protocol: Tls12
-   Connected to MQTT Broker
-   ```
+
+      - Click **Connect** - should show **"Connected (TLS)"**
+      - Check MQTT Debug Log for certificate validation:
+      ```
+      Certificate validation approved. Errors: None.
+      Subject: CN=*.ala.us-east-1.emqxsl.com
+      TLS encryption enabled. Using protocol: Tls12
+      Connected to MQTT Broker
+      ```
 
 3. **Verify in EMQX Console**
-   - Go to EMQX deployment **Monitor** section
-   - Check **Connections** - should see your Client ID connected
-   - Verify connection shows as secure/encrypted
+   
+      - Go to EMQX deployment **Monitor** section
+      - Check **Connections** - should see your Client ID connected
+      - Verify connection shows as secure/encrypted
 
 !!! success "EMQX CA Setup Complete!"
     **Benefits of using downloaded CA certificate:**
@@ -1489,9 +1506,10 @@ openssl x509 -req -in client.csr -signkey client-key.pem \
 ```
 
 **Option B: Use Your PKI/CA System**
-- Generate certificate through your organization's PKI
-- Ensure certificate includes **Client Authentication** key usage
-- Common Name should match your device identifier
+
+  - Generate certificate through your organization's PKI
+  - Ensure certificate includes **Client Authentication** key usage
+  - Common Name should match your device identifier
 
 #### Step 2: Convert to PFX Format (Windows)
 
@@ -1507,13 +1525,12 @@ openssl pkcs12 -export -out client.pfx \
 
 #### Step 3: Configure XPF with Client Certificate
 
-![XPF Client Certificate Configuration](../../assets/screenshots/xpf-mqtt-client-cert.webp){ loading="lazy" }
-
 1. **TLS Configuration**:
-   - **TLS/SSL**: Checked
-   - **CA Certificate**: `ca.crt` (broker's CA certificate)
-   - **Client Certificate**: `client.pfx` (your device certificate)
-   - **Certificate Password**: (PFX password from Step 2)
+   
+      - **TLS/SSL**: Checked
+      - **CA Certificate**: `ca.crt` (broker's CA certificate)
+      - **Client Certificate**: `client.pfx` (your device certificate)
+      - **Certificate Password**: (PFX password from Step 2)
 
 2. **Broker Configuration**:
    ```yaml
@@ -1570,11 +1587,12 @@ openssl pkcs12 -export -out client.pfx \
 ### Diagnostic Tools
 
 **XPF MQTT Add-on Diagnostics:**
-- **MQTT Statistics Display (TxxRxxExx)**: Real-time communication counters for monitoring message flow and error rates
-- MQTT connection status indicator
-- Message publish/subscribe counters
-- Topic subscription management
-- Communication error logging
+
+   - **MQTT Statistics Display (TxxRxxExx)**: Real-time communication counters for monitoring message flow and error rates
+   - MQTT connection status indicator
+   - Message publish/subscribe counters
+   - Topic subscription management
+   - Communication error logging
 
 **MQTT Statistics for Troubleshooting:**
 
@@ -1589,10 +1607,11 @@ openssl pkcs12 -export -out client.pfx \
 **Built-in MQTT Debug Log**: Access detailed connection, authentication, and message flow information via IoT Tab > MQTT Group > Debug Log button
 
 **External MQTT Tools:**
-- **MQTT Explorer**: Visual broker exploration and testing
-- **Mosquitto Client**: Command-line publish/subscribe tools
-- **MQTT.fx**: Desktop MQTT client for testing
-- **Online MQTT Clients**: Web-based testing interfaces
+
+   - **MQTT Explorer**: Visual broker exploration and testing
+   - **Mosquitto Client**: Command-line publish/subscribe tools
+   - **MQTT.fx**: Desktop MQTT client for testing
+   - **Online MQTT Clients**: Web-based testing interfaces
 
 ## Best Practices
 
