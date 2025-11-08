@@ -326,8 +326,9 @@ To verify that your XPF MQTT connection is working correctly, use **MQTT Explore
 ### Step 2: Enable Communication Logging
 
 2. **Enable Communication Logging** to see detailed MQTT activity
-      - In XPF, go to **Home Tab** > **Log** > **Show** 
-      - Click **Start** to begin logging
+      - **General Communication Log**: In XPF, go to **Home Tab** > **Log** > **Show** and click **Start**
+      - **MQTT-Specific Debug Log**: Go to **IoT Tab** > **MQTT Group** > **Debug Log Button** and click **Start**
+      - The MQTT Debug Log provides detailed connection, authentication, and message flow information specifically for MQTT operations
       - **For detailed logging setup**: See [Communication Logging](../products/xpf/user-guide.md#log-group) in the XPF User Guide
 
 ### Step 3: Start MQTT Communication
@@ -433,6 +434,32 @@ For production systems, always use encrypted MQTT connections to protect your da
 3. **Test Secure Connection**
    - XPF shows "Connected (TLS)" status
    - Use HiveMQ WebSocket client in dashboard for verification
+   - **Enable MQTT Debug Log** (IoT Tab > MQTT Group > Debug Log) to see detailed connection status:
+
+      ```
+         11/8/2025 3:34:33 PM,MQTT Start/Stop Toggle
+         11/8/2025 3:34:33 PM,Port 8883 on a88b7e2966be46fdaa86a088d60d4160.s1.eu.hivemq.cloud is open.
+         11/8/2025 3:34:33 PM,Connecting...
+         11/8/2025 3:34:33 PM,TCP Server: a88b7e2966be46fdaa86a088d60d4160.s1.eu.hivemq.cloud:8883
+         11/8/2025 3:34:33 PM,Using credentials. Username: hivemq.webclient.1762555561933 Password:***
+         11/8/2025 3:34:33 PM,TLS encryption enabled. Using protocol: Tls12
+         11/8/2025 3:34:33 PM,No CA certificate provided.
+         11/8/2025 3:34:33 PM,No client certificate provided.
+         11/8/2025 3:34:33 PM,Using credentials. Username: hivemq.webclient.1762555561933 Password:***
+         11/8/2025 3:34:33 PM,MQTT Client Configuration>> Host:a88b7e2966be46fdaa86a088d60d4160.s1.eu.hivemq.cloud, Port:8883, Protocol:3.11, Timeout:10000, KeepAlive:60s WebSocket:False, TLS:True, CA Cert Path:, Client Cert Path:, Username:hivemq.webclient.1762555561933, Password:*** 
+         11/8/2025 3:34:33 PM,Connecting...
+         11/8/2025 3:34:34 PM,Certificate validation approved. Errors: None. Subject: CN=*.s1.eu.hivemq.cloud. Thumbprint: A5ACACC3389D15FFAE7E2004F166320558B381CF. Chain elements: 3
+         11/8/2025 3:34:34 PM,Connected.
+         11/8/2025 3:34:34 PM,Connected to MQTT Broker
+         11/8/2025 3:34:44 PM,Published: xpf/Sample Holding Register 40001
+         11/8/2025 3:34:44 PM,xpf/Sample Holding Register : 40001
+         11/8/2025 3:34:44 PM,Published: xpf/Sample Input Register 30001
+         11/8/2025 3:34:44 PM,xpf/Sample Input Register : 30001
+         11/8/2025 3:34:44 PM,Published: xpf/Discrete Input Register 1
+         11/8/2025 3:34:44 PM,xpf/Discrete Input Register : 1
+         11/8/2025 3:34:44 PM,Published: xpf/Coil Register 1
+         11/8/2025 3:34:44 PM,xpf/Coil Register : 1
+      ```
 
 #### Option 2: Public Broker with TLS
 
@@ -965,10 +992,10 @@ Subscription Topics:
     - XPF Status: Look for "Connected" indicator
     - TX Counter: Should increment as data is published
     
-    **2. Use XPF's Built-in MQTT Console**
-    - Open **MQTT Console** in XPF
-    - Enable **Debug Logging** 
-    - Watch real-time TX/RX message flow
+    **2. Use XPF's Built-in MQTT Logging**
+    - **General Log**: Open **Home Tab** > **Log** > **Show** for overall communication status
+    - **MQTT Debug Log**: Use **IoT Tab** > **MQTT Group** > **Debug Log** for detailed MQTT-specific information
+    - Watch real-time connection status, authentication, and TX/RX message flow
     
     **3. Test Bidirectional Communication**
     - **Publisher Test**: XPF Client mode publishes to broker
