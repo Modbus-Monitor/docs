@@ -499,6 +499,60 @@ TLS/SSL: ✓ Enabled
 Websocket: ✓ Enabled
 ```
 
+### Certificate-Based Authentication
+
+#### Understanding Certificate Authentication
+
+Certificate authentication provides enhanced security for MQTT connections through cryptographic validation. There are two types of certificates used in MQTT security:
+
+**1. CA (Certificate Authority) Certificate**
+   - **Purpose**: Validates the broker's identity (server authentication)
+   - **When to use**: When connecting to brokers with custom/private certificates
+   - **Security benefit**: Prevents man-in-the-middle attacks by verifying broker authenticity
+
+**2. Client Certificate**
+   - **Purpose**: Authenticates your device to the broker (client authentication)
+   - **When to use**: When broker requires mutual TLS (mTLS) authentication
+   - **Security benefit**: Ensures only authorized devices can connect
+
+#### When to Use Certificates
+
+| Scenario | CA Certificate | Client Certificate | Use Case |
+|----------|----------------|-------------------|----------|
+| **Public brokers** (HiveMQ, EMQX public) | Optional (auto-detect) | Not supported | Basic testing, learning |
+| **Private cloud brokers** (EMQX Cloud, HiveMQ Cloud) | Required (download from provider) | Optional | Secure production deployment |
+| **Enterprise environments** | Required (from IT department) | Required | High-security, compliance requirements |
+| **Self-hosted brokers** | Required (your own CA) | Required | Complete control and security |
+
+#### EMQX Cloud Certificate Configuration
+
+**EMQX provides downloadable CA certificates for secure connections:**
+
+![EMQX CA Certificate](../assets/screenshots/xpf-iot-emqx-ca2.webp){ loading="lazy"}
+
+1. **Download CA Certificate from EMQX Console**
+      - Log into your EMQX deployment console (as shown in screenshot)
+      - Navigate to **Deployment Overview** → **MQTT Connection Information**
+      - Click **CA Certificate** download link (shows "CA Certificate Expiration: 2031.11.09")
+      - Save the certificate file (usually named `ca.crt` or similar)
+      
+2. **Configure XPF with EMQX CA Certificate**
+   ```yaml
+   XPF Configuration:
+     Broker Host: caxxxx4e.ala.us-east-1.emqxsl.com (your EMQX endpoint)
+     Port: 8883 (TLS port)
+     TLS/SSL: ✓ Enabled
+     CA Certificate: [Browse] → Select downloaded ca.crt file
+     Client Certificate: Leave empty (for username/password auth)
+   ```
+
+3. **Set CA Certificate Path in XPF**
+   - In XPF MQTT settings, locate the **CA Certificate** button (file icon)
+   - Click the **CA Certificate** button to open file browser
+   - Navigate to your downloaded CA certificate file
+   - Select the certificate file (e.g., `ca.crt`, `emqx-ca.pem`)
+   - XPF will display the certificate path in the field
+
 ### Client Certificate Authentication
 
 For high-security environments requiring mutual authentication:
@@ -506,7 +560,31 @@ For high-security environments requiring mutual authentication:
 !!! warning "Advanced Setup"
     Client certificates require PKI knowledge and certificate management. Only recommended for enterprise environments with proper certificate infrastructure.
 
-#### Generate Client Certificate
+#### When Client Certificates Are Required
+
+**Industrial & Enterprise Scenarios:**
+- **Manufacturing Plants**: PLCs and SCADA systems requiring device authentication
+- **Critical Infrastructure**: Power plants, water treatment, transportation systems
+- **Compliance Environments**: ISO 27001, IEC 62443, SOX, HIPAA requirements
+- **Zero-Trust Networks**: All devices must be cryptographically authenticated
+- **Multi-Tenant Brokers**: Shared MQTT infrastructure requiring device isolation
+
+**Security Benefits:**
+- **Device Identity Verification**: Each device has unique cryptographic identity
+- **Non-Repudiation**: Cryptographic proof of device actions and commands
+- **Access Control**: Fine-grained permissions based on certificate attributes
+- **Audit Trails**: Complete logging of authenticated device communications
+
+**Typical Implementation:**
+```yaml
+Enterprise Setup:
+  CA Certificate: Company's root certificate authority
+  Client Certificate: Device-specific certificate signed by company CA
+  Broker Configuration: Requires both server and client authentication
+  Access Control: MQTT topics mapped to certificate attributes
+```
+
+#### Generate Client Certificate (optional)
 ```bash
 # Create private key and certificate
 openssl genpkey -algorithm RSA -out client-key.pem
@@ -518,15 +596,207 @@ openssl pkcs12 -export -out client.pfx -inkey client-key.pem -in client-cert.pem
 ```
 
 #### Configure XPF with Certificates
+
+**XPF Certificate Configuration Steps:**
+
+1. **Open XPF MQTT Settings**
+   - Navigate to **IoT Tab** > **MQTT Group** > **Settings**
+   - Enable **TLS/SSL** checkbox first
+
+2. **Set CA Certificate Path**
+   - Click the **CA Certificate** button (file certificate icon)
+   - Browse to your downloaded CA certificate file
+   - Select the certificate file (e.g., `ca.crt`, `emqx-ca.pem`, `your-company-ca.crt`)
+   - XPF displays the full path in the field
+
+3. **Set Client Certificate Path** (if required)
+   - Click the **Client Certificate** button (file certificate icon)  
+   - Browse to your client certificate file (must be in PFX format)
+   - Select the certificate file (e.g., `client.pfx`, `device-cert.pfx`)
+   - Enter the certificate password when prompted
+
+4. **Complete Configuration**
+   ```yaml
+   Broker Configuration:
+     Broker Host: secure-broker.yourcompany.com (or EMQX endpoint)
+     Port: 8883 (TLS port)
+     Client ID: XPF-Device-001 (must match certificate CN if using client certs)
+     TLS/SSL: ✓ Enabled
+     
+   Certificate Configuration:
+     CA Certificate: [Full path displayed after browsing]
+     Client Certificate: [Full path displayed after browsing, PFX format]
+     Certificate Password: [Entered during PFX selection]
+   ```
+
+**Certificate File Format Requirements:**
+- **CA Certificate**: `.crt`, `.pem`, `.cer` formats supported
+- **Client Certificate**: Must be `.pfx` (PKCS#12) format containing both certificate and private key
+- **Certificate Path**: XPF stores and displays the full file path after selection
+
+!!! tip "Certificate Management in XPF"
+    **XPF Certificate UI Features:**
+    - **File Browser Integration**: Certificate buttons open standard file dialogs
+    - **Path Validation**: XPF validates certificate file format and accessibility  
+    - **Secure Storage**: Certificate paths stored in XPF configuration (passwords not stored)
+    - **Certificate Icons**: File certificate icons clearly identify certificate configuration buttons
+
+### Authentication vs Authorization
+
+Understanding the difference between authentication (who you are) and authorization (what you can do) is crucial for proper MQTT security implementation.
+
+#### Authentication: "Who Are You?"
+
+**Authentication Methods by Complexity:**
+
+| Method | Security Level | Use Case | Username Required | Notes |
+|--------|----------------|----------|-------------------|-------|
+| **Anonymous** | None | Public testing only | No | Anyone can connect |
+| **Username/Password** | Basic | Development, cloud services | Yes | Simple credential-based auth |
+| **CA Certificate Only** | Medium | Verified server identity | Yes (usually) | Validates broker, not client |
+| **Client Certificate** | High | Enterprise environments | No* | Cryptographic device identity |
+| **Client Cert + Username** | Highest | Maximum security | Yes | Both crypto and credential auth |
+
+*Client certificates can replace username/password but may be used together for defense in depth.
+
+#### Authorization: "What Can You Do?"
+
+**After authentication, authorization controls access to topics and operations:**
+
+**HiveMQ Cloud Authorization Example:**
 ```yaml
-Broker Host: secure-broker.yourcompany.com
-Port: 8883
-Client ID: XPF-Device-001
-TLS/SSL: ✓ Enabled
-CA Certificate: ca.crt (broker's CA)
-Client Certificate: client.pfx
-Certificate Password: (your PFX password)
+Topic Permissions (configured in broker):
+  User "sensor-device":
+    - CAN publish to: "sensors/+/data"
+    - CANNOT publish to: "commands/#"
+    - CAN subscribe to: "sensors/sensor-001/config"
+    
+  User "control-dashboard":
+    - CAN publish to: "commands/#"
+    - CAN subscribe to: "sensors/+/data"
+    - CAN subscribe to: "alarms/#"
 ```
+
+#### Recommended Configurations by Use Case
+
+=== "Beginner (Learning & Testing)"
+
+    **Goal**: Get started quickly with minimal complexity
+    
+    **Authentication**: Username/Password
+    ```yaml
+    XPF Configuration:
+      TLS/SSL: ✓ Enabled (use 8883)
+      CA Certificate: Auto-detect
+      Username: your-hivemq-username
+      Password: your-hivemq-password
+      Client Certificate: (leave empty)
+    ```
+    
+    **Authorization**: Default permissions (can publish/subscribe to all topics)
+    
+    **Benefits:**
+    - Quick setup, no certificate management
+    - Encrypted connection protects data in transit
+    - Good for learning and development
+    
+    **Limitations:**
+    - Relies on shared credentials
+    - Less secure than certificate-based auth
+
+=== "Secure (Production Development)"
+
+    **Goal**: Production-ready security with manageable complexity
+    
+    **Authentication**: Username/Password + Downloaded CA Certificate
+    ```yaml
+    XPF Configuration:
+      TLS/SSL: ✓ Enabled
+      CA Certificate: [Downloaded from EMQX/HiveMQ console]
+      Username: production-device-001
+      Password: strong-unique-password
+      Client Certificate: (leave empty)
+    ```
+    
+    **Authorization**: Topic-based permissions
+    ```yaml
+    Broker Configuration:
+      Device Permissions:
+        - PUBLISH: "factory/line1/data/#"
+        - SUBSCRIBE: "factory/line1/commands/+"
+        - DENY: "admin/#", "system/#"
+    ```
+    
+    **Benefits:**
+    - Explicit trust chain (no auto-detect)
+    - Topic-level access control
+    - Credential rotation capabilities
+    
+    **When to use:**
+    - Production deployments
+    - Multi-device installations
+    - Customer-facing systems
+
+=== "Enterprise (Maximum Security)"
+
+    **Goal**: Highest security for critical infrastructure
+    
+    **Authentication**: Client Certificate + CA Certificate (mutual TLS)
+    ```yaml
+    XPF Configuration:
+      TLS/SSL: ✓ Enabled
+      CA Certificate: company-root-ca.crt
+      Client Certificate: device-001.pfx
+      Certificate Password: strong-pfx-password
+      Username: (optional - can be derived from certificate)
+    ```
+    
+    **Authorization**: Certificate-based permissions + topic ACLs
+    ```yaml
+    Broker Configuration:
+      Certificate Subject: CN=XPF-Plant1-Device001
+      Permitted Actions:
+        - PUBLISH: "plant1/devices/001/#"
+        - SUBSCRIBE: "plant1/commands/001/+"
+        - DENY ALL other topics
+    ```
+    
+    **Benefits:**
+    - Cryptographic device identity
+    - No shared credentials
+    - Granular certificate-based permissions
+    - Audit trails for all device actions
+    
+    **When to use:**
+    - Critical infrastructure
+    - Compliance environments (IEC 62443, ISO 27001)
+    - Zero-trust networks
+    - High-value industrial systems
+
+#### Implementation Recommendations
+
+**Start Simple, Scale Security:**
+
+1. **Development Phase**: Begin with username/password + TLS
+2. **Testing Phase**: Add downloaded CA certificates  
+3. **Production Phase**: Implement topic-based authorization
+4. **Enterprise Phase**: Add client certificates for device authentication
+
+**Common Security Progression:**
+```yaml
+Phase 1: Anonymous → Username/Password + TLS
+Phase 2: Add CA Certificate (explicit trust)
+Phase 3: Configure topic permissions (authorization)
+Phase 4: Client certificates (device identity)
+```
+
+!!! warning "Authentication vs Authorization Gotcha"
+    **Client certificates replace username/password for authentication** but broker authorization policies still determine topic access. A device with a valid certificate can still be denied access to specific topics by authorization rules.
+
+!!! tip "HiveMQ vs EMQX Authorization"
+    - **HiveMQ Cloud**: Authorization configured in web console under "Access Management"
+    - **EMQX Cloud**: Authorization rules configured in "Authentication & Authorization" section
+    - **Both support**: Topic-based ACLs, username-based rules, certificate-based policies
 
 ### Verification
 
@@ -1101,7 +1371,73 @@ Subscription Topics:
 !!! success "Production Setup Complete!"
     You now have **secure, encrypted MQTT** communication suitable for production environments!
 
-### Example 3: Advanced TLS with Client Certificates
+### Example 3: EMQX Cloud with CA Certificate
+
+**Production setup with EMQX Cloud using downloaded CA certificate** - More secure than auto-detect.
+
+#### Step 1: Set Up EMQX Cloud Deployment
+
+1. **Create EMQX Cloud Account**
+   - Visit [EMQX Cloud](https://www.emqx.com/cloud) and create account
+   - Create a new deployment (Serverless or Dedicated)
+   - Note your deployment endpoint (e.g., `caxxxx4e.ala.us-east-1.emqxsl.com`)
+
+2. **Download CA Certificate**
+   - In EMQX console, go to **Deployment Overview**
+   - Find **MQTT Connection Information** section
+   - Click **CA Certificate** download link
+   - Save the certificate file (e.g., `emqx-ca.crt`)
+
+#### Step 2: Configure XPF with EMQX CA Certificate
+
+
+1. **Open XPF MQTT Settings**
+   ```yaml
+   Basic Configuration:
+     Broker Host: caxxxx4e.ala.us-east-1.emqxsl.com (your endpoint)
+     Port: 8883 (TLS/SSL port)
+     Client ID: XPF-EMQX-Device001
+     Username: (EMQX username)
+     Password: (EMQX password)
+   ```
+
+2. **Configure CA Certificate**
+   - Enable **TLS/SSL** checkbox
+   - Click **CA Certificate** button (file certificate icon)
+   - Browse to downloaded `emqx-ca.crt` file
+   - Select the certificate file
+   - XPF displays certificate path
+
+#### Step 3: Test EMQX Connection
+
+1. **Verify Certificate Configuration**
+   - CA Certificate path should be displayed in XPF
+   - TLS/SSL should be enabled
+   - All connection details should be entered
+
+2. **Connect and Verify**
+   - Click **Connect** - should show **"Connected (TLS)"**
+   - Check MQTT Debug Log for certificate validation:
+   ```
+   Certificate validation approved. Errors: None.
+   Subject: CN=*.ala.us-east-1.emqxsl.com
+   TLS encryption enabled. Using protocol: Tls12
+   Connected to MQTT Broker
+   ```
+
+3. **Verify in EMQX Console**
+   - Go to EMQX deployment **Monitor** section
+   - Check **Connections** - should see your Client ID connected
+   - Verify connection shows as secure/encrypted
+
+!!! success "EMQX CA Setup Complete!"
+    **Benefits of using downloaded CA certificate:**
+    - ✅ **Explicit trust chain** - You control which CA to trust
+    - ✅ **No auto-detect vulnerabilities** - Prevents potential CA spoofing
+    - ✅ **Certificate expiry tracking** - You know when CA cert expires (2031.11.09 in example)
+    - ✅ **Compliance ready** - Explicit certificate management for auditing
+
+### Example 4: Advanced TLS with Client Certificates
 
 **For high-security environments** requiring mutual TLS authentication.
 
