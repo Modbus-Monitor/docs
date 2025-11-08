@@ -919,6 +919,13 @@ All log controls in one comprehensive table. Labels **1**, **2**, **3a-3h**, and
     - Pre-configured cloud templates (AWS IoT, Azure IoT, HiveMQ)
     - Connection status monitoring and diagnostics
     
+    **MQTT Data Reception:**
+    
+    - Subscribe to MQTT topics and update Monitor Points grid in real-time
+    - Works independently of Modbus Client/Server operations  
+    - Supports external data integration from IoT devices, cloud services, and other systems
+    - **Complete setup guide:** [MQTT Data Reception Guide](../../guides/mqtt-addon.md#mqtt-data-reception-guide-real-time-monitor-point-updates)
+    
     **Use for:** Enterprise IoT deployments, multi-broker environments, advanced security requirements
     
     **License Required:** Purchase MQTT feature license to unlock full functionality

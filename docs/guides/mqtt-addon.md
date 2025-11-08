@@ -835,20 +835,65 @@ Phase 4: Client certificates (device identity)
 
 XPF's MQTT subscription feature allows receiving data from MQTT brokers and updating monitor points in real-time - enabling remote data injection and external system integration. This powerful feature **works independently of Modbus Client/Server operations**, allowing you to receive data via MQTT and display it in XPF's monitor points grid regardless of whether you're actively polling Modbus devices or running a Modbus server.
 
+<figure markdown>
+  ![XPF MQTT Configuration Interface](../assets/screenshots/xpf-iot-mqtt-topics-subscribe.webp){ loading="lazy" }
+  <figcaption style="font-size: 0.9em; color: #666;">XPF MQTT IoT interface showing active subscription topics list with highlighted [+] button indicating topics are actively subscribed and receiving data</figcaption>
+</figure>
+
+**Interface Elements:**
+
+| Element | Control | Function | Status Indicator |
+|---------|---------|----------|------------------|
+| **1** | **Subscription Topics List** | View and manage active MQTT topic subscriptions | Displays all topics currently subscribed for incoming messages |
+| **2** | **[+] Subscribe to All Topics** | Subscribes to all topics in the current list | Highlighted when MQTT broker confirms successful subscription |
+| **3** | **[-] Unsubscribe from All Topics** | Removes subscription from all topics in the list | Highlighted when broker confirms unsubscription status |
+| **4** | **+ Add Topic** | Add new topic after typing in text box | Use for patterns like `sensors/+/data`, `commands/#` |
+| **5** | **- Remove Topic** | Select topic from list and click to remove | Removes topic from subscription configuration |
+
+### MQTT Communication Statistics
+
+XPF provides real-time MQTT communication statistics displayed in the **T00R00E00** format in the MQTT interface:
+
+**Statistics Format: TxxRxxExx**
+- **T** (Transmit): Number of messages successfully published to the MQTT broker
+- **R** (Receive): Number of messages successfully received from subscribed topics
+- **E** (Error): Number of communication errors encountered (connection failures, publish errors, receive errors)
+
+**Example Statistics Display:**
+- **T125R089E003** = 125 messages sent, 89 messages received, 3 errors
+- **T000R000E000** = No activity yet (initial state)
+- **T045R000E001** = 45 messages published, no messages received, 1 error occurred
+
+**Statistics Updates:**
+- **Real-time counting**: Counters update immediately as MQTT operations occur
+- **Persistent during session**: Counters accumulate throughout the XPF session
+- **Reset capability**: Use "Reset Counters" button to clear all statistics
+- **Independent tracking**: Publish/subscribe counters work independently of each other
+
+!!! tip "Understanding MQTT Traffic Patterns"
+    **Normal operation patterns:**
+    - **Publishing only**: High T count, R=000 (XPF sending data to broker)
+    - **Subscribing only**: T=000, high R count (XPF receiving external data)
+    - **Bidirectional**: Both T and R counters increasing (full MQTT integration)
+    - **Error monitoring**: E count should remain low; investigate if errors increase rapidly
+
 **How MQTT Data Reception Works:**
-- Configure subscription topics in XPF's MQTT panel to listen for incoming messages
-- When MQTT messages arrive, XPF automatically updates the **Monitor Points data grid** with the new values
-- **Works independently**: No need to start Modbus Client or Server tabs - MQTT data updates happen automatically
-- Supports both structured JSON data and simple topic/payload formats for maximum flexibility
-- Automatically creates new monitor points or updates existing ones based on incoming MQTT data
+
+  - Configure subscription topics in XPF's MQTT panel to listen for incoming messages
+  - When MQTT messages arrive, XPF automatically updates the **Monitor Points data grid** with the new values
+  - **Works independently**: No need to start Modbus Client or Server tabs - MQTT data updates happen automatically
+  - Supports both structured JSON data and simple topic/payload formats for maximum flexibility
+  - Automatically creates new monitor points or updates existing ones based on incoming MQTT data
 
 **Key Independence Feature:**
+
 - **Monitor Points Grid Updates**: MQTT messages directly update the visual data grid in real-time
 - **No Modbus Dependency**: Works whether Modbus Client/Server tabs are running or stopped
 - **Real-Time Display**: See external data flowing into XPF immediately as MQTT messages arrive
 - **Flexible Data Sources**: Combine Modbus polling with MQTT data injection in the same monitor points view
 
 **Practical Applications:**
+
 - **External Data Integration**: Receive sensor data from IoT devices, weather stations, or cloud services via MQTT
 - **Multi-Protocol Monitoring**: Combine Modbus device data with MQTT data sources in a single view
 - **Remote Data Injection**: Accept data from external systems (databases, APIs, other applications) via MQTT
@@ -1052,6 +1097,43 @@ Unified Display:
 ```
 
 **For comprehensive MQTT connection setup, see**: [Secure Setup Guide](#secure-setup-guide) and [Complete Setup Examples](#complete-setup-examples) sections above.
+
+## MQTT Communication Monitoring and Diagnostics
+
+### Understanding MQTT Statistics (TxxRxxExx)
+
+**The MQTT statistics display provides real-time insight into communication health:**
+
+**Performance Monitoring:**
+```yaml
+Healthy Communication Patterns:
+  - Steady T counter increases during publishing operations
+  - Steady R counter increases when receiving subscribed data
+  - E counter remains at zero or very low numbers
+  - Counters resume increasing after connection recovery
+
+Warning Indicators:
+  - E counter increasing rapidly (connection/authentication issues)
+  - T counter not increasing during expected publishing (connection lost)
+  - R counter not increasing despite expected incoming data (subscription issues)
+  - All counters stopped increasing (communication halted)
+```
+
+**Troubleshooting with Statistics:**
+
+| Statistics Pattern | Likely Issue | Resolution |
+|-------------------|--------------|------------|
+| **T000R000E005+** | Connection/authentication failures | Check broker settings, credentials, network connectivity |
+| **T123R000E000** | Publishing works, no received data | Verify subscription topics, check if external publishers are active |
+| **T000R089E000** | Receiving data, not publishing | Normal for receive-only configurations, or check publishing setup |
+| **T050R025E010** | Mixed success with some errors | Intermittent network issues, check broker stability |
+| **T000R000E000** | No activity at all | MQTT not started, or no monitor points configured for publishing |
+
+**Using Statistics for Optimization:**
+- **High T, Low R**: Optimize publishing frequency to reduce broker load
+- **High R, Low T**: Perfect for data reception applications
+- **Increasing E count**: Investigate network stability, authentication, or broker capacity
+- **Balanced T/R**: Indicates healthy bidirectional MQTT communication
 
 ## Advanced Configuration Reference
 
@@ -1488,10 +1570,23 @@ openssl pkcs12 -export -out client.pfx \
 ### Diagnostic Tools
 
 **XPF MQTT Add-on Diagnostics:**
+- **MQTT Statistics Display (TxxRxxExx)**: Real-time communication counters for monitoring message flow and error rates
 - MQTT connection status indicator
 - Message publish/subscribe counters
 - Topic subscription management
 - Communication error logging
+
+**MQTT Statistics for Troubleshooting:**
+
+| Error Pattern | Statistics Example | Diagnosis | Action |
+|---------------|-------------------|-----------|---------|
+| **Connection Issues** | T000R000E010+ | Authentication/network failures | Verify credentials, check network, test broker connectivity |
+| **Publishing Problems** | T000R045E003 | Can receive but not publish | Check broker ACL permissions, verify topic permissions |
+| **Subscription Issues** | T067R000E001 | Can publish but not receive | Verify subscription topics, check wildcard patterns |
+| **Broker Overload** | T234R045E025 | High error rate with mixed success | Reduce publish frequency, check broker capacity |
+| **Network Instability** | Fluctuating counters | Intermittent connectivity | Monitor network stability, consider QoS settings |
+
+**Built-in MQTT Debug Log**: Access detailed connection, authentication, and message flow information via IoT Tab > MQTT Group > Debug Log button
 
 **External MQTT Tools:**
 - **MQTT Explorer**: Visual broker exploration and testing
