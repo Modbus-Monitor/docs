@@ -19,7 +19,7 @@
         - **[🔍 Part B: Verification Tool](#part-b-set-up-mqtt-explorer-for-verification)** → Install MQTT Explorer  
         - **[✅ Part C: Test & Verify](#part-c-test-and-verify-connection)** → Test your setup
     - **[🔐 Secure Setup](#secure-setup-guide)** → TLS/SSL, WebSocket, and certificate authentication
-    - **[📡 Server Mode](#server-mode-guide-mqtt-command-reception)** → Receive MQTT commands and write to Modbus
+    - **[📡 MQTT Data Reception](#mqtt-data-reception-guide-real-time-monitor-point-updates)** → Receive MQTT data and update monitor points
     
     **📖 Complete Documentation**
     
@@ -57,9 +57,10 @@ The MQTT Add-on enables Modbus Monitor XPF to publish and subscribe to MQTT brok
     - XPF polls Modbus devices and publishes data to MQTT broker
     - Perfect for: Sending sensor data, status updates, alarms to cloud
     
-    **Subscriber Mode (Server Mode Active)**  
-    - XPF receives MQTT messages and writes values to Modbus devices
-    - Perfect for: Remote setpoint changes, control commands, configuration updates
+    **Subscriber Mode (MQTT Data Reception)**  
+    - XPF receives MQTT messages and updates Monitor Points grid in real-time
+    - Perfect for: External data integration, multi-protocol monitoring, development testing
+    - **Works independently**: No need for Modbus Client/Server to be running
     
     **Built-in MQTT Test Tools**
     - Integrated MQTT client for testing and debugging
@@ -86,29 +87,29 @@ Uplink (XPF Client to MQTT):
   - Production counts to Analytics platform  
   - Alarm states to Notification system
 
-Downlink (MQTT to XPF Server):
-  - Setpoint changes to PLC registers
-  - Recipe updates to Process controllers
-  - Emergency stops to Safety systems
+**Downlink (MQTT to XPF Monitor Points):**
+  - External sensor data to Monitor Points grid
+  - Cloud service data to unified monitoring view
+  - Test data injection for dashboard development
 ```
 
-**IoT Edge Gateway (Complete Solution)**
+**IoT Data Aggregation (Complete Solution)**
 ```yaml
-Edge Processing:
-  - Collect from multiple Modbus devices (Client mode)
-  - Aggregate and process data locally  
-  - Publish summaries to cloud (Publisher)
-  - Receive cloud commands (Subscriber)
-  - Distribute commands to devices (Server mode)
+Multi-Source Monitoring:
+  - Collect from Modbus devices via polling (Client mode)
+  - Receive external data via MQTT subscriptions (Data Reception)
+  - Display unified view in Monitor Points grid
+  - Publish combined analytics to cloud (Publisher)
+  - Independent operation of each data source
 ```
 
 **Development & Testing (Integrated Tools)**
 ```yaml
 Development Workflow:
-  1. Use XPF Server mode to simulate devices
-  2. Test MQTT publishing with built-in tools
-  3. Verify cloud connectivity with integrated client
-  4. Deploy same XPF configuration to production
+  1. Use MQTT publishers to inject test data into Monitor Points
+  2. Test monitoring dashboards with simulated data
+  3. Verify data processing with integrated MQTT client
+  4. Deploy same XPF configuration to production with real Modbus devices
 ```
 
 !!! tip "No Other Tool Does This"
@@ -396,7 +397,7 @@ To verify that your XPF MQTT connection is working correctly, use **MQTT Explore
 Now that you have basic MQTT communication working, you can explore advanced features:
 
 - **🔐 [Secure Setup Guide](#secure-setup-guide)** - TLS/SSL encryption, WebSocket, and certificate authentication
-- **📡 [Server Mode Guide](#server-mode-guide-mqtt-command-reception)** - Receive MQTT commands and write to Modbus devices
+- **📡 [MQTT Data Reception Guide](#mqtt-data-reception-guide-real-time-monitor-point-updates)** - Receive MQTT data and update monitor points in real-time
 - **🏭 [Advanced Configuration](#step-2-configure-topics)** - Custom topic structures and message formatting  
 - **🛠️ [Production Examples](#complete-setup-examples)** - Real-world configuration examples with detailed steps
 
@@ -830,151 +831,227 @@ Phase 4: Client certificates (device identity)
 
 ---
 
-## Server Mode Guide: MQTT Command Reception
+## MQTT Data Reception Guide: Real-Time Monitor Point Updates
 
-XPF's Server Mode allows receiving commands from MQTT brokers and writing them to Modbus devices - enabling remote control capabilities. This powerful feature transforms XPF into a **Modbus server** that can receive control commands via MQTT and write values directly to its internal Modbus registers, which can then be read by other Modbus clients.
+XPF's MQTT subscription feature allows receiving data from MQTT brokers and updating monitor points in real-time - enabling remote data injection and external system integration. This powerful feature **works independently of Modbus Client/Server operations**, allowing you to receive data via MQTT and display it in XPF's monitor points grid regardless of whether you're actively polling Modbus devices or running a Modbus server.
 
-**How MQTT Server Mode Works:**
-- XPF creates virtual Modbus registers (holding registers, input registers, coils, discrete inputs)
-- MQTT messages received from the broker are processed and written to these virtual registers
-- Other Modbus clients (PLCs, HMIs, SCADA systems) can connect to XPF via TCP/RTU and read the updated values
-- This creates a **bridge between MQTT and Modbus networks**, enabling cloud-to-device control
+**How MQTT Data Reception Works:**
+- Configure subscription topics in XPF's MQTT panel to listen for incoming messages
+- When MQTT messages arrive, XPF automatically updates the **Monitor Points data grid** with the new values
+- **Works independently**: No need to start Modbus Client or Server tabs - MQTT data updates happen automatically
+- Supports both structured JSON data and simple topic/payload formats for maximum flexibility
+- Automatically creates new monitor points or updates existing ones based on incoming MQTT data
+
+**Key Independence Feature:**
+- **Monitor Points Grid Updates**: MQTT messages directly update the visual data grid in real-time
+- **No Modbus Dependency**: Works whether Modbus Client/Server tabs are running or stopped
+- **Real-Time Display**: See external data flowing into XPF immediately as MQTT messages arrive
+- **Flexible Data Sources**: Combine Modbus polling with MQTT data injection in the same monitor points view
 
 **Practical Applications:**
-- **Cloud Control**: Receive setpoint changes from cloud dashboards and make them available to local PLCs
-- **Remote Configuration**: Update device parameters via MQTT that are then read by Modbus devices
-- **Inter-System Communication**: Bridge different protocols by receiving MQTT data and serving it via Modbus
-- **Testing & Simulation**: Use another XPF instance in Client mode to send MQTT messages, then read the values from the Server mode instance
+- **External Data Integration**: Receive sensor data from IoT devices, weather stations, or cloud services via MQTT
+- **Multi-Protocol Monitoring**: Combine Modbus device data with MQTT data sources in a single view
+- **Remote Data Injection**: Accept data from external systems (databases, APIs, other applications) via MQTT
+- **Development & Testing**: Simulate device data by publishing MQTT messages that appear in monitor points
+- **Dashboard Data Sources**: Use MQTT to feed external data into XPF for unified monitoring displays
 
-!!! tip "Bidirectional Testing Setup"
-    **Perfect for testing:** Use two XPF instances - one in Client mode publishing MQTT data, and another in Server mode receiving the data and serving it via Modbus. This creates a complete local test environment without needing external hardware.
+!!! tip "Multi-Source Monitoring Setup"
+    **Perfect for comprehensive monitoring:** Configure some monitor points to poll Modbus devices while subscribing to MQTT topics for external data. All data appears together in the same monitor points grid, providing a unified view of your entire system.
 
-!!! info "Bidirectional MQTT"
-    **Client Mode**: XPF polls Modbus → publishes to MQTT as discuseed in the previous sections. (data collection)  
-    **Server Mode**: XPF receives MQTT → writes to Modbus registers → serves data via Modbus (remote control)
+!!! info "Bidirectional MQTT Capabilities"
+    **Publishing (Outbound)**: XPF polls Modbus → publishes data to MQTT broker (covered in previous sections)  
+    **Subscribing (Inbound)**: XPF receives MQTT messages → updates Monitor Points grid → displays real-time data from any MQTT source
 
-### Server Mode Setup
+**Supported Message Formats:**
+- **Complete JSON DTO Format**: Full register details with all Modbus configuration parameters
+- **Simple Topic/Payload**: Topic name becomes monitor point name, payload becomes the value  
+- **Automatic Point Management**: Creates new monitor points or updates existing ones based on address, unit ID, and register type matching
 
-#### Step 1: Basic Server Configuration
-
-1. **Switch to Server Mode**
-   - Open XPF **Server** tab
-   - Configure Modbus server settings (Unit ID, register ranges)
-   - **See**: [Server Mode Configuration](../products/xpf/user-guide.md#5-modbus-server-operations) in main user guide
-
-2. **Configure MQTT Subscriptions**
-   ```yaml
-   Subscription Topics:
-     - "commands/plant1/setpoint" - Temperature setpoint changes
-     - "control/emergency/stop" - Emergency commands  
-     - "config/device/{UnitID}/+" - Device configuration updates
-   
-   Message Handling:
-     - JSON parsing for structured commands
-     - Direct value mapping for simple setpoints
-     - Validation and acknowledgment publishing
-   ```
-
-#### Step 2: Command Message Format
-
-**Simple Value Commands:**
+**Complete JSON DTO Format (Published by XPF when Modbus Client is running):**
 ```json
-Topic: "commands/plant1/setpoint"
-Message: "75.5"
-Result: Writes 75.5 to configured Modbus register
-```
-
-**Structured JSON Commands:**
-```json
-Topic: "commands/plant1/config"
-Message: {
-  "register": "40001",
-  "value": 1250,
-  "unit": "°F",
-  "timestamp": "2025-11-07T14:30:00Z"
+{
+  "RegName": "ModbusMonitor/Signed",
+  "RegAddress": 400001,
+  "RegUnitID": 1,
+  "RegGain": 1,
+  "RegOffset": 0,
+  "RegType": "UINT16",
+  "RegByteSwap": "ABCD_BE",
+  "RegValue": "204",
+  "OneBased": false,
+  "HasError": false
 }
 ```
 
-#### Step 3: Test Server Mode
+**JSON DTO Field Descriptions:**
+- **RegName**: Monitor point display name 
+- **RegAddress**: Modbus register address
+- **RegUnitID**: Modbus device unit/slave ID
+- **RegGain**: Scaling gain factor applied to raw value
+- **RegOffset**: Scaling offset applied to raw value  
+- **RegType**: Modbus register type (UINT16, SINT16, UINT32, etc.)
+- **RegByteSwap**: Byte order configuration (ABCD_BE, DCBA_LE, etc.)
+- **RegValue**: Current processed value (after gain/offset scaling)
+- **OneBased**: Address format (true=1-based, false=0-based addressing)
+- **HasError**: Error status (true if communication/processing error occurred)
 
-1. **Start XPF Server Mode**
-   - Click **Start** in Server tab
-   - Verify Modbus server listening on configured port
+### MQTT Subscription Setup
 
-2. **Send Test Commands**
-   - Use MQTT client to publish to subscription topics
-   - Monitor XPF Communication Log for received messages
-   - Verify register values change in XPF Server view
+#### Step 1: Configure MQTT Subscription Topics
 
-3. **Bidirectional Testing**
-   - **Client Mode**: Read current values → Publish to MQTT
-   - **Server Mode**: Receive MQTT commands → Update values  
-   - **Client Mode**: Read updated values → Confirm changes
+1. **Open MQTT Panel in XPF**
+   - Navigate to the MQTT Add-on panel in XPF
+   - Locate the **Subscription Topics** list/configuration area
+   - **Important**: Ensure MQTT broker connection is configured and working (see previous sections)
 
-### Server Mode Use Cases
+2. **Add Subscription Topics**
+   ```yaml
+   Example Subscription Topics:
+     - "sensors/temperature/+" - Temperature data from multiple sensors
+     - "external/weather/data" - Weather service data
+     - "system/alarms/#" - System alarm messages  
+     - "devices/+/status" - Device status updates
+   
+   Message Processing:
+     - JSON DTO format: Full register details in structured format
+     - Simple format: Topic name → Monitor Point name, Payload → Value
+     - Automatic point creation: New monitor points added if not existing
+   ```
 
-**Remote Setpoint Control:**
-```yaml
-Scenario: Cloud dashboard adjusts PLC setpoints
-MQTT Topic: "control/plant1/temperature/setpoint"
-Message: "68.5"
-XPF Action: Write 68.5 to holding register 40001
-Confirmation: Publish acknowledgment to "status/plant1/setpoint/ack"
+#### Step 2: Message Format Options
+
+**Option A: Complete JSON DTO Format (Published by XPF)**
+```json
+Topic: "sensors/temperature/room1"
+Message: {
+  "RegName": "Room1 Temperature",
+  "RegAddress": 40001,
+  "RegUnitID": 1,
+  "RegGain": 0.1,
+  "RegOffset": -273.15,
+  "RegType": "SINT16",
+  "RegByteSwap": "ABCD_BE",
+  "RegValue": "23.5",
+  "OneBased": false,
+  "HasError": false
+}
+Result: Creates/updates monitor point with complete register configuration and scaling
 ```
 
-**Emergency Stop Systems:**
-```yaml
-Scenario: Cloud monitoring detects problem
-MQTT Topic: "emergency/plant1/stop" 
-Message: "EMERGENCY_STOP"
-XPF Action: Write 1 to emergency stop coil 00001
-Confirmation: Publish "STOPPED" to "status/plant1/emergency"
+**Option B: Simplified JSON Format (For External Publishers)**
+```json
+Topic: "sensors/temperature/room1"
+Message: {
+  "RegName": "Room1 Temperature",
+  "RegValue": "23.5",
+  "RegAddress": "40001", 
+  "RegType": "Holding Register",
+  "RegUnitID": "1"
+}
+Result: Creates/updates monitor point with basic register details
 ```
 
-**Recipe/Configuration Updates:**
-```yaml
-Scenario: Push new process parameters
-MQTT Topic: "config/devices/001/recipe"
-Message: {"temp": 150, "time": 3600, "pressure": 25}
-XPF Action: Write multiple registers with recipe values
-Confirmation: Publish success status
+**Option C: Simple Topic/Payload Format**
+```json
+Topic: "sensors/humidity/room1"
+Message: "65.2"
+Result: Creates monitor point named "sensors/humidity/room1" with value "65.2"
 ```
 
-### Security Considerations for Server Mode
-
-!!! warning "Server Mode Security"
-    **Server Mode receives write commands - implement proper security:**
+!!! info "Message Format Usage"
+    **When XPF Publishes (Outbound):**
+    - **Complete JSON DTO**: Used when Modbus Client tab is running and publishing monitor point data
+    - Includes all Modbus configuration details for complete data reconstruction
     
-    - ✅ **Use TLS/SSL** for all MQTT connections
-    - ✅ **Implement authentication** (usernames, certificates)
-    - ✅ **Validate command sources** and message formats
-    - ✅ **Log all command executions** for audit trails
-    - ✅ **Set register write permissions** carefully
-    - ✅ **Test emergency stop procedures** thoroughly
+    **When XPF Receives (Inbound):**
+    - **Complete JSON DTO**: Full compatibility with XPF-published messages (bidirectional)
+    - **Simplified JSON**: Basic register details for external system integration
+    - **Simple Topic/Payload**: Lightweight format for basic data injection
+    
+    **Bidirectional Compatibility**: XPF instances can exchange complete JSON DTO messages for full monitor point synchronization between systems.
 
-### Bidirectional Integration Example
+#### Step 3: Test MQTT Data Reception
 
-**Complete IoT control system:**
+1. **Start MQTT Connection**
+   - Click **Connect** in MQTT panel
+   - Verify "Connected" status shows
+   - Monitor connection log for successful subscription confirmations
 
+2. **Send Test Data**
+   - Use MQTT client to publish to your subscription topics
+   - **Monitor Points Grid should update immediately** with new/changed values
+   - Check Communication Log for received message confirmations:
+     ```          
+        14:33:13: MQTT Message Received: Topic: sensors/temp/room1, Payload: 24.8
+        14:33:13: Updated monitor point: sensors/temp/room1 = 24.8
+     ```
+
+3. **Verify Independent Operation**
+   - **Monitor Points update regardless** of Modbus Client/Server tab status
+   - Data flows into grid whether Modbus operations are active or not
+   - Real-time updates visible immediately upon message receipt
+
+### MQTT Data Reception Use Cases
+
+**External Sensor Integration:**
 ```yaml
-Data Collection (Client Mode):
-  - XPF polls temperature sensor (register 30001)
-  - Publishes to "sensors/plant1/temperature"
-  - Cloud receives and displays current temperature
-
-Remote Control (Server Mode):  
-  - Cloud operator adjusts setpoint in dashboard
-  - Dashboard publishes to "commands/plant1/setpoint"
-  - XPF receives command and writes to setpoint register (40001)
-  - Process controller uses new setpoint
-
-Verification Loop:
-  - XPF continues polling actual temperature
-  - Publishes updated readings showing setpoint change effect
-  - Cloud dashboard shows real-time response to control action
+Scenario: Weather station data via MQTT
+MQTT Topic: "weather/station1/temperature"
+Message: "18.5"
+XPF Action: Update monitor point "weather/station1/temperature" with value 18.5
+Display: Appears immediately in Monitor Points grid
 ```
 
-**For comprehensive Server Mode configuration, see**: [Server Operations](../products/xpf/user-guide.md#5-modbus-server-operations) in the main user guide.
+**Multi-System Data Collection:**
+```yaml
+Scenario: Combine Modbus device data with external IoT data
+Modbus Data: Poll temperature sensors every 5 seconds
+MQTT Data: Receive cloud weather data every 60 seconds  
+Combined View: Both data sources visible in same Monitor Points grid
+```
+
+**Development & Testing Data Injection:**
+```yaml
+Scenario: Test monitoring dashboards without hardware
+Test Process: Publish simulated sensor data via MQTT
+XPF Display: Monitor points populate with test data immediately
+Benefits: Full dashboard testing without physical Modbus devices
+```
+
+### Security Considerations for MQTT Subscriptions
+
+!!! warning "MQTT Subscription Security"
+    **MQTT subscriptions receive external data - implement proper security:**
+    
+    - ✅ **Use TLS/SSL** for all MQTT connections to prevent data tampering
+    - ✅ **Implement authentication** (usernames, certificates) to verify data sources  
+    - ✅ **Validate incoming data** formats and ranges before display
+    - ✅ **Log all received messages** for audit trails and debugging
+    - ✅ **Set topic permissions** carefully to prevent unauthorized data injection
+    - ✅ **Monitor data sources** to detect compromised or malfunctioning publishers
+
+### Integration Example: Complete Monitoring Solution
+
+**Comprehensive monitoring setup combining multiple data sources:**
+
+```yaml
+Modbus Data Sources:
+  - Poll local PLCs every 2 seconds for real-time process data
+  - Update monitor points with current production values
+
+MQTT Data Sources:  
+  - Subscribe to "weather/+" for environmental data every 5 minutes
+  - Subscribe to "energy/grid/+" for utility data every 15 minutes
+  - Subscribe to "alarms/external/+" for external system alerts
+
+Unified Display:
+  - All data sources appear together in Monitor Points grid
+  - Real-time updates from both Modbus polling and MQTT subscriptions
+  - No configuration dependencies between data source types
+  - Complete system visibility in single XPF instance
+```
+
+**For comprehensive MQTT connection setup, see**: [Secure Setup Guide](#secure-setup-guide) and [Complete Setup Examples](#complete-setup-examples) sections above.
 
 ## Advanced Configuration Reference
 
