@@ -158,15 +158,10 @@ nav:
     - Help Center: support/index.md
     - Community Forum: https://quantumbitsolutions.com/forums/
   
-  - Documentation Guides:
-    - guides/features-demo.md
-    - 📊 Mermaid Diagrams: guides/mermaid-showcase.md
-    - 🖼️ Images & Assets: guides/assets-guide.md
-    - 📝 Content Migration: guides/content-migration.md
+  - Documentation Guides:  
     - 🔢 6-Digit Addressing: guides/6-digit-addressing.md
+    - 📡 MQTT Add-on: guides/mqtt-addon.md
+    - ☁️ ThingSpeak Add-on: guides/thingspeak-addon.md
+
   
-  - Legacy Content:
-    - imported/xpf-help.md
-    - imported/advanced-help.md  
-    - imported/mapper-help.md
-    - imported/android-help.md
+  
