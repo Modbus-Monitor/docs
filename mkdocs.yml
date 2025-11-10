@@ -1,6 +1,6 @@
 docs_dir: docs
 site_name: Modbus Monitor — Documentation
-site_url: https://modbus-monitor.github.io/docs/
+site_url: https://modbus-monitor.github.io/modbus-monitor-docs/
 use_directory_urls: true
 
 # Documentation versioning

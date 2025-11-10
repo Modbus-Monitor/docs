@@ -93,7 +93,7 @@ If you need to update manually:
 2. Test locally with `mkdocs serve`
 3. If changes are significant, run version update script
 4. Commit and push changes
-5. Verify deployment at https://modbus-monitor.github.io/docs/
+5. Verify deployment at https://modbus-monitor.github.io/modbus-monitor-docs/
 
 ### Change Documentation
 Always document what changed:

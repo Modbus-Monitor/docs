@@ -10,7 +10,7 @@ Built with **MkDocs Material**. Each product has its own section and comprehensi
 
 ## 🌐 Live Documentation
 
-**View the documentation**: https://modbus-monitor.github.io/docs/
+**View the documentation**: https://modbus-monitor.github.io/modbus-monitor-docs/
 
 ## 🚀 Local Development Setup
 
@@ -23,7 +23,7 @@ Built with **MkDocs Material**. Each product has its own section and comprehensi
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/modbus-monitor/docs.git
+   git clone https://github.com/modbus-monitor/modbus-monitor-docs.git
    cd docs
    ```
 

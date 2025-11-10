@@ -6,7 +6,7 @@
 ✅ GitHub repository with static documentation files  
 ✅ MkDocs Material theme with clean navigation  
 ✅ Auto-build and deployment to GitHub Pages  
-✅ Live documentation at: https://modbus-monitor.github.io/docs/  
+✅ Live documentation at: https://modbus-monitor.github.io/modbus-monitor-docs/  
 
 ### Daily Editing Workflow
 
@@ -128,7 +128,7 @@ git push origin main
 4. **GitHub Actions automatically**:
    - Builds MkDocs site
    - Deploys to GitHub Pages
-5. **Live site updates** at https://modbus-monitor.github.io/docs/
+5. **Live site updates** at https://modbus-monitor.github.io/modbus-monitor-docs/
 
 ## WSL-Specific Setup
 
