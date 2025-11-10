@@ -770,13 +770,13 @@ The **Modbus Wizard** provides a streamlined interface for configuring monitor p
 | Field | Purpose | Options/Format |
 |-------|---------|----------------|
 | **Register Name** | Descriptive identifier | Text field - name your monitor point |
-| **Modbus Function** | Register type and access | See [Address Field - 6-Digit Format](#2-address-field-6-digit-format) in Monitor Points Configuration |
+| **Modbus Function** | Register type and access | See [6-Digit Addressing Scheme Guide](../../guides/6-digit-addressing.md) for complete details |
 | **Sub-Function** | Function variant *(FC8 only)* | Appears for FC8 Diagnostics - e.g., "0 (0x0) Return Query Data" |
 | **Device ID** | Device identification type *(FC43-14 only)* | Appears for FC43-14 - e.g., "01 Get Basic Device ID (stream)" |
 | **Object ID** | MEI object identifier *(FC43-14 only)* | Appears for FC43-14 - Object number (00-FF hexadecimal) |
 | **CustomQ** | Custom Modbus Packet | Add PDU part of the Modbus Command to send any command  |
 | **Data Request** | Request address/value | Address or data value for the request |
-| **Address** |  Modbus Address | Zero or One based Modbus Address (see [6-digit format](#2-address-field-6-digit-format)) |
+| **Address** |  Modbus Address | Zero or One based Modbus Address (see [6-digit addressing guide](../../guides/6-digit-addressing.md)) |
 | **Data Type** | Data interpretation | See [Data Type Options](#6-data-type-data-interpretation) in Monitor Points Configuration |
 | **Poll Rate Control** | Update frequency | NONE, SKIP, ONCE, INTERVAL (Adjust Poll Rate value) |
 | **Bit Field** | Extract specific bit | 0-15 for 16-bit registers - selects individual bit |
@@ -4245,6 +4245,11 @@ Effect: Poll once (@-1), 32 registers (:31), bit 5 (.5)
 
 #### 2. Address Field - 6-Digit Format
 
+!!! info "Complete 6-Digit Addressing Guide"
+    **For comprehensive explanations, troubleshooting, and examples:** See the [**6-Digit Addressing Scheme Guide**](../../guides/6-digit-addressing.md)
+    
+    This section provides XPF-specific details. The comprehensive guide covers all aspects including common mistakes, device compatibility, and conversion from other tools.
+
 The **6-digit addressing format** provides an explicit and standardized way to identify both the register type and its address in a single number. This format is used in XPF and many other Modbus tools to simplify configuration.
 
 **Format Structure:**
@@ -4257,7 +4262,7 @@ The **6-digit addressing format** provides an explicit and standardized way to i
 - **4** = Register Type Indicator (Holding Register)
 - **00001** = Register Number (1)
 
-!!! info "Prefix Digit ≠ Function Code"
+!!! warning "Critical: Prefix Digit ≠ Function Code"
     **Important:** The first digit is a **register type indicator**, not the Modbus function code itself (though they're related). 
     
     - **Type Prefix** → Tells you what kind of register (Coil, Discrete Input, Input Register, Holding Register)
@@ -4265,14 +4270,14 @@ The **6-digit addressing format** provides an explicit and standardized way to i
     
     For example, address `400001` uses type prefix `4` (Holding Register), which is typically accessed using **Function Code 03** (Read) or **06/16** (Write).
 
-**Register Type Prefix Table:**
+**Quick Reference Table:**
 
-| Prefix Digit | Register Type | Typical Function Codes | Address Range (6-Digit) | Access |
-|--------------|---------------|------------------------|-------------------------|---------|
-| **0xxxxx** | Coils | FC01 (Read) / FC05, FC15 (Write) | 000001–065536 | Read/Write |
-| **1xxxxx** | Discrete Inputs | FC02 (Read) | 100001–165536 | Read Only |
-| **3xxxxx** | Input Registers | FC04 (Read) | 300001–365536 | Read Only |
-| **4xxxxx** | Holding Registers | FC03 (Read) / FC06, FC16 (Write) | 400001–465536 | Read/Write |
+| Prefix | Register Type | Function Codes | Address Range | Access |
+|--------|---------------|----------------|---------------|--------|
+| **0** | Coils | FC01 (Read) / FC05, FC15 (Write) | 000001–065536 | Read/Write |
+| **1** | Discrete Inputs | FC02 (Read) | 100001–165536 | Read Only |
+| **3** | Input Registers | FC04 (Read) | 300001–365536 | Read Only |
+| **4** | Holding Registers | FC03 (Read) / FC06, FC16 (Write) | 400001–465536 | Read/Write |
 
 **Visual Breakdown:**
 

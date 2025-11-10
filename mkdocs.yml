@@ -150,6 +150,7 @@ nav:
     - 📊 Mermaid Diagrams: guides/mermaid-showcase.md
     - 🖼️ Images & Assets: guides/assets-guide.md
     - 📝 Content Migration: guides/content-migration.md
+    - 🔢 6-Digit Addressing: guides/6-digit-addressing.md
   
   - Legacy Content:
     - imported/xpf-help.md

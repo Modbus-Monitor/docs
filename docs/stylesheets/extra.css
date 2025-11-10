@@ -75,6 +75,11 @@
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out !important;
 }
 
+.screenshot-center {
+  max-width: 85% !important;
+  height: auto !important;    
+}
+
 
 .screenshot-shadow:hover {
   transform: scale(1.02) !important;
