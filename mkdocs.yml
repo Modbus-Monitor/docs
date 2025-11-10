@@ -3,6 +3,12 @@ site_name: Modbus Monitor — Documentation
 site_url: https://modbus-monitor.github.io/modbus-monitor-docs/
 use_directory_urls: true
 
+# Ensure proper index page handling
+site_description: Professional Modbus monitoring tools and comprehensive documentation for automation engineers, OEMs, and testing teams.
+site_author: Quantum Bit Solutions
+repo_name: modbus-monitor-docs
+repo_url: https://github.com/Modbus-Monitor/modbus-monitor-docs
+
 # Documentation versioning
 extra:
   version:
@@ -11,6 +17,7 @@ extra:
 
 theme:
   name: material
+  custom_dir: docs/overrides
   features:
     # Navigation enhancements
     - navigation.instant
@@ -69,6 +76,13 @@ plugins:
         - en
       indexing: 'full'
       prebuild_index: true
+      min_search_length: 2
+      exclusions:
+        - Legacy Content/*
+      boost:
+        - products/android/free-guide.md: 2.0
+        - products/xpf/user-guide.md: 2.0
+        - guides/6-digit-addressing.md: 1.5
   - include-markdown
   - awesome-pages
   - autorefs

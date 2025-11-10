@@ -224,3 +224,94 @@
   text-overflow: ellipsis !important;
   white-space: nowrap !important;
 }
+
+/* 404 Page Styling */
+.error-page {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.error-page h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--md-primary-fg-color);
+}
+
+.error-page .search-enhanced {
+  max-width: 500px;
+  width: 100%;
+  margin: 2rem 0;
+}
+
+.error-page .search-enhanced input {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border: 2px solid var(--md-primary-fg-color--light);
+  border-radius: 0.75rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  transition: all 0.3s ease;
+}
+
+.error-page .search-enhanced input:focus {
+  outline: none;
+  border-color: var(--md-primary-fg-color);
+  box-shadow: 0 0 0 3px rgba(var(--md-primary-fg-color-rgb), 0.1);
+}
+
+/* Enhanced grid cards for 404 page */
+.grid.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.grid.cards .card {
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.grid.cards .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  border-color: var(--md-primary-fg-color--light);
+}
+
+.grid.cards .card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--md-primary-fg-color);
+}
+
+.grid.cards .card .md-button {
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+}
+
+/* Responsive design for 404 page */
+@media screen and (max-width: 768px) {
+  .error-page h1 {
+    font-size: 2rem;
+  }
+  
+  .grid.cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .grid.cards .card {
+    padding: 1.5rem;
+  }
+}

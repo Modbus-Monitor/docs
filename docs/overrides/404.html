@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="md-content" data-md-component="content">
+    <article class="md-content__inner md-typeset">
+      
+      <h1 id="page-not-found">🔍 Page Not Found</h1>
+
+      <div class="admonition warning">
+        <p class="admonition-title">Oops! This page doesn't exist</p>
+        <p>The page you're looking for might have been moved, renamed, or is temporarily unavailable.</p>
+      </div>
+
+      <div class="grid cards">
+        
+        <div class="card">
+          <h3>🔍 Search Documentation</h3>
+          <hr>
+          <p>Can't find what you're looking for? Try searching our comprehensive documentation.</p>
+          
+          <!-- Enhanced search form -->
+          <form class="md-search__form" name="search" role="search" onsubmit="return false;">
+            <input 
+              class="md-search__input" 
+              type="text" 
+              name="query" 
+              placeholder="Search documentation..." 
+              autocapitalize="off" 
+              autocorrect="off" 
+              autocomplete="off" 
+              spellcheck="false" 
+              data-md-component="search-query"
+              style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px;"
+            >
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>🏠 Back to Home</h3>
+          <hr>
+          <p>Start over from our main documentation hub with all product guides.</p>
+          <a href="{{ config.site_url or '../' }}" class="md-button md-button--primary">
+            Go to Home Page
+          </a>
+        </div>
+
+        <div class="card">
+          <h3>📚 Browse Products</h3>
+          <hr>
+          <p>Explore our complete product documentation and guides.</p>
+          <ul>
+            <li><a href="../products/xpf/user-guide/">Modbus Monitor XPF</a></li>
+            <li><a href="../products/android/free-guide/">Android Monitor</a></li>
+            <li><a href="../products/mapper/user-manual/">Mapper Pro</a></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>❓ Get Support</h3>
+          <hr>
+          <p>Need immediate assistance? Contact our support team.</p>
+          <ul>
+            <li><a href="../support/">Support Center</a></li>
+            <li><a href="https://quantumbitsolutions.com/forums/" target="_blank">Community Forum</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <h2>🎯 Popular Resources</h2>
+      
+      <div class="admonition info">
+        <p class="admonition-title">Most Searched Content</p>
+        <p>Here are our most popular documentation pages that might help:</p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h4>Quick Start Guides</h4>
+          <ul>
+            <li><a href="../products/xpf/quick-start/">XPF Quick Start</a></li>
+            <li><a href="../products/android/free-guide/">Android Setup</a></li>
+            <li><a href="../products/mapper/quick-start/">Mapper Demo</a></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4>Technical References</h4>
+          <ul>
+            <li><a href="../guides/6-digit-addressing/">6-Digit Addressing</a></li>
+            <li><a href="../technical/error-codes/">Error Codes</a></li>
+            <li><a href="../technical/hardware/">Hardware Setup</a></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4>Integration Guides</h4>
+          <ul>
+            <li><a href="../guides/mqtt-addon/">MQTT Add-on</a></li>
+            <li><a href="../guides/thingspeak-addon/">ThingSpeak Add-on</a></li>
+            <li><a href="../integrations/google-sheets/">Google Sheets</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <hr>
+      <div style="text-align: center;">
+        <p><strong>Still can't find it?</strong> <a href="https://quantumbitsolutions.com/contact-us/" target="_blank">Contact our support team</a> - we're here to help! 🚀</p>
+      </div>
+
+    </article>
+  </div>
+
+  <style>
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    
+    .card {
+      background: var(--md-default-bg-color);
+      border: 1px solid var(--md-default-fg-color--light);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .card h3, .card h4 {
+      margin-top: 0;
+      color: var(--md-primary-fg-color);
+    }
+    
+    .card hr {
+      margin: 1rem 0;
+      border-color: var(--md-default-fg-color--light);
+    }
+    
+    .cards .card {
+      text-align: center;
+    }
+  </style>
+
+{% endblock %}
