@@ -69,17 +69,55 @@ jobs:
       # Existing imported files are preserved but no longer auto-updated
 
       # ────────────────────────────────
-      # 3️⃣c Update build date in version file
+      # 3️⃣c Update version number and build date
       # ────────────────────────────────
-      - name: Update documentation build date
+      - name: Update version and build date
         run: |
-          # Update build_date in _version.yml
           current_date=$(date -u +'%Y-%m-%d')
+          formatted_date=$(date -u +'%B %d, %Y')
+          
           if [ -f "docs/_version.yml" ]; then
+            # Read current version
+            current_version=$(grep -oP 'version: "\K[^"]+' docs/_version.yml | head -1)
+            echo "📌 Current version: $current_version"
+            
+            # Auto-increment patch version (e.g., 1.0.0 -> 1.0.1)
+            IFS='.' read -ra VERSION_PARTS <<< "$current_version"
+            MAJOR="${VERSION_PARTS[0]}"
+            MINOR="${VERSION_PARTS[1]}"
+            PATCH="${VERSION_PARTS[2]}"
+            NEW_PATCH=$((PATCH + 1))
+            new_version="${MAJOR}.${MINOR}.${NEW_PATCH}"
+            
+            # Update _version.yml
+            sed -i "s/version: \"[^\"]*\"/version: \"$new_version\"/" docs/_version.yml
             sed -i "s/build_date: .*/build_date: \"$current_date\"/" docs/_version.yml
+            
+            # Update mkdocs.yml copyright with new version and date
+            sed -i "s/Documentation Version [0-9]\+\.[0-9]\+\.[0-9]\+/Documentation Version $new_version/" mkdocs.yml
+            sed -i "s/Last Updated: [^•]*/Last Updated: $formatted_date/" mkdocs.yml
+            
+            echo "✅ Updated version to: $new_version"
             echo "📅 Updated build date to: $current_date"
+            echo "📄 Updated copyright in mkdocs.yml"
           else
-            echo "⚠️ Version file not found, skipping build date update"
+            echo "⚠️ Version file not found, skipping version update"
+          fi
+          
+      # ────────────────────────────────
+      # 3️⃣d Commit version updates back to repo
+      # ────────────────────────────────
+      - name: Commit version updates
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/_version.yml mkdocs.yml
+          if git diff --staged --quiet; then
+            echo "No version changes to commit"
+          else
+            git commit -m "🔄 Auto-update: version bump and build date [skip ci]"
+            git push
+            echo "✅ Committed version updates"
           fi
 
       # ────────────────────────────────

@@ -30,22 +30,38 @@ if ! command -v pip3 &> /dev/null; then
     sudo apt install python3-pip -y
 fi
 
-# Check if MkDocs is installed
-if ! command -v mkdocs &> /dev/null; then
-    echo "📦 Installing MkDocs and required plugins..."
-    pip3 install mkdocs mkdocs-material mkdocs-include-markdown-plugin mkdocs-awesome-pages-plugin mkdocs-autorefs mkdocs-redirects
+# Check if virtual environment exists and use it, otherwise use system packages
+if [ -d "venv" ]; then
+    echo "📦 Using virtual environment..."
+    source venv/bin/activate
     
-    # Add local pip bin to PATH if mkdocs still not found
+    # Check if mkdocs is installed in venv
     if ! command -v mkdocs &> /dev/null; then
-        echo "Adding local pip bin to PATH..."
-        export PATH="$HOME/.local/bin:$PATH"
-        echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+        echo "📦 Installing MkDocs and required plugins in venv..."
+        pip install mkdocs mkdocs-material mkdocs-include-markdown-plugin mkdocs-awesome-pages-plugin mkdocs-autorefs mkdocs-redirects pymdown-extensions mkdocs-minify-plugin
+    fi
+else
+    # No venv, use system packages (for home setup)
+    echo "📦 Using system Python packages..."
+    
+    # Check if MkDocs is installed
+    if ! command -v mkdocs &> /dev/null; then
+        echo "📦 Installing MkDocs and required plugins..."
+        pip3 install mkdocs mkdocs-material mkdocs-include-markdown-plugin mkdocs-awesome-pages-plugin mkdocs-autorefs mkdocs-redirects pymdown-extensions
+        
+        # Add local pip bin to PATH if mkdocs still not found
+        if ! command -v mkdocs &> /dev/null; then
+            echo "Adding local pip bin to PATH..."
+            export PATH="$HOME/.local/bin:$PATH"
+            echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+        fi
     fi
 fi
 
 # Start MkDocs server in background
 echo "✅ Starting MkDocs live server..."
-mkdocs serve --dev-addr=0.0.0.0:8000 &
+# Use --watch-theme and --dirtyreload for better WSL compatibility
+mkdocs serve --dev-addr=0.0.0.0:8000 --watch-theme --dirtyreload &
 MKDOCS_PID=$!
 
 # Wait for server to start

@@ -1,9 +1,9 @@
-﻿# Modbus Monitor - Free Android Guide
+﻿# Modbus Monitor - Modbus Console
 
 **Mobile Modbus monitoring for field technicians and engineers**
 
 !!! info "Free Version"
-    This is the free version of Modbus Monitor for Android devices. For advanced features, see the [Advanced Guide](advanced-guide.md).
+    Modbus Console is the free version of Modbus Monitor for Android devices. For advanced features, see the [Advanced Guide](advanced-guide.md).
 
 <figure markdown style="text-align: center;">
 ![Modbus Monitor Android (free)](../../assets/screenshots/modbus-monitor-free-demo.webp){ .center loading="lazy" width="300" }
@@ -22,16 +22,45 @@ The free Modbus Monitor Android app provides essential Modbus monitoring capabil
 
 ## Features
 
-**Communication Interfaces:**
-
-- ✅ **Modbus TCP** - Network connections (WiFi/Ethernet) using Modbus/TCP protocol
-- ✅ **Bluetooth & BLE** - Wireless connections using Modbus RTU protocol  
-- ✅ **USB Serial** - Direct cable connections using Modbus RTU protocol
-
 **Core Capabilities:**
 
-- ✅ **6-digit addressing scheme** - Industry standard format
-- ✅ **Read/write operations** - Single and multiple registers
+- **Modbus TCP** - Network connections (WiFi/Ethernet) using Modbus/TCP protocol
+- **Bluetooth & BLE** - Wireless connections using Modbus RTU protocol  
+- **USB Serial** - Direct cable connections using Modbus RTU protocol
+- **6-digit addressing scheme** - Industry standard format
+- **Read/write operations** - Single and multiple registers
+
+
+### Connection Diagrams
+
+#### Wireless Connections (Bluetooth/WiFi)
+
+```mermaid
+flowchart LR
+    A[Modbus Monitor<br/>Android App] <-->|Bluetooth Classic<br/>BLE<br/>WiFi| B[Built-in<br/>Bluetooth/WiFi Chip]
+    B <--> C[PLC/Modbus Device<br/>with Bluetooth/WiFi]
+    
+    style A fill:#d4edda
+    style B fill:#fff3cd
+    style C fill:#e1f5ff
+```
+
+#### Serial Connections (RS232/RS485)
+
+```mermaid
+flowchart LR
+    A[Modbus Monitor<br/>Android Device] <-->|USB-C/Micro USB| B[USB-OTG<br/>Adapter]
+    B <-->|USB| C[USB-Serial<br/>Converter]
+    C <-->|RS232/RS485| D[PLC or<br/>Modbus RTU Server]
+    
+    style A fill:#d4edda
+    style B fill:#ffeaa7
+    style C fill:#fff3cd
+    style D fill:#e1f5ff
+```
+
+
+
 
 
 !!! tip "Need More Protocol Combinations?"
@@ -46,11 +75,13 @@ The free Modbus Monitor Android app provides essential Modbus monitoring capabil
 3. **Grant permissions** when prompted:
 
    **For Bluetooth connections:**
+
    - Android requires location permission (depending on OS version)
    - Allow Modbus Monitor to find, connect to, and determine relative position of nearby devices (click "Yes")
    - Skip Bluetooth permissions if only using TCP (click "No")
 
    **For USB Serial connections:**
+
    - Requires USB-to-Serial port via USB-OTG connection
    - "Open Modbus Monitor to handle FT232 USB UART?" (click "OK")
    - "Always open Modbus Monitor when FT232 USB UART is connected?" (click "OK")
@@ -64,7 +95,8 @@ The app displays available communication channels in order:
 1. **Modbus TCP** (always first) - For network connections
 2. **Bluetooth Paired Devices** - Previously paired BT devices  
 3. **Serial Devices** - Connected USB serial ports
-4. **BLE Devices** - Bluetooth Low Energy devices
+4. **Bluetooth Classic** - Connect to Bluetooth SPP (Serial Port Profile) devices
+5. **BLE Devices** - Bluetooth Low Energy devices
 
 !!! note "Protocol Selection"
     - **Modbus TCP channel** -> Uses **Modbus TCP** protocol
@@ -85,10 +117,18 @@ Click the **three-dot menu** (...) in the top-right corner to configure:
 - **Parity** - None, Even, or Odd
 - **Stop Bits** - Usually 1
 
-#### For Bluetooth/BLE:
-- **Pair device first** before using
-- Configure through Android Bluetooth settings
-- Return to app and select paired device
+#### For Bluetooth Classic (SPP):
+
+- **Pair device first** in Android Bluetooth settings
+- Older Bluetooth SPP devices require pairing before use
+- Once paired, select from "Bluetooth Paired Devices" list in app
+- Configure serial parameters (baud rate, parity) in app settings
+
+#### For BLE (Bluetooth Low Energy):
+- **No pre-pairing required** - BLE devices can be discovered and connected directly
+- Scan and connect directly from within Modbus Monitor app
+- Select from "BLE Devices" list
+- BLE offers easier setup for newer devices
 
 ## Understanding Modbus Addresses
 
@@ -223,6 +263,7 @@ All examples above write the value **995** to holding register **1**.
 ## Upgrade Path
 
 Ready for more features? The **Advanced Version** includes:
+
 - Unlimited monitor points
 - Serial/RTU support  
 - Advanced data analysis
