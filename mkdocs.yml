@@ -120,7 +120,7 @@ markdown_extensions:
 # Footer with version information
 copyright: |
   Documentation Version 1.0.0 • Last Updated: January 15, 2025 • 
-  <a href="https://github.com/Modbus-Monitor/docs" target="_blank">View on GitHub</a>
+  <a href="https://github.com/Modbus-Monitor/modbus-monitor-docs" target="_blank">View on GitHub</a>
 
 nav:
   - Home: index.md
