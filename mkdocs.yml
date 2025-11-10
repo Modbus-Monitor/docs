@@ -6,8 +6,8 @@ use_directory_urls: true
 # Ensure proper index page handling
 site_description: Professional Modbus monitoring tools and comprehensive documentation for automation engineers, OEMs, and testing teams.
 site_author: Quantum Bit Solutions
-repo_name: modbus-monitor-docs
-repo_url: https://github.com/Modbus-Monitor/modbus-monitor-docs
+# repo_name: Modbus Monitor Documentation
+# repo_url: https://github.com/Modbus-Monitor/modbus-monitor-docs
 
 # Documentation versioning
 extra:
@@ -133,8 +133,7 @@ markdown_extensions:
 
 # Footer with version information
 copyright: |
-  Documentation Version 1.0.0 • Last Updated: January 15, 2025 • 
-  <a href="https://github.com/Modbus-Monitor/modbus-monitor-docs" target="_blank">View on GitHub</a>
+  Documentation Version 1.0.0 • Last Updated: January 15, 2025
 
 nav:
   - Home: index.md
