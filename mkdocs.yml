@@ -133,7 +133,7 @@ markdown_extensions:
 
 # Footer with version information
 copyright: |
-  Documentation Version 1.0.3 • Last Updated: November 11, 2025
+  Documentation Version 1.0.4 • Last Updated: November 11, 2025
 
 nav:
   - Home: index.md
