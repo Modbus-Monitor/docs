@@ -2,234 +2,149 @@
 
 **Professional mobile Modbus monitoring for advanced users and field engineers**
 
-
-
-## 1. Introduction
-
-**Modbus Monitor XPF** is a versatile Windows application for facilitating communication between a Windows-based PC and Modbus Client or Server devices. It handles both Client (Master) and Server (Slave) operations and supports all common Modbus variants: TCP/IP, Serial RTU, Serial ASCII, and RTU/ASCII over TCP.
-
 ![Modbus Monitor Advanced on Mobile](../../assets/screenshots/android-advanced/mma-modbus-monitor-android.webp){ .screenshot-center loading="lazy" }
-
-!!! success "Advanced Version Features"
-    The Modbus Monitor Advanced is a professional Android app that communicates using the Modbus protocol through various interfaces. This paid version includes all features of the free app and excels in professional features, configuration options, and ease of data input.
 
 ## Introduction
 
-The Modbus Monitor Advanced operates in two modes: **Master (Client)** and **Slave (Server)**. The operation, configuration, and communication differ based on the selected mode.
+The Modbus Monitor Advanced is a comprehensive **3-in-1 solution**: Modbus Client, Server, and Sensor Server in a single Android application. This professional app provides complete Modbus protocol implementation with extensive connectivity and data management capabilities.
 
-- **Master Mode**: The app polls remote devices to retrieve data, displayed in your chosen format
-- **Slave Mode**: Your phone/tablet acts as a Modbus TCP Slave Device, allowing other devices to poll your device for data
+### Core Capabilities
 
-**Key Advantage**: The Modbus Monitor Advanced combines both modes in one application, eliminating the need for separate apps.
+**Communication Channels (4)**:
 
-## Download & Installation
+- **TCP/IP** - Wi-Fi and Ethernet networks
+- **USB-OTG** - Direct serial connections  
+- **Bluetooth** - Wireless serial communication
+- **Cloud/IoT** - MQTT and custom protocols
 
-- [:material-google-play: Google Play Store](https://play.google.com/store/apps/details?id=com.Bhavan.Galex)
-- [:material-download: Official Download](https://quantumbitsolutions.com/purchase/)
+**Protocol Support (8)**:
 
-**Requirements**: Android 8.0+ with network and USB permissions enabled
+Modbus TCP, UDP, RTU, ASCII, RTU over TCP, MQTT, and custom protocols
 
-## Main Window Interface
+**Data Management**:
+
+- CSV import/export with timed intervals (second/minute/hour)
+- Email export and cloud integration (ThingSpeak, Google Sheets)
+- Real-time logging and statistical analysis
+
+### Operation Modes
+
+- **Client Mode**: Poll remote devices with full protocol flexibility
+- **Server Mode**: Turn Android into Modbus TCP slave device
+- **Sensor Mode**: Expose phone sensors via Modbus TCP protocol
+
+**Download**: [:material-google-play: Google Play Store](https://play.google.com/store/apps/details?id=com.Bhavan.Galex) | [:material-download: Official Site](https://quantumbitsolutions.com/purchase/)
+
+**Requirements**: Android 8.0+ with network and USB permissions
+
+## Getting Started
+
+### Main Interface Overview
 
 <figure markdown>
   ![Main Window Layout](../../assets/screenshots/android-advanced/main-window-annotated.webp){ width="500" }
-  <figcaption>Figure 2: Main window interface with numbered components explained below</figcaption>
+  <figcaption>Figure 1: Main interface with key controls and status indicators</figcaption>
 </figure>
 
-The main window provides a comprehensive control center:
+**Key Components**:
+1. **Mode Controls** - Start/stop Client and Server operations
+2. **Connection Status** - Bluetooth, USB, and IoT indicators  
+3. **Statistics** - Good/bad packet counters
+4. **Monitor Points** - Device data with real-time values
+5. **Quick Add** - (+) button for new monitor points
 
-### Header Section
-1. **Hamburger Menu** [1] - Access main navigation
-2. **Application Title** - Shows current app mode
+### Quick Start (3 Steps)
 
-### Quick Access Controls
-2. **Server Mode Status/Start/Stop** [2] - Toggle Modbus server functionality
-3. **Client Mode Status/Start/Stop** [3] - Control Modbus client operations  
-4. **Bluetooth Status/Start/Stop** - Manage Bluetooth connections
-5. **USB Ports Status/Available Port** - View USB-OTG connection status
-6. **IoT Status/Start/Stop** - Control cloud integrations
+!!! example "Get Connected in 3 Steps"
+    1. **Add Monitor Point** - Press (+) button
+    2. **Configure Connection** - Set channel (TCP/IP/USB/Bluetooth) and device details
+    3. **Start Monitoring** - Press link icon to begin data collection
 
-### Status Information
-7. **Good/Bad Packet Counters** [7] - Communication statistics
-8. **Server IP Address and Port** - Current server configuration
-9. **Monitor Point Data** [9] - Name, configuration, values, and response times
-10. **Add Monitor Point** [10] - Quick access button with default settings
-
-### Quick Start Example
-
-!!! example "Quick Setup in 3 Steps"
-    1. **Press the + Button** to add a new Monitor Point with default settings
-    2. **Click the Monitor Point** and select "Change" to configure:
-       - Set **Channel** to TCP/IP 
-       - Enter **IP Address and Port** of remote server
-       - Specify **Number of Registers** and **Protocol** (Modbus TCP default)
-    3. **Click the Link Icon** to start polling and view live values
-
-## Main Menu Navigation
+### Main Menu Features
 
 <figure markdown>
   ![Main Menu Options](../../assets/screenshots/android-advanced/main-menu.webp){ width="350" }
-  <figcaption>Figure 3: Main menu showing all available options and features</figcaption>
+  <figcaption>Figure 2: Complete menu showing all available features</figcaption>
 </figure>
 
-### Menu Options
+**Essential Features**:
+- **⚙️ Settings** - Configure protocols, timing, and cloud integrations
+- **�📤 Import/Export** - CSV data management and email sharing
+- **☁️ Cloud Setup** - Google Sheets, ThingSpeak, MQTT configuration
+- **🔧 System Tools** - Reset, statistics, and factory restore
 
-- **🏠 Home**: Return to main screen (back button alternative)
-- **📱 Modbus Console**: Run Modbus Client Console (similar to free version)
-- **⚙️ Settings**: Comprehensive configuration for:
-  - Modbus Master/Server settings
-  - Timing and communication parameters
-  - Bluetooth and USB configurations
-  - Sleep and power management
-  - Logging and diagnostics
-  - Google Sheets integration
-  - ThingSpeak cloud publishing
-  - MQTT client setup
-
-### Data Management
-- **💰 Purchases**: Purchase additional add-ons
-- **🔄 Transform**: Convert old Modbus maps for compatibility
-- **📥 Import**: Load Modbus Monitor CSV files from Downloads
-- **📤 Export and Email**: Send data and configuration via email (CSV format for Excel editing)
-
-### Cloud Integrations
-- **📊 Google Sheets**: Configure Google Sheets add-on settings
-- **☁️ ThingSpeak**: Set up periodic data transmission to ThingSpeak
-- **📡 MQTT**: Configure MQTT client for IoT connectivity
-
-### System Management
-- **🔧 Factory Reset**: Erase all monitoring points and settings
-- **📊 Reset T/RX Counts**: Clear transmission/reception counters
-- **📈 Reset Statistics**: Clear Min/Average/Max statistics for all points
-
-## Monitor Points Management
+## Monitor Points - Core Concept
 
 <figure markdown>
   ![Monitor Points List](../../assets/screenshots/android-advanced/monitor-points-list.webp){ width="450" }
-  <figcaption>Figure 4: Monitor points list showing multiple configured devices with live data</figcaption>
+  <figcaption>Figure 3: Monitor points showing live data from multiple devices</figcaption>
 </figure>
 
-### What Are Monitor Points?
+**What are Monitor Points?**
+Monitor Points are like PLC tags - each contains complete configuration for one data source:
+- Communication settings (protocol, IP address, channel)
+- Data formatting and display options
+- Write values and mathematical transforms
 
-A **Monitoring Point** is similar to tags in a PLC and contains all information relevant to:
-- Modbus communication settings
-- Physical interface configuration  
-- Data display formatting
-- Preset writing values
+**Key Advantage**: Each point can use different protocols and connections, enabling multi-device SCADA functionality.
 
-**Advanced Capability**: Each monitor point can have different physical interfaces, Modbus protocols, IP addresses, and configurations.
-
-### Monitor Point Management Menu
+### Monitor Point Management
 
 <figure markdown>
   ![Monitor Point Management Dialog](../../assets/screenshots/android-advanced/monitor-point-management.webp){ width="400" }
-  <figcaption>Figure 5: Monitor point management options accessible by tapping any monitor point</figcaption>
+  <figcaption>Figure 4: Management options (tap any monitor point to access)</figcaption>
 </figure>
 
-**Access**: Click on any Monitoring Point to open the management dialog
+**Quick Actions**:
+- **✏️ Change** - Configure point settings (primary option)
+- **� Communications** - Start/stop polling
+- **✍️ Write** - Send values to remote device
+- **� Copy/📄 Paste** - Duplicate point configurations
 
-#### Available Actions
-- **📡 Communications**: Start/stop Modbus Client (same as Link Icon)
-- **➕ Add**: Create new Monitoring Point with defaults (same as + button)
-- **🗑️ Remove**: Delete selected monitor point
-- **✏️ Change**: Edit/configure the selected point (primary configuration option)
-- **📋 Copy**: Copy selected point to memory
-- **📄 Paste**: Paste copied point as new item
-- **✍️ Write**: Send new value to Modbus server (must enable Write for each point)
-- **📝 Write Preset Value**: Send previously configured preset value
-- **👁️ Hide/Unhide Configuration**: Toggle display of configuration details
-
-### Monitor Point Configuration
+### Configuration Dialog
 
 <figure markdown>
   ![Monitor Point Configuration Dialog](../../assets/screenshots/android-advanced/monitor-point-configuration.webp){ width="500" }
-  <figcaption>Figure 6: Detailed monitor point configuration with expandable sections</figcaption>
+  <figcaption>Figure 5: Detailed configuration with expandable sections</figcaption>
 </figure>
 
-#### Configuration Sections (Click to Expand)
+**Configuration Sections**:
+1. **📶 Channel** - Communication interface and protocol
+2. **🔧 Modbus** - Address, function codes, display settings  
+3. **🖥️ Sensor Server** - Android sensor integration
+4. **🧮 Math** - Linear scaling and calculations
+5. **💬 Coded Messages** - Text translation for numeric values
 
-1. **📶 Channel Settings**: Communication interface and protocol
-2. **🔧 Modbus Configuration**: Address, function codes, and display settings  
-3. **🖥️ Sensor Server**: Settings for server mode operation
-4. **🧮 Math**: Linear transformation and scaling calculations
-5. **💬 Coded Message**: Translate numeric values to predefined text strings
-
-## Modbus Client Mode (Master)
+## Client Mode - Polling Remote Devices
 
 <figure markdown>
   ![Modbus Client Mode Interface](../../assets/screenshots/android-advanced/client-mode-interface.webp){ width="500" }
-  <figcaption>Figure 7: Modbus client mode showing active polling and data collection</figcaption>
+  <figcaption>Figure 6: Client mode showing active data polling from multiple devices</figcaption>
 </figure>
 
-### Quick Start Guide: Master Mode
+### Configuration Essentials
 
-#### Step 1: Add Monitor Points
-- Click **(+)** button or select **"Add"** from menu
-- New point created with default settings
-- Tap point and select **"Change"** to configure
+**Channel Selection**:
+- **� TCP/IP** → Modbus TCP (Ethernet/Wi-Fi)
+- **🔌 USB-OTG** → Modbus RTU/ASCII (Serial)  
+- **📱 Bluetooth** → Modbus RTU/ASCII (Wireless)
 
-#### Step 2: Configure Channel
-Choose physical/network interface:
+**Addressing**: Uses 6-digit format supporting full 16-bit range (0-65535). See [6-Digit Addressing Guide](../../guides/6-digit-addressing.md) for details.
 
-- **📡 TCP/IP**: For Wi-Fi or Ethernet connected devices
-- **🔌 Serial**: For USB-OTG serial port connections  
-- **📱 Bluetooth**: For Bluetooth-enabled devices
-
-#### Step 3: Select Protocol
-Ensure correct Channel/Protocol combination:
-
-| Channel | Compatible Protocols | Use Case |
-|---------|---------------------|----------|
-| TCP/IP | Modbus TCP | Ethernet/Wi-Fi networks |
-| Serial | Modbus RTU, ASCII | USB-OTG connections |
-| Bluetooth | Modbus RTU, ASCII | Wireless serial |
+**Count Field**: Registers to read (1 for integers, 2 for floats, max 125)
 
 !!! warning "Protocol Compatibility"
-    Modbus Monitor Advanced skips monitor points with incorrect Channel/Protocol combinations. Verify settings if communication fails.
+    Ensure correct Channel/Protocol combinations. Incorrect settings cause communication failures.
 
-#### Step 4: Configure Addressing
-
-**Slave ID**: Set the device ID for your remote device
-
-**Modbus Address**: Use the **6-digit addressing scheme** that combines Modbus Address and Function Code:
-
-!!! info "6-Digit Addressing"
-    The app uses a 6-digit format supporting the full 16-bit range (0-65535). Visit our [6-Digit Addressing Guide](../../guides/6-digit-addressing.md) for detailed examples and conversion information.
-
-**Count Field**: Number of registers to read (max 125 per Modbus specification)
-- Most common: 1 register
-- Float values: 2 registers  
-- Varies by data type
-
-#### Step 5: Start Communication
-- Click **"Link" icon** to begin polling
-- **Success**: Data values appear in monitor point list
-- **Failure**: "?????" displayed - check configuration
-
-### Advanced Features
-
-**Multi-Device Support**: Set different protocols, IP addresses, ports, and channels for each monitor point - enabling SCADA-level data collection through a single interface.
-
-### Modbus Write Operations
+### Write Operations
 
 <figure markdown>
   ![Modbus Write Dialog](../../assets/screenshots/android-advanced/write-dialog.webp){ width="400" }
-  <figcaption>Figure 8: Write dialog for sending values to remote Modbus devices</figcaption>
+  <figcaption>Figure 7: Write dialog for sending values to remote devices</figcaption>
 </figure>
 
-#### Write Dialog Features
-- **Header**: Shows monitor point name and data type
-- **Write Field**: Enter value to send
-- **Change Button**: Execute write operation
-
-#### Write Modes
-- **Master Mode**: Value included in packet sent to remote server
-- **Server Mode**: Value stored in internal registers for remote master polling
-
-**Access**: Select **"Write"** option from Monitor Point Management dialog
-
-!!! caution "Write Safety"
-    Write functionality is disabled by default to prevent accidental operations. Enable individually for each monitor point as needed.
+**Write Capabilities**: Send values to remote servers (disabled by default for safety)
+**Multi-Device**: Each monitor point supports different protocols and connections
 
 ## Modbus Server Mode (Slave)
 
@@ -536,86 +451,36 @@ Device 3 - Sensor:
 - **Proper Grounding**: Essential for reliable communication
 - **Quality Cables**: Use shielded cables in industrial environments
 
-### Recommended USB Serial Chipsets
-Most quality manufacturers specify chipset information:
-- FTDI FT232, FT4232
-- Prolific PL2303
-- Silicon Labs CP210x
-- CH340/CH341
+## Hardware & Cloud Integration
 
-## Cloud Integration Add-ons
+### USB Serial Requirements
+**Recommended Chipsets**: FTDI FT232/FT4232, Prolific PL2303, Silicon Labs CP210x, CH340/CH341
+**Hardware**: USB-OTG adapter, USB-to-RS485 converter for industrial networks
 
-### Google Sheets Integration
-- **Real-time Data Publishing**: Send monitor point values to Google Sheets
-- **Automated Reports**: Generate periodic summaries
-- **Data Analysis**: Use Google Sheets tools for trending
-- **Team Sharing**: Collaborate on data analysis
+### Cloud Platform Add-ons
+- **📊 Google Sheets** - Real-time data publishing and automated reports
+- **☁️ ThingSpeak** - IoT dashboards, API access, alerts and triggers  
+- **📡 MQTT** - Industrial IoT integration with AWS, Azure, Google Cloud
 
-**Setup**: Available through in-app purchase and configuration in Settings menu
-
-### ThingSpeak Cloud Platform
-- **IoT Data Publishing**: Send data to ThingSpeak channels
-- **Custom Dashboards**: Create visualizations
-- **API Access**: Integrate with other applications
-- **Alerts & Triggers**: Set up automated notifications
-
-**Configuration**: Access through main menu → ThingSpeak settings
-
-### MQTT Client Support
-- **IoT Connectivity**: Connect to MQTT brokers
-- **Real-time Messaging**: Publish/subscribe to topics
-- **Industrial IoT**: Integration with factory systems
-- **Cloud Platforms**: AWS IoT, Azure IoT, Google Cloud IoT
-
-**Setup**: Configure through main menu → MQTT settings
-
-## Troubleshooting & Support
+## Troubleshooting
 
 ### Common Issues
+- **"?????" Values** - Check IP address, port, protocol settings
+- **USB Issues** - Verify OTG adapter compatibility and permissions
+- **Timeouts** - Increase timeout values in settings
+- **Protocol Errors** - Ensure correct Channel/Protocol combinations
 
-#### Communication Problems
-- **"?????" Values**: Check IP address, port, and protocol settings
-- **Timeout Errors**: Increase timeout values in settings
-- **Connection Refused**: Verify remote device is accessible
-- **Protocol Errors**: Ensure correct Channel/Protocol combination
+### Support Resources
+- 📧 **Email**: support@quantumbitsolutions.com
+- 📖 **Documentation**: [quantumbitsolutions.com/help](https://quantumbitsolutions.com/help/)
+- � **Forum**: [Expert community](https://quantumbitsolutions.com/forums/)
 
-#### USB Serial Issues  
-- **Device Not Detected**: Check USB-OTG adapter compatibility
-- **Permission Errors**: Grant USB permissions when prompted
-- **Communication Failures**: Verify baud rate and protocol settings
-- **Intermittent Connections**: Check cable quality and connections
+## Get Started Today
 
-### Getting Help
+[:material-google-play: Download from Google Play Store](https://play.google.com/store/apps/details?id=com.Bhavan.Galex){ .md-button .md-button--primary }
 
-#### Professional Support Channels
-- 📧 **Priority Email Support**: support@quantumbitsolutions.com
-- 📖 **Documentation**: [Complete user guides](https://quantumbitsolutions.com/help/)
-- 💬 **Community Forum**: [Expert user community](https://quantumbitsolutions.com/forums/)
-- 🎥 **Video Tutorials**: Step-by-step instruction videos
-
-#### Additional Resources
-- 📚 **Error Codes**: [Detailed error reference](https://quantumbitsolutions.com/errors/)
-- 🔧 **Protocol Guides**: [Modbus fundamentals](https://quantumbitsolutions.com/modbus/)
-- 📱 **FAQ**: [Frequently asked questions](https://quantumbitsolutions.com/faq/)
-- 🔄 **Updates**: Regular app updates with new features
-
-## Purchase & Download
-
-### Get Modbus Monitor Advanced
-
-[:material-google-play: Purchase on Google Play Store](https://play.google.com/store/apps/details?id=com.Bhavan.Galex){ .md-button .md-button--primary }
-
-[:material-download: Official Download Page](https://quantumbitsolutions.com/purchase/){ .md-button }
-
-### What's Included
-- ✅ **Full Modbus Protocol Support**: TCP, RTU, ASCII
-- ✅ **Unlimited Monitor Points**: No restrictions on device monitoring  
-- ✅ **Professional Features**: Write operations, custom functions, advanced configuration
-- ✅ **Cloud Integrations**: Google Sheets, ThingSpeak, MQTT add-ons available
-- ✅ **Priority Support**: Fast email support with expert assistance
-- ✅ **Regular Updates**: New features and improvements
-- ✅ **Professional Documentation**: Comprehensive user guides and tutorials
+**Professional Modbus monitoring** with unlimited monitor points, cloud integration, and priority support.
 
 ---
 
-**Professional mobile Modbus monitoring** - The Advanced version provides everything needed for serious industrial communication work on Android devices.
+**Ready for serious industrial communication work on Android devices.**
