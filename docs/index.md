@@ -24,8 +24,8 @@
 
     Mobile Modbus monitoring for field technicians and engineers.
 
-    [:octicons-arrow-right-24: Free Version](products/android/free-guide.md)
-    [:octicons-arrow-right-24: Advanced Version](products/android/advanced-guide.md)
+    [:octicons-arrow-right-24: Modbus Console (free)](products/android/free-guide.md)
+    [:octicons-arrow-right-24: Modbus Monitor Advanced](products/android/advanced-guide.md)
 
 -   :material-map:{ .lg } **Modbus Mapper Pro**
 

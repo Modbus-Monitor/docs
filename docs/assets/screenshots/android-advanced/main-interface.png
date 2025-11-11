@@ -1,0 +1,15 @@
+<!-- Screenshot Placeholder: Main Interface -->
+<!-- 
+This file should contain a screenshot of the Modbus Monitor Advanced main interface showing:
+- Header with hamburger menu and app title
+- Quick access buttons (Server, Client, Bluetooth, USB, IoT status)
+- Good/Bad packet counters
+- Server IP and port information
+- Monitor points list with live data
+- + button for adding new points
+
+Recommended size: 400px width
+Format: PNG with transparency support
+-->
+
+![Main Interface Placeholder](data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjcwMCIgdmlld0JveD0iMCAwIDQwMCA3MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNzAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzOTgiIGhlaWdodD0iNjk4IiBzdHJva2U9IiNEMUQ1REIiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIvPgo8dGV4dCB4PSIyMDAiIHk9IjMzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjM3Mzg1Ij5NYWluIEludGVyZmFjZSBTY3JlZW5zaG90PC90ZXh0Pgo8dGV4dCB4PSIyMDAiIHk9IjM1NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOUI5Qzk5Ij5SZXF1aXJlZCBmb3IgRmlndXJlIDE8L3RleHQ+Cjwvc3ZnPgo=)
