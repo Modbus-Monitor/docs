@@ -49,6 +49,21 @@ Modbus TCP, UDP, Serial RTU, Serial ASCII, RTU over TCP, ASCII over TCP, and MQT
 
 ### Main Interface Overview
 
+The Modbus Monitor Advanced features an intuitive main interface designed for both novice and expert users. Understanding this interface is crucial for effective operation, as it serves as your command center for all Modbus communication activities.
+
+**Interface Design Philosophy**:
+The main screen combines **status indicators** with **action buttons** for streamlined operation. Each visual element serves a specific purpose - status lights show what's happening, buttons control operations, and data displays provide real-time feedback. This unified design eliminates the need to navigate between multiple screens during normal operation.
+
+**For New Users**: Don't be overwhelmed by the interface - you'll primarily use just a few key elements:
+
+- The **+ button [10]** to add new connections
+- **Monitor Points [9]** to view your data
+- **Client Mode [3]** to start/stop data collection
+
+**For Advanced Users**: The interface provides comprehensive control over multiple simultaneous connections, with detailed statistics, server capabilities, and extensive configuration options all accessible from this single screen.
+
+The main interface combines status indicators with action buttons for easy operation. Each row displays monitor points showing Name, Configuration details, current Modbus values, send/receive frames, and packet response times.
+
 <figure markdown>  
   ![Main Window Layout](../../assets/screenshots/android-advanced/mma-main-UI.webp)
   <figcaption>Figure 1: Main interface with key controls and status indicators</figcaption>
@@ -56,16 +71,28 @@ Modbus TCP, UDP, Serial RTU, Serial ASCII, RTU over TCP, ASCII over TCP, and MQT
 
 **Key Components**:
 
-1. **Hamburger Menu [1]** - Access main application menu and settings
-2. **Server Mode Status/Start/Stop [2]** - Toggle and status indicator for Modbus server
-3. **Client Mode Status/Start/Stop [3]** - Toggle and status indicator for Modbus client
-4. **Connection Status** - Bluetooth, USB, and IoT indicators  
-5. **Good/Bad Packet Counters [7]** - Communication statistics and error tracking
-6. **Server Info** - IP address and port when server mode is active
-7. **Monitor Points [9]** - Device data with real-time values, configuration details, and response times
-8. **Quick Add [10]** - (+) button for new monitor points
+| Element | Reference | Description | Function |
+|---------|-----------|-------------|----------|
+| **Hamburger Menu** | [1] | Main application menu | Access settings, import/export, cloud setup |
+| **Server Mode** | [2] | Server status/toggle | Start/stop Modbus TCP server functionality |
+| **Client Mode** | [3] | Client status/toggle | Start/stop Modbus client polling |
+| **Bluetooth Status** | [4] | Communication indicators | Bluetooth control and status |
+| **Serial Status** | [5] | USB Serial indicators | USB and USB-OTG connected device control panel and connection status |
+| **IoT** | [6] | IoT status | IoT controls and status |
+| **Packet Counters** | [7] | Statistics display | Good/Bad packet counts and error tracking |
+| **Server Info** | [8] | Network details | IP address and port when server is active |
+| **Monitor Points** | [9] | Data display area | Live values, config details, response times, click or swipe for edits |
+| **Quick Add** | [10] | Add button | (+) button to create new monitor points |
 
-The main interface combines status indicators with action buttons for easy operation. Each row displays monitor points showing Name, Configuration details, current Modbus values, send/receive frames, and packet response times.
+!!! info "Detailed Coverage Ahead"
+    Each of these interface elements will be explained in comprehensive detail throughout this guide. The numbered references [1]-[10] correspond to the annotations in the screenshot above, making it easy to follow along. New users should focus on elements [3], [9], and [10] to get started, while advanced users can utilize all features for complex multi-device scenarios.
+
+**Interface Zones**:
+- **Top Row**: Primary controls and status indicators [1]-[6] 
+- **Statistics Area**: Communication health and server info [7]-[8]
+- **Data Area**: Your monitor points and add button [9]-[10]
+
+
 
 ### Quick Start (3 Steps)
 
