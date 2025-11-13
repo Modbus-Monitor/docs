@@ -16,6 +16,13 @@ The Modbus Monitor Advanced operates in two primary modes: **Master (Client)** a
 
 The advantage of the Modbus Monitor Advanced is that it combines both modes in one application, eliminating the need to purchase separate apps.
 
+**Essential App Features**:
+
+- **⚙️ Settings** - Configure protocols, timing, and cloud integrations  
+- **📤 Export/Import** - CSV data management and email sharing
+- **☁️ Cloud Integration** - Google Sheets, ThingSpeak, MQTT support
+- **🔄 Data Management** - Real-time logging, statistics, and data transformations
+
 ### Core Capabilities
 
 **Communication Channels (4)**:
@@ -27,7 +34,7 @@ The advantage of the Modbus Monitor Advanced is that it combines both modes in o
 
 **Protocol Support (8)**:
 
-Modbus TCP, UDP, Serial RTU, Serial ASCII, RTU over TCP, ASCII over TCP, and MQTT
+Modbus TCP, UDP, Serial RTU, Serial ASCII, RTU over TCP, ASCII over TCP, ThingSpeak, Google Sheets, and MQTT
 
 **Data Management**:
 
@@ -87,12 +94,6 @@ The main interface combines status indicators with action buttons for easy opera
 !!! info "Detailed Coverage Ahead"
     Each of these interface elements will be explained in comprehensive detail throughout this guide. The numbered references [1]-[10] correspond to the annotations in the screenshot above, making it easy to follow along. New users should focus on elements [3], [9], and [10] to get started, while advanced users can utilize all features for complex multi-device scenarios.
 
-**Interface Zones**:
-- **Top Row**: Primary controls and status indicators [1]-[6] 
-- **Statistics Area**: Communication health and server info [7]-[8]
-- **Data Area**: Your monitor points and add button [9]-[10]
-
-
 
 ### Quick Start (3 Steps)
 
@@ -101,35 +102,24 @@ The main interface combines status indicators with action buttons for easy opera
     2. **Configure Connection** - Click the Monitor Point and select "Change" to set up the Monitor Point. Click TCP/IP (Channel), set the IP Address and Port from a remote server, specify the Number of Registers, and the Protocol (Modbus TCP is the default)
     3. **Start Monitoring** - Click the **Link** icon to start polling the remote server and view the value
 
-### Main Menu Features
+### Navigation Basics
 
-<figure markdown>
-  ![Main Menu Options](../../assets/screenshots/android-advanced/main-menu.webp){ width="350" }
-  <figcaption>Figure 2: Complete menu showing all available features</figcaption>
-</figure>
+**Primary Navigation**:
 
-**Complete Feature List**:
+- **Hamburger Menu [1]** - Access all app settings and features
+- **Main Interface** - Your primary workspace for monitoring data
+- **Monitor Point Dialogs** - Configure individual connections
 
-**Core Functions**:
-- **🏠 Home** - Return to main interface (press back button to close menu)
-- **💻 Modbus Console** - Run Modbus Client Console similar to Modbus Monitor (Free) App
-- **⚙️ Settings** - Configuration screen for Modbus Master, Server, Timing, Bluetooth, Sleep, Logs, Google Sheets, ThingSpeak, and MQTT
+**Quick Access Features**:
 
-**Data Management**:
-- **📥 Import** - Import Modbus Monitor CSV Points file from Downloads folder
-- **📤 Export and Email** - Export Data and Device Configuration via email attachment. Add your own email to get data in CSV format for easy editing in Excel
-- **🔄 Transform** - Transform old Modbus Map into latest version for compatibility
+- **Settings** (via menu) - Configure app behavior and cloud features
+- **Edit Monitor Point** (click or swipe) - Click on Monitor Point or swipe to see the menu for each monitoring point
+- **Import/Export** (via menu) - Manage monitor point configurations
+- **Help & Support** (via menu) - Access documentation and community
 
-**Cloud Integration**:
-- **📊 Google Sheets** - Settings related to Google Sheets Add-on (when purchased)
-- **📡 ThingSpeak** - Setup ThingSpeak to periodically send data
-- **🌐 MQTT** - Setup MQTT client for industrial IoT integration
+!!! tip "Learning Path"
+    Start with the basics: add a monitor point, configure it, and start monitoring. Once comfortable, explore the advanced features through the hamburger menu [1]. Each feature has detailed explanations in the sections below.
 
-**System Management**:
-- **� Purchases** - Purchase Add-On features
-- **🏭 Factory Reset** - Erase all monitoring points and default app settings
-- **🔄 Reset T/RX Counts** - Reset TX/RX communication counters
-- **📈 Reset Statistics** - Reset the Min/Ave/Max statistics value for each monitor point
 
 ## Monitor Points - Core Concept
 
