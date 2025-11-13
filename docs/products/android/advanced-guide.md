@@ -6,7 +6,15 @@
 
 ## Introduction
 
-The Modbus Monitor Advanced is a comprehensive **3-in-1 solution**: Modbus Client, Server, and Sensor Server in a single Android application. This professional app provides complete Modbus protocol implementation with extensive connectivity and data management capabilities.
+The Modbus Monitor Advanced is a comprehensive **3-in-1 solution**: Modbus Client, Server, and Sensor Server in a single Android application. This professional app allows you to poll Modbus-speaking devices for data directly from your mobile device.
+
+The Modbus Monitor Advanced operates in two primary modes: **Master (Client)** and **Slave (Server)**. The operation, configuration, and communication differ based on the selected mode. The paid version includes all features of the free app and excels in professional features, configuration options, and ease of data input.
+
+**Master (Client) Mode**: The app polls remote devices to retrieve data, which is then displayed in your chosen data format, including raw data.
+
+**Slave (Server) Mode**: Your phone or tablet acts as a Modbus TCP Slave Device, allowing other devices on the network to poll your device for data.
+
+The advantage of the Modbus Monitor Advanced is that it combines both modes in one application, eliminating the need to purchase separate apps.
 
 ### Core Capabilities
 
@@ -47,18 +55,24 @@ Modbus TCP, UDP, Serial RTU, Serial ASCII, RTU over TCP, ASCII over TCP, and MQT
 </figure>
 
 **Key Components**:
-1. **Mode Controls** - Start/stop Client and Server operations
-2. **Connection Status** - Bluetooth, USB, and IoT indicators  
-3. **Statistics** - Good/bad packet counters
-4. **Monitor Points** - Device data with real-time values
-5. **Quick Add** - (+) button for new monitor points
+
+1. **Hamburger Menu [1]** - Access main application menu and settings
+2. **Server Mode Status/Start/Stop [2]** - Toggle and status indicator for Modbus server
+3. **Client Mode Status/Start/Stop [3]** - Toggle and status indicator for Modbus client
+4. **Connection Status** - Bluetooth, USB, and IoT indicators  
+5. **Good/Bad Packet Counters [7]** - Communication statistics and error tracking
+6. **Server Info** - IP address and port when server mode is active
+7. **Monitor Points [9]** - Device data with real-time values, configuration details, and response times
+8. **Quick Add [10]** - (+) button for new monitor points
+
+The main interface combines status indicators with action buttons for easy operation. Each row displays monitor points showing Name, Configuration details, current Modbus values, send/receive frames, and packet response times.
 
 ### Quick Start (3 Steps)
 
 !!! example "Get Connected in 3 Steps"
-    1. **Add Monitor Point** - Press (+) button
-    2. **Configure Connection** - Set channel (TCP/IP/USB/Bluetooth) and device details
-    3. **Start Monitoring** - Press link icon to begin data collection
+    1. **Add Monitor Point** - Press the **+** button to add a new Monitor Point with default settings
+    2. **Configure Connection** - Click the Monitor Point and select "Change" to set up the Monitor Point. Click TCP/IP (Channel), set the IP Address and Port from a remote server, specify the Number of Registers, and the Protocol (Modbus TCP is the default)
+    3. **Start Monitoring** - Click the **Link** icon to start polling the remote server and view the value
 
 ### Main Menu Features
 
@@ -67,11 +81,28 @@ Modbus TCP, UDP, Serial RTU, Serial ASCII, RTU over TCP, ASCII over TCP, and MQT
   <figcaption>Figure 2: Complete menu showing all available features</figcaption>
 </figure>
 
-**Essential Features**:
-- **⚙️ Settings** - Configure protocols, timing, and cloud integrations
-- **�📤 Import/Export** - CSV data management and email sharing
-- **☁️ Cloud Setup** - Google Sheets, ThingSpeak, MQTT configuration
-- **🔧 System Tools** - Reset, statistics, and factory restore
+**Complete Feature List**:
+
+**Core Functions**:
+- **🏠 Home** - Return to main interface (press back button to close menu)
+- **💻 Modbus Console** - Run Modbus Client Console similar to Modbus Monitor (Free) App
+- **⚙️ Settings** - Configuration screen for Modbus Master, Server, Timing, Bluetooth, Sleep, Logs, Google Sheets, ThingSpeak, and MQTT
+
+**Data Management**:
+- **📥 Import** - Import Modbus Monitor CSV Points file from Downloads folder
+- **📤 Export and Email** - Export Data and Device Configuration via email attachment. Add your own email to get data in CSV format for easy editing in Excel
+- **🔄 Transform** - Transform old Modbus Map into latest version for compatibility
+
+**Cloud Integration**:
+- **📊 Google Sheets** - Settings related to Google Sheets Add-on (when purchased)
+- **📡 ThingSpeak** - Setup ThingSpeak to periodically send data
+- **🌐 MQTT** - Setup MQTT client for industrial IoT integration
+
+**System Management**:
+- **� Purchases** - Purchase Add-On features
+- **🏭 Factory Reset** - Erase all monitoring points and default app settings
+- **🔄 Reset T/RX Counts** - Reset TX/RX communication counters
+- **📈 Reset Statistics** - Reset the Min/Ave/Max statistics value for each monitor point
 
 ## Monitor Points - Core Concept
 
@@ -81,12 +112,18 @@ Modbus TCP, UDP, Serial RTU, Serial ASCII, RTU over TCP, ASCII over TCP, and MQT
 </figure>
 
 **What are Monitor Points?**
-Monitor Points are like PLC tags - each contains complete configuration for one data source:
-- Communication settings (protocol, IP address, channel)
-- Data formatting and display options
-- Write values and mathematical transforms
 
-**Key Advantage**: Each point can use different protocols and connections, enabling multi-device SCADA functionality.
+A Monitor Point is similar to tags in a PLC and holds all information relevant to defining Modbus, the communication medium, display, and preset writing values. Each monitor point contains complete configuration for one data source:
+
+- **Communication settings** - Protocol, IP address, port, channel selection
+- **Modbus configuration** - Address, function codes, slave ID, register count  
+- **Data formatting** - Display options, data types, scaling
+- **Write values** - Preset values and mathematical transforms
+- **Advanced features** - Coded messages, sensor integration
+
+**Key Advantage**: Each point can use different protocols and connections, enabling multi-device SCADA functionality. With Modbus Monitor Advanced, you can set different protocols, IP addresses, ports, and channels for each Monitor Point Entry. This advanced SCADA-level data collection approach allows you to set and view live values from various operation modes through a single interface.
+
+The full list of Monitor Points can be built by adding new items one at a time or importing thousands of items from a CSV file from email or the mobile device's Downloads folder.
 
 ### Monitor Point Management
 
@@ -95,11 +132,17 @@ Monitor Points are like PLC tags - each contains complete configuration for one 
   <figcaption>Figure 4: Management options (tap any monitor point to access)</figcaption>
 </figure>
 
-**Quick Actions**:
-- **✏️ Change** - Configure point settings (primary option)
-- **� Communications** - Start/stop polling
-- **✍️ Write** - Send values to remote device
-- **� Copy/📄 Paste** - Duplicate point configurations
+**Management Options**:
+
+- **📞 Communications** - Start or stop the Modbus Client. This is the same as clicking on the Link Icon. This is also the default action when no item is selected and OK is clicked
+- **➕ Add** - Add a new Monitor Point with default settings. This is the same as clicking the + floating button
+- **❌ Remove** - Remove the selected item
+- **✏️ Change** - Change or edit the selected Monitor Point. This option is usually used after a new item is added to configure or set up the Monitor Point
+- **📋 Copy** - Copy the selected item to memory
+- **📄 Paste** - Paste the copied item from memory and add it as a new item
+- **✍️ Write** - Write and send a new value to Modbus. Modbus Write must be enabled for each item for this to work (Write is disabled by default to prevent accidents)
+- **⚡ Write Preset Value** - Write the preset value to the Modbus Server. The preset value is set previously when setting up a new Monitor Point
+- **👁️ Hide/Unhide Configuration** - Show or hide the line below the Register Name that displays a short description of the configuration
 
 ### Configuration Dialog
 
@@ -124,14 +167,35 @@ Monitor Points are like PLC tags - each contains complete configuration for one 
 
 ### Configuration Essentials
 
+To start polling in Master Mode, Modbus Monitor Advanced requires at least one monitor point. You can add a monitor point by clicking the (+) button or selecting "Add" from the menu. When you click "Add" or (+), a monitor point is added with default settings and values. 
+
+**Setup Steps**:
+1. **Add Monitor Point** - Tap the monitor point in the list and select "Change" to edit the newly added point
+2. **Select Channel** - Choose the physical or network device your remote device (server/slave) will use for communication
+3. **Choose Protocol** - Select compatible protocol for your selected channel (see table above)
+4. **Configure Connection** - Set IP address/port for TCP/IP or baud rate for serial connections
+5. **Set Modbus Parameters** - Configure Slave ID, address, and register count
+6. **Start Polling** - Click the "Link" icon to start polling from remote servers
+
 **Channel Selection**:
-- **� TCP/IP** → Modbus TCP (Ethernet/Wi-Fi)
+- **🌐 TCP/IP** → Modbus TCP (Ethernet/Wi-Fi)
 - **🔌 USB-OTG** → Modbus RTU/ASCII (Serial)  
 - **📱 Bluetooth** → Modbus RTU/ASCII (Wireless)
 
-**Addressing**: Uses 6-digit format supporting full 16-bit range (0-65535). See [6-Digit Addressing Guide](../../guides/6-digit-addressing.md) for details.
+**Protocol Compatibility**:
 
-**Count Field**: Registers to read (1 for integers, 2 for floats, max 125)
+| Channel | Supported Protocols | Notes |
+|---------|-------------------|-------|
+| TCP/IP | Modbus TCP, UDP, RTU over TCP, ASCII over TCP | Works as Master and Server |
+| Serial (USB-OTG) | Modbus RTU, Modbus ASCII | Serial communication only |
+| Bluetooth | Modbus RTU, Modbus ASCII | Wireless serial communication |
+
+!!! warning "Protocol Compatibility"
+    Only certain protocols are compatible with each channel. Modbus Monitor Advanced will skip monitor points with incorrect Channel/Protocol combinations. If communication shows errors, ensure the correct Channel and Protocol are set for each monitor point.
+
+**Addressing**: Uses 6-digit format supporting full 16-bit range (0-65535). This address is in the Modbus Protocol format, not the more common PLC address scheme. See [6-Digit Addressing Guide](../../guides/6-digit-addressing.md) for details.
+
+**Count Field**: Registers to read (1 for integers, 2 for floats, max 125 per Modbus specification). Ensure the correct number of counts is programmed for the data type to be displayed.
 
 !!! warning "Protocol Compatibility"
     Ensure correct Channel/Protocol combinations. Incorrect settings cause communication failures.
@@ -143,8 +207,15 @@ Monitor Points are like PLC tags - each contains complete configuration for one 
   <figcaption>Figure 7: Write dialog for sending values to remote devices</figcaption>
 </figure>
 
-**Write Capabilities**: Send values to remote servers (disabled by default for safety)
-**Multi-Device**: Each monitor point supports different protocols and connections
+The Write Dialog box is displayed when selecting the "Write" option from the Monitor Point Management dialog. The header shows the name of the Monitor Point along with the Data Type. Enter the value in the write field and click the Change button.
+
+**Write Capabilities**: 
+- Send values to remote servers (disabled by default for safety)
+- Works in both Master and Server modes
+- In Master mode: write value included in Modbus packet sent to remote server
+- In Server mode: write value stored in internal registers for remote masters to poll
+
+**Multi-Device Support**: Each monitor point supports different protocols and connections, enabling write operations across multiple devices and networks simultaneously.
 
 ## Modbus Server Mode (Slave)
 
@@ -465,10 +536,34 @@ Device 3 - Sensor:
 ## Troubleshooting
 
 ### Common Issues
-- **"?????" Values** - Check IP address, port, protocol settings
-- **USB Issues** - Verify OTG adapter compatibility and permissions
-- **Timeouts** - Increase timeout values in settings
-- **Protocol Errors** - Ensure correct Channel/Protocol combinations
+
+**Communication Problems**:
+- **"?????" Values** - Unable to collect data from remote servers
+  - Check IP address, port, and protocol settings
+  - Verify network connectivity and device accessibility
+  - Confirm correct Channel/Protocol combinations
+- **Protocol Errors** - Ensure correct Channel/Protocol combinations (see compatibility table in Client Mode section)
+- **Timeouts** - Increase timeout values in Settings → Timing
+
+**Hardware Issues**:
+- **USB Issues** - Verify OTG adapter compatibility and USB permissions
+  - Ensure Android device supports USB-OTG
+  - Check that USB serial adapter uses supported chipset (FTDI, Prolific, etc.)
+  - Grant USB permissions when prompted
+- **Bluetooth Connection** - Verify Bluetooth pairing and permissions
+- **Network Connection** - Check Wi-Fi/Ethernet connectivity for TCP/IP mode
+
+**Configuration Issues**:
+- **Invalid Addresses** - Use 6-digit Modbus Protocol format, not PLC addressing
+- **Wrong Register Count** - Set correct count for data type (1 for integers, 2 for floats)
+- **Write Failures** - Enable write permissions for each monitor point (disabled by default)
+
+### Diagnostic Steps
+1. **Check Connection Status** - Monitor connection indicators on main interface
+2. **Review Packet Counters** - Good/Bad packet statistics show communication health
+3. **Verify Settings** - Double-check all configuration parameters
+4. **Test Simple Configuration** - Start with basic TCP/IP connection before advanced setups
+5. **Check Error Codes** - Reference [Error Codes Page](https://quantumbitsolutions.com/errors/)
 
 ### Support Resources
 - 📧 **Email**: support@quantumbitsolutions.com
