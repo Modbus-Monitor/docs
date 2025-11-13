@@ -19,7 +19,7 @@ The Modbus Monitor Advanced is a comprehensive **3-in-1 solution**: Modbus Clien
 
 **Protocol Support (8)**:
 
-Modbus TCP, UDP, RTU, ASCII, RTU over TCP, MQTT, and custom protocols
+Modbus TCP, UDP, Serial RTU, Serial ASCII, RTU over TCP, ASCII over TCP, and MQTT
 
 **Data Management**:
 
@@ -31,18 +31,18 @@ Modbus TCP, UDP, RTU, ASCII, RTU over TCP, MQTT, and custom protocols
 
 - **Client Mode**: Poll remote devices with full protocol flexibility
 - **Server Mode**: Turn Android into Modbus TCP slave device
-- **Sensor Mode**: Expose phone sensors via Modbus TCP protocol
+- **Sensor Mode**: Expose phone sensors via Modbus TCP protocol and MOdbus/TCP server
 
 **Download**: [:material-google-play: Google Play Store](https://play.google.com/store/apps/details?id=com.Bhavan.Galex) | [:material-download: Official Site](https://quantumbitsolutions.com/purchase/)
 
-**Requirements**: Android 8.0+ with network and USB permissions
+**Requirements**: Android 6.0+ (API23) with network and USB permissions; USB OTG support required for serial connections
 
 ## Getting Started
 
 ### Main Interface Overview
 
-<figure markdown>
-  ![Main Window Layout](../../assets/screenshots/android-advanced/main-window-annotated.webp){ width="500" }
+<figure markdown>  
+  ![Main Window Layout](../../assets/screenshots/android-advanced/mma-main-UI.webp)
   <figcaption>Figure 1: Main interface with key controls and status indicators</figcaption>
 </figure>
 
