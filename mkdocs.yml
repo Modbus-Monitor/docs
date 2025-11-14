@@ -45,6 +45,9 @@ theme:
     - content.tooltips
     - content.footnote.tooltips
     - content.tabs.link
+    # Required for Material Design grid cards
+    - content.action.edit
+    - content.action.view
   palette:
     - scheme: default
       primary: indigo
