@@ -30,7 +30,6 @@ theme:
     - navigation.tabs.sticky
     - navigation.footer
     - navigation.sections
-    - navigation.collapse
     # Table of Contents improvements  
     - toc.follow
     - toc.integrate

@@ -19,6 +19,27 @@
   box-shadow: 0 0.2rem 0.5rem rgba(0,0,0,.05);
 }
 
+/* Product sections with better spacing */
+.md-typeset h3[id*="material-"] {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgba(var(--md-primary-fg-color--rgb), 0.05);
+  border-radius: 0.5rem;
+  border-left: 0.25rem solid var(--md-primary-fg-color);
+}
+
+/* Better link styling for navigation arrows */
+.md-typeset a[href*="octicons-arrow-right"] {
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+.md-typeset a[href*="octicons-arrow-right"]:hover {
+  background-color: rgba(var(--md-primary-fg-color--rgb), 0.1);
+}
+
 /* Screenshot styling */
 .screenshot {
   margin: 1.5rem 0;
