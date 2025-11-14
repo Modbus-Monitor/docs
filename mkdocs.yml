@@ -2,6 +2,7 @@ docs_dir: docs
 site_name: Modbus Monitor — Documentation
 site_url: https://modbus-monitor.github.io/modbus-monitor-docs/
 use_directory_urls: true
+# Repository renamed from 'docs' to 'modbus-monitor-docs' - trigger rebuild
 
 # Ensure proper index page handling
 site_description: Professional Modbus monitoring tools and comprehensive documentation for automation engineers, OEMs, and testing teams.
