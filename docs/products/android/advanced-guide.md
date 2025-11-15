@@ -80,9 +80,9 @@ The main interface combines status indicators with action buttons for easy opera
 
 | Element | Reference | Description | Function |
 |---------|-----------|-------------|----------|
-| **Hamburger Menu** | [1] | Main application menu | Access settings, import/export, cloud setup |
-| **Server Mode** | [2] | Server status/toggle | Start/stop Modbus TCP server functionality |
-| **Client Mode** | [3] | Client status/toggle | Start/stop Modbus client polling |
+| **[Hamburger Menu](#hamburger-menu)** | [1] | Main application menu | Access settings, import/export, cloud setup |
+| **[Server Mode](#modbus-server-mode-slave)** | [2] | Server status/toggle | Start/stop Modbus TCP server functionality |
+| **[Client Mode](#client-mode---polling-remote-devices)** | [3] | Client status/toggle | Start/stop Modbus client polling |
 | **Bluetooth Status** | [4] | Communication indicators | Bluetooth control and status |
 | **Serial Status** | [5] | USB Serial indicators | USB and USB-OTG connected device control panel and connection status |
 | **IoT** | [6] | IoT status | IoT controls and status |
@@ -106,7 +106,7 @@ The main interface combines status indicators with action buttons for easy opera
 
 **Primary Navigation**:
 
-- **Hamburger Menu [1]** - Access all app settings and features
+- **[Hamburger Menu [1]](#hamburger-menu)** - Access all app settings and features
 - **Main Interface** - Your primary workspace for monitoring data
 - **Monitor Point Dialogs** - Configure individual connections
 
@@ -118,7 +118,7 @@ The main interface combines status indicators with action buttons for easy opera
 - **Help & Support** (via menu) - Access documentation and community
 
 !!! tip "Learning Path"
-    Start with the basics: add a monitor point, configure it, and start monitoring. Once comfortable, explore the advanced features through the hamburger menu [1]. Each feature has detailed explanations in the sections below.
+    Start with the basics: add a monitor point, configure it, and start monitoring. Once comfortable, explore the advanced features through the [hamburger menu [1]](#hamburger-menu). Each feature has detailed explanations in the sections below.
 
 ## Hamburger Menu
 
