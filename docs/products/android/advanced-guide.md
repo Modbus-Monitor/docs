@@ -167,98 +167,178 @@ The main interface combines status indicators with action buttons for easy opera
 
 [:octicons-arrow-left-24: Back to Main Interface](#main-interface-overview)
 
-Access comprehensive app configuration through **[Hamburger Menu [1]](#hamburger-menu) → Settings**. The Settings screen organizes all configuration options into logical categories for easy management of communication protocols, timing parameters, logging options, and hardware-specific settings.
+Access comprehensive app configuration through **[Hamburger Menu [1]](#hamburger-menu) → Settings**. The Settings screen organizes all configuration options into logical categories for easy management of communication protocols, timing parameters, logging options, cloud integrations, and hardware-specific settings.
 
-### Settings Categories Overview
+=== "Modbus Master"
 
-#### Communication Settings
-Basic network and device connection parameters for client mode operations.
+    **Template settings for new monitor points in client mode operations.**
+    
+    | Setting | Type | Description | Default | Notes |
+    |---------|------|-------------|---------|-------|
+    | **IP Address** | Text | Default IP address for new monitor points | Device IP | Template for TCP/IP connections |
+    | **Port** | Number | Default port for client connections | 502 | Standard Modbus TCP port |
+    | **Slave ID** | Number | Default Modbus slave ID | 1 | Applied to new monitor points |
+    | **Auto Start** | Switch | Start polling automatically when app launches | Disabled | Begins client mode on app start |
+    
+    !!! tip "Template Functionality"
+        These settings serve as templates when creating new monitor points, saving you from entering the same information repeatedly for similar devices.
 
-| Setting | Type | Description | Default | Notes |
-|---------|------|-------------|---------|-------|
-| **IP Address** | Text | Default IP address for new monitor points | Not Set | Used as template for new connections |
-| **Port** | Number | Default port for client connections | Not Set | Template for TCP/IP monitor points |
-| **Slave/Station ID** | Number | Default Modbus slave ID | Not Set | Applied to new monitor points |
+=== "Server"
 
-#### Server Settings
-Configuration options for [Modbus Server Mode](#modbus-server-mode-slave) operation.
+    **Configuration options for [Modbus Server Mode](#modbus-server-mode-slave) operation.**
+    
+    | Setting | Type | Description | Default | Notes |
+    |---------|------|-------------|---------|-------|
+    | **Server Port** | Number | Port for Modbus TCP server | 8888 | See [Server Configuration](#server-configuration) |
+    | **Modbus Server** | Switch | Show/hide server icon on main interface | Disabled | Enables [Server Mode [2]](#modbus-server-mode-slave) |
+    | **Auto Start** | Switch | Automatically start server when app launches | Disabled | Useful for dedicated server deployments |
+    
+    !!! note "Server Configuration Cross-Reference"
+        For detailed server setup including port guidelines and best practices, see the [Server Configuration](#server-configuration) section.
 
-| Setting | Type | Description | Default | Notes |
-|---------|------|-------------|---------|-------|
-| **Server Port** | Number | Port for Modbus TCP server | 8888 | See [Server Configuration](#server-configuration) |
-| **Modbus Server** | Checkbox | Show/hide server icon on main interface | Disabled | Enables [Server Mode [2]](#modbus-server-mode-slave) |
+=== "Timing"
 
-!!! note "Server Configuration Cross-Reference"
-    For detailed server setup including port guidelines and best practices, see the [Server Configuration](#server-configuration) section.
+    **Fine-tune communication timing and performance parameters.**
+    
+    | Setting | Type | Description | Default | Range | Notes |
+    |---------|------|-------------|---------|-------|-------|
+    | **Timeout** | Number | Packet response timeout (milliseconds) | 1000 | 100-30000 | Increase for slow networks |
+    | **Retries** | Number | Retry attempts for failed packets | 3 | 0-10 | 0 = no retries |
+    | **Socket Timeout** | Number | TCP socket connection timeout | 30000 | 1000-60000 | Network connection limit |
+    | **Inter-Message Wait** | Number | Delay between packets (milliseconds) | 20 | 0-5000 | Required for some devices |
+    | **Interval** | Number | Polling interval for monitor points | 1000 | 100-3600000 | How often to poll each point |
+    
+    !!! warning "Performance Impact"
+        Lower timeout values improve responsiveness but may cause failures on slow networks. Higher intervals reduce network traffic but delay data updates.
 
-#### Timing Settings
-Fine-tune communication timing and performance parameters.
+=== "Bluetooth"
 
-| Setting | Type | Description | Default | Range | Notes |
-|---------|------|-------------|---------|-------|-------|
-| **Timeout** | Number | Packet response timeout (milliseconds) | 5000 | 100-30000 | Increase for slow networks |
-| **Retries** | Number | Retry attempts for failed packets | 3 | 0-10 | 0 = no retries |
-| **Socket Timeout** | Number | TCP socket connection timeout | 10000 | 1000-60000 | Network connection limit |
-| **Inter-Message Wait** | Number | Delay between packets (milliseconds) | 100 | 0-5000 | Required for some devices |
-| **Interval** | Number | Polling interval for monitor points | 1000 | 100-3600000 | How often to poll each point |
+    **Wireless communication security and connection options.**
+    
+    | Setting | Type | Description | Default | Security Impact |
+    |---------|------|-------------|---------|------------------|
+    | **Insecure Connections** | Switch | Allow insecure Bluetooth pairing | Disabled | Enables connections to older devices |
+    
+    !!! warning "Security Consideration"
+        Insecure connections allow pairing with older Bluetooth devices that don't support modern security protocols. Enable only when necessary.
 
-#### Logging Settings
-Control data logging, packet display, and CSV export functionality.
+=== "Sleep"
 
-| Setting | Type | Description | Default | Purpose |
-|---------|------|-------------|---------|----------|
-| **Show TX/RX** | Checkbox | Display packet data in interface | Enabled | Debugging and analysis |
-| **Enable Log** | Checkbox | Save data to CSV files | Disabled | Data collection and export |
-| **CSV Log Period** | Number | Logging interval (seconds) | Not Set | How often to save CSV data |
+    **Battery optimization and power management settings.**
+    
+    | Setting | Type | Description | Default | Impact |
+    |---------|------|-------------|---------|--------|
+    | **Battery Saver** | Switch | Stop communications during device sleep | Enabled | Improves battery life significantly |
+    
+    !!! tip "Power Management"
+        Battery Saver automatically pauses all communication when your device sleeps, extending battery life for mobile use.
 
-#### Serial Communication Settings
-RS485 and serial-specific hardware control options.
+=== "Logs"
 
-| Setting | Type | Description | Default | Purpose |
-|---------|------|-------------|---------|----------|
-| **RTS Toggle Enable** | Checkbox | Enable RTS control for RS485 | Disabled | Required for RS485 half-duplex |
-| **RTS Polarity** | Checkbox | RTS signal polarity | Disabled | High/Low for transmit enable |
-| **RTS Disable Delay** | Number | RTS disable delay (milliseconds) | Not Set | Timing for RS485 turnaround |
+    **Control data logging, packet display, and debugging functionality.**
+    
+    | Setting | Type | Description | Default | Purpose |
+    |---------|------|-------------|---------|----------|
+    | **Show TX/RX** | Switch | Display packet data in interface | Disabled | Real-time packet debugging |
+    | **Log Communications** | Switch | Log TX/RX frames and other info | Disabled | Detailed communication logging |
+    | **CSV Log Period** | Number | CSV file logging interval (seconds) | 0 (disabled) | Automatic data export timing |
+    
+    !!! info "Debugging & Data Collection"
+        Enable TX/RX display for real-time packet analysis. CSV logging saves data to Downloads folder for analysis.
 
-#### Bluetooth Settings
-Wireless communication security and connection options.
+=== "Google Sheets"
 
-| Setting | Type | Description | Default | Security Impact |
-|---------|------|-------------|---------|------------------|
-| **Insecure Connections** | Checkbox | Allow insecure Bluetooth pairing | Enabled | Enables connections to older devices |
+    **Real-time data publishing to Google Spreadsheets (Add-on required).**
+    
+    | Setting | Type | Description | Default | Notes |
+    |---------|------|-------------|---------|-------|
+    | **Use Google Sheets** | Switch | Enable Google Sheets data logging | Disabled | Requires Google account setup |
+    | **Spreadsheet ID** | Text | Target spreadsheet identifier | Default ID | From your Google Sheets URL |
+    | **Create New Sheet** | Switch | Create new sheet on app start | Disabled | Organizes data by session |
+    | **Account Name** | Text | Connected Google account | Not Set | Read-only display |
+    | **Account Setup** | Button | Configure Google account access | - | Opens account configuration |
+    
+    !!! note "Cloud Integration"
+        Google Sheets integration requires the Google Sheets add-on purchase and Google account authentication.
 
-#### Power Management
-Battery optimization and sleep behavior settings.
+=== "ThingSpeak"
 
-| Setting | Type | Description | Default | Impact |
-|---------|------|-------------|---------|--------|
-| **Battery Saver** | Checkbox | Stop communication during device sleep | Disabled | Improves battery life |
+    **IoT dashboard and data visualization platform (Add-on required).**
+    
+    | Setting | Type | Description | Default | Notes |
+    |---------|------|-------------|---------|-------|
+    | **Use ThingSpeak** | Switch | Enable ThingSpeak data publishing | Disabled | Requires API key |
+    | **Write API Key** | Text | ThingSpeak channel write key | Default Key | From your ThingSpeak account |
+    | **Test Sample Data** | Button | Send test data to verify connection | - | Validates configuration |
+    
+    !!! info "IoT Platform"
+        ThingSpeak provides real-time charts, alerts, and data analysis. Requires ThingSpeak add-on and free/paid ThingSpeak account.
 
-### Settings Access Methods
+=== "MQTT"
 
-**Primary Access**: **[Hamburger Menu [1]](#hamburger-menu) → Settings**
+    **Industrial IoT messaging protocol integration (Add-on required).**
+    
+    | Setting | Type | Description | Default | Notes |
+    |---------|------|-------------|---------|-------|
+    | **Use MQTT** | Switch | Enable MQTT topic publishing | Disabled | Requires broker configuration |
+    | **Server URI** | Text | MQTT broker connection string | tcp://broker.hivemq.com:1883 | Include protocol and port |
+    | **Client ID** | Text | Unique client identifier | Empty | Auto-generated if blank |
+    | **Username** | Text | Broker authentication username | Empty | Leave blank for anonymous |
+    | **Password** | Password | Broker authentication password | Empty | Secure credential storage |
+    | **QoS** | Dropdown | Quality of Service level | 1 | 0=At most once, 1=At least once, 2=Exactly once |
+    | **Sample Topic** | Text | Test topic for publishing | modbusmonitor/testtopic1 | Used for testing connection |
+    | **Test Panel** | Button | Configuration and test interface | - | Validates MQTT setup |
+    
+    !!! tip "Industrial Integration"
+        MQTT enables integration with AWS IoT, Azure IoT, Google Cloud IoT, and industrial automation systems. Supports secure and reliable data streaming.
+
+### Settings Access & Navigation
+
+**Access Path**: **[Hamburger Menu [1]](#hamburger-menu) → Settings**
 
 **Navigation Tips**:
-- Settings are organized in scrollable categories
-- Tap category headers to expand/collapse sections
+- Click tabs above to jump between setting categories
+- Settings are automatically saved when changed
 - Use device back button to return to main interface
-- Changes are saved automatically
+- Each category focuses on related functionality
 
 **Related Sections**:
 - [Server Configuration](#server-configuration) - Detailed server setup
-- [Client Mode](#client-mode---polling-remote-devices) - Communication setup
+- [Client Mode](#client-mode---polling-remote-devices) - Communication setup  
 - [Troubleshooting](#troubleshooting) - Common configuration issues
 
 ## Modbus Server Mode (Slave)
+
+[:octicons-arrow-left-24: Back to Main Interface](#main-interface-overview)
+
+Turn your Android device into a **Modbus TCP Server** that other devices can poll for data. This powerful feature effectively converts your phone or tablet into an industrial data server, enabling remote Modbus masters to access your device's data through standard Modbus TCP protocol.
+
 <figure markdown>
   ![Modbus Server Mode Interface](../../assets/screenshots/android-advanced/mma-server-main.webp){ width="500" }
   <figcaption>Server mode active [1] with IP address, port, [2] and connected client count displayed [3]</figcaption>
 </figure>
 
-The Modbus Monitor Advanced can operate as a **Modbus TCP Server**, turning your Android device into a Modbus slave that other devices can poll for data. This mode effectively converts your phone or tablet into an industrial data server.
-
 !!! info "Server Mode Overview"
     Technically this functionality could be split into a separate "Modbus Server Android App", but it's included in the same app for convenience and ease of use.
+
+### Core Concepts
+
+#### Modbus Map Building
+The server operates by building a **Modbus Map** through your monitor points list. Each monitor point you add represents a value stored in memory that gets served to Modbus clients when they request data from the corresponding address. This approach allows you to:
+
+- **Share Monitor Points**: The same monitor point list is used for both Master (Client) and Slave (Server) operations, saving data entry steps
+- **Memory Mapping**: Values are reflected in internal memory and automatically sent to clients when requested
+- **Address Management**: Each monitor point defines specific register addresses that clients can access
+
+#### Protocol Restrictions
+**Important**: Server mode **only supports Modbus TCP protocol**. Any other protocol option selected in monitor points is ignored. For multiple protocol support in server mode, consider [Modbus Monitor XPF](https://quantumbitsolutions.com/windows-xpf-monitor/).
+
+#### Data Flow Architecture
+1. **Monitor Point Configuration**: Set up registers with addresses, data types, and function codes
+2. **Memory Storage**: Values are stored in internal memory at specified addresses  
+3. **Client Requests**: Remote Modbus masters poll your device using standard Modbus TCP
+4. **Automatic Response**: App automatically responds with current values from internal registers
+5. **Write Support**: Clients can write values to your server registers for bidirectional communication
 
 ### Server Mode Features
 
@@ -285,28 +365,40 @@ The Modbus Monitor Advanced can operate as a **Modbus TCP Server**, turning your
 #### Configuration Options
 
 | Setting | Description | Default |
-|---------|-------------|---------|
+|---------|-------------|---------||
 | **Server/Listen Port** | Port number for server operation | 8888 |
 | **Modbus Server** | Show/hide Server icon on main window | Enabled |
 | **Auto Start** | Automatically start server when app launches | Disabled |
 
+!!! tip "Auto Start Feature"
+    Enable "Auto Start" to automatically begin server operation when the app launches. This is useful for dedicated server deployments where the Android device serves as a permanent Modbus TCP server.
+
+#### Configuration Access
+**Path**: **[Hamburger Menu [1]](#hamburger-menu) → Settings → Server** (see [Settings](#settings) section for complete configuration reference)
+
 #### Port Configuration Guidelines
 
-**Recommended Port: 8888**
-- Port 502 (standard Modbus) requires rooted Android device
-- Android blocks many ports below 1024 for security
-- Use ports above 1024 that aren't occupied by other applications
+**Standard vs. Practical Ports**:
+- **Port 502**: Standard Modbus TCP port, but requires **rooted Android device**
+- **Port 8888**: Recommended default - tested to work well on most Android devices
+- **Ports > 1024**: Safe choice as Android blocks many ports below 1024 for security
 
 **Special Port Setting: "0"**
 - Setting port to "0" lets Android automatically find available port
 - ⚠️ **Caution**: Can cause conflicts with other network devices
 - Better to manually select a known-safe port number
 
+**Real-World Port Conflicts**:
+During testing, certain ports caused issues with other network services:
+- **Port 5060**: Caused VoIP service problems (ringing and audio issues)
+- **Common Service Ports**: Research existing network devices before selecting
+
 **Port Selection Best Practices**:
-- Research existing network devices and their port usage
-- Avoid common service ports (e.g., 5060 for VoIP)
-- Test selected port to ensure no conflicts
-- Document chosen port for future reference
+1. **Research Network**: Identify existing devices and their port usage
+2. **Avoid System Ports**: Stay above 1024 unless device is rooted
+3. **Test Selection**: Verify chosen port doesn't conflict with existing services
+4. **Document Choice**: Record selected port for future reference and troubleshooting
+5. **Consider Environment**: Different sites may have different port restrictions
 
 ### Setting Up Monitor Points for Server Mode
 
@@ -315,24 +407,43 @@ The Modbus Monitor Advanced can operate as a **Modbus TCP Server**, turning your
   <figcaption>Figure 4: Monitor point configured for server mode with Modbus TCP protocol and proper addressing</figcaption>
 </figure>
 
+#### Prerequisites
+**Before starting server mode, ensure**:
+1. **Server Feature Enabled**: Check "Modbus Server?" in [Settings](#settings) to show server icon
+2. **Monitor Points Added**: Must have at least one monitor point configured
+3. **Correct Protocol**: All monitor points must use Modbus TCP protocol
+
 #### Basic Server Setup Steps
 
-1. **Enable Server Feature**: Check "Modbus Server?" in Settings to show server icon
-2. **Add Monitor Points**: Click (+) to add at least one monitoring point
-3. **Configure Points**: Set up each point for server operation
+**Step 1: Enable Server Feature**
+- Navigate to **[Hamburger Menu [1]](#hamburger-menu) → Settings → Server**
+- Check "Modbus Server?" option to place server icon on main interface
+- This is the **only way** to access server functionality
+
+**Step 2: Add Monitor Points**
+- Click **(+)** button to add at least one monitoring point
+- Server cannot start without monitor points in the list
+
+**Step 3: Configure Each Monitor Point**
+- Set up each point specifically for server operation
+- Follow configuration requirements below
 
 #### Server Monitor Point Configuration
 
-**Required Settings**:
-- **Protocol**: Must be set to **Modbus TCP**
+**Critical Settings** (must be configured correctly):
+- **Protocol**: Must be set to **Modbus TCP** (other protocols ignored)
 - **Channel**: TCP/IP (other channels ignored)  
-- **Address**: Starting register address (e.g., 0 for 40001)
-- **Count**: Number of registers to serve
+- **Address**: Starting register address (e.g., 0 for PLC address 40001)
+- **Count**: Number of registers to serve (matches your data requirements)
 - **Function Code**: 3 (Holding Registers) or 4 (Input Registers)
+- **Data Type**: Choose appropriate type (Integer, Float, etc.)
 
 **Ignored Settings in Server Mode**:
-- **IP Address**: Uses server settings instead
-- **Port**: Uses server port configuration
+- **IP Address**: Server uses device IP automatically
+- **Port**: Server uses port from Settings configuration
+
+!!! warning "Address Translation Required"
+    The address field uses **Modbus Protocol format**, not PLC addressing. For address translation help, see the [6-Digit Addressing Guide](../../guides/6-digit-addressing.md).
 
 #### Example Configuration
 ```yaml
