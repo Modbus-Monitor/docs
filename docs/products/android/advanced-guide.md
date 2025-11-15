@@ -163,6 +163,201 @@ The main interface combines status indicators with action buttons for easy opera
 
 </div>
 
+## Settings
+
+[:octicons-arrow-left-24: Back to Main Interface](#main-interface-overview)
+
+Access comprehensive app configuration through **[Hamburger Menu [1]](#hamburger-menu) → Settings**. The Settings screen organizes all configuration options into logical categories for easy management of communication protocols, timing parameters, logging options, and hardware-specific settings.
+
+### Settings Categories Overview
+
+#### Communication Settings
+Basic network and device connection parameters for client mode operations.
+
+| Setting | Type | Description | Default | Notes |
+|---------|------|-------------|---------|-------|
+| **IP Address** | Text | Default IP address for new monitor points | Not Set | Used as template for new connections |
+| **Port** | Number | Default port for client connections | Not Set | Template for TCP/IP monitor points |
+| **Slave/Station ID** | Number | Default Modbus slave ID | Not Set | Applied to new monitor points |
+
+#### Server Settings
+Configuration options for [Modbus Server Mode](#modbus-server-mode-slave) operation.
+
+| Setting | Type | Description | Default | Notes |
+|---------|------|-------------|---------|-------|
+| **Server Port** | Number | Port for Modbus TCP server | 8888 | See [Server Configuration](#server-configuration) |
+| **Modbus Server** | Checkbox | Show/hide server icon on main interface | Disabled | Enables [Server Mode [2]](#modbus-server-mode-slave) |
+
+!!! note "Server Configuration Cross-Reference"
+    For detailed server setup including port guidelines and best practices, see the [Server Configuration](#server-configuration) section.
+
+#### Timing Settings
+Fine-tune communication timing and performance parameters.
+
+| Setting | Type | Description | Default | Range | Notes |
+|---------|------|-------------|---------|-------|-------|
+| **Timeout** | Number | Packet response timeout (milliseconds) | 5000 | 100-30000 | Increase for slow networks |
+| **Retries** | Number | Retry attempts for failed packets | 3 | 0-10 | 0 = no retries |
+| **Socket Timeout** | Number | TCP socket connection timeout | 10000 | 1000-60000 | Network connection limit |
+| **Inter-Message Wait** | Number | Delay between packets (milliseconds) | 100 | 0-5000 | Required for some devices |
+| **Interval** | Number | Polling interval for monitor points | 1000 | 100-3600000 | How often to poll each point |
+
+#### Logging Settings
+Control data logging, packet display, and CSV export functionality.
+
+| Setting | Type | Description | Default | Purpose |
+|---------|------|-------------|---------|----------|
+| **Show TX/RX** | Checkbox | Display packet data in interface | Enabled | Debugging and analysis |
+| **Enable Log** | Checkbox | Save data to CSV files | Disabled | Data collection and export |
+| **CSV Log Period** | Number | Logging interval (seconds) | Not Set | How often to save CSV data |
+
+#### Serial Communication Settings
+RS485 and serial-specific hardware control options.
+
+| Setting | Type | Description | Default | Purpose |
+|---------|------|-------------|---------|----------|
+| **RTS Toggle Enable** | Checkbox | Enable RTS control for RS485 | Disabled | Required for RS485 half-duplex |
+| **RTS Polarity** | Checkbox | RTS signal polarity | Disabled | High/Low for transmit enable |
+| **RTS Disable Delay** | Number | RTS disable delay (milliseconds) | Not Set | Timing for RS485 turnaround |
+
+#### Bluetooth Settings
+Wireless communication security and connection options.
+
+| Setting | Type | Description | Default | Security Impact |
+|---------|------|-------------|---------|------------------|
+| **Insecure Connections** | Checkbox | Allow insecure Bluetooth pairing | Enabled | Enables connections to older devices |
+
+#### Power Management
+Battery optimization and sleep behavior settings.
+
+| Setting | Type | Description | Default | Impact |
+|---------|------|-------------|---------|--------|
+| **Battery Saver** | Checkbox | Stop communication during device sleep | Disabled | Improves battery life |
+
+### Settings Access Methods
+
+**Primary Access**: **[Hamburger Menu [1]](#hamburger-menu) → Settings**
+
+**Navigation Tips**:
+- Settings are organized in scrollable categories
+- Tap category headers to expand/collapse sections
+- Use device back button to return to main interface
+- Changes are saved automatically
+
+**Related Sections**:
+- [Server Configuration](#server-configuration) - Detailed server setup
+- [Client Mode](#client-mode---polling-remote-devices) - Communication setup
+- [Troubleshooting](#troubleshooting) - Common configuration issues
+
+## Modbus Server Mode (Slave)
+<figure markdown>
+  ![Modbus Server Mode Interface](../../assets/screenshots/android-advanced/mma-server-main.webp){ width="500" }
+  <figcaption>Server mode active [1] with IP address, port, [2] and connected client count displayed [3]</figcaption>
+</figure>
+
+The Modbus Monitor Advanced can operate as a **Modbus TCP Server**, turning your Android device into a Modbus slave that other devices can poll for data. This mode effectively converts your phone or tablet into an industrial data server.
+
+!!! info "Server Mode Overview"
+    Technically this functionality could be split into a separate "Modbus Server Android App", but it's included in the same app for convenience and ease of use.
+
+### Server Mode Features
+
+#### Core Functionality
+- **Modbus TCP Protocol Only**: Server mode supports only Modbus TCP (other protocols ignored)
+- **Shared Monitor Points**: Same monitor point list used for both Master and Slave operations
+- **Multiple Client Support**: Handle multiple simultaneous client connections
+- **Real-time Data Serving**: Serve live data to remote Modbus masters
+
+#### Starting the Server
+1. **Click Server Icon** on the main window to start/stop the Modbus TCP Server [1]
+2. **View Connection Info**: Server IP Address and Port displayed when started successfully   [2]
+3. **Monitor Clients**: Number in parentheses next to port shows connected client count [3]
+
+### Server Configuration
+
+<figure markdown>
+  ![Server Configuration Settings](../../assets/screenshots/android-advanced/server-configuration.webp){ width="450" }
+  <figcaption>Figure 3: Server configuration settings accessible through Main Menu → Settings → Server</figcaption>
+</figure>
+
+**Access**: **[Hamburger Menu [1]](#hamburger-menu) → Settings → Server** (see [Settings](#settings) section for complete configuration reference)
+
+#### Configuration Options
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+| **Server/Listen Port** | Port number for server operation | 8888 |
+| **Modbus Server** | Show/hide Server icon on main window | Enabled |
+| **Auto Start** | Automatically start server when app launches | Disabled |
+
+#### Port Configuration Guidelines
+
+**Recommended Port: 8888**
+- Port 502 (standard Modbus) requires rooted Android device
+- Android blocks many ports below 1024 for security
+- Use ports above 1024 that aren't occupied by other applications
+
+**Special Port Setting: "0"**
+- Setting port to "0" lets Android automatically find available port
+- ⚠️ **Caution**: Can cause conflicts with other network devices
+- Better to manually select a known-safe port number
+
+**Port Selection Best Practices**:
+- Research existing network devices and their port usage
+- Avoid common service ports (e.g., 5060 for VoIP)
+- Test selected port to ensure no conflicts
+- Document chosen port for future reference
+
+### Setting Up Monitor Points for Server Mode
+
+<figure markdown>
+  ![Server Monitor Point Configuration](../../assets/screenshots/android-advanced/server-monitor-point.webp){ width="500" }
+  <figcaption>Figure 4: Monitor point configured for server mode with Modbus TCP protocol and proper addressing</figcaption>
+</figure>
+
+#### Basic Server Setup Steps
+
+1. **Enable Server Feature**: Check "Modbus Server?" in Settings to show server icon
+2. **Add Monitor Points**: Click (+) to add at least one monitoring point
+3. **Configure Points**: Set up each point for server operation
+
+#### Server Monitor Point Configuration
+
+**Required Settings**:
+- **Protocol**: Must be set to **Modbus TCP**
+- **Channel**: TCP/IP (other channels ignored)  
+- **Address**: Starting register address (e.g., 0 for 40001)
+- **Count**: Number of registers to serve
+- **Function Code**: 3 (Holding Registers) or 4 (Input Registers)
+
+**Ignored Settings in Server Mode**:
+- **IP Address**: Uses server settings instead
+- **Port**: Uses server port configuration
+
+#### Example Configuration
+```yaml
+Server Setup Example:
+  Protocol: Modbus TCP
+  Address: 0 (PLC Address 40001)
+  Count: 10 (for 5 float values × 2 words/float)
+  Function: 3 (Holding Registers)
+  Data Type: Float
+```
+
+### How Server Mode Works
+
+#### Data Flow Process
+1. **Monitor Point Setup**: Configure registers with addresses and data types
+2. **Memory Management**: Values stored in internal memory at specified addresses
+3. **Client Polling**: Remote masters poll your device using standard Modbus TCP
+4. **Data Response**: App responds with current values from internal registers
+
+#### Write Operations in Server Mode
+- **Write Support**: Clients can write values to your server registers
+- **Internal Storage**: Written values stored in internal memory
+- **Value Retrieval**: Stored values returned when registers are polled
+- **Preset Values**: Use "Write Preset Value" to populate registers with default data
+
 ## Monitor Points - Core Concept
 
 <figure markdown>
@@ -275,116 +470,6 @@ The Write Dialog box is displayed when selecting the "Write" option from the Mon
 - In Server mode: write value stored in internal registers for remote masters to poll
 
 **Multi-Device Support**: Each monitor point supports different protocols and connections, enabling write operations across multiple devices and networks simultaneously.
-
-## Modbus Server Mode (Slave)
-
-<figure markdown>
-  ![Modbus Server Mode Interface](../../assets/screenshots/android-advanced/server-mode-interface.webp){ width="500" }
-  <figcaption>Figure 9: Server mode active with IP address, port, and connected client count displayed</figcaption>
-</figure>
-
-The Modbus Monitor Advanced can operate as a **Modbus TCP Server**, turning your Android device into a Modbus slave that other devices can poll for data. This mode effectively converts your phone or tablet into an industrial data server.
-
-!!! info "Server Mode Overview"
-    Technically this functionality could be split into a separate "Modbus Server Android App", but it's included in the same app for convenience and ease of use.
-
-### Server Mode Features
-
-#### Core Functionality
-- **Modbus TCP Protocol Only**: Server mode supports only Modbus TCP (other protocols ignored)
-- **Shared Monitor Points**: Same monitor point list used for both Master and Slave operations
-- **Multiple Client Support**: Handle multiple simultaneous client connections
-- **Real-time Data Serving**: Serve live data to remote Modbus masters
-
-#### Starting the Server
-1. **Click Server Icon** on the main window to start/stop the Modbus TCP Server
-2. **View Connection Info**: Server IP Address and Port displayed when started successfully  
-3. **Monitor Clients**: Number in parentheses next to port shows connected client count
-
-### Server Configuration
-
-<figure markdown>
-  ![Server Configuration Settings](../../assets/screenshots/android-advanced/server-configuration.webp){ width="450" }
-  <figcaption>Figure 10: Server configuration settings accessible through Main Menu → Settings → Server</figcaption>
-</figure>
-
-**Access**: Main Menu → Settings → Server
-
-#### Configuration Options
-
-| Setting | Description | Default |
-|---------|-------------|---------|
-| **Server/Listen Port** | Port number for server operation | 8888 |
-| **Modbus Server** | Show/hide Server icon on main window | Enabled |
-| **Auto Start** | Automatically start server when app launches | Disabled |
-
-#### Port Configuration Guidelines
-
-**Recommended Port: 8888**
-- Port 502 (standard Modbus) requires rooted Android device
-- Android blocks many ports below 1024 for security
-- Use ports above 1024 that aren't occupied by other applications
-
-**Special Port Setting: "0"**
-- Setting port to "0" lets Android automatically find available port
-- ⚠️ **Caution**: Can cause conflicts with other network devices
-- Better to manually select a known-safe port number
-
-**Port Selection Best Practices**:
-- Research existing network devices and their port usage
-- Avoid common service ports (e.g., 5060 for VoIP)
-- Test selected port to ensure no conflicts
-- Document chosen port for future reference
-
-### Setting Up Monitor Points for Server Mode
-
-<figure markdown>
-  ![Server Monitor Point Configuration](../../assets/screenshots/android-advanced/server-monitor-point.webp){ width="500" }
-  <figcaption>Figure 11: Monitor point configured for server mode with Modbus TCP protocol and proper addressing</figcaption>
-</figure>
-
-#### Basic Server Setup Steps
-
-1. **Enable Server Feature**: Check "Modbus Server?" in Settings to show server icon
-2. **Add Monitor Points**: Click (+) to add at least one monitoring point
-3. **Configure Points**: Set up each point for server operation
-
-#### Server Monitor Point Configuration
-
-**Required Settings**:
-- **Protocol**: Must be set to **Modbus TCP**
-- **Channel**: TCP/IP (other channels ignored)  
-- **Address**: Starting register address (e.g., 0 for 40001)
-- **Count**: Number of registers to serve
-- **Function Code**: 3 (Holding Registers) or 4 (Input Registers)
-
-**Ignored Settings in Server Mode**:
-- **IP Address**: Uses server settings instead
-- **Port**: Uses server port configuration
-
-#### Example Configuration
-```yaml
-Server Setup Example:
-  Protocol: Modbus TCP
-  Address: 0 (PLC Address 40001)
-  Count: 10 (for 5 float values × 2 words/float)
-  Function: 3 (Holding Registers)
-  Data Type: Float
-```
-
-### How Server Mode Works
-
-#### Data Flow Process
-1. **Monitor Point Setup**: Configure registers with addresses and data types
-2. **Memory Management**: Values stored in internal memory at specified addresses
-3. **Client Polling**: Remote masters poll your device using standard Modbus TCP
-4. **Data Response**: App responds with current values from internal registers
-
-#### Write Operations in Server Mode
-- **Write Support**: Clients can write values to your server registers
-- **Internal Storage**: Written values stored in internal memory
-- **Value Retrieval**: Stored values returned when registers are polled
-- **Preset Values**: Use "Write Preset Value" to populate registers with default data
 
 ## Sensor Server Mode
 
