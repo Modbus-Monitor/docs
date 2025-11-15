@@ -120,6 +120,48 @@ The main interface combines status indicators with action buttons for easy opera
 !!! tip "Learning Path"
     Start with the basics: add a monitor point, configure it, and start monitoring. Once comfortable, explore the advanced features through the hamburger menu [1]. Each feature has detailed explanations in the sections below.
 
+## Hamburger Menu
+
+<div class="grid cards" markdown>
+
+-   ![Main Menu Hamburger](../../assets/screenshots/android-advanced/main-menu-hamburger.webp){ width="300" style="display: block; margin: 0 auto;" }
+
+-   **Main Application Menu**
+
+    ---
+    
+    Access advanced features through the hamburger menu:
+    
+    **Main**
+    
+    - **Home** - Return to the main monitoring interface
+    - **Modbus Console** - Access console mode features
+    - **Settings** - Configure app behavior and protocols
+    - **Purchases** - Verify license and purchase status
+    
+    **Data**
+
+    - **Save** - Save current monitor point configuration
+    - **Clear All** - Remove all monitor points and data
+    - **Transform** - Legacy transformation utility to convert old monitor points to new types
+    - **Import** - Load monitor points from CSV file in Downloads folder
+    - **Export and Email** - Export all monitor points and configuration data to CSV in Downloads folder and send via email
+    - **Google Sheets** - Real-time data publishing to spreadsheets (Add-on purchase required)
+    - **ThingSpeak** - IoT dashboard and data visualization (Add-on purchase required)
+    - **MQTT** - Industrial IoT messaging protocol (Add-on purchase required)
+    
+    **Reset & Maintenance**
+
+    - **Factory Reset** - Restore app to default settings
+    - **Reset Comm Counts** - Clear communication statistics
+    - **Reset Statistics** - Reset performance counters
+    
+    **Exit**
+    
+    - **Help** - Access documentation links and application version information
+    - **Exit** - Close application completely
+
+</div>
 
 ## Monitor Points - Core Concept
 
