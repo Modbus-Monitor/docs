@@ -71,8 +71,8 @@ The main screen combines **status indicators** with **action buttons** for strea
 
 The main interface combines status indicators with action buttons for easy operation. Each row displays monitor points showing Name, Configuration details, current Modbus values, send/receive frames, and packet response times.
 
-<figure markdown>  
-  ![Main Window Layout](../../assets/screenshots/android-advanced/mma-main-UI.webp)
+<figure markdown id="figure-1">  
+  ![Main Window Layout](../../assets/screenshots/android-advanced/mma-main-ui.webp)
   <figcaption>Figure 1: Main interface with key controls and status indicators</figcaption>
 </figure>
 
@@ -134,9 +134,9 @@ The main interface combines status indicators with action buttons for easy opera
     
     **Main**
     
-    - **Home** - Return to the main monitoring interface
-    - **Modbus Console** - Access console mode features
-    - **Settings** - Configure app behavior and protocols
+    - **[Home](#main-interface-overview)** - Return to the main monitoring interface
+    - **[Modbus Console](../free-guide.md)** - Simple console-style interface for basic Modbus communication (see [Free version guide](../free-guide.md))
+    - **[Settings](#settings)** - Configure app behavior and protocols
     - **Purchases** - Verify license and purchase status
     
     **Data**
@@ -292,21 +292,6 @@ Access comprehensive app configuration through **[Hamburger Menu [1]](#hamburger
     !!! tip "Industrial Integration"
         MQTT enables integration with AWS IoT, Azure IoT, Google Cloud IoT, and industrial automation systems. Supports secure and reliable data streaming.
 
-### Settings Access & Navigation
-
-**Access Path**: **[Hamburger Menu [1]](#hamburger-menu) → Settings**
-
-**Navigation Tips**:
-- Click tabs above to jump between setting categories
-- Settings are automatically saved when changed
-- Use device back button to return to main interface
-- Each category focuses on related functionality
-
-**Related Sections**:
-- [Server Configuration](#server-configuration) - Detailed server setup
-- [Client Mode](#client-mode---polling-remote-devices) - Communication setup  
-- [Troubleshooting](#troubleshooting) - Common configuration issues
-
 ## Modbus Server Mode (Slave)
 
 [:octicons-arrow-left-24: Back to Main Interface](#main-interface-overview)
@@ -321,37 +306,23 @@ Turn your Android device into a **Modbus TCP Server** that other devices can pol
 !!! info "Server Mode Overview"
     Technically this functionality could be split into a separate "Modbus Server Android App", but it's included in the same app for convenience and ease of use.
 
-### Core Concepts
+### How Server Mode Works
 
-#### Modbus Map Building
-The server operates by building a **Modbus Map** through your monitor points list. Each monitor point you add represents a value stored in memory that gets served to Modbus clients when they request data from the corresponding address. This approach allows you to:
+**Simple Concept**: Your phone becomes a Modbus server that other devices can read data from. Each monitor point you create becomes a register(s) that clients can access.
 
-- **Share Monitor Points**: The same monitor point list is used for both Master (Client) and Slave (Server) operations, saving data entry steps
-- **Memory Mapping**: Values are reflected in internal memory and automatically sent to clients when requested
-- **Address Management**: Each monitor point defines specific register addresses that clients can access
+#### Key Features
+- **Modbus TCP Only**: Only supports Modbus TCP protocol (other protocols ignored)
+- **Shared Monitor Points**: Same list used for both client and server modes
+- **Multiple Clients**: Handle several connections simultaneously
+- **Real-time Data**: Serve live data to remote devices
 
-#### Protocol Restrictions
-**Important**: Server mode **only supports Modbus TCP protocol**. Any other protocol option selected in monitor points is ignored. For multiple protocol support in server mode, consider [Modbus Monitor XPF](https://quantumbitsolutions.com/windows-xpf-monitor/).
+#### Quick Start Steps
+1. **Click Server Mode [2]** to start/stop the Modbus TCP Server (see [Figure 1](#figure-1))
+2. **Check Server Info [8]** - Shows your IP address and port (see [Figure 1](#figure-1))
+3. **Monitor Client Count [8]** - Number in parentheses shows connected devices (see [Figure 1](#figure-1))
 
-#### Data Flow Architecture
-1. **Monitor Point Configuration**: Set up registers with addresses, data types, and function codes
-2. **Memory Storage**: Values are stored in internal memory at specified addresses  
-3. **Client Requests**: Remote Modbus masters poll your device using standard Modbus TCP
-4. **Automatic Response**: App automatically responds with current values from internal registers
-5. **Write Support**: Clients can write values to your server registers for bidirectional communication
-
-### Server Mode Features
-
-#### Core Functionality
-- **Modbus TCP Protocol Only**: Server mode supports only Modbus TCP (other protocols ignored)
-- **Shared Monitor Points**: Same monitor point list used for both Master and Slave operations
-- **Multiple Client Support**: Handle multiple simultaneous client connections
-- **Real-time Data Serving**: Serve live data to remote Modbus masters
-
-#### Starting the Server
-1. **Click Server Icon** on the main window to start/stop the Modbus TCP Server [1]
-2. **View Connection Info**: Server IP Address and Port displayed when started successfully   [2]
-3. **Monitor Clients**: Number in parentheses next to port shows connected client count [3]
+!!! note "XPF Alternative"
+    For multiple protocol support in server mode, consider [Modbus Monitor XPF](https://quantumbitsolutions.com/windows-xpf-monitor/).
 
 ### Server Configuration
 
