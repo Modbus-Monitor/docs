@@ -102,24 +102,6 @@ The main interface combines status indicators with action buttons for easy opera
     2. **Configure Connection** - Click the Monitor Point and select "Change" to set up the Monitor Point. Click TCP/IP (Channel), set the IP Address and Port from a remote server, specify the Number of Registers, and the Protocol (Modbus TCP is the default)
     3. **Start Monitoring** - Click the **Link** icon to start polling the remote server and view the value
 
-### Navigation Basics
-
-**Primary Navigation**:
-
-- **[Hamburger Menu [1]](#hamburger-menu)** - Access all app settings and features
-- **Main Interface** - Your primary workspace for monitoring data
-- **Monitor Point Dialogs** - Configure individual connections
-
-**Quick Access Features**:
-
-- **Settings** (via menu) - Configure app behavior and cloud features
-- **Edit Monitor Point** (click or swipe) - Click on Monitor Point or swipe to see the menu for each monitoring point
-- **Import/Export** (via menu) - Manage monitor point configurations
-- **Help & Support** (via menu) - Access documentation and community
-
-!!! tip "Learning Path"
-    Start with the basics: add a monitor point, configure it, and start monitoring. Once comfortable, explore the advanced features through the [hamburger menu [1]](#hamburger-menu). Each feature has detailed explanations in the sections below.
-
 ## Hamburger Menu
 
 <div class="grid cards" markdown>
