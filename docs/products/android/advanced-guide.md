@@ -102,6 +102,21 @@ The main interface combines status indicators with action buttons for easy opera
     2. **Configure Connection** - Click the Monitor Point and select "Change" to set up the Monitor Point. Click TCP/IP (Channel), set the IP Address and Port from a remote server, specify the Number of Registers, and the Protocol (Modbus TCP is the default)
     3. **Start Monitoring** - Click the **Link** icon to start polling the remote server and view the value
 
+### Navigation Guide
+
+**Quick Access to Key Sections**:
+
+| What You Want To Do | Go To Section | Key Features |
+|---------------------|---------------|--------------|
+| **Navigate the app interface** | [Hamburger Menu](#hamburger-menu) | Settings, import/export, cloud setup |
+| **Configure app behavior** | [Settings](#settings) | Protocol settings, timing, cloud integration |
+| **Read data from devices** | [Client Mode](#client-mode---polling-remote-devices) | Poll remote servers, multiple protocols |
+| **Let others read your data** | [Server Mode](#modbus-server-mode-slave) | Turn phone into Modbus server |
+| **Expose phone sensors** | [Sensor Server Mode](#sensor-server-mode) | Share accelerometer, gyro, etc. via Modbus |
+| **Understand data organization** | [Monitor Points](#monitor-points---core-concept) | Core configuration concepts |
+| **Troubleshoot issues** | [Troubleshooting](#troubleshooting) | Common problems and solutions |
+| **Learn about hardware** | [Hardware Requirements](#hardware-requirements) | USB, Bluetooth, network setup |
+
 ## Hamburger Menu
 
 <div class="grid cards" markdown>
@@ -274,6 +289,66 @@ Access comprehensive app configuration through **[Hamburger Menu [1]](#hamburger
     !!! tip "Industrial Integration"
         MQTT enables integration with AWS IoT, Azure IoT, Google Cloud IoT, and industrial automation systems. Supports secure and reliable data streaming.
 
+## Client Mode - Polling Remote Devices
+
+[:octicons-arrow-left-24: Back to Main Interface](#main-interface-overview)
+
+<figure markdown>
+  ![Modbus Client Mode Interface](../../assets/screenshots/android-advanced/client-mode-interface.webp){ width="500" }
+  <figcaption>Figure 2: Client mode showing active data polling from multiple devices</figcaption>
+</figure>
+
+**Client Mode** transforms your Android device into a powerful **Modbus Master** that can poll multiple remote devices for live data. This is the primary mode for field engineers and technicians who need to monitor, troubleshoot, and analyze industrial systems.
+
+### Configuration Essentials
+
+To start polling in Master Mode, Modbus Monitor Advanced requires at least one monitor point. You can add a monitor point by clicking the (+) button or selecting "Add" from the menu. When you click "Add" or (+), a monitor point is added with default settings and values.
+
+**Setup Steps**:
+1. **Add Monitor Point** - Tap the monitor point in the list and select "Change" to edit the newly added point
+2. **Select Channel** - Choose the physical or network device your remote device (server/slave) will use for communication
+3. **Choose Protocol** - Select compatible protocol for your selected channel (see table below)
+4. **Configure Connection** - Set IP address/port for TCP/IP or baud rate for serial connections
+5. **Set Modbus Parameters** - Configure Slave ID, address, and register count
+6. **Start Polling** - Click the "Link" icon to start polling from remote servers
+
+**Channel Selection**:
+- **🌐 TCP/IP** → Modbus TCP (Ethernet/Wi-Fi)
+- **🔌 USB-OTG** → Modbus RTU/ASCII (Serial)  
+- **📱 Bluetooth** → Modbus RTU/ASCII (Wireless)
+
+**Protocol Compatibility**:
+
+| Channel | Supported Protocols | Notes |
+|---------|-------------------|---------|
+| TCP/IP | Modbus TCP, UDP, RTU over TCP, ASCII over TCP | Works as Master and Server |
+| Serial (USB-OTG) | Modbus RTU, Modbus ASCII | Serial communication only |
+| Bluetooth | Modbus RTU, Modbus ASCII | Wireless serial communication |
+
+!!! warning "Protocol Compatibility"
+    Only certain protocols are compatible with each channel. Modbus Monitor Advanced will skip monitor points with incorrect Channel/Protocol combinations. If communication shows errors, ensure the correct Channel and Protocol are set for each monitor point.
+
+**Addressing**: Uses 6-digit format supporting full 16-bit range (0-65535). This address is in the Modbus Protocol format, not the more common PLC address scheme. See [6-Digit Addressing Guide](../../guides/6-digit-addressing.md) for details.
+
+**Count Field**: Registers to read (1 for integers, 2 for floats, max 125 per Modbus specification). Ensure the correct number of counts is programmed for the data type to be displayed.
+
+### Write Operations
+
+<figure markdown>
+  ![Modbus Write Dialog](../../assets/screenshots/android-advanced/write-dialog.webp){ width="400" }
+  <figcaption>Figure 3: Write dialog for sending values to remote devices</figcaption>
+</figure>
+
+The Write Dialog box is displayed when selecting the "Write" option from the Monitor Point Management dialog. The header shows the name of the Monitor Point along with the Data Type. Enter the value in the write field and click the Change button.
+
+**Write Capabilities**: 
+- Send values to remote servers (disabled by default for safety)
+- Works in both Master and Server modes
+- In Master mode: write value included in Modbus packet sent to remote server
+- In Server mode: write value stored in internal registers for remote masters to poll
+
+**Multi-Device Support**: Each monitor point supports different protocols and connections, enabling write operations across multiple devices and networks simultaneously.
+
 ## Modbus Server Mode (Slave)
 
 [:octicons-arrow-left-24: Back to Main Interface](#main-interface-overview)
@@ -282,7 +357,7 @@ Turn your Android device into a **Modbus TCP Server** that other devices can pol
 
 <figure markdown>
   ![Modbus Server Mode Interface](../../assets/screenshots/android-advanced/mma-server-main.webp){ width="500" }
-  <figcaption>Figure 2: Server mode active showing IP address, port, and connected client count</figcaption>
+  <figcaption>Figure 4: Server mode active showing IP address, port, and connected client count</figcaption>
 </figure>
 
 !!! info "Server Mode Overview"
@@ -293,12 +368,14 @@ Turn your Android device into a **Modbus TCP Server** that other devices can pol
 **Simple Concept**: Your Android device becomes a Modbus TCP server that other devices can poll for data. Each monitor point you create becomes available as Modbus registers that remote clients can read.
 
 **Key Benefits**:
+
 - **Shared Configuration**: Monitor points work in both Client and Server modes
 - **Multiple Clients**: Handle several remote devices simultaneously  
 - **Live Data Serving**: Provide real-time values to industrial networks
 - **Standard Protocol**: Uses industry-standard Modbus TCP
 
 **Operation Process**:
+
 1. **Build Modbus Map**: Add monitor points to define available registers
 2. **Start Server**: Click the **Server Mode [2]** button (see [Figure 1](#figure-1))
 3. **Monitor Status**: Check **Server Info [8]** for IP address and connected client count
@@ -311,7 +388,7 @@ Turn your Android device into a **Modbus TCP Server** that other devices can pol
 
 <figure markdown>
   ![Server Configuration Settings](../../assets/screenshots/android-advanced/server-config.webp)
-  <figcaption>Figure 3: Server configuration options accessible through Settings → Server</figcaption>
+  <figcaption>Figure 5: Server configuration options accessible through Settings → Server</figcaption>
 </figure>
 
 **Access**: **[Hamburger Menu [1]](#hamburger-menu) → Settings → Server** (see [Settings](#settings) section for complete configuration reference)
@@ -327,17 +404,20 @@ Turn your Android device into a **Modbus TCP Server** that other devices can pol
 #### Quick Setup Steps
 
 **Step 1: Configure Port Settings**
+
 - Navigate to **[Hamburger Menu [1]](#hamburger-menu) → Settings → Server**
 - Set **Server Port** (recommended: 8888 for non-rooted devices)
 - Enable **Modbus Server** switch to show server icon on main interface
 
 **Step 2: Port Selection Guidelines**
+
 - **Port 502**: Standard Modbus port, requires rooted Android device
 - **Port 8888**: Recommended default for most Android devices  
 - **Ports > 1024**: Safe choices for non-rooted devices
 - **Port "0"**: Auto-select (⚠️ may cause network conflicts)
 
 **Step 3: Add Monitor Points**
+
 - At least one monitor point required to start server
 - Click **(+)** to add new monitor point
 - Configure for server mode (see [Monitor Point Setup](#setting-up-monitor-points-for-server-mode) below)
@@ -358,21 +438,25 @@ The second setup step is to turn on the Server feature so it can be started. Thi
 #### Port Configuration Guidelines
 
 **Standard vs. Practical Ports**:
+
 - **Port 502**: Standard Modbus TCP port, but requires **rooted Android device**
 - **Port 8888**: Recommended default - tested to work well on most Android devices
 - **Ports > 1024**: Safe choice as Android blocks many ports below 1024 for security
 
 **Special Port Setting: "0"**
+
 - Setting port to "0" lets Android automatically find available port
 - ⚠️ **Caution**: Can cause conflicts with other network devices
 - Better to manually select a known-safe port number
 
 **Real-World Port Conflicts**:
+
 During testing, certain ports caused issues with other network services:
 - **Port 5060**: Caused VoIP service problems (ringing and audio issues)
 - **Common Service Ports**: Research existing network devices before selecting
 
 **Port Selection Best Practices**:
+
 1. **Research Network**: Identify existing devices and their port usage
 2. **Avoid System Ports**: Stay above 1024 unless device is rooted
 3. **Test Selection**: Verify chosen port doesn't conflict with existing services
@@ -383,11 +467,13 @@ During testing, certain ports caused issues with other network services:
 
 <figure markdown>
   ![Server Monitor Point Configuration](../../assets/screenshots/android-advanced/server-monitor-point.webp){ width="500" }
-  <figcaption>Figure 4: Monitor point configured for server mode with Modbus TCP protocol and register addressing</figcaption>
+  <figcaption>Figure 6: Monitor point configured for server mode with Modbus TCP protocol and register addressing</figcaption>
 </figure>
 
 #### Prerequisites
+
 **Before starting server mode, ensure**:
+
 1. **Server Feature Enabled**: Check "Modbus Server?" in [Settings](#settings) to show server icon
 2. **Monitor Points Added**: Must have at least one monitor point configured
 3. **Correct Protocol**: All monitor points must use Modbus TCP protocol
@@ -395,21 +481,25 @@ During testing, certain ports caused issues with other network services:
 #### Basic Server Setup Steps
 
 **Step 1: Enable Server Feature**
+
 - Navigate to **[Hamburger Menu [1]](#hamburger-menu) → Settings → Server**
 - Check "Modbus Server?" option to place server icon on main interface
 - This is the **only way** to access server functionality
 
 **Step 2: Add Monitor Points**
+
 - Click **(+)** button to add at least one monitoring point
 - Server cannot start without monitor points in the list
 
 **Step 3: Configure Each Monitor Point**
+
 - Set up each point specifically for server operation
 - Follow configuration requirements below
 
 #### Server Monitor Point Configuration
 
 **Critical Settings** (must be configured correctly):
+
 - **Protocol**: Must be set to **Modbus TCP** (other protocols ignored)
 - **Channel**: TCP/IP (other channels ignored)  
 - **Address**: Starting register address (use [6-Digit Addressing format](../../guides/6-digit-addressing.md))
@@ -417,6 +507,7 @@ During testing, certain ports caused issues with other network services:
 - **Data Type**: Choose appropriate type (Integer, Float, etc.)
 
 **Ignored Settings in Server Mode**:
+
 - **IP Address**: Server uses device IP automatically
 - **Port**: Server uses port from Settings configuration
 
@@ -454,7 +545,7 @@ Server Monitor Point:
 
 <figure markdown>
   ![Monitor Points List](../../assets/screenshots/android-advanced/monitor-points-list.webp){ width="450" }
-  <figcaption>Figure 5: Monitor points showing live data from multiple devices</figcaption>
+  <figcaption>Figure 9: Monitor points showing live data from multiple devices</figcaption>
 </figure>
 
 **What are Monitor Points?**
@@ -475,7 +566,7 @@ The full list of Monitor Points can be built by adding new items one at a time o
 
 <figure markdown>
   ![Monitor Point Management Dialog](../../assets/screenshots/android-advanced/monitor-point-management.webp){ width="400" }
-  <figcaption>Figure 6: Management options (tap any monitor point to access)</figcaption>
+  <figcaption>Figure 10: Management options (tap any monitor point to access)</figcaption>
 </figure>
 
 **Management Options**:
@@ -494,7 +585,7 @@ The full list of Monitor Points can be built by adding new items one at a time o
 
 <figure markdown>
   ![Monitor Point Configuration Dialog](../../assets/screenshots/android-advanced/monitor-point-configuration.webp){ width="500" }
-  <figcaption>Figure 7: Detailed configuration with expandable sections</figcaption>
+  <figcaption>Figure 11: Detailed configuration with expandable sections</figcaption>
 </figure>
 
 **Configuration Sections**:
@@ -504,70 +595,11 @@ The full list of Monitor Points can be built by adding new items one at a time o
 4. **🧮 Math** - Linear scaling and calculations
 5. **💬 Coded Messages** - Text translation for numeric values
 
-## Client Mode - Polling Remote Devices
-
-<figure markdown>
-  ![Modbus Client Mode Interface](../../assets/screenshots/android-advanced/client-mode-interface.webp){ width="500" }
-  <figcaption>Figure 8: Client mode showing active data polling from multiple devices</figcaption>
-</figure>
-
-### Configuration Essentials
-
-To start polling in Master Mode, Modbus Monitor Advanced requires at least one monitor point. You can add a monitor point by clicking the (+) button or selecting "Add" from the menu. When you click "Add" or (+), a monitor point is added with default settings and values. 
-
-**Setup Steps**:
-1. **Add Monitor Point** - Tap the monitor point in the list and select "Change" to edit the newly added point
-2. **Select Channel** - Choose the physical or network device your remote device (server/slave) will use for communication
-3. **Choose Protocol** - Select compatible protocol for your selected channel (see table above)
-4. **Configure Connection** - Set IP address/port for TCP/IP or baud rate for serial connections
-5. **Set Modbus Parameters** - Configure Slave ID, address, and register count
-6. **Start Polling** - Click the "Link" icon to start polling from remote servers
-
-**Channel Selection**:
-- **🌐 TCP/IP** → Modbus TCP (Ethernet/Wi-Fi)
-- **🔌 USB-OTG** → Modbus RTU/ASCII (Serial)  
-- **📱 Bluetooth** → Modbus RTU/ASCII (Wireless)
-
-**Protocol Compatibility**:
-
-| Channel | Supported Protocols | Notes |
-|---------|-------------------|-------|
-| TCP/IP | Modbus TCP, UDP, RTU over TCP, ASCII over TCP | Works as Master and Server |
-| Serial (USB-OTG) | Modbus RTU, Modbus ASCII | Serial communication only |
-| Bluetooth | Modbus RTU, Modbus ASCII | Wireless serial communication |
-
-!!! warning "Protocol Compatibility"
-    Only certain protocols are compatible with each channel. Modbus Monitor Advanced will skip monitor points with incorrect Channel/Protocol combinations. If communication shows errors, ensure the correct Channel and Protocol are set for each monitor point.
-
-**Addressing**: Uses 6-digit format supporting full 16-bit range (0-65535). This address is in the Modbus Protocol format, not the more common PLC address scheme. See [6-Digit Addressing Guide](../../guides/6-digit-addressing.md) for details.
-
-**Count Field**: Registers to read (1 for integers, 2 for floats, max 125 per Modbus specification). Ensure the correct number of counts is programmed for the data type to be displayed.
-
-!!! warning "Protocol Compatibility"
-    Ensure correct Channel/Protocol combinations. Incorrect settings cause communication failures.
-
-### Write Operations
-
-<figure markdown>
-  ![Modbus Write Dialog](../../assets/screenshots/android-advanced/write-dialog.webp){ width="400" }
-  <figcaption>Figure 9: Write dialog for sending values to remote devices</figcaption>
-</figure>
-
-The Write Dialog box is displayed when selecting the "Write" option from the Monitor Point Management dialog. The header shows the name of the Monitor Point along with the Data Type. Enter the value in the write field and click the Change button.
-
-**Write Capabilities**: 
-- Send values to remote servers (disabled by default for safety)
-- Works in both Master and Server modes
-- In Master mode: write value included in Modbus packet sent to remote server
-- In Server mode: write value stored in internal registers for remote masters to poll
-
-**Multi-Device Support**: Each monitor point supports different protocols and connections, enabling write operations across multiple devices and networks simultaneously.
-
 ## Sensor Server Mode
 
 <figure markdown>
   ![Sensor Server Configuration](../../assets/screenshots/android-advanced/sensor-server-config.webp){ width="500" }
-  <figcaption>Figure 10: Sensor server setup showing Android sensor selection and automatic configuration</figcaption>
+  <figcaption>Figure 7: Sensor server setup showing Android sensor selection and automatic configuration</figcaption>
 </figure>
 
 **Sensor Server** is an innovative extension of the Modbus Server that exposes your Android device's built-in sensors through the Modbus TCP protocol.
@@ -595,7 +627,7 @@ The Write Dialog box is displayed when selecting the "Write" option from the Mon
 
 <figure markdown>
   ![Sensor Information Display](../../assets/screenshots/android-advanced/sensor-info-display.webp){ width="600" }
-  <figcaption>Figure 11: Automatic sensor information display showing specifications and real-time values</figcaption>
+  <figcaption>Figure 8: Automatic sensor information display showing specifications and real-time values</figcaption>
 </figure>
 
 #### Setup Process
@@ -625,6 +657,7 @@ Raw Data: [0]xxx.xx [1]xxx.xx [2]xxx.xx
 ```
 
 **Example Information**:
+
 - **Sensor Number**: Internal Android sensor ID
 - **Sensor Name**: Human-readable sensor type
 - **Power Consumption**: Current draw in milliamps
@@ -653,30 +686,35 @@ Sensor Server Requirements:
 
 #### Data Format
 **3-Axis Readings**: Most sensors provide data in 3-dimensional arrays
+
 - **[0] X-Axis**: First dimensional reading
 - **[1] Y-Axis**: Second dimensional reading  
 - **[2] Z-Axis**: Third dimensional reading
 
 #### Data Interpretation
 **Accelerometer Example**:
+
 - **X-Axis**: Lateral acceleration (left/right)
 - **Y-Axis**: Longitudinal acceleration (forward/back)
 - **Z-Axis**: Vertical acceleration (up/down)
 - **Units**: Typically m/s² (meters per second squared)
 
 **Reference Documentation**: 
+
 - 📖 [Android Sensor Developer Guide](https://developer.android.com/guide/topics/sensors/sensors_overview.html)
 - 📋 Manufacturer sensor datasheets for specific interpretations
 
 ### Practical Applications
 
 #### Industrial IoT Integration
+
 - **Environmental Monitoring**: Use phone as environmental sensor station
 - **Vibration Analysis**: Monitor equipment vibration via accelerometer
 - **Light Control Systems**: Automatic lighting based on ambient conditions
 - **Security Systems**: Motion detection and proximity alerts
 
 #### Research and Development
+
 - **Data Collection**: Gather sensor data for analysis projects  
 - **Prototype Testing**: Quick sensor integration without custom programming
 - **Educational Demonstrations**: Teach industrial protocols and sensor integration
@@ -685,18 +723,21 @@ Sensor Server Requirements:
 ## Professional Use Cases
 
 ### Field Service Applications
+
 - **Equipment Diagnostics**: Quick troubleshooting of industrial devices
 - **Configuration Backup**: Save and restore device settings
 - **Performance Monitoring**: Track system performance over time
 - **Communication Testing**: Verify network connectivity and protocols
 
 ### System Integration
+
 - **Device Commissioning**: Validate new installations
 - **Network Mapping**: Document system architectures
 - **Protocol Verification**: Test custom implementations
 - **Performance Optimization**: Identify communication bottlenecks
 
 ### Research & Development
+
 - **Protocol Analysis**: Reverse engineer device communications
 - **Custom Development**: Test new device implementations  
 - **Educational Demos**: Teach Modbus fundamentals
@@ -744,6 +785,7 @@ Device 3 - Sensor:
 ## Hardware Requirements
 
 ### Mobile Device Specifications
+
 - **Android OS**: 8.0 (API 26) or higher
 - **RAM**: 2GB minimum, 4GB recommended
 - **Storage**: 100MB available space
@@ -751,6 +793,7 @@ Device 3 - Sensor:
 - **USB**: OTG support for serial connections
 
 ### Serial Communication Hardware
+
 - **USB-OTG Adapter**: For connecting serial devices
 - **USB-to-RS485 Converter**: For industrial networks
 - **Proper Grounding**: Essential for reliable communication
@@ -763,6 +806,7 @@ Device 3 - Sensor:
 **Hardware**: USB-OTG adapter, USB-to-RS485 converter for industrial networks
 
 ### Cloud Platform Add-ons
+
 - **📊 Google Sheets** - Real-time data publishing and automated reports
 - **☁️ ThingSpeak** - IoT dashboards, API access, alerts and triggers  
 - **📡 MQTT** - Industrial IoT integration with AWS, Azure, Google Cloud
@@ -788,6 +832,7 @@ Device 3 - Sensor:
 - **Network Connection** - Check Wi-Fi/Ethernet connectivity for TCP/IP mode
 
 **Configuration Issues**:
+
 - **Invalid Addresses** - Use 6-digit Modbus Protocol format, not PLC addressing
 - **Wrong Register Count** - Set correct count for data type (1 for integers, 2 for floats)
 - **Write Failures** - Enable write permissions for each monitor point (disabled by default)
@@ -800,6 +845,7 @@ Device 3 - Sensor:
 5. **Check Error Codes** - Reference [Error Codes Page](https://quantumbitsolutions.com/errors/)
 
 ### Support Resources
+
 - 📧 **Email**: support@quantumbitsolutions.com
 - 📖 **Documentation**: [quantumbitsolutions.com/help](https://quantumbitsolutions.com/help/)
 - � **Forum**: [Expert community](https://quantumbitsolutions.com/forums/)
