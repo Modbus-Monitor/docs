@@ -291,20 +291,21 @@ Access comprehensive app configuration through **[Hamburger Menu [1]](#hamburger
 
 ## Client Mode - Polling Remote Devices
 
-[:octicons-arrow-left-24: Back to Main Interface](#main-interface-overview)
+**Client Mode** transforms your Android device into a powerful **Modbus Master** that can poll multiple remote devices for live data. This is the primary mode for field engineers and technicians who need to monitor, troubleshoot, and analyze industrial systems.
+
 
 <figure markdown>
-  ![Modbus Client Mode Interface](../../assets/screenshots/android-advanced/client-mode-interface.webp){ width="500" }
+  ![Modbus Client Mode Interface](../../assets/screenshots/android-advanced/client-mode-interface.webp){.screenshot-shadow}
   <figcaption>Figure 2: Client mode showing active data polling from multiple devices</figcaption>
 </figure>
 
-**Client Mode** transforms your Android device into a powerful **Modbus Master** that can poll multiple remote devices for live data. This is the primary mode for field engineers and technicians who need to monitor, troubleshoot, and analyze industrial systems.
 
 ### Configuration Essentials
 
 To start polling in Master Mode, Modbus Monitor Advanced requires at least one monitor point. You can add a monitor point by clicking the (+) button or selecting "Add" from the menu. When you click "Add" or (+), a monitor point is added with default settings and values.
 
 **Setup Steps**:
+
 1. **Add Monitor Point** - Tap the monitor point in the list and select "Change" to edit the newly added point
 2. **Select Channel** - Choose the physical or network device your remote device (server/slave) will use for communication
 3. **Choose Protocol** - Select compatible protocol for your selected channel (see table below)
@@ -313,9 +314,9 @@ To start polling in Master Mode, Modbus Monitor Advanced requires at least one m
 6. **Start Polling** - Click the "Link" icon to start polling from remote servers
 
 **Channel Selection**:
-- **🌐 TCP/IP** → Modbus TCP (Ethernet/Wi-Fi)
-- **🔌 USB-OTG** → Modbus RTU/ASCII (Serial)  
-- **📱 Bluetooth** → Modbus RTU/ASCII (Wireless)
+- **TCP/IP** → Modbus TCP, Modbus RTU/ASCII over TCP (Ethernet/Wi-Fi)
+- **Serial (USB-OTG)** → Modbus RTU/ASCII (Serial)  
+- **Bluetooth** → Modbus RTU/ASCII (Wireless)
 
 **Protocol Compatibility**:
 
