@@ -306,44 +306,273 @@ Access comprehensive app configuration through **[Hamburger Menu [1]](#hamburger
 **Advanced Multi-Channel Capability**: Each [Monitor Point](#monitor-points---core-concept) becomes a powerful data source with its own independent communication channel (Serial, TCP/IP, or Bluetooth). This allows you to collect data from different devices using different protocols simultaneously, enabling you to configure and monitor systems from various sources and build comprehensive system-level information from a single interface.
 
 
-<figure markdown>
-  ![Modbus Client Mode Interface](../../assets/screenshots/android-advanced/client-mode-interface.webp){.screenshot-shadow}
-  <figcaption>Figure 2: Client mode showing active data polling from multiple devices</figcaption>
-</figure>
-
-
 ### Configuration Essentials
 
 To start polling in Master Mode, Modbus Monitor Advanced requires at least one monitor point. You can add a monitor point by clicking the (+) button or selecting "Add" from the menu. When you click "Add" or (+), a monitor point is added with default settings and values.
 
-**Setup Steps**:
+**Monitor Points Management Dialog**: This is your central command hub for modifying, configuring, and controlling individual Modbus points (registers or coils) within your list. See the detailed [Monitor Points Management](#monitor-point-management) section for complete information about all available options.
 
-1. **Add Monitor Point** - Tap the monitor point in the list and select "Change" to edit the newly added point
-2. **Select Channel** - Choose the physical or network device your remote device (server/slave) will use for communication
-3. **Choose Protocol** - Select compatible protocol for your selected channel (see table below)
-4. **Configure Connection** - Set IP address/port for TCP/IP or baud rate for serial connections
-5. **Set Modbus Parameters** - Configure Slave ID, address, and register count
-6. **Start Polling** - Click the "Link" icon to start polling from remote servers
+### Monitor Point Configuration
 
-**Channel Selection**:
-- **TCP/IP** → Modbus TCP, Modbus RTU/ASCII over TCP (Ethernet/Wi-Fi)
-- **Serial (USB-OTG)** → Modbus RTU/ASCII (Serial)  
-- **Bluetooth** → Modbus RTU/ASCII (Wireless)
+<div class="grid cards" markdown>
 
-**Protocol Compatibility**:
+-   ![Monitor Point Configuration Dialog](../../assets/screenshots/android-advanced/mma-monitor-point-configure.webp){ width="400" style="display: block; margin: 0 auto;" }
 
-| Channel | Supported Protocols | Notes |
-|---------|-------------------|---------|
-| TCP/IP | Modbus TCP, UDP, RTU over TCP, ASCII over TCP | Works as Master and Server |
-| Serial (USB-OTG) | Modbus RTU, Modbus ASCII | Serial communication only |
-| Bluetooth | Modbus RTU, Modbus ASCII | Wireless serial communication |
+-   **Monitor Point Configuration Dialog**
 
-!!! warning "Protocol Compatibility"
-    Only certain protocols are compatible with each channel. Modbus Monitor Advanced will skip monitor points with incorrect Channel/Protocol combinations. If communication shows errors, ensure the correct Channel and Protocol are set for each monitor point.
+    ---
+    
+    Configure each monitor point with detailed settings across five expandable sections:
+    
+    **Core Configuration**
+    
+    - **📶 [Channel Settings](#channel-settings)** - Communication interface and protocol selection
+    - **🔧 [Modbus Configuration](#modbus-configuration)** - Address, register count, and display settings
+    - **🖥️ [Sensor Server](#sensor-server-configuration)** - Android sensor integration options
+    - **🧮 [Math](#math-configuration)** - Linear transformation and scaling settings  
+    - **💬 [Coded Messages](#coded-messages-configuration)** - Translate numbers to predefined strings
+    
 
-**Addressing**: Uses 6-digit format supporting full 16-bit range (0-65535). This address is in the Modbus Protocol format, not the more common PLC address scheme. See [6-Digit Addressing Guide](../../guides/6-digit-addressing.md) for details.
+    **Quick Setup Steps**:
+    
+    1. **Add Monitor Point** - Tap monitor point and select "Change" to edit
+    2. **Select Channel** - Choose communication interface (TCP/IP, Serial, Bluetooth)
+    3. **Configure Protocol** - Set compatible protocol for selected channel
+    4. **Set Connection** - Configure IP address/port or baud rate
+    5. **Define Modbus** - Set Slave ID, address, and register count
+    6. **Start Polling** - Click "Link" icon to begin data collection
 
-**Count Field**: Registers to read (1 for integers, 2 for floats, max 125 per Modbus specification). Ensure the correct number of counts is programmed for the data type to be displayed.
+</div>
+
+#### Channel Settings
+
+**Communication interface and protocol selection for your monitor point.**
+
+=== "Channel"
+
+    **Physical communication interface and protocol selection.**
+    
+    | Setting | Type | Options | Description |
+    |---------|------|---------|-------------|
+    | **TCP/IP** | Selection | TCP/IP, Serial, Bluetooth | Physical communication interface |
+    | **Serial Port** | Selection | Modbus TCP, RTU, ASCII, UDP | Modbus protocol variant |
+    | **Bluetooth BR/EDR/LE** | Selection | Modbus TCP, RTU, ASCII, UDP | Modbus protocol variant |
+    
+    !!! warning "Protocol Compatibility"
+        Only certain protocols are compatible with each channel. Modbus Monitor Advanced will skip monitor points with incorrect Channel/Protocol combinations. Verify correct settings if communication errors occur.
+
+=== "Protocol"
+
+    **Protocol selection**
+    
+    | Setting | Type | Description |
+    |---------|------|-------------|
+    | **None** | Dropdown | Skip the Monitoring Point or set to None |
+    | **Modbus TCP** | Dropdown | Modbus/TCP Protocol|
+    | **Modbus RTU over TCP** | Dropdown | Modbus RTU over TCP Protocol|
+    | **Modbus UDP** | Dropdown | Modbus UDP|
+    | **Modbus RTU over UDP** | Dropdown | Modbus UDP|
+    | **Serial ASCII** | Dropdown | Modbus UDP|
+    | **Serial Serial** | Dropdown | Modbus UDP|
+    
+    !!! warning "Protocol Compatibility"
+        Only certain protocols are compatible with each channel. Modbus Monitor Advanced will skip monitor points with incorrect Channel/Protocol combinations. Verify correct settings if communication errors occur.        
+
+=== "TCP/IP Settings"
+
+    **Network connection parameters for TCP/IP communications.**
+    
+    | Setting | Type | Options | Description |
+    |---------|------|---------|-------------|
+    | **IP Address** | Text | IPv4 address | Target device IP address |
+    | **Port** | Number | 1-65535 | TCP/UDP port number (default: 502) |
+    
+    **Common Port Usage**:
+    - **502** - Standard Modbus TCP port
+    - **8888** - Alternative port for multiple devices
+    - **Custom** - User-defined ports for specific applications
+
+=== "Serial Settings"
+
+    **Serial communication parameters for USB-OTG and direct serial connections.**
+    
+    | Setting | Type | Options | Description |
+    |---------|------|---------|-------------|
+    | **Baud Rate** | Dropdown | 9600, 19200, 38400, 57600, 115200 | Serial communication speed |
+    | **Data Bits** | Dropdown | 7, 8 | Number of data bits per character |
+    | **Parity** | Dropdown | None, Even, Odd | Error detection method |
+    | **Stop Bits** | Dropdown | 1, 2 | Number of stop bits |
+    
+    **Common Serial Configurations**:
+    - **9600-8-N-1** - Most common industrial setup
+    - **19200-8-N-1** - Higher speed applications  
+    - **38400-8-E-1** - With even parity for error checking
+
+#### Modbus Configuration
+
+**Core Modbus parameters and data formatting options.**
+
+=== "Basic Settings"
+
+    **Essential Modbus configuration parameters.**
+    
+    | Setting | Type | Range/Options | Description |
+    |---------|------|---------------|-------------|
+    | **Register Name** | Text | Custom text | Descriptive name for monitor point |
+    | **Address** | Number | 000001-665535 | 6-digit Modbus protocol address |
+    | **Count** | Number | 1-125 | Number of registers to read |
+    | **Slave ID** | Number | 0-255 | Target device Modbus slave ID |
+    
+    **Addressing System**:
+    - **6-Digit Format**: Supports full Modbus protocol range (0-65535)
+    - **Function Code Integration**: Address includes register type information
+    - **Protocol Format**: Uses Modbus protocol addressing, not PLC addressing
+    
+    !!! info "Addressing Guide"
+        The address field uses **Modbus Protocol format**, not PLC addressing. For complete address translation help, see the [6-Digit Addressing Guide](../../guides/6-digit-addressing.md).
+
+=== "Data Types"
+
+    **Data interpretation and formatting options.**
+    
+    | Data Type | Registers | Description | Use Cases |
+    |-----------|-----------|-------------|-----------|
+    | **16-bit Integer** | 1 | Standard integer value | Counters, status values |
+    | **32-bit Integer** | 2 | Extended integer range | Large counters, timestamps |
+    | **Float (32-bit)** | 2 | IEEE 754 floating point | Analog measurements, sensors |
+    | **64-bit Integer** | 4 | Extended long integer | Very large values |
+    | **Double (64-bit)** | 4 | Double precision float | High precision measurements |
+    | **String** | Variable | Text data | Device names, status messages |
+    
+    | Setting | Type | Range/Options | Description |
+    |---------|------|---------------|-------------|
+    | **Data Type** | Dropdown | See table above | How to interpret register data |
+    | **Byte Swap** | Checkbox | Yes/No | Reverse byte order in multi-word values |
+
+=== "Write Operations"
+
+    **Write operation configuration and safety settings.**
+    
+    | Setting | Type | Range/Options | Description |
+    |---------|------|---------------|-------------|
+    | **Write Enable** | Checkbox | Yes/No | Allow write operations (disabled by default) |
+    | **Write Function** | Dropdown | 05, 06, 15, 16 | Modbus write function code |
+    | **Preset Value** | Number | Custom | Default value for write operations |
+    
+    **Write Function Codes**:
+    - **05** - Write Single Coil
+    - **06** - Write Single Register  
+    - **15** - Write Multiple Coils
+    - **16** - Write Multiple Registers
+    
+    !!! warning "Write Safety"
+        Write operations are disabled by default for safety. Enable only when necessary and verify target device and address.
+
+#### Sensor Server Configuration
+
+**Android sensor integration settings for Sensor Server Mode.**
+
+=== "Sensor Selection"
+
+    **Choose and configure Android sensors for Modbus exposure.**
+    
+    | Setting | Type | Options | Description |
+    |---------|------|---------|-------------|
+    | **Sensor Selection** | Dropdown | See list below | Choose Android sensor to expose |
+    | **Auto Configure** | Automatic | Yes | Automatically sets count, protocol, data type |
+    
+    **Automatic Configuration**:
+    When you select a sensor, the app automatically configures:
+    - **Count**: Set to 6 words (3 floats × 2 words each)
+    - **Protocol**: Set to Modbus TCP
+    - **Data Type**: Set to Float
+    - **Register Name**: Updated with sensor specifications and live readings
+
+=== "Available Sensors"
+
+    **Complete list of Android sensors available for integration.**
+    
+    | Sensor | Description | Data Axes | Typical Units |
+    |--------|-------------|-----------|---------------|
+    | **Accelerometer** | Device motion and orientation | 3 (X, Y, Z) | m/s² |
+    | **Gyroscope** | Angular velocity measurements | 3 (X, Y, Z) | rad/s |
+    | **Light Sensor** | Ambient light levels | 1 | lux |
+    | **Orientation** | Device position in 3D space | 3 (Azimuth, Pitch, Roll) | degrees |
+    | **Temperature** | Ambient temperature | 1 | °C |
+    | **Barometer** | Atmospheric pressure | 1 | hPa |
+    | **Magnetometer** | Magnetic field strength | 3 (X, Y, Z) | µT |
+    | **Proximity** | Object detection near device | 1 | cm |
+
+#### Math Configuration
+
+**Linear transformation and scaling options for data processing.**
+
+=== "Scaling Settings"
+
+    **Mathematical transformation parameters.**
+    
+    | Setting | Type | Range | Description |
+    |---------|------|-------|-------------|
+    | **Scale Factor** | Number | Any decimal | Multiply raw value by this factor |
+    | **Offset** | Number | Any decimal | Add this value after scaling |
+    | **Engineering Units** | Text | Custom text | Display suffix (e.g., "°C", "PSI") |
+    
+    **Mathematical Formula**:
+    ```
+    Display Value = (Raw Value × Scale Factor) + Offset
+    ```
+
+=== "Common Examples"
+
+    **Typical scaling scenarios and configurations.**
+    
+    | Application | Scale Factor | Offset | Units | Example |
+    |-------------|--------------|---------|--------|---------|
+    | **Temperature (°F to °C)** | 0.5556 | -17.78 | °C | Convert Fahrenheit |
+    | **Pressure (PSI)** | 0.1 | 0 | PSI | Scale 0-1000 to 0-100 |
+    | **Flow Rate** | 2.5 | 0 | GPM | Scale to actual flow |
+    | **Percentage** | 0.1 | 0 | % | Convert 0-1000 to 0-100% |
+    
+    **Use Case Benefits**:
+    - **Unit Conversion**: Convert between different measurement systems
+    - **Range Scaling**: Adjust raw sensor values to meaningful ranges
+    - **Calibration**: Apply calibration factors to improve accuracy
+
+#### Coded Messages Configuration
+
+**Translate numeric values to descriptive text messages.**
+
+=== "Message Setup"
+
+    **Basic coded message configuration.**
+    
+    | Setting | Type | Description |
+    |---------|------|-------------|
+    | **Enable Coded Messages** | Checkbox | Activate text translation feature |
+    | **Message Map** | Table | Value-to-text mapping definitions |
+    
+    **Configuration Benefits**:
+    - **User-Friendly Display**: Show meaningful text instead of numbers
+    - **Status Translation**: Convert numeric codes to operational status
+    - **Alarm Indication**: Highlight critical conditions with descriptive text
+    - **Multi-Language Support**: Define messages in local language
+
+=== "Message Examples"
+
+    **Sample message mapping configurations.**
+    
+    | Raw Value | Display Message | Use Case |
+    |-----------|-----------------|----------|
+    | 0 | "Stopped" | Equipment status |
+    | 1 | "Running" | Equipment status |
+    | 2 | "Fault" | Equipment status |
+    | 100-199 | "Normal Range" | Operating conditions |
+    | 200+ | "Over Range" | Alarm conditions |
+    
+    **Advanced Mappings**:
+    - **Range-based**: Map value ranges to different messages
+    - **State Machines**: Define complex operational states
+    - **Alarm Levels**: Create hierarchical alarm messages
 
 ### Write Operations
 
@@ -645,17 +874,73 @@ The full list of Monitor Points can be built by adding new items one at a time o
   <figcaption>Figure 10: Management options (tap any monitor point to access)</figcaption>
 </figure>
 
-**Management Options**:
+**The Monitor Points Management Dialog** is your central command hub for modifying, configuring, and controlling individual Modbus points (registers or coils) within your list.
 
-- **📞 Communications** - Start or stop the Modbus Client. Same as clicking the Link Icon. Default action when no item is selected and OK is clicked
-- **➕ Add** - Add a new Monitor Point with default settings. Same as clicking the + floating button
-- **❌ Remove** - Remove the selected item from the monitor points list
-- **✏️ Change** - Edit the selected Monitor Point configuration. Usually used after adding a new item to configure settings
-- **📋 Copy** - Copy the selected item to memory for duplication
-- **📄 Paste** - Paste the copied item from memory and add it as a new item
-- **✍️ Write** - Opens [Write Dialog](#write-operations) to send custom value to Modbus device. **Write must be enabled** in monitor point configuration (disabled by default for safety)
-- **⚡ Write Preset Value** - Instantly sends the pre-configured preset value to the target device. Uses the preset value defined during monitor point setup
-- **👁️ Hide/Unhide Configuration** - Toggle display of configuration details line below the Register Name
+#### Accessing the Management Dialog
+
+<figure markdown>
+  ![Accessing Monitor Points Management Dialog](../../assets/screenshots/android-advanced/mma-monitor-points-mangement.webp)
+  <figcaption>Figure 4: Accessing Monitor Points Management Dialog either by tap or swipe</figcaption>
+</figure>
+
+The Monitor Points Management dialog can be accessed either by clicking on the monitor points (after adding a point) or swiping left to expose the Menu option. The UI shows the Monitor Points Management dialog to configure each monitor point and customize it.
+
+To open the Management Menu:
+1. **Tap** any specific Monitor Point in your main list
+2. **Long-press** (depending on your device interaction settings)
+3. A dialog box titled **"Monitor Point Management"** will appear
+
+#### Management Options
+
+| Option | Icon | Description | Use Cases |
+|--------|------|-------------|----------|
+| **Communications** | Link | Toggles communication status for selected item | Pause queries to specific device without stopping entire system |
+| **Add** | Plus | Opens "Add Point" configuration screen | Insert new Modbus register or coil into monitoring list |
+| **Remove** | Delete | Permanently deletes selected Monitor Point | Clean up unused or obsolete monitoring points |
+| **Change** | Edit | Opens configuration screen for selected point | Modify Address, Function Code, Data Type, or other settings |
+| **Copy** | Copy | Copies configuration of selected point to clipboard | Backup configurations or prepare for duplication |
+| **Paste** | Paste | Pastes previously copied configuration as new item | Quickly duplicate similar sensors or registers |
+| **Write** | Write | Initiates write command to device | Send custom values to device (requires write capability enabled) |
+| **Write Preset Value** | Preset | Sends pre-configured default value to device | Quick setpoint adjustments or restore to known values |
+| **Hide/Unhide Configuration** | View | Toggles visibility of technical details in main list | Clean interface by hiding register addresses and data types |
+| **Apply Settings to All** | Global | Applies settings from selected point to all other points | Bulk update Channel/IP settings across all monitor points (use with caution) |
+
+#### How to Use the Management Dialog
+
+**Step-by-Step Process**:
+1. **Select an Action**: Tap the radio button next to desired action (e.g., "Change" or "Copy")
+2. **Confirm**: Press the **OK** button at bottom of dialog
+3. **Cancel**: Press **Cancel** to close menu without making changes
+
+#### Advanced Features
+
+**Configuration Auto-Switching**: The app automatically switches between "Simple" and "Advanced" views depending on the point's configuration complexity.
+
+**Bulk Operations**: Use "Apply Settings to All" to propagate network settings (IP address, port, protocol) from one point to all others in your list.
+
+#### Troubleshooting Management Operations
+
+**Common Issues**:
+
+- **Error Messages**: If you see error notifications (e.g., "Error 343235"), it usually indicates:
+  - Monitor Point configuration is invalid
+  - Background communication driver is busy
+  - **Solution**: Wait a moment and try the action again
+
+- **Read-Only Points**: If you select "Write" on points configured as Read-Only (e.g., Input Registers):
+  - The command may not execute
+  - **Solution**: Verify the register type supports write operations
+
+- **Write Operations Disabled**: Write and Write Preset commands require:
+  - Write capability enabled in monitor point configuration
+  - Proper Modbus function codes configured
+  - **Solution**: Use "Change" to enable write capability in point settings
+
+!!! tip "Management Best Practices"
+    - **Copy Before Modifying**: Always copy important configurations before making changes
+    - **Test Write Operations**: Verify write commands work correctly before deploying in production
+    - **Use Descriptive Names**: Give monitor points clear, descriptive names for easier management
+    - **Group Similar Points**: Organize related monitor points together for easier bulk operations
 
 !!! info "Write Operations Access"
     Both **Write** and **Write Preset Value** options are available in this menu and work in both Client and Server modes:
@@ -664,20 +949,6 @@ The full list of Monitor Points can be built by adding new items one at a time o
     - **Write Preset Value**: Immediate transmission of pre-configured default value
     - **Safety**: Both options require write capability to be enabled in monitor point configuration
     - **Cross-Mode**: Available whether operating as Modbus Client or Server
-
-### Configuration Dialog
-
-<figure markdown>
-  ![Monitor Point Configuration Dialog](../../assets/screenshots/android-advanced/monitor-point-configuration.webp){ width="500" }
-  <figcaption>Figure 11: Detailed configuration with expandable sections</figcaption>
-</figure>
-
-**Configuration Sections**:
-1. **📶 Channel** - Communication interface and protocol
-2. **🔧 Modbus** - Address, register count, display settings  
-3. **🖥️ Sensor Server** - Android sensor integration
-4. **🧮 Math** - Linear scaling and calculations
-5. **💬 Coded Messages** - Text translation for numeric values
 
 ## Sensor Server Mode
 
