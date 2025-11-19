@@ -2,7 +2,7 @@ docs_dir: docs
 site_name: Modbus Monitor — Documentation
 site_url: https://docs.quantumbitsolutions.com/
 use_directory_urls: true
-# Repository renamed from 'docs' to 'modbus-monitor-docs' - trigger rebuild
+# Custom domain configured - rebuild for proper asset paths
 
 # Ensure proper index page handling
 site_description: Professional Modbus monitoring tools and comprehensive documentation for automation engineers, OEMs, and testing teams.
