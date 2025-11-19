@@ -84,12 +84,22 @@ The main interface combines status indicators with action buttons for easy opera
 | **[Server Mode](#modbus-server-mode-slave)** | [2] | Server status/toggle | Start/stop Modbus TCP server functionality |
 | **[Client Mode](#client-mode---polling-remote-devices)** | [3] | Client status/toggle | Start/stop Modbus client polling |
 | **Bluetooth Status** | [4] | Communication indicators | Bluetooth control and status |
-| **Serial Status** | [5] | USB Serial indicators | USB and USB-OTG connected device control panel and connection status |
+| **Serial Status** | [5] | USB Serial indicators | USB and USB-OTG connected device control panel and connection status. Shows status or click to see available USB devices that can be used |
 | **IoT** | [6] | IoT status | IoT controls and status |
-| **Packet Counters** | [7] | Statistics display | Good/Bad packet counts and error tracking |
-| **Server Info** | [8] | Network details | IP address and port when server is active |
+| **Google Sheets** | [7] | Statistics display | Controls for Google Sheets  |
+| **Packet Counters** | [8] | Statistics display | Good/Bad packet counts and error tracking |
 | **Monitor Points** | [9] | Data display area | Live values, config details, response times, click or swipe for edits |
-| **Quick Add** | [10] | Add button | (+) button to create new monitor points |
+| **Monitor Points - Index** | [9a] | Monitor point index and counter | Sequential monitor point number (i) and request attempt counter for tracking polling activity |
+| **Monitor Points - Value** | [9b] | Primary data display line | Shows monitor point name, current live value, and optional engineering unit suffix for easy identification |
+| **Monitor Points - Config** | [9c] | Configuration summary line | Displays key settings: communication channel, write function code, data type, byte swap, Modbus address, register count, slave ID, and scaling parameters |
+| **Monitor Points - Packet** | [9d] | Communication packet display | Shows raw Modbus packet data for both transmitted requests and received responses for debugging and analysis |
+| **Monitor Points - Delay** | [9e] | Communication timing metrics | Displays response time delay between packet transmission and reception, useful for network performance monitoring |
+| **Monitor Points - Preset** | [9f] | Quick write button | Interactive button for instantly writing preset values to device when configured; requires proper write function code setup |
+| **Server Info** | [10] | Network details | IP address and port when server is active |
+| **Quick Add** | [11] | Add button | (+) button to create new monitor points |
+
+!!! note "Monitor Point Configuration Display"
+    Monitor Point configuration details (elements 9c to 9e) can be hidden or shown using the "Hide or Unhide Configuration" menu option in the Monitor Point Management dialog.
 
 !!! info "Detailed Coverage Ahead"
     Each of these interface elements will be explained in comprehensive detail throughout this guide. The numbered references [1]-[10] correspond to the annotations in the screenshot above, making it easy to follow along. New users should focus on elements [3], [9], and [10] to get started, while advanced users can utilize all features for complex multi-device scenarios.
@@ -292,6 +302,8 @@ Access comprehensive app configuration through **[Hamburger Menu [1]](#hamburger
 ## Client Mode - Polling Remote Devices
 
 **Client Mode** transforms your Android device into a powerful **Modbus Master** that can poll multiple remote devices for live data. This is the primary mode for field engineers and technicians who need to monitor, troubleshoot, and analyze industrial systems.
+
+**Advanced Multi-Channel Capability**: Each [Monitor Point](#monitor-points---core-concept) becomes a powerful data source with its own independent communication channel (Serial, TCP/IP, or Bluetooth). This allows you to collect data from different devices using different protocols simultaneously, enabling you to configure and monitor systems from various sources and build comprehensive system-level information from a single interface.
 
 
 <figure markdown>
