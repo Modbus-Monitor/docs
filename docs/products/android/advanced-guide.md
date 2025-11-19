@@ -438,7 +438,26 @@ To start polling in Master Mode, Modbus Monitor Advanced requires at least one m
 
 #### Modbus Configuration
 
-**Core Modbus parameters and data formatting options.**
+**Core Modbus parameters and data formatting options for industrial communication.**
+
+The Modbus Configuration section contains the essential parameters that define how your monitor point communicates with Modbus devices and how the received data is interpreted and displayed. This is where you configure the fundamental aspects of Modbus protocol communication including addressing, data types, byte ordering, and write operations.
+
+**Configuration Categories**:
+
+- **[Basic Settings](#basic-settings)** - Essential Modbus parameters including addressing, slave ID, and register configuration
+- **[Data Types](#data-types)** - Data interpretation options and endian/byte swap configurations for proper data formatting
+- **[Write Operations](#write-operations)** - Write function configuration and safety settings for sending data to devices
+
+**Why Modbus Configuration Matters**:
+
+- **Addressing Accuracy**: Proper Six-Digit addressing ensures you're reading the correct registers or coils
+- **Data Interpretation**: Correct data type selection displays meaningful values instead of raw register data
+- **Byte Order Handling**: Endian swap settings accommodate different manufacturer implementations
+- **Write Safety**: Controlled write operations prevent accidental device configuration changes
+- **Protocol Compliance**: Ensures your communication follows standard Modbus specifications
+
+!!! tip "Configuration Best Practices"
+    Start with **Basic Settings** to establish communication, then fine-tune **Data Types** for proper value display, and finally configure **Write Operations** only when device control is required. Each monitor point can have completely different Modbus settings, enabling multi-device monitoring from a single interface.
 
 === "Basic Settings"
 
@@ -446,18 +465,21 @@ To start polling in Master Mode, Modbus Monitor Advanced requires at least one m
     
     | Setting | Type | Range/Options | Description |
     |---------|------|---------------|-------------|
-    | **Register Name** | Text | Custom text | Descriptive name for monitor point |
-    | **Address** | Number | 000001-665535 | 6-digit Modbus protocol address |
-    | **Count** | Number | 1-125 | Number of registers to read |
-    | **Slave ID** | Number | 0-255 | Target device Modbus slave ID |
+    | **Name** | Text | Custom text | Name to describe this Monitor Point (e.g., Oven Temperature) |
+    | **Units** | Text | Custom text | Suffix to add after value (e.g., °C) |
+    | **Address** | Number | 000001-665535 | Six-Digit Modbus (one-based) address that includes Function Code |
+    | **Enron** | Dropdown | Yes/No | Choose Yes to use Enron address and protocol layer |
+    | **Slave ID** | Number | 0-255 | Server or Slave ID of the remote Modbus server |
+    | **Count** | Number | 1-125 | Number of registers to request. Default is 1 but varies based on Data Type |
     
-    **Addressing System**:
-    - **6-Digit Format**: Supports full Modbus protocol range (0-65535)
-    - **Function Code Integration**: Address includes register type information
-    - **Protocol Format**: Uses Modbus protocol addressing, not PLC addressing
+    **Addressing System Examples**:
+    - **Read 1st Holding Register**: 400001 (4 ⇒ Function 3)
+    - **Read 1st Input Register**: 300001 (3 ⇒ Function 4)
+    - **Read 1st Coil**: 000001 (0 ⇒ Modbus Function 1)
+    - **Read 1st Discrete Input**: 100001 (1 ⇒ Modbus Function 2)
     
-    !!! info "Addressing Guide"
-        The address field uses **Modbus Protocol format**, not PLC addressing. For complete address translation help, see the [6-Digit Addressing Guide](../../guides/6-digit-addressing.md).
+    !!! info "Six-Digit Addressing Guide"
+        The address field uses **Six-Digit Modbus format** (one-based) that includes the Function Code. For complete address information and examples, see: [quantumbitsolutions.com/address](https://quantumbitsolutions.com/address/)
 
 === "Data Types"
 
@@ -465,17 +487,33 @@ To start polling in Master Mode, Modbus Monitor Advanced requires at least one m
     
     | Data Type | Registers | Description | Use Cases |
     |-----------|-----------|-------------|-----------|
-    | **16-bit Integer** | 1 | Standard integer value | Counters, status values |
-    | **32-bit Integer** | 2 | Extended integer range | Large counters, timestamps |
-    | **Float (32-bit)** | 2 | IEEE 754 floating point | Analog measurements, sensors |
-    | **64-bit Integer** | 4 | Extended long integer | Very large values |
-    | **Double (64-bit)** | 4 | Double precision float | High precision measurements |
-    | **String** | Variable | Text data | Device names, status messages |
+    | **INT16** | 1 | 16-bit signed integer | Standard counters, signed values |
+    | **INT16U** | 1 | 16-bit unsigned integer | Status values, positive counters |
+    | **HEX** | 1 | Hexadecimal display | Raw data debugging, bit patterns |
+    | **BINARY** | 1 | Binary display | Bit analysis, digital status |
+    | **INT32** | 2 | 32-bit signed integer | Large counters, timestamps |
+    | **FLOAT32** | 2 | IEEE 754 floating point | Analog measurements, sensors |
+    | **DOUBLE64** | 4 | 64-bit double precision | High precision measurements |
+    | **STRING** | Variable | Text data | Device names, status messages |
+    | **BCD** | Variable | Binary Coded Decimal | Legacy system data |
+    | **EPOCH** | 2 | Unix timestamp | Time/date values |
+    | **INT32U** | 2 | 32-bit unsigned integer | Large positive values |
+    | **INT64** | 4 | 64-bit signed integer | Very large signed values |
+    | **INT64U** | 4 | 64-bit unsigned integer | Very large unsigned values |
     
     | Setting | Type | Range/Options | Description |
     |---------|------|---------------|-------------|
     | **Data Type** | Dropdown | See table above | How to interpret register data |
-    | **Byte Swap** | Checkbox | Yes/No | Reverse byte order in multi-word values |
+    | **Swap** | Dropdown | Byte/word swap options | Choose endian and swap configuration |
+    
+    **Swap Options (Endian Configuration)**:
+    
+    | Option | Description | Use Case |
+    |--------|-------------|----------|
+    | **ABCD_BE** | Big Endian | Standard big endian byte order |
+    | **BADC_BEBS** | Big Endian with Byte Swap | Big endian with bytes swapped |
+    | **DCBA_LE** | Little Endian | Standard little endian byte order |
+    | **CDAB_LEBS** | Little Endian with Byte Swap | Little endian with bytes swapped |
 
 === "Write Operations"
 
@@ -483,18 +521,28 @@ To start polling in Master Mode, Modbus Monitor Advanced requires at least one m
     
     | Setting | Type | Range/Options | Description |
     |---------|------|---------------|-------------|
-    | **Write Enable** | Checkbox | Yes/No | Allow write operations (disabled by default) |
-    | **Write Function** | Dropdown | 05, 06, 15, 16 | Modbus write function code |
-    | **Preset Value** | Number | Custom | Default value for write operations |
+    | **Write Function** | Dropdown | See options below | Function to use for Write Operation |
+    | **Button Write Value** | Number | Custom | Preset value for "Write preset value" option in Monitor Point Management |
     
-    **Write Function Codes**:
-    - **05** - Write Single Coil
-    - **06** - Write Single Register  
-    - **15** - Write Multiple Coils
-    - **16** - Write Multiple Registers
+    **Write Function Options**:
+    
+    | Function | Code | Description | Use Case |
+    |----------|------|-------------|----------|
+    | **Read Only** | Default | No write operations allowed | Safe monitoring only |
+    | **05 Write Single Coil** | 05 | Write single coil (bit) | Individual digital outputs |
+    | **06 Write Single Register** | 06 | Write single holding register | Individual analog outputs |
+    | **15 Write Multiple Coils** | 15 | Write multiple coils | Multiple digital outputs |
+    | **16 Write Multiple Registers** | 16 | Write multiple holding registers | Multiple analog outputs |
+    | **Auto** | Auto | Choose based on function type and register count | Automatic selection |
+    
+    **Function Code Selection**:
+    - **Read Only**: Default safe option, prevents accidental writes
+    - **Single Operations**: Use 05/06 for individual coil or register writes
+    - **Multiple Operations**: Use 15/16 for bulk coil or register writes  
+    - **Auto Mode**: Automatically selects appropriate function based on data type and count
     
     !!! warning "Write Safety"
-        Write operations are disabled by default for safety. Enable only when necessary and verify target device and address.
+        Write operations are disabled by default for safety. The preset value will be used for the "Write preset value" option in the Monitor Point Management dialog box.
 
 #### Sensor Server Configuration
 
