@@ -5,7 +5,7 @@
 
 **Cloud data logging and visualization add-on for Modbus Monitor XPF**
 
-![ThingSpeak Channel](../assets/screenshots/xpf-iot-thingspeak.webp)
+![ThingSpeak Channel](../assets/screenshots/xpf/xpf-iot-thingspeak.webp)
 
 ## Overview
 
@@ -146,7 +146,7 @@ Configure the ThingSpeak Add-on within Modbus Monitor XPF:
    - Navigate to **Add-ons** → **ThingSpeak** in XPF
    - Or go to **Client** tab → **ThingSpeak** group
 
-![ThingSpeak API Key](../assets/screenshots/xpf-iot-thingspeak-api-key.webp)
+![ThingSpeak API Key](../assets/screenshots/xpf/xpf-iot-thingspeak-api-key.webp)
 2. **Enter ThingSpeak Connection Details**
    - **Channel ID**: Your ThingSpeak channel ID (e.g., 3148861)
    - **Write API Key**: The API key copied from ThingSpeak
@@ -166,7 +166,7 @@ Configure the ThingSpeak Add-on within Modbus Monitor XPF:
 
 **XPF automatically maps monitor point rows to ThingSpeak fields:**
 
-![Modbus Monitor XPF Thingspeak Configuration](../assets/screenshots/xpf-iot-thingspeak-samples.webp)
+![Modbus Monitor XPF Thingspeak Configuration](../assets/screenshots/xpf/xpf-iot-thingspeak-samples.webp)
 
 | XPF Monitor Point Row | ThingSpeak Field | Example Data | Description |
 |----------------------|------------------|--------------|-------------|

@@ -6,7 +6,7 @@
 **General-purpose messaging and IoT connectivity add-on for Modbus Monitor XPF**
 
 <figure markdown>
-  ![XPF MQTT Configuration Interface](../assets/screenshots/xpf-iot-mqtt.webp){ loading="lazy" }
+  ![XPF MQTT Configuration Interface](../assets/screenshots/xpf/xpf-iot-mqtt.webp){ loading="lazy" }
   <figcaption style="font-size: 0.9em; color: #666;">XPF MQTT Configuration showing connection to public broker</figcaption>
 </figure>
 
@@ -261,7 +261,7 @@ This complete tutorial walks you through connecting XPF to an MQTT broker and ve
 To verify that your XPF MQTT connection is working correctly, use **MQTT Explorer** - a free desktop application that provides a visual interface for monitoring MQTT traffic.
 
 <figure markdown>
-  ![MQTT Explorer Connection Setup](../assets/screenshots/xpf-iot-mqtt-explorer-test.webp){ loading="lazy" }
+  ![MQTT Explorer Connection Setup](../assets/screenshots/xpf/xpf-iot-mqtt-explorer-test.webp){ loading="lazy" }
   <figcaption style="font-size: 0.9em; color: #666;">Connection setup showing XPF MQTT configuration (left) and MQTT Explorer (right). Both must use the same: (1) Host/Broker address and (2) Port number for successful communication</figcaption>
 </figure>
 
@@ -280,7 +280,7 @@ To verify that your XPF MQTT connection is working correctly, use **MQTT Explore
       - **Port**: `1883`
       - **Protocol**: `mqtt://`      
       - **Important: Set up subscriptions BEFORE connecting (MQTT Explorer requirement):**
-        ![MQTT Explorer Topics Setup](../assets/screenshots/xpf-iot-explorer-topics.webp){ width="800" loading="lazy" }
+        ![MQTT Explorer Topics Setup](../assets/screenshots/xpf/xpf-iot-explorer-topics.webp){ width="800" loading="lazy" }
         - Expand the **Advanced** section in the connection dialog, `1`
         - In the **Topic** field, enter: `xpf/#`
         - Click the **+ ADD** button to add the subscription `2`
@@ -322,7 +322,7 @@ To verify that your XPF MQTT connection is working correctly, use **MQTT Explore
      - `xpf/Discrete Input Register`
      - `xpf/Coil Register`
      - This ensures the published MQTT messages appear under the correct topic tree in MQTT Explorer      
-      ![Modbus Monitor XPF MQTT Topics Subscribe](../assets/screenshots/xpf-iot-topics-publish.webp){ width="600" loading="lazy" }
+      ![Modbus Monitor XPF MQTT Topics Subscribe](../assets/screenshots/xpf/xpf-iot-topics-publish.webp){ width="600" loading="lazy" }
 
 ### Step 2: Enable Communication Logging
 
@@ -369,7 +369,7 @@ To verify that your XPF MQTT connection is working correctly, use **MQTT Explore
       - Stop the Communication Logging and close the Log window after successful test verification
 
 <figure markdown>
-![XPF MQTT Publishing Success Test](../assets/screenshots/xpf-iot-mqtt-publish-test.webp){ width="800" loading="lazy" title="Click to enlarge - MQTT publishing verification" }
+![XPF MQTT Publishing Success Test](../assets/screenshots/xpf/xpf-iot-mqtt-publish-test.webp){ width="800" loading="lazy" title="Click to enlarge - MQTT publishing verification" }
 <figcaption style="font-size: 0.9em; color: #666;">Successful MQTT publishing test demonstrating the complete flow: XPF publishes monitor point data using the test/sample button, which sends all monitoring points to the MQTT broker, and MQTT Explorer receives and displays these messages in its topic tree view for verification.</figcaption>
 </figure>
 
@@ -420,7 +420,7 @@ For production systems, always use encrypted MQTT connections to protect your da
    - Visit [HiveMQ Cloud](https://www.hivemq.com/cloud/)
    - Create cluster (2-3 minutes)
    - Note cluster URL: `your-cluster.s2.eu.hivemq.cloud`
-![alt text](../assets/screenshots/xpf-mqtt-secure.webp)
+![alt text](../assets/screenshots/xpf/xpf-mqtt-secure.webp)
 2. **Configure XPF for TLS**
    ```yaml
    Broker Host: your-cluster.s2.eu.hivemq.cloud
@@ -541,7 +541,7 @@ Certificate authentication provides enhanced security for MQTT connections throu
 
 **EMQX provides downloadable CA certificates for secure connections:**
 
-![EMQX CA Certificate](../assets/screenshots/xpf-iot-emqx-ca2.webp){ loading="lazy"}
+![EMQX CA Certificate](../assets/screenshots/xpf/xpf-iot-emqx-ca2.webp){ loading="lazy"}
 
 1. **Download CA Certificate from EMQX Console**
       - Log into your EMQX deployment console (as shown in screenshot)
@@ -841,7 +841,7 @@ Phase 4: Client certificates (device identity)
 XPF's MQTT subscription feature allows receiving data from MQTT brokers and updating monitor points in real-time - enabling remote data injection and external system integration. This powerful feature **works independently of Modbus Client/Server operations**, allowing you to receive data via MQTT and display it in XPF's monitor points grid regardless of whether you're actively polling Modbus devices or running a Modbus server.
 
 <figure markdown>
-  ![XPF MQTT Configuration Interface](../assets/screenshots/xpf-iot-mqtt-topics-subscribe.webp){ loading="lazy" }
+  ![XPF MQTT Configuration Interface](../assets/screenshots/xpf/xpf-iot-mqtt-topics-subscribe.webp){ loading="lazy" }
   <figcaption style="font-size: 0.9em; color: #666;">XPF MQTT IoT interface showing active subscription topics list with highlighted [+] button indicating topics are actively subscribed and receiving data</figcaption>
 </figure>
 
@@ -1312,7 +1312,7 @@ Subscription Topics:
 
 **Recommended for production** - Secure, reliable, free tier available.
 
-![XPF MQTT Configuration - TLS Setup](../../assets/screenshots/xpf-mqtt-tls-setup.webp){ loading="lazy" }
+![XPF MQTT Configuration - TLS Setup](../../assets/screenshots/xpf/xpf-mqtt-tls-setup.webp){ loading="lazy" }
 
 #### Step 1: Set Up HiveMQ Cloud Account
 
@@ -1353,7 +1353,7 @@ Subscription Topics:
       - **Client Certificate**: Leave empty (username/password auth)
       - **Verify Hostname**: Checked
 
-![XPF TLS Configuration](../../assets/screenshots/xpf-mqtt-secure.webp){ loading="lazy" }
+![XPF TLS Configuration](../../assets/screenshots/xpf/xpf-mqtt-secure.webp){ loading="lazy" }
 
 #### Step 3: Configure Production Topics
 

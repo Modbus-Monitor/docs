@@ -41,7 +41,7 @@ By the end of this guide, you'll have:
 4. **Set Port** to `502` (standard Modbus port)
 5. **Click** Start button
 
-![TCP Connection Setup](../../assets/screenshots/xpf-tcp-setup.png)
+![TCP Connection Setup](../../assets/screenshots/xpf/xpf-tcp-setup.png)
 
 ### For Serial Devices
 
@@ -81,7 +81,7 @@ By the end of this guide, you'll have:
 3. **Green values** = successful reads
 4. **Red borders** = communication errors
 
-![Live Data Monitoring](../../assets/screenshots/xpf-live-monitoring.png)
+![Live Data Monitoring](../../assets/screenshots/xpf/xpf-live-monitoring.png)
 
 ## 🚀 Quick Success Checklist
 
