@@ -536,6 +536,7 @@ The Modbus Configuration section contains the essential parameters that define h
     | **Auto** | Auto | Choose based on function type and register count | Automatic selection |
     
     **Function Code Selection**:
+
     - **Read Only**: Default safe option, prevents accidental writes
     - **Single Operations**: Use 05/06 for individual coil or register writes
     - **Multiple Operations**: Use 15/16 for bulk coil or register writes  
@@ -548,21 +549,42 @@ The Modbus Configuration section contains the essential parameters that define h
 
 **Android sensor integration settings for Sensor Server Mode.**
 
+The Sensor Server Configuration section enables your Android device's built-in sensors to be accessible via Modbus TCP protocol. This powerful feature automatically configures monitor points to expose real-time sensor data through standard Modbus communication, making your phone or tablet sensors available to any Modbus master device.
+
+!!! info "Cross-Reference"
+    For complete Sensor Server operation details, setup procedures, and practical applications, see the dedicated [Sensor Server Mode](#sensor-server-mode) section.
+
 === "Sensor Selection"
 
     **Choose and configure Android sensors for Modbus exposure.**
     
     | Setting | Type | Options | Description |
     |---------|------|---------|-------------|
-    | **Sensor Selection** | Dropdown | See list below | Choose Android sensor to expose |
-    | **Auto Configure** | Automatic | Yes | Automatically sets count, protocol, data type |
+    | **Sensor Selection** | Dropdown | See available sensors | Choose Android sensor to expose via Modbus |
+    | **Auto Configure** | Automatic | Yes | Automatically sets count, protocol, data type, and register information |
+    
+    **Available Sensors** (varies by device):
+    - **Accelerometer** - Device motion and orientation (X, Y, Z axes)
+    - **Gyroscope** - Angular velocity measurements (X, Y, Z axes)
+    - **Light Sensor** - Ambient light levels
+    - **Orientation** - Device position in 3D space (Azimuth, Pitch, Roll)
+    - **Temperature** - Ambient temperature (device-dependent)
+    - **Barometer** - Atmospheric pressure
+    - **Magnetometer** - Magnetic field strength (X, Y, Z axes)
+    - **Proximity** - Object detection near device
+    
+    !!! note "Device-Specific Sensors"
+        The sensors listed above are examples of commonly available Android sensors. The actual sensors available in your dropdown will vary depending on your specific device hardware. Some devices may have additional specialized sensors not listed here.
     
     **Automatic Configuration**:
     When you select a sensor, the app automatically configures:
-    - **Count**: Set to 6 words (3 floats × 2 words each)
-    - **Protocol**: Set to Modbus TCP
-    - **Data Type**: Set to Float
-    - **Register Name**: Updated with sensor specifications and live readings
+    - **Count**: Set to 6 words (3 floats × 2 words each) for 3-axis sensor data
+    - **Protocol**: Set to Modbus TCP (required for sensor server mode)
+    - **Data Type**: Set to Float for proper sensor value representation
+    - **Register Name**: Updated with comprehensive sensor specifications and live readings
+    
+    !!! tip "Sensor Server Requirements"
+        Sensor Server mode requires Modbus Server to be enabled and active. The sensor configuration automatically optimizes settings for real-time sensor data exposure via Modbus TCP protocol.
 
 === "Available Sensors"
 
@@ -583,55 +605,104 @@ The Modbus Configuration section contains the essential parameters that define h
 
 **Linear transformation and scaling options for data processing.**
 
-=== "Scaling Settings"
+The Math Configuration section provides powerful mathematical transformation capabilities to convert raw Modbus register values into meaningful engineering units. This essential feature enables proper scaling, unit conversion, and calibration of sensor readings and industrial measurements.
 
-    **Mathematical transformation parameters.**
+=== "Linear Transformation"
+
+    **Simple linear translation using y = mx + b equation.**
     
     | Setting | Type | Range | Description |
     |---------|------|-------|-------------|
-    | **Scale Factor** | Number | Any decimal | Multiply raw value by this factor |
-    | **Offset** | Number | Any decimal | Add this value after scaling |
-    | **Engineering Units** | Text | Custom text | Display suffix (e.g., "°C", "PSI") |
+    | **Gain (m)** | Number | Any decimal | Slope value in the linear equation (multiplication factor) |
+    | **Offset (b)** | Number | Any decimal | Offset value in the linear equation (addition constant) |
+    | **Engineering Units** | Text | Custom text | Display suffix (e.g., "°C", "PSI", "RPM") |
     
     **Mathematical Formula**:
     ```
-    Display Value = (Raw Value × Scale Factor) + Offset
+    Display Value = (Raw Value × Gain) + Offset
+    ```
+    
+    **Use Cases**:
+    - **Simple Scaling**: Convert raw ADC counts to engineering units
+    - **Unit Conversion**: Transform between different measurement systems
+    - **Calibration**: Apply sensor-specific correction factors
+
+=== "Linear Scaling"
+
+    **Convert values from one range (PLC values) to another (real-world units).**
+    
+    | Setting | Type | Range | Description |
+    |---------|------|-------|-------------|
+    | **Analog K1** | Number | Any decimal | Lowest value the PLC Analog module produces (e.g., 0 for 0mA) |
+    | **Analog K2** | Number | Any decimal | Highest value the Analog module produces (e.g., 65535 for 20mA) |
+    | **Low Limit** | Number | Any decimal | Low limit of real-world unit (e.g., 0 watts) |
+    | **High Limit** | Number | Any decimal | High limit of real-world unit (e.g., 1000 watts) |
+    | **Engineering Units** | Text | Custom text | Display suffix for scaled values |
+    
+    **Scaling Formula**:
+    ```
+    Display Value = Low Limit + ((Raw Value - Analog K1) × (High Limit - Low Limit)) / (Analog K2 - Analog K1)
     ```
 
-=== "Common Examples"
+=== "Configuration Examples"
 
-    **Typical scaling scenarios and configurations.**
+    **Common scaling scenarios and practical configurations.**
     
-    | Application | Scale Factor | Offset | Units | Example |
-    |-------------|--------------|---------|--------|---------|
-    | **Temperature (°F to °C)** | 0.5556 | -17.78 | °C | Convert Fahrenheit |
-    | **Pressure (PSI)** | 0.1 | 0 | PSI | Scale 0-1000 to 0-100 |
-    | **Flow Rate** | 2.5 | 0 | GPM | Scale to actual flow |
-    | **Percentage** | 0.1 | 0 | % | Convert 0-1000 to 0-100% |
+    **Linear Transformation Examples**:
     
-    **Use Case Benefits**:
-    - **Unit Conversion**: Convert between different measurement systems
-    - **Range Scaling**: Adjust raw sensor values to meaningful ranges
-    - **Calibration**: Apply calibration factors to improve accuracy
+    | Application | Gain (m) | Offset (b) | Units | Use Case |
+    |-------------|----------|------------|-------|----------|
+    | **Temperature (°F to °C)** | 0.5556 | -17.78 | °C | Convert Fahrenheit to Celsius |
+    | **Pressure Scaling** | 0.1 | 0 | PSI | Scale 0-1000 raw to 0-100 PSI |
+    | **RPM Conversion** | 2.5 | 0 | RPM | Scale encoder counts to RPM |
+    | **Percentage** | 0.1 | 0 | % | Convert 0-1000 raw to 0-100% |
+    
+    **Linear Scaling Examples**:
+    
+    | Application | K1 | K2 | Low Limit | High Limit | Units | Description |
+    |-------------|----|----|-----------|------------|-------|-------------|
+    | **4-20mA Current Loop** | 0 | 65535 | 0 | 1000 | Watts | PLC analog input to power measurement |
+    | **0-10V Voltage Input** | 0 | 32767 | -50 | 150 | °C | Analog voltage to temperature range |
+    | **Pressure Transmitter** | 819 | 16384 | 0 | 250 | PSI | 4-20mA pressure transmitter scaling |
+    | **Flow Measurement** | 0 | 65535 | 0 | 5000 | LPM | Analog flow sensor to liters per minute |
+    
+    **Configuration Benefits**:
+    
+    - **Industrial Standards**: Support for standard 4-20mA and 0-10V signals
+    - **PLC Integration**: Direct compatibility with PLC analog modules
+    - **Real-World Units**: Convert raw counts to meaningful measurements
+    - **Calibration Support**: Accommodate sensor-specific characteristics
 
 #### Coded Messages Configuration
 
-**Translate numeric values to descriptive text messages.**
+**Translate numeric values to descriptive text messages for enhanced user interface.**
+
+Coded Messages provide a powerful way to convert numeric register values into meaningful text descriptions, making industrial data more intuitive and user-friendly. This feature is essential for displaying equipment status, alarm conditions, and operational states in human-readable format.
 
 === "Message Setup"
 
-    **Basic coded message configuration.**
+    **Configure numeric-to-text translation mappings.**
     
     | Setting | Type | Description |
     |---------|------|-------------|
-    | **Enable Coded Messages** | Checkbox | Activate text translation feature |
-    | **Message Map** | Table | Value-to-text mapping definitions |
+    | **Coded Message** | Dropdown | Select "None" initially, long-click for configuration menu |
+    | **Message Mapping** | Configuration | Define number-to-string translations |
+    
+    **Configuration Process**:
+
+    1. **Access Configuration**: Long-click on "None" when the list is empty to see additional options
+    2. **Configuration Menu**: Shows Add, Change, Move UP, Move DOWN, and Remove options
+    3. **Add Messages**: Click "Add" and follow prompts to define value-to-text mappings
+    4. **Organize**: Use Move UP/DOWN to reorder message priority
+    5. **Maintain**: Use Change/Remove to modify existing message definitions
     
     **Configuration Benefits**:
-    - **User-Friendly Display**: Show meaningful text instead of numbers
-    - **Status Translation**: Convert numeric codes to operational status
+
+    - **User-Friendly Display**: Show meaningful text instead of raw numbers
+    - **Status Translation**: Convert numeric codes to operational status descriptions
     - **Alarm Indication**: Highlight critical conditions with descriptive text
-    - **Multi-Language Support**: Define messages in local language
+    - **Multi-Language Support**: Define messages in local language or terminology
+    - **Equipment States**: Display complex operational modes in readable format
 
 === "Message Examples"
 
@@ -646,6 +717,7 @@ The Modbus Configuration section contains the essential parameters that define h
     | 200+ | "Over Range" | Alarm conditions |
     
     **Advanced Mappings**:
+
     - **Range-based**: Map value ranges to different messages
     - **State Machines**: Define complex operational states
     - **Alarm Levels**: Create hierarchical alarm messages
@@ -1034,6 +1106,9 @@ To open the Management Menu:
 </figure>
 
 **Sensor Server** is an innovative extension of the Modbus Server that exposes your Android device's built-in sensors through the Modbus TCP protocol.
+
+!!! tip "Configuration Details"
+    For detailed sensor selection and configuration options, see the [Sensor Server Configuration](#sensor-server-configuration) section in the Monitor Point Configuration guide.
 
 ### What is Sensor Server?
 
