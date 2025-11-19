@@ -1249,11 +1249,11 @@ Now that you understand the interface, settings, and monitor point configuration
 
 ### Guide 1: Using Modbus Client Mode (Master)
 
-**What is Client Mode?** In Client (Master) Mode, your Android device actively polls remote Modbus devices (servers/slaves) to retrieve data and optionally write values back to them. This is the most common use case for monitoring PLCs, sensors, meters, and other industrial equipment.
+**What is Client Mode?** In Client (Master) Mode, your Android device actively polls remote Modbus devices (servers/slaves) to retrieve data and optionally write values back to them. This is the most common use case for monitoring PLCs, sensors, meters, and other industrial equipment. In this guide, we will use configure three monitoring points each collecting data from three differnet channels 1. TCP 2. USB Serial 3. Bluetooth BLE using the diffrent DSD HM-10 Bluetooth 4.0 BLE commnication.
 
 <figure markdown>
-  ![Modbus Client Mode Operation](../../assets/screenshots/android-advanced/client-mode-diagram.webp){ width="600" }
-  <figcaption>Modbus Client Mode: Your device polls remote servers for data</figcaption>
+  ![Modbus Client Mode Operation](../../assets/screenshots/android-advanced/mma-master-three-channels.webp){width="400"}
+  <figcaption>Modbus Client Mode: Your device polls remote servers from TCP (i0), USB Serial (i1), and Bluetooth BLE servers (i1) simulatanoously</figcaption>
 </figure>
 
 #### Prerequisites
@@ -1278,40 +1278,72 @@ Before starting, ensure you have:
 
 Expand the **[Channel Settings](#channel-settings)** section:
 
-=== "TCP/IP Setup (Most Common)"
+=== "TCP/IP Setup (i0)"
+
+    Standard network connection over Wi‑Fi/Ethernet to a PLC, gateway, or Modbus TCP device.
 
     1. **Channel**: Select `TCP/IP`
-    2. **Protocol**: Choose `Modbus TCP`
-    3. **IP Address**: Enter your device's IP (e.g., `192.168.1.100`)
-    4. **Port**: Enter Modbus port (default: `502`)
+    2. **Protocol**: `Modbus TCP`
+    3. **IP Address**: Enter device IP (e.g., `192.168.1.100`)
+    4. **Port**: Device Modbus port (default: `502`)
+    5. **Slave ID**: Some TCP devices still require a unit ID (often `1`)
     
     !!! example "Typical PLC Connection"
         ```
         Channel: TCP/IP
         Protocol: Modbus TCP
-        IP Address: 192.168.1.50
+        IP Address: 192.168.68.62
         Port: 502
+        Slave ID: 1
         ```
 
-=== "Serial/USB Setup"
+=== "Serial/USB Setup (i1)"
+
+    Direct wired connection using a USB‑OTG serial adapter (RS‑485/RS‑232).
 
     1. **Channel**: Select `Serial`
-    2. **Protocol**: Choose `Modbus RTU` (most common) or `Modbus ASCII`
-    3. **Serial Port**: Select your USB adapter (appears when connected), for example "/dev/bus/usb/001/002"
-    4. **Baud Rate**: Match your device (common: `9600`, `19200`)
+    2. **USB Port**: Choose adapter from dropdown (appears when plugged in)
+    3. **Interface**: Leave `Default` unless special hardware requires change
+    4. **Baud Rate**: Match device (e.g., `9600`, `19200`, `38400`)
     5. **Data Bits**: Usually `8`
-    6. **Parity**: Match device (often `None` or `Even`)
+    6. **Parity**: `None` (common) or as required (`Even`/`Odd`)
     7. **Stop Bits**: Usually `1`
+    8. **Flow Control**: `None` (most Modbus devices)
+    9. **Protocol**: `Modbus RTU` (most common) or `Modbus ASCII`
+    10. **Slave ID**: Device station number (1–247)
+
+    !!! example "Typical Serial Connection"
+        ```
+        Channel: Serial Port
+        USB Port: /dev/bus/usb/001/002
+        Baud Rate: 9600
+        Databit: 8
+        Parity: None
+        Stop(bit): 1
+        Flow Control: None
+        Protocol: Serial RTU        
+        ```
     
     !!! tip "USB Serial Compatibility"
-        Use adapters with FTDI FT232, Prolific PL2303, Silicon Labs CP210x, or CH340/CH341 chipsets for best compatibility.
+        Use adapters with FTDI FT232/FT4232, Prolific PL2303, Silicon Labs CP210x, or CH340/CH341 chipsets for best compatibility.
 
-=== "Bluetooth Setup"
+=== "Bluetooth Setup (i2)"
+
+    Wireless serial bridge using a BLE/Classic module (e.g., HM‑10) to a Modbus RTU device.
 
     1. **Channel**: Select `Bluetooth`
-    2. **Protocol**: Choose `Modbus RTU` or `Modbus ASCII`
-    3. **Bluetooth Device**: Pair your device first in Android settings, then select it
-    4. **Baud Rate** and other serial parameters: Match your device
+    2. **Device**: Choose paired module (e.g., `HM-10 4C:3F:D3:02:XX:XX`)
+    3. **Protocol**: `Modbus RTU` (ASCII if device requires)        
+
+    !!! example "Typical Bluetooth Connection"
+        ```
+        Channel: Bluetooth BR/EDR/LE
+        Device: 4C:3F:D3:02:XX:XX        
+        Protocol: Serial RTU            
+        ```
+
+    !!! note "Pairing Requirement"
+        Pair the Bluetooth module in Android system settings first; then it appears in the selection list.
 
 **Step 3: Configure Modbus Parameters**
 
@@ -1322,11 +1354,73 @@ Expand the **[Modbus Configuration](#modbus-configuration)** section:
 3. **Address**: Enter the 6-digit Modbus address (see [6-Digit Addressing Guide](../../guides/6-digit-addressing.md))
    - Examples: `400001` (holding register 1), `300001` (input register 1), `100001` (coil 1)
 4. **Count**: Number of registers to read
-   - `1` for single 16-bit integer
-   - `2` for 32-bit float or long integer
-   - `4` for 64-bit double
+      - `1` for single 16-bit integer
+      - `2` for 32-bit float or long integer
+      - `4` for 64-bit double
 5. **Data Type**: Select how to interpret the data
    - `16-bit Integer`, `32-bit Float`, `Boolean`, etc.
+   - See section **[Data Types](#data-types)** for options.
+
+#### Example Per-Channel Modbus Configuration
+
+The index labels (i0, i1, i2) identify the sample monitor points for each communication channel shown in the figure. Below are complete example configurations you can adapt; replace addresses/counts with those for your devices.
+
+=== "i0 - TCP/IP Example"
+
+    ```yaml
+    Channel: TCP/IP
+    IP Address: 192.168.68.62
+    Port: 502
+    Protocol: Modbus TCP
+    Name: Signed
+    Units: <empty>        
+    Address: 400101        # Holding register 1st (6-digit format)
+    Count: 1               # 16-bit float
+    Data Type: INT16U
+    Write Function: Auto
+    Swap: ABCD_BE          # Standard big endian
+    Write Preset Value: None
+    ```
+
+=== "i1 - Serial/USB Example"
+
+    ```yaml
+    Channel: Serial Port
+    USB Port: /dev/bus/usb/001/002
+    Interface: Default (Hardware Set)    
+    Baud Rate: 9600
+    Data Bits: 8
+    Parity: None
+    Stop Bits: 1
+    Flow Control: None
+    Protocol: Modbus RTU
+    Name: Long ABCD (3210 Inverser)
+    Units: <empty>
+    Address: 400002        # Holding register 2    
+    Slave ID: 1
+    Count: 2               # 32-bit Integer    
+    Data Type: INT32
+    Write Function: Read Only
+    Swap: ABCD_BE          # Big endian
+    Write Preset Value: None
+    ```
+
+=== "i2 - Bluetooth Example"
+
+    ```yaml
+    Channel: Bluetooth
+    Device: HM-10 4C:3F:D3:02:XX:XX
+    Name: Long ABCD 1032 Standard
+    Protocol: Modbus RTU    
+    Units: <empty>
+    Address: 400004        # Holding register 4
+    Slave ID: 1
+    Count: 2               # 32-bit Integer    
+    Data Type: INT32
+    Write Function: Read Only
+    Swap: CDAB_LEBS         
+    Write Preset Value: None
+    ```
 
 !!! info "Address Format"
     This app uses the **6-digit Modbus Protocol format**, not PLC addressing. The 6-digit format combines function code and address:
