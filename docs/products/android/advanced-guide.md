@@ -326,11 +326,11 @@ To start polling in Master Mode, Modbus Monitor Advanced requires at least one m
     
     **Core Configuration**
     
-    - **📶 [Channel Settings](#channel-settings)** - Communication interface and protocol selection
-    - **🔧 [Modbus Configuration](#modbus-configuration)** - Address, register count, and display settings
-    - **🖥️ [Sensor Server](#sensor-server-configuration)** - Android sensor integration options
-    - **🧮 [Math](#math-configuration)** - Linear transformation and scaling settings  
-    - **💬 [Coded Messages](#coded-messages-configuration)** - Translate numbers to predefined strings
+    - **[Channel Settings](#channel-settings)** - Communication interface and protocol selection
+    - **[Modbus Configuration](#modbus-configuration)** - Address, register count, and display settings
+    - **[Sensor Server](#sensor-server-configuration)** - Android sensor integration options
+    - **[Math](#math-configuration)** - Linear transformation and scaling settings  
+    - **[Coded Messages](#coded-messages-configuration)** - Translate numbers to predefined strings
     
 
     **Quick Setup Steps**:
@@ -350,33 +350,40 @@ To start polling in Master Mode, Modbus Monitor Advanced requires at least one m
 
 === "Channel"
 
-    **Physical communication interface and protocol selection.**
-    
-    | Setting | Type | Options | Description |
-    |---------|------|---------|-------------|
-    | **TCP/IP** | Selection | TCP/IP, Serial, Bluetooth | Physical communication interface |
-    | **Serial Port** | Selection | Modbus TCP, RTU, ASCII, UDP | Modbus protocol variant |
-    | **Bluetooth BR/EDR/LE** | Selection | Modbus TCP, RTU, ASCII, UDP | Modbus protocol variant |
-    
-    !!! warning "Protocol Compatibility"
-        Only certain protocols are compatible with each channel. Modbus Monitor Advanced will skip monitor points with incorrect Channel/Protocol combinations. Verify correct settings if communication errors occur.
-
-=== "Protocol"
-
-    **Protocol selection**
+    **Physical communication interface selection.**
     
     | Setting | Type | Description |
     |---------|------|-------------|
-    | **None** | Dropdown | Skip the Monitoring Point or set to None |
-    | **Modbus TCP** | Dropdown | Modbus/TCP Protocol|
-    | **Modbus RTU over TCP** | Dropdown | Modbus RTU over TCP Protocol|
-    | **Modbus UDP** | Dropdown | Modbus UDP|
-    | **Modbus RTU over UDP** | Dropdown | Modbus UDP|
-    | **Serial ASCII** | Dropdown | Modbus UDP|
-    | **Serial Serial** | Dropdown | Modbus UDP|
+    | **TCP/IP** | Selection | Network communication via Wi-Fi or Ethernet |
+    | **Serial Port** | Selection | Direct USB-OTG serial communication |
+    | **Bluetooth BR/EDR/LE** | Selection | Wireless serial communication via Bluetooth |
     
-    !!! warning "Protocol Compatibility"
-        Only certain protocols are compatible with each channel. Modbus Monitor Advanced will skip monitor points with incorrect Channel/Protocol combinations. Verify correct settings if communication errors occur.        
+    **Channel Descriptions**:
+    - **TCP/IP**: Best for networked devices, PLCs, and remote servers
+    - **Serial Port**: Direct connection via USB-OTG adapters for legacy devices
+    - **Bluetooth**: Wireless connection to Bluetooth-enabled Modbus devices
+
+=== "Protocol"
+
+    **Modbus protocol variant selection based on chosen channel.**
+    
+    | Protocol | Compatible Channels | Description |
+    |---------|-------------------|-------------|
+    | **None** | All | Skip this monitoring point (disabled) |
+    | **Modbus TCP** | TCP/IP | Standard Modbus over TCP/IP networks |
+    | **Modbus RTU over TCP** | TCP/IP | RTU protocol encapsulated in TCP packets |
+    | **Modbus UDP** | TCP/IP | Modbus over UDP (connectionless) |
+    | **Modbus ASCII over TCP** | TCP/IP | ASCII protocol encapsulated in TCP packets |
+    | **Modbus RTU** | Serial, Bluetooth | Binary serial protocol for direct connections |
+    | **Modbus ASCII** | Serial, Bluetooth | ASCII serial protocol for direct connections |
+    
+    **Protocol Compatibility Matrix**:
+    
+    | Channel | Supported Protocols | Notes |
+    |---------|-------------------|---------|
+    | **TCP/IP** | Modbus TCP, UDP, RTU over TCP, ASCII over TCP | Network-based protocols |
+    | **Serial (USB-OTG)** | Modbus RTU, Modbus ASCII | Direct serial communication |
+    | **Bluetooth** | Modbus RTU, Modbus ASCII | Wireless serial communication |        
 
 === "TCP/IP Settings"
 
@@ -398,15 +405,36 @@ To start polling in Master Mode, Modbus Monitor Advanced requires at least one m
     
     | Setting | Type | Options | Description |
     |---------|------|---------|-------------|
+    | **USB Port** | Text | Click to Scan | Click to scan and select the available device. Clicking on the available device also checks if the permission is set correctly |
+    | **Interface** | Dropdown | Default, RS232, RS485 | Some devices have more than one interface to choose from |
     | **Baud Rate** | Dropdown | 9600, 19200, 38400, 57600, 115200 | Serial communication speed |
     | **Data Bits** | Dropdown | 7, 8 | Number of data bits per character |
     | **Parity** | Dropdown | None, Even, Odd | Error detection method |
     | **Stop Bits** | Dropdown | 1, 2 | Number of stop bits |
+    | **Flow Control** | Dropdown | None, CTS/RTS, DTR/DSR, XOFF/XON | Hardware or software flow control method |
     
     **Common Serial Configurations**:
     - **9600-8-N-1** - Most common industrial setup
     - **19200-8-N-1** - Higher speed applications  
     - **38400-8-E-1** - With even parity for error checking
+
+=== "Bluetooth Settings"
+
+    **Bluetooth wireless communication parameters for paired devices.**
+    
+    | Setting | Type | Options | Description |
+    |---------|------|---------|-------------|
+    | **Device** | Text | 4C:3F:D3:02:DB:55 | Physical address of target Bluetooth device (e.g., Bluetooth 4.0 BLE module containing TI CC2541 chip) |
+    | **Scan** | Dialog | Click MAC address field | Click on the Device MAC address field to open scan dialog and discover available Bluetooth devices. Select preferred device to automatically fill the MAC address field |
+    
+    **Bluetooth Configuration Notes**:
+
+    - **Scan Function**: Click on the MAC address field to open scan dialog and discover available Bluetooth devices
+    - **Device Selection**: Choose from discovered devices to automatically populate the MAC address field
+    - **Auto Connection**: App handles connection automatically when communication is started
+    - **Device Pairing**: Previously paired devices work best (especially older EDR devices)
+    - **Connection Range**: Typical range 10-30 feet depending on Bluetooth class 
+    
 
 #### Modbus Configuration
 
