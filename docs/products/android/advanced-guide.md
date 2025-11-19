@@ -1269,7 +1269,7 @@ Before starting, ensure you have:
 
 **Step 1: Add a Monitor Point**
 
-1. Tap the **[+ button [10]](#figure-1)** on the main screen
+1. Tap the **[+ button [11]](#figure-1)** on the main screen
 2. A new monitor point appears with default settings
 3. Tap the monitor point to open **Monitor Point Management** dialog
 4. Select **"Change"** to edit configuration
@@ -1359,7 +1359,7 @@ Expand the **[Modbus Configuration](#modbus-configuration)** section:
       - `4` for 64-bit double
 5. **Data Type**: Select how to interpret the data
    - `16-bit Integer`, `32-bit Float`, `Boolean`, etc.
-   - See section **[Data Types](#data-types)** for options.
+   - See **[Data Types](#data-types)** tab for complete list of available types
 
 #### Example Per-Channel Modbus Configuration
 
@@ -1374,8 +1374,8 @@ The index labels (i0, i1, i2) identify the sample monitor points for each commun
     Protocol: Modbus TCP
     Name: Signed
     Units: <empty>        
-    Address: 400101        # Holding register 1st (6-digit format)
-    Count: 1               # 16-bit float
+    Address: 400001        # Holding register 1st (6-digit format)
+    Count: 1               # 16-bit unsigned integer
     Data Type: INT16U
     Write Function: Auto
     Swap: ABCD_BE          # Standard big endian
@@ -1436,14 +1436,14 @@ The index labels (i0, i1, i2) identify the sample monitor points for each commun
 
 1. Tap **OK** to save your configuration
 2. Tap the **[Client Mode icon [3]](#figure-1)** to start polling
-   - Icon turns **green** when active
+   - Icon turns **green** (chain link) when active
 3. Your monitor point now shows live data values
 
 **Expected Results**:
 
-- ✅ **Numbers displayed**: Successfully reading from device
-- ❌ **"?????" displayed**: Communication failure - check settings
-- 📊 **Packet counters**: Good/Bad counters show communication health
+- **Numbers displayed**: Successfully reading from device
+- **"?????" displayed**: Communication failure - check settings
+- **Packet counters**: Good/Bad counters show communication health
 
 #### Writing Values to Remote Devices
 
@@ -1453,7 +1453,7 @@ Once your monitor point is configured and reading successfully, you can write va
 
 1. Tap monitor point → **"Change"**
 2. Expand **[Modbus Configuration](#modbus-configuration)** → scroll to Write Operations tab
-3. **Write Function**: Select appropriate function
+3. **Write Function**: Select appropriate function (already set in during Modbus Monitoring Configuration)
    - `Write Single Coil (05)` for boolean values
    - `Write Single Register (06)` for single registers
    - `Write Multiple Registers (16)` for multiple registers
@@ -1488,10 +1488,10 @@ For complete write operation details, see the [Write Operations](#write-operatio
 
 **Data Scaling and Transformation**:
 
-- Use **[Math → Linear Transformation](#math)** to scale raw values
-- Apply **[Coded Messages](#coded-message)** to translate numbers to text
+- Use **[Math → Linear Transformation](#math-configuration)** to scale raw values
+- Apply **[Coded Messages](#coded-messages-configuration)** to translate numbers to text
 
-**Cloud Integration**: Enable real-time data logging to Google Sheets, ThingSpeak, or MQTT brokers (requires add-ons).
+**Cloud Integration**: Enable real-time data logging to Google Sheets, ThingSpeak, or MQTT brokers (requires add-ons). Data is sent to the cloud after each complete monitoring loop through all configured points.
 
 #### Troubleshooting Client Mode
 
@@ -1557,7 +1557,7 @@ For detailed port guidelines, see [Server Configuration](#server-configuration).
 
 Server mode requires monitor points that define which registers contain what data:
 
-1. Tap **[+ button [10]](#figure-1)** to add monitor point
+1. Tap **[+ button [11]](#figure-1)** to add monitor point
 2. Tap monitor point → **"Change"**
 3. Configure **[Channel Settings](#channel-settings)**:
    - **Channel**: `TCP/IP`
