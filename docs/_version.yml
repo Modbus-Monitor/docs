@@ -2,11 +2,11 @@
 # This file tracks the version and last update date of the documentation
 # Update the version number when user manuals or actual content changes
 
-version: "1.0.18"
+version: "1.0.19"
 release_date: "2025-01-15"  # YYYY-MM-DD format
 build_date: "2025-11-19"
 changelog:
-  - version: "1.0.18"
+  - version: "1.0.19"
     date: "2025-01-15" 
     changes:
       - "Initial public release"
