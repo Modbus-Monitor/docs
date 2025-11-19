@@ -473,6 +473,7 @@ The Modbus Configuration section contains the essential parameters that define h
     | **Count** | Number | 1-125 | Number of registers to request. Default is 1 but varies based on Data Type |
     
     **Addressing System Examples**:
+
     - **Read 1st Holding Register**: 400001 (4 ⇒ Function 3)
     - **Read 1st Input Register**: 300001 (3 ⇒ Function 4)
     - **Read 1st Coil**: 000001 (0 ⇒ Modbus Function 1)
@@ -564,6 +565,7 @@ The Sensor Server Configuration section enables your Android device's built-in s
     | **Auto Configure** | Automatic | Yes | Automatically sets count, protocol, data type, and register information |
     
     **Available Sensors** (varies by device):
+
     - **Accelerometer** - Device motion and orientation (X, Y, Z axes)
     - **Gyroscope** - Angular velocity measurements (X, Y, Z axes)
     - **Light Sensor** - Ambient light levels
@@ -577,7 +579,9 @@ The Sensor Server Configuration section enables your Android device's built-in s
         The sensors listed above are examples of commonly available Android sensors. The actual sensors available in your dropdown will vary depending on your specific device hardware. Some devices may have additional specialized sensors not listed here.
     
     **Automatic Configuration**:
+    
     When you select a sensor, the app automatically configures:
+
     - **Count**: Set to 6 words (3 floats × 2 words each) for 3-axis sensor data
     - **Protocol**: Set to Modbus TCP (required for sensor server mode)
     - **Data Type**: Set to Float for proper sensor value representation
@@ -870,7 +874,7 @@ Turn your Android device into a **Modbus TCP Server** that other devices can pol
 
 - At least one monitor point required to start server
 - Click **(+)** to add new monitor point
-- Configure for server mode (see [Monitor Point Setup](#setting-up-monitor-points-for-server-mode) below)
+- Configure for server mode (see [Monitor Point Configuration](#monitor-point-configuration-for-server-mode) below)
 
 !!! warning "Port Conflicts"
     Research existing network devices before selecting a port. For example, Port 5060 can interfere with VoIP services. Choose ports above 1024 for non-rooted devices to avoid system conflicts.
@@ -913,7 +917,7 @@ During testing, certain ports caused issues with other network services:
 4. **Document Choice**: Record selected port for future reference and troubleshooting
 5. **Consider Environment**: Different sites may have different port restrictions
 
-### Setting Up Monitor Points for Server Mode
+### Monitor Point Configuration for Server Mode
 
 <figure markdown>
   ![Server Monitor Point Configuration](../../assets/screenshots/android-advanced/server-monitor-point.webp){ width="500" }
