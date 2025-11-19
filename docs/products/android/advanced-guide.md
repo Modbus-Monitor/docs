@@ -314,6 +314,8 @@ To start polling in Master Mode, Modbus Monitor Advanced requires at least one m
 
 ### Monitor Point Configuration
 
+Monitor point configuration defines how your app connects to and interprets data from Modbus devices. Each monitor point specifies the device address, register location, data format, and polling behavior for a specific piece of data you want to monitor or control.
+
 <div class="grid cards" markdown>
 
 -   ![Monitor Point Configuration Dialog](../../assets/screenshots/android-advanced/mma-monitor-point-configure.webp){ width="400" style="display: block; margin: 0 auto;" }
@@ -579,7 +581,7 @@ The Sensor Server Configuration section enables your Android device's built-in s
         The sensors listed above are examples of commonly available Android sensors. The actual sensors available in your dropdown will vary depending on your specific device hardware. Some devices may have additional specialized sensors not listed here.
     
     **Automatic Configuration**:
-    
+
     When you select a sensor, the app automatically configures:
 
     - **Count**: Set to 6 words (3 floats × 2 words each) for 3-axis sensor data
@@ -728,27 +730,36 @@ Coded Messages provide a powerful way to convert numeric register values into me
 
 ### Write Operations
 
+Write operations enable bidirectional Modbus communication, allowing you to send values to remote devices (Client Mode) or populate internal registers for remote masters to read (Server Mode). This powerful feature transforms your Android device from a read-only monitor into a full-featured industrial control interface, capable of adjusting setpoints, triggering operations, and managing device configurations.
+
+**Two Ways to Write Values:**
+
+1. **Write Dialog** - Enter custom values through an interactive dialog for one-time changes or testing
+2. **Write Preset Value** - Instantly send pre-configured values via the **[Monitor Points - Preset [9f]](#main-interface-overview)** button for quick operations
+
+Both methods are accessible through the [Monitor Point Management](#monitor-point-management) dialog and work in Client and Server modes.
+
+#### Modbus Write Dialog
+
+The Write Dialog box is displayed when selecting the "Write" option from the [Monitor Point Management](#monitor-point-management) dialog (tap any monitor point to access). The dialog header shows the Monitor Point name along with the configured Data Type. Enter the value in the write field and click the Change button.
+
 <figure markdown>
-  ![Modbus Write Dialog](../../assets/screenshots/android-advanced/write-dialog.webp){ width="400" }
+  ![Modbus Write Dialog](../../assets/screenshots/android-advanced/modbus-write.webp){ width="400" }
   <figcaption>Figure 3: Write dialog for sending values to remote devices</figcaption>
 </figure>
 
-**Accessing the Write Dialog**:
-The Write Dialog box is displayed when selecting the "Write" option from the Monitor Point Management dialog (tap any monitor point to access). The dialog header shows the Monitor Point name along with the configured Data Type.
 
-**Write Dialog Operation**:
-1. **Enter Value**: Type the desired value in the write field
-2. **Click Change**: Confirm and send the write operation
-3. **Monitor Results**: Check for successful write confirmation
+**Important**: The Write Dialog box is available in both Client and Server modes. During Client operation, the write value is included in the Modbus packet sent to the remote server using the selected Write Function. During Server operation, the write value is stored in internal registers where remote masters can poll and retrieve it via standard Modbus communication.
 
 **Write vs. Write Preset Value**:
 
-| Operation | Description | Use Case |
-|-----------|-------------|----------|
-| **Write** | Send custom value entered in dialog | One-time value changes, testing, debugging |
-| **Write Preset Value** | Send pre-configured default value | Quick restore to known good values |
+| Operation | Description | Access Method |
+|-----------|-------------|---------------|
+| **Write** | Send custom value entered in dialog | Select "Write" option from [Monitor Point Management](#monitor-point-management) dialog |
+| **Write Preset Value** | Send pre-configured default value | Click **[Monitor Points - Preset [9f]](#main-interface-overview)** button or select "Write Preset Value" from management dialog |
 
 **Write Capabilities**: 
+
 - **Safety First**: Write operations disabled by default to prevent accidental changes
 - **Dual Mode Support**: Available in both Client and Server modes
 - **Custom Values**: Enter any valid value for the configured data type
@@ -1229,6 +1240,555 @@ Sensor Server Requirements:
 - **Prototype Testing**: Quick sensor integration without custom programming
 - **Educational Demonstrations**: Teach industrial protocols and sensor integration
 - **Mobile Sensor Networks**: Deploy phones as distributed sensor nodes
+
+---
+
+## Practical Guides
+
+Now that you understand the interface, settings, and monitor point configuration details, this section provides step-by-step guides for the three main ways to use Modbus Monitor Advanced. Each guide builds on the concepts explained in previous sections and provides practical workflows you can follow immediately.
+
+### Guide 1: Using Modbus Client Mode (Master)
+
+**What is Client Mode?** In Client (Master) Mode, your Android device actively polls remote Modbus devices (servers/slaves) to retrieve data and optionally write values back to them. This is the most common use case for monitoring PLCs, sensors, meters, and other industrial equipment.
+
+<figure markdown>
+  ![Modbus Client Mode Operation](../../assets/screenshots/android-advanced/client-mode-diagram.webp){ width="600" }
+  <figcaption>Modbus Client Mode: Your device polls remote servers for data</figcaption>
+</figure>
+
+#### Prerequisites
+
+Before starting, ensure you have:
+
+- **Network Access**: Wi-Fi/Ethernet connection to your Modbus device OR USB-OTG adapter for serial connections
+- **Device Information**: IP address/port (TCP) or baud rate/settings (serial)
+- **Register Details**: Modbus addresses you want to monitor
+- **Protocol Knowledge**: Whether device uses Modbus TCP, RTU, or ASCII
+
+#### Quick Start: Monitoring Your First Device
+
+**Step 1: Add a Monitor Point**
+
+1. Tap the **[+ button [10]](#figure-1)** on the main screen
+2. A new monitor point appears with default settings
+3. Tap the monitor point to open **Monitor Point Management** dialog
+4. Select **"Change"** to edit configuration
+
+**Step 2: Configure Communication Channel**
+
+Expand the **[Channel Settings](#channel-settings)** section:
+
+=== "TCP/IP Setup (Most Common)"
+
+    1. **Channel**: Select `TCP/IP`
+    2. **Protocol**: Choose `Modbus TCP`
+    3. **IP Address**: Enter your device's IP (e.g., `192.168.1.100`)
+    4. **Port**: Enter Modbus port (default: `502`)
+    
+    !!! example "Typical PLC Connection"
+        ```
+        Channel: TCP/IP
+        Protocol: Modbus TCP
+        IP Address: 192.168.1.50
+        Port: 502
+        ```
+
+=== "Serial/USB Setup"
+
+    1. **Channel**: Select `Serial`
+    2. **Protocol**: Choose `Modbus RTU` (most common) or `Modbus ASCII`
+    3. **Serial Port**: Select your USB adapter (appears when connected), for example "/dev/bus/usb/001/002"
+    4. **Baud Rate**: Match your device (common: `9600`, `19200`)
+    5. **Data Bits**: Usually `8`
+    6. **Parity**: Match device (often `None` or `Even`)
+    7. **Stop Bits**: Usually `1`
+    
+    !!! tip "USB Serial Compatibility"
+        Use adapters with FTDI FT232, Prolific PL2303, Silicon Labs CP210x, or CH340/CH341 chipsets for best compatibility.
+
+=== "Bluetooth Setup"
+
+    1. **Channel**: Select `Bluetooth`
+    2. **Protocol**: Choose `Modbus RTU` or `Modbus ASCII`
+    3. **Bluetooth Device**: Pair your device first in Android settings, then select it
+    4. **Baud Rate** and other serial parameters: Match your device
+
+**Step 3: Configure Modbus Parameters**
+
+Expand the **[Modbus Configuration](#modbus-configuration)** section:
+
+1. **Name**: Give it a descriptive name (e.g., `Tank Level`, `Motor Speed`)
+2. **Slave ID**: Enter your device's Modbus slave ID (usually `1-247`)
+3. **Address**: Enter the 6-digit Modbus address (see [6-Digit Addressing Guide](../../guides/6-digit-addressing.md))
+   - Examples: `400001` (holding register 1), `300001` (input register 1), `100001` (coil 1)
+4. **Count**: Number of registers to read
+   - `1` for single 16-bit integer
+   - `2` for 32-bit float or long integer
+   - `4` for 64-bit double
+5. **Data Type**: Select how to interpret the data
+   - `16-bit Integer`, `32-bit Float`, `Boolean`, etc.
+
+!!! info "Address Format"
+    This app uses the **6-digit Modbus Protocol format**, not PLC addressing. The 6-digit format combines function code and address:
+    
+    - `000001-009999`: Coils (Function 1)
+    - `100001-199999`: Discrete Inputs (Function 2)
+    - `300001-365535`: Input Registers (Function 4)
+    - `400001-465535`: Holding Registers (Function 3)
+    
+    See the [6-Digit Addressing Guide](../../guides/6-digit-addressing.md) for complete details and conversion tools.
+
+**Step 4: Start Polling**
+
+1. Tap **OK** to save your configuration
+2. Tap the **[Client Mode icon [3]](#figure-1)** to start polling
+   - Icon turns **green** when active
+3. Your monitor point now shows live data values
+
+**Expected Results**:
+
+- ✅ **Numbers displayed**: Successfully reading from device
+- ❌ **"?????" displayed**: Communication failure - check settings
+- 📊 **Packet counters**: Good/Bad counters show communication health
+
+#### Writing Values to Remote Devices
+
+Once your monitor point is configured and reading successfully, you can write values back to the device:
+
+**Enable Write Capability**:
+
+1. Tap monitor point → **"Change"**
+2. Expand **[Modbus Configuration](#modbus-configuration)** → scroll to Write Operations tab
+3. **Write Function**: Select appropriate function
+   - `Write Single Coil (05)` for boolean values
+   - `Write Single Register (06)` for single registers
+   - `Write Multiple Registers (16)` for multiple registers
+4. **(Optional) Button Write Value**: Set a preset value for quick writes
+5. Tap **OK** to save
+
+**Two Ways to Write**:
+
+1. **Custom Value Write**:
+   - Tap monitor point → **"Write"**
+   - Enter value in dialog
+   - Tap **"Change"** to send
+   
+2. **Preset Value Write** (faster):
+   - Tap monitor point → **"Write Preset Value"**
+   - Instantly sends pre-configured value
+
+!!! warning "Write Safety"
+    Write operations are **disabled by default** to prevent accidents. Always test writes on non-critical systems first.
+
+For complete write operation details, see the [Write Operations](#write-operations) section.
+
+#### Advanced Client Mode Features
+
+**Multiple Device Monitoring**: Add multiple monitor points with different IP addresses, ports, protocols, and channels. Each point operates independently.
+
+**Polling Optimization**:
+
+- **Interval**: Set in [Settings → Timing](#settings) (default: 1000ms)
+- **Timeout**: Adjust if devices are slow to respond
+- **Retries**: Configure retry attempts for failed communications
+
+**Data Scaling and Transformation**:
+
+- Use **[Math → Linear Transformation](#math)** to scale raw values
+- Apply **[Coded Messages](#coded-message)** to translate numbers to text
+
+**Cloud Integration**: Enable real-time data logging to Google Sheets, ThingSpeak, or MQTT brokers (requires add-ons).
+
+#### Troubleshooting Client Mode
+
+| Problem | Solution |
+|---------|----------|
+| **"?????" values** | Check IP address, port, slave ID, and network connectivity |
+| **Timeouts** | Increase timeout in Settings → Timing, verify device is online |
+| **Wrong values** | Verify address format (6-digit), data type, and byte order |
+| **No USB device** | Check USB-OTG support, adapter compatibility, USB permissions |
+| **Write failures** | Ensure write capability is enabled, correct write function selected |
+
+### Guide 2: Using Modbus Server Mode (Slave)
+
+**What is Server Mode?** In Server (Slave) Mode, your Android device becomes a Modbus TCP server that responds to requests from remote Modbus clients (masters). This allows other devices or software to poll your phone/tablet for data you've configured.
+
+<figure markdown>
+  ![Modbus Server Mode Operation](../../assets/screenshots/android-advanced/server-mode-diagram.webp){ width="600" }
+  <figcaption>Modbus Server Mode: Remote masters poll your device for data</figcaption>
+</figure>
+
+#### When to Use Server Mode
+
+**Common Applications**:
+
+- **Testing**: Simulate Modbus devices for testing SCADA systems or PLCs
+- **Gateway**: Bridge data from sensors to industrial systems
+- **Data Publishing**: Make Android sensor data available via Modbus protocol
+- **Development**: Develop and test Modbus client software
+
+#### Prerequisites
+
+- **Network Connection**: Wi-Fi or Ethernet with known IP address
+- **Port Availability**: Ensure your selected port isn't blocked or in use
+- **Data Plan**: Decide what data you want to serve and at which registers
+
+#### Quick Start: Setting Up Your First Server
+
+**Step 1: Enable Server Feature**
+
+1. Open **[Hamburger Menu [1]](#figure-1) → Settings**
+2. Go to **Server** tab
+3. Enable **"Modbus Server?"** toggle
+4. **Server icon [2]** now appears on main screen
+
+**Step 2: Configure Server Settings**
+
+Stay in **[Settings → Server](#settings)**:
+
+1. **Server/Listen Port**: Choose your port number
+   - Default: `8888` (not standard 502 to avoid conflicts)
+   - Use `502` for standard Modbus TCP compatibility
+   - Avoid ports below 1024 unless rooted
+2. **Auto Start**: Enable if you want server to start automatically on app launch
+
+!!! tip "Port Selection"
+    - **Standard Modbus**: Use port `502` for compatibility with most SCADA systems
+    - **Custom Port**: Use higher ports (`8888`, `5020`, etc.) to avoid conflicts
+    - **Multiple Servers**: Use different ports for different applications
+
+For detailed port guidelines, see [Server Configuration](#server-configuration).
+
+**Step 3: Create Server Monitor Points**
+
+Server mode requires monitor points that define which registers contain what data:
+
+1. Tap **[+ button [10]](#figure-1)** to add monitor point
+2. Tap monitor point → **"Change"**
+3. Configure **[Channel Settings](#channel-settings)**:
+   - **Channel**: `TCP/IP`
+   - **Protocol**: `Modbus TCP`
+4. Configure **[Modbus Configuration](#modbus-configuration)**:
+   - **Name**: Descriptive name (e.g., `Temperature Sensor 1`)
+   - **Address**: 6-digit address where this data will be stored
+     - Example: `400001` for holding register 1
+   - **Count**: Number of registers (1 for integer, 2 for float, etc.)
+   - **Data Type**: How data is formatted
+
+**Step 4: Populate Registers with Data**
+
+Server mode stores data in internal memory. You have two options:
+
+=== "Option 1: Manual Write"
+
+    1. Tap monitor point → **"Write"**
+    2. Enter value
+    3. Tap **"Change"** to store in register
+    4. Value is now available for remote clients to read
+
+=== "Option 2: Preset Values"
+
+    1. Tap monitor point → **"Change"**
+    2. In Modbus Configuration → Write Operations tab
+    3. Set **"Button Write Value"** to your default value
+    4. Tap **OK** to save
+    5. Tap monitor point → **"Write Preset Value"** to load default
+
+**Step 5: Start the Server**
+
+1. Tap the **[Server Mode icon [2]](#figure-1)**
+2. Icon turns **green** when server is running
+3. Main screen shows **Server IP Address and Port**
+4. Remote clients can now connect and poll your device
+
+**Verify Server is Running**:
+
+- Server icon is **green**
+- IP address and port displayed on main screen
+- Use another Modbus client to test connection
+
+#### Understanding Server Data Flow
+
+1. **Configuration**: You set up monitor points with addresses and data types
+2. **Data Storage**: Values are written to internal memory at specified addresses
+3. **Client Request**: Remote master sends Modbus read request
+4. **Response**: App retrieves value from memory and responds to client
+5. **Write Support**: Clients can also write values to your server (if enabled)
+
+For detailed explanation, see [How Server Mode Works](#how-server-mode-works).
+
+#### Testing Your Server
+
+**Use Another Modbus Client to Test**:
+
+1. On a computer on the same network, use Modbus client software
+2. Connect to your Android device's IP address and configured port
+3. Read the register addresses you configured
+4. You should see the values you wrote
+
+**Common Test Tools**:
+
+- **Modbus Monitor XPF** (Windows)
+- **QModMaster** (Cross-platform)
+- **ModScan** (Windows)
+- **Python modbus-tk or pymodbus** (Programming)
+
+#### Server Mode Best Practices
+
+**Register Organization**:
+
+- Use logical address ranges for different data types
+- Document your register map for remote clients
+- Reserve address ranges for future expansion
+
+**Performance Optimization**:
+
+- Don't create more monitor points than you need
+- Group related data in consecutive registers
+- Set appropriate polling intervals for your application
+
+**Security Considerations**:
+
+- Server has no authentication - use on trusted networks only
+- Consider firewall rules to restrict access
+- Use non-standard ports for additional obscurity
+- Monitor connection activity
+
+#### Troubleshooting Server Mode
+
+| Problem | Solution |
+|---------|----------|
+| **Can't connect to server** | Verify IP address, check firewall settings, ensure server is started |
+| **Port already in use** | Change to different port in Settings, check for other apps using port |
+| **Clients read wrong values** | Verify address format matches client expectations, check data type |
+| **Write operations fail** | Enable write capability in monitor point configuration |
+| **Server stops unexpectedly** | Check Android battery optimization settings, disable power saving |
+
+### Guide 3: Using Sensor Server Mode
+
+**What is Sensor Server Mode?** Sensor Server is a specialized extension of Server Mode that automatically exposes your Android device's built-in hardware sensors (accelerometer, gyroscope, light sensor, etc.) through the Modbus TCP protocol. No programming or complex configuration required.
+
+<figure markdown>
+  ![Sensor Server Concept](../../assets/screenshots/android-advanced/sensor-server-concept.webp){ width="600" }
+  <figcaption>Sensor Server Mode: Hardware sensors exposed via Modbus protocol</figcaption>
+</figure>
+
+#### When to Use Sensor Server
+
+**Practical Applications**:
+
+- **Environmental Monitoring**: Deploy phones as ambient light/temperature sensors
+- **Vibration Analysis**: Use accelerometer to monitor equipment vibration
+- **Motion Detection**: Security and proximity alerts via Modbus
+- **Prototype Testing**: Quick IoT sensor integration without custom programming
+- **Education**: Demonstrate industrial protocol integration with real sensors
+- **Mobile Networks**: Distributed sensor nodes reporting to central SCADA
+
+#### Prerequisites
+
+- **Android Sensors**: Device must have the sensors you want to use
+- **Server Mode**: Must enable Modbus Server feature first
+- **Network**: Wi-Fi connection for remote clients to access data
+- **Understanding**: Basic knowledge of sensor types and 3-axis data
+
+#### Quick Start: Exposing Your First Sensor
+
+**Step 1: Enable Server Mode**
+
+1. **[Hamburger Menu [1]](#figure-1) → Settings → Server**
+2. Enable **"Modbus Server?"** toggle
+3. Configure **Server/Listen Port** (default: 8888)
+4. Tap **OK**
+
+**Step 2: Add Sensor Monitor Point**
+
+1. Tap **[+ button [10]](#figure-1)** to add new monitor point
+2. Tap monitor point → **"Change"**
+3. In **[Channel Settings](#channel-settings)**:
+   - **Channel**: Must be `TCP/IP`
+   - **Protocol**: Must be `Modbus TCP`
+
+**Step 3: Select Your Sensor**
+
+1. Expand the **[Sensor Server Configuration](#sensor-server-configuration)** section
+2. **Sensor Selection**: Tap dropdown to see available sensors
+   - Common: Accelerometer, Gyroscope, Light, Orientation
+   - Available sensors depend on your device hardware
+3. **Select a sensor** from the list
+
+**Magic Happens** ✨: The app automatically configures:
+
+- **Register Name**: Filled with detailed sensor information
+- **Count**: Set to `6` (for 3 float values)
+- **Data Type**: Set to `Float`
+- **Address**: You must still set this manually
+
+**Step 4: Set Modbus Address**
+
+1. Still in **[Modbus Configuration](#modbus-configuration)**:
+2. **Address**: Enter 6-digit address (e.g., `400001`)
+3. **Count**: Should already be `6` (don't change)
+4. **Data Type**: Should already be `Float` (don't change)
+
+**Step 5: Start Server and Monitor**
+
+1. Tap **OK** to save configuration
+2. Tap **[Server Mode icon [2]](#figure-1)** to start
+3. Register name now shows **live sensor readings**:
+   ```
+   Sensor #X [SensorName]
+   Power: XXXmA Resolution: X.XX
+   Range: XXX Vendor: [Name]
+   Raw Data: [0]XX.XX [1]XX.XX [2]XX.XX
+   ```
+
+**Step 6: Access from Remote Client**
+
+Remote Modbus clients can now:
+
+1. Connect to your Android device's IP and port
+2. Read the configured address (e.g., `400001`)
+3. Retrieve 3 float values (6 registers) containing sensor data
+
+#### Understanding Sensor Data
+
+**Three-Axis Data Format**: Most sensors return 3-dimensional readings:
+
+- **[0] X-Axis**: First dimension
+- **[1] Y-Axis**: Second dimension
+- **[2] Z-Axis**: Third dimension
+
+**Example - Accelerometer**:
+
+| Axis | Meaning | Example Value | Units |
+|------|---------|---------------|-------|
+| **X** | Lateral (left/right) | 0.05 | m/s² |
+| **Y** | Longitudinal (forward/back) | -0.12 | m/s² |
+| **Z** | Vertical (up/down) | 9.81 | m/s² |
+
+!!! tip "Understanding Sensor Readings"
+    The Register Name field shows real-time sensor values as `[0]`, `[1]`, `[2]`. These correspond to X, Y, Z axes for most sensors. See [Android Sensor Documentation](https://developer.android.com/guide/topics/sensors/sensors_overview.html) for detailed interpretation.
+
+#### Multiple Sensor Configuration
+
+You can expose multiple sensors simultaneously:
+
+1. **Add multiple monitor points** (one for each sensor)
+2. **Use different addresses** for each (e.g., 400001, 400007, 400013)
+3. **Space addresses by 6 registers** to avoid overlaps
+4. **Start server** - all sensors are now accessible
+
+**Example Multi-Sensor Setup**:
+
+```
+Monitor Point 1: Accelerometer → Address 400001 (registers 400001-400006)
+Monitor Point 2: Gyroscope     → Address 400007 (registers 400007-400012)
+Monitor Point 3: Light Sensor  → Address 400013 (registers 400013-400018)
+```
+
+#### Common Sensors and Their Uses
+
+| Sensor | Data Type | Application Examples |
+|--------|-----------|---------------------|
+| **Accelerometer** | 3-axis acceleration (m/s²) | Vibration monitoring, motion detection, orientation |
+| **Gyroscope** | 3-axis angular velocity (rad/s) | Rotation measurement, stability monitoring |
+| **Light** | Ambient illumination (lux) | Automatic lighting, energy management |
+| **Orientation** | Device angle (degrees) | Position monitoring, tilt detection |
+| **Magnetometer** | Magnetic field (μT) | Compass, metal detection |
+| **Proximity** | Distance (cm) | Object detection, presence sensing |
+| **Temperature** | Ambient temp (°C) | Environmental monitoring |
+| **Barometer** | Pressure (hPa) | Altitude, weather monitoring |
+
+!!! note "Sensor Availability"
+    Not all Android devices have all sensors. The Sensor Selection dropdown only shows sensors physically present in your device.
+
+#### Practical Example: Vibration Monitoring
+
+**Scenario**: Monitor equipment vibration using your phone's accelerometer.
+
+1. **Setup sensor server** with accelerometer (as described above)
+2. **Mount phone** securely to equipment
+3. **Configure SCADA** to poll the sensor address
+4. **Set thresholds** in SCADA for abnormal vibration
+5. **Trigger alerts** when vibration exceeds limits
+
+**Register Data**:
+- `400001-400002`: X-axis acceleration (float)
+- `400003-400004`: Y-axis acceleration (float)
+- `400005-400006`: Z-axis acceleration (float)
+
+#### Sensor Server Best Practices
+
+**Power Management**:
+
+- Keep device plugged in for continuous monitoring
+- Disable battery optimization for the app
+- Use "Auto Start" setting for unattended operation
+
+**Accuracy**:
+
+- Calibrate sensors if device supports it (usually in Android settings)
+- Allow warm-up time after starting
+- Mount device securely to reduce noise
+
+**Data Interpretation**:
+
+- Consult [Android Sensor Documentation](https://developer.android.com/guide/topics/sensors/sensors_overview.html)
+- Check manufacturer datasheets for sensor specifications
+- Test and validate sensor readings before deployment
+
+**Network Reliability**:
+
+- Use stable Wi-Fi connection
+- Consider static IP configuration
+- Monitor connection quality
+
+#### Troubleshooting Sensor Server
+
+| Problem | Solution |
+|---------|----------|
+| **No sensors in dropdown** | Device doesn't have that sensor hardware |
+| **Sensor data is zeros** | Sensor may require permissions, try restarting app |
+| **Erratic readings** | Device is moving, ensure stable mounting |
+| **Can't access from client** | Verify server is running, check network connectivity |
+| **Wrong data format** | Ensure client reads as floats, reads 6 registers (3 floats) |
+
+For detailed configuration, see the [Sensor Server Mode](#sensor-server-mode) section.
+
+---
+
+## Add-Ons Integration
+
+Modbus Monitor Advanced can be extended with cloud integration add-ons that enable real-time data logging, IoT dashboards, and remote monitoring capabilities. This section covers the three available add-ons.
+
+!!! info "Add-On Purchase Required"
+    The following features require separate add-on purchases from the app or [quantumbitsolutions.com](https://quantumbitsolutions.com/purchase/). Configuration options appear in Settings after purchase.
+
+### MQTT Integration
+
+**MQTT (Message Queuing Telemetry Transport)** is a lightweight publish/subscribe messaging protocol ideal for IoT applications. The MQTT add-on allows Modbus Monitor Advanced to publish monitor point data to any MQTT broker.
+
+**Coming Soon**: Detailed setup guide for MQTT configuration, broker connection, topic structure, and integration examples with AWS IoT, Azure IoT Hub, and Google Cloud IoT.
+
+**Quick Access**: Configure in **[Settings → MQTT](#settings)**
+
+### ThingSpeak Integration  
+
+**ThingSpeak** is a cloud-based IoT analytics platform that provides instant visualizations, MATLAB analytics, and data export capabilities.
+
+**Coming Soon**: Complete guide covering ThingSpeak account setup, API key configuration, channel creation, field mapping, and dashboard creation.
+
+**Quick Access**: Configure in **[Settings → ThingSpeak](#settings)**
+
+### Google Sheets Integration
+
+**Google Sheets** integration enables automatic real-time data logging to cloud spreadsheets, perfect for data collection, reporting, and sharing.
+
+**Coming Soon**: Step-by-step instructions for Google account authentication, spreadsheet configuration, data formatting, and automated report generation.
+
+**Quick Access**: Configure in **[Settings → Google Sheets](#settings)**
+
+---
 
 ## Professional Use Cases
 
