@@ -2020,6 +2020,7 @@ Device 3 - Sensor:
 
 **Professional Modbus monitoring** with unlimited monitor points, cloud integration, and priority support.
 
+
 ---
 
 **Ready for serious industrial communication work on Android devices.**
