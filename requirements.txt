@@ -1,5 +1,5 @@
-# Pin compatible versions - tested combination that works
-mkdocs==1.5.3
+# Compatible versions - mkdocs-material 9.5.x requires mkdocs 1.6.x
+mkdocs==1.6.1
 mkdocs-material==9.5.31
 mkdocs-include-markdown-plugin==6.0.6
 mkdocs-awesome-pages-plugin==2.10.0
