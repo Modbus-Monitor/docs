@@ -4,6 +4,13 @@
 
 ![Modbus Monitor Advanced on Mobile](../../assets/screenshots/android-advanced/mma-modbus-monitor-android.webp){ .screenshot-center loading="lazy" }
 
+!!! success "Get Started Today"
+    [:material-google-play: **Download Modbus Monitor Advanced**](https://play.google.com/store/apps/details?id=com.Bhavan.Galex){ .md-button .md-button--primary } [:material-rocket-launch-outline: **Quick Start (3 Steps)**](#quick-start-3-steps){ .md-button }
+    
+    Professional mobile Modbus monitoring with unlimited monitor points, sensor publishing, cloud integration, and priority support.
+    
+    Need desktop? Try [:material-monitor: Modbus Monitor XPF](https://quantumbitsolutions.com/windows-xpf-monitor/) for Windows.
+
 ## Introduction
 
 The Modbus Monitor Advanced is a comprehensive **3-in-1 solution**: Modbus Client, Server, and Sensor Server in a single Android application. This professional app allows you to poll Modbus-speaking devices for data directly from your mobile device.
@@ -47,8 +54,6 @@ Modbus TCP, UDP, Serial RTU, Serial ASCII, RTU over TCP, ASCII over TCP, ThingSp
 - **Client Mode**: Poll remote devices with full protocol flexibility
 - **Server Mode**: Turn Android into Modbus TCP slave device
 - **Sensor Mode**: Expose phone sensors via Modbus TCP protocol and Modbus/TCP server
-
-**Download**: [:material-google-play: Google Play Store](https://play.google.com/store/apps/details?id=com.Bhavan.Galex) | [:material-download: Official Site](https://quantumbitsolutions.com/purchase/)
 
 **Requirements**: Android 6.0+ (API23) with network and USB permissions; USB OTG support required for serial connections
 
@@ -124,8 +129,10 @@ The main interface combines status indicators with action buttons for easy opera
 | **Let others read your data** | [Server Mode](#modbus-server-mode-slave) | Turn phone into Modbus server |
 | **Expose phone sensors** | [Sensor Server Mode](#sensor-server-mode) | Share accelerometer, gyro, etc. via Modbus |
 | **Understand data organization** | [Monitor Points](#monitor-points---core-concept) | Core configuration concepts |
+| **Compare with other tools** | [Ecosystem Tools](#modbus-ecosystem-complementary-tools) | QModMaster, pymodbus, ModScan, XPF |
 | **Troubleshoot issues** | [Troubleshooting](#troubleshooting) | Common problems and solutions |
 | **Learn about hardware** | [Hardware Requirements](#hardware-requirements) | USB, Bluetooth, network setup |
+| **Publish local data to cloud** | [Cloud Publishing FAQ](#cloud-publishing-faq) | MQTT / Sheets / ThingSpeak workflows |
 
 ## Hamburger Menu
 
@@ -476,10 +483,10 @@ The Modbus Configuration section contains the essential parameters that define h
     
     **Addressing System Examples**:
 
-    - **Read 1st Holding Register**: 400001 (4 â‡’ Function 3)
-    - **Read 1st Input Register**: 300001 (3 â‡’ Function 4)
-    - **Read 1st Coil**: 000001 (0 â‡’ Modbus Function 1)
-    - **Read 1st Discrete Input**: 100001 (1 â‡’ Modbus Function 2)
+    - **Read 1st Holding Register**: 400001 (4 ‡’ Function 3)
+    - **Read 1st Input Register**: 300001 (3 ‡’ Function 4)
+    - **Read 1st Coil**: 000001 (0 ‡’ Modbus Function 1)
+    - **Read 1st Discrete Input**: 100001 (1 ‡’ Modbus Function 2)
     
     !!! info "Six-Digit Addressing Guide"
         The address field uses **Six-Digit Modbus format** (one-based) that includes the Function Code. For complete address information and examples, see: [quantumbitsolutions.com/address](https://quantumbitsolutions.com/address/)
@@ -563,8 +570,8 @@ The Sensor Server Configuration section enables your Android device's built-in s
     
     | Setting | Type | Options | Description |
     |---------|------|---------|-------------|
-    | **Sensor Selection** | Dropdown | See available sensors | Choose Android sensor to expose via Modbus |
-    | **Auto Configure** | Automatic | Yes | Automatically sets count, protocol, data type, and register information |
+    | **Sensor Selection** | List | Pick one from available sensors | Choose Android sensor to expose via Modbus |
+    | **Auto Configure** | Automatic | Yes | Automatically sets count, protocol, data type, and register information (when sensor is clicked) |
     
     **Available Sensors** (varies by device):
 
@@ -584,7 +591,7 @@ The Sensor Server Configuration section enables your Android device's built-in s
 
     When you select a sensor, the app automatically configures:
 
-    - **Count**: Set to 6 words (3 floats Ã— 2 words each) for 3-axis sensor data
+    - **Count**: Set to 6 words (3 floats — 2 words each) for 3-axis sensor data
     - **Protocol**: Set to Modbus TCP (required for sensor server mode)
     - **Data Type**: Set to Float for proper sensor value representation
     - **Register Name**: Updated with comprehensive sensor specifications and live readings
@@ -836,11 +843,11 @@ Turn your Android device into a **Modbus TCP Server** that other devices can pol
 
 **Key Benefits**:
 
-- âœ… **Multiple Clients**: Handle several remote devices at once
-- âœ… **Standard Protocol**: Industry-standard Modbus TCP (no custom drivers needed)
-- âœ… **Read & Write**: Clients can both read values and write updates
-- âœ… **Easy Setup**: Shared configuration with Client mode
-- âœ… **Gateway Capability**: Run Client + Server simultaneously to bridge protocols (e.g., Serial RTU Modbus TCP)
+- œ… **Multiple Clients**: Handle several remote devices at once
+- œ… **Standard Protocol**: Industry-standard Modbus TCP (no custom drivers needed)
+- œ… **Read & Write**: Clients can both read values and write updates
+- œ… **Easy Setup**: Shared configuration with Client mode
+- œ… **Gateway Capability**: Run Client + Server simultaneously to bridge protocols (e.g., Serial RTU Modbus TCP)
 
 !!! warning "Protocol Converter Mode"
     When using Client and Server modes simultaneously as a protocol converter, ensure monitor points use compatible configurations. Only certain channel/protocol combinations are supported - test your specific setup thoroughly before final deployment.
@@ -901,9 +908,9 @@ These are **global server configuration settings** located in the main menu Sett
 | **Auto Start** | Optional | Automatically starts server when app launches |
 
 !!! info "Port Selection Guide"
-    - **8888**: âœ… Recommended - works on all devices (non-rooted)
-    - **502**: âš ï¸ Standard Modbus port (requires rooted Android)
-    - **1024+**: âœ… Safe range for non-rooted devices
+    - **8888**: œ… Recommended - works on all devices (non-rooted)
+    - **502**: š ¸ Standard Modbus port (requires rooted Android)
+    - **1024+**: œ… Safe range for non-rooted devices
     - **Avoid**: Port 5060 (VoIP conflicts), "0" (auto-select is unpredictable)
 
 ---
@@ -1272,7 +1279,7 @@ Raw Data: [0]xxx.xx [1]xxx.xx [2]xxx.xx
 
 | Setting | Required Value | Notes |
 |---------|---------------|-------|
-| **Sensor Selection** | Choose from dropdown | Varies by device hardware |
+| **Sensor Selection** | Choose from the List | Varies by device hardware |
 | **Address** | 6-digit format (e.g., 400001) | Starting register for data |
 | **Count** | 6 minimum | 3 floats × 2 registers each |
 | **Protocol** | Modbus TCP | Server mode requirement |
@@ -1295,11 +1302,75 @@ Raw Data: [0]xxx.xx [1]xxx.xx [2]xxx.xx
 !!! tip "Learn More"
     For detailed sensor specifications, data formats, and best practices, see: [Android Sensors Overview](https://developer.android.com/develop/sensors-and-location/sensors/sensors_overview)
 
+??? success "Sensor Server TL;DR"
+    1. Enable Modbus Server (Settings → Server).
+    2. Add monitor point → Channel: TCP/IP → Protocol: Modbus TCP.
+    3. Select sensor (auto‑config sets Count=6, Data Type=Float for 3‑axis).
+    4. Set starting Address (e.g. 400001) → OK.
+    5. Start Server → Remote master reads 400001 Count=6 (3 floats).
+
+??? info "Multi-Sensor Configuration"
+    You can expose multiple sensors simultaneously. Use one monitor point per sensor; space addresses to avoid overlap.
+
+    | Sensor | Start Address | Registers | Notes |
+    |--------|---------------|-----------|-------|
+    | Accelerometer | 400001 | 6 | X,Y,Z acceleration (m/s²) |
+    | Gyroscope | 400007 | 6 | X,Y,Z angular velocity (rad/s) |
+    | Light | 400013 | 2 | Ambient illumination (lux) |
+    | Magnetometer | 400015 | 6 | Magnetic field (µT) |
+    | Barometer | 400021 | 2 | Atmospheric pressure (hPa) |
+    | Temperature | 400023 | 2 | Ambient temperature (°C) |
+
+    Address spacing rule: allocate 2 registers per float. Three‑axis sensors: 6 registers; single‑axis: 2.
+
+??? example "Vibration Monitoring Workflow"
+    | Axis | Register Range | Meaning |
+    |------|----------------|---------|
+    | X | 400001-400002 | Lateral motion |
+    | Y | 400003-400004 | Longitudinal motion |
+    | Z | 400005-400006 | Vertical motion |
+
+    Steps:
+    1. Rigidly mount device to equipment.
+    2. Expose accelerometer (auto Count=6).
+    3. SCADA polls 400001 Count=6.
+    4. Apply threshold rules to detect abnormal vibration.
+
+??? tip "Sensor Capability Reference"
+    | Sensor | Data | Units | Example Uses |
+    |--------|------|-------|--------------|
+    | Accelerometer | 3-axis acceleration | m/s² | Vibration, motion |
+    | Gyroscope | 3-axis angular velocity | rad/s | Rotation, stability |
+    | Light | Illumination level | lux | Lighting automation |
+    | Orientation | Device orientation angles | degrees | Alignment tracking |
+    | Magnetometer | 3-axis magnetic field | µT | Compass, metal detection |
+    | Proximity | Distance / presence | cm | Object / access sensing |
+    | Temperature | Ambient temperature | °C | Environmental logging |
+    | Barometer | Atmospheric pressure | hPa | Weather / altitude |
+
+??? tip "Best Practices"
+    Power: keep device powered • disable battery optimization • use Auto Start for unattended operation.
+    
+    Accuracy: calibrate if supported • allow stabilization • secure mounting.
+    
+    Interpretation: confirm expected units • validate under known conditions • review datasheets.
+    
+    Network: prefer stable Wi‑Fi/Ethernet • consider static IP • monitor client count.
+
+??? warning "Troubleshooting"
+    | Problem | Cause | Resolution |
+    |---------|-------|-----------|
+    | No sensors listed | Hardware absent | Use device with required sensors |
+    | All zeros | Permissions/sensor inactive | Restart app; verify sensor availability |
+    | Erratic readings | Device movement / mounting | Improve mounting; add damping |
+    | Client cannot read | Server not started / network | Start server; verify IP/port/firewall |
+    | Wrong data format | Client expects integers | Read 6 registers as 3 floats |
+
 ---
 
 ## Practical Guides
 
-Now that you understand the interface, settings, and monitor point configuration details, this section provides step-by-step guides for the three main ways to use Modbus Monitor Advanced. Each guide builds on the concepts explained in previous sections and provides practical workflows you can follow immediately.
+Now that you understand the interface, settings, and monitor point configuration details, this section provides step-by-step guides for the two main active modes: Client (Master) and Server (Slave). For publishing Android sensors, see the consolidated [Sensor Server Mode](#sensor-server-mode) section above.
 
 ### Guide 1: Using Modbus Client Mode (Master)
 
@@ -1334,7 +1405,7 @@ Expand the **[Channel Settings](#channel-settings)** section:
 
 === "TCP/IP Setup (i0)"
 
-    Standard network connection over Wiâ€‘Fi/Ethernet to a PLC, gateway, or Modbus TCP device.
+    Standard network connection over Wi€‘Fi/Ethernet to a PLC, gateway, or Modbus TCP device.
 
     1. **Channel**: Select `TCP/IP`
     2. **Protocol**: `Modbus TCP`
@@ -1353,7 +1424,7 @@ Expand the **[Channel Settings](#channel-settings)** section:
 
 === "Serial/USB Setup (i1)"
 
-    Direct wired connection using a USBâ€‘OTG serial adapter (RSâ€‘485/RSâ€‘232).
+    Direct wired connection using a USB€‘OTG serial adapter (RS€‘485/RS€‘232).
 
     1. **Channel**: Select `Serial`
     2. **USB Port**: Choose adapter from dropdown (appears when plugged in)
@@ -1364,7 +1435,7 @@ Expand the **[Channel Settings](#channel-settings)** section:
     7. **Stop Bits**: Usually `1`
     8. **Flow Control**: `None` (most Modbus devices)
     9. **Protocol**: `Modbus RTU` (most common) or `Modbus ASCII`
-    10. **Slave ID**: Device station number (1â€“247)
+    10. **Slave ID**: Device station number (1€“247)
 
     !!! example "Typical Serial Connection"
         ```
@@ -1383,7 +1454,7 @@ Expand the **[Channel Settings](#channel-settings)** section:
 
 === "Bluetooth Setup (i2)"
 
-    Wireless serial bridge using a BLE/Classic module (e.g., HMâ€‘10) to a Modbus RTU device.
+    Wireless serial bridge using a BLE/Classic module (e.g., HM€‘10) to a Modbus RTU device.
 
     1. **Channel**: Select `Bluetooth`
     2. **Device**: Choose paired module (e.g., `HM-10 4C:3F:D3:02:XX:XX`)
@@ -1739,199 +1810,6 @@ For detailed explanation, see [How Server Mode Works](#how-server-mode-works).
 | **Write operations fail** | Enable write capability in monitor point configuration |
 | **Server stops unexpectedly** | Check Android battery optimization settings, disable power saving |
 
-### Guide 3: Using Sensor Server Mode
-
-**What is Sensor Server Mode?** Sensor Server is a specialized extension of Server Mode that automatically exposes your Android device's built-in hardware sensors (accelerometer, gyroscope, light sensor, etc.) through the Modbus TCP protocol. No programming or complex configuration required.
-
-<figure markdown>
-  ![Sensor Server Concept](../../assets/screenshots/android-advanced/sensor-server-concept.webp){ width="600" }
-  <figcaption>Sensor Server Mode: Hardware sensors exposed via Modbus protocol</figcaption>
-</figure>
-
-#### When to Use Sensor Server
-
-**Practical Applications**:
-
-- **Environmental Monitoring**: Deploy phones as ambient light/temperature sensors
-- **Vibration Analysis**: Use accelerometer to monitor equipment vibration
-- **Motion Detection**: Security and proximity alerts via Modbus
-- **Prototype Testing**: Quick IoT sensor integration without custom programming
-- **Education**: Demonstrate industrial protocol integration with real sensors
-- **Mobile Networks**: Distributed sensor nodes reporting to central SCADA
-
-#### Prerequisites
-
-- **Android Sensors**: Device must have the sensors you want to use
-- **Server Mode**: Must enable Modbus Server feature first
-- **Network**: Wi-Fi connection for remote clients to access data
-- **Understanding**: Basic knowledge of sensor types and 3-axis data
-
-#### Quick Start: Exposing Your First Sensor
-
-**Step 1: Enable Server Mode**
-
-1. **[Hamburger Menu [1]](#figure-1)  Settings  Server**
-2. Enable **"Modbus Server?"** toggle
-3. Configure **Server/Listen Port** (default: 8888)
-4. Tap **OK**
-
-**Step 2: Add Sensor Monitor Point**
-
-1. Tap **[+ button [10]](#figure-1)** to add new monitor point
-2. Tap monitor point **"Change"**
-3. In **[Channel Settings](#channel-settings)**:
-   - **Channel**: Must be `TCP/IP`
-   - **Protocol**: Must be `Modbus TCP`
-
-**Step 3: Select Your Sensor**
-
-1. Expand the **[Sensor Server Configuration](#sensor-server-configuration)** section
-2. **Sensor Selection**: Tap dropdown to see available sensors
-   - Common: Accelerometer, Gyroscope, Light, Orientation
-   - Available sensors depend on your device hardware
-3. **Select a sensor** from the list
-
-**Magic Happens** âœ¨: The app automatically configures:
-
-- **Register Name**: Filled with detailed sensor information
-- **Count**: Set to `6` (for 3 float values)
-- **Data Type**: Set to `Float`
-- **Address**: You must still set this manually
-
-**Step 4: Set Modbus Address**
-
-1. Still in **[Modbus Configuration](#modbus-configuration)**:
-2. **Address**: Enter 6-digit address (e.g., `400001`)
-3. **Count**: Should already be `6` (don't change)
-4. **Data Type**: Should already be `Float` (don't change)
-
-**Step 5: Start Server and Monitor**
-
-1. Tap **OK** to save configuration
-2. Tap **[Server Mode icon [2]](#figure-1)** to start
-3. Register name now shows **live sensor readings**:
-   ```
-   Sensor #X [SensorName]
-   Power: XXXmA Resolution: X.XX
-   Range: XXX Vendor: [Name]
-   Raw Data: [0]XX.XX [1]XX.XX [2]XX.XX
-   ```
-
-**Step 6: Access from Remote Client**
-
-Remote Modbus clients can now:
-
-1. Connect to your Android device's IP and port
-2. Read the configured address (e.g., `400001`)
-3. Retrieve 3 float values (6 registers) containing sensor data
-
-#### Understanding Sensor Data
-
-**Three-Axis Data Format**: Most sensors return 3-dimensional readings:
-
-- **[0] X-Axis**: First dimension
-- **[1] Y-Axis**: Second dimension
-- **[2] Z-Axis**: Third dimension
-
-**Example - Accelerometer**:
-
-| Axis | Meaning | Example Value | Units |
-|------|---------|---------------|-------|
-| **X** | Lateral (left/right) | 0.05 | m/sÂ² |
-| **Y** | Longitudinal (forward/back) | -0.12 | m/sÂ² |
-| **Z** | Vertical (up/down) | 9.81 | m/sÂ² |
-
-!!! tip "Understanding Sensor Readings"
-    The Register Name field shows real-time sensor values as `[0]`, `[1]`, `[2]`. These correspond to X, Y, Z axes for most sensors. See [Android Sensor Documentation](https://developer.android.com/guide/topics/sensors/sensors_overview.html) for detailed interpretation.
-
-#### Multiple Sensor Configuration
-
-You can expose multiple sensors simultaneously:
-
-1. **Add multiple monitor points** (one for each sensor)
-2. **Use different addresses** for each (e.g., 400001, 400007, 400013)
-3. **Space addresses by 6 registers** to avoid overlaps
-4. **Start server** - all sensors are now accessible
-
-**Example Multi-Sensor Setup**:
-
-```
-Monitor Point 1: Accelerometer  Address 400001 (registers 400001-400006)
-Monitor Point 2: Gyroscope      Address 400007 (registers 400007-400012)
-Monitor Point 3: Light Sensor   Address 400013 (registers 400013-400018)
-```
-
-#### Common Sensors and Their Uses
-
-| Sensor | Data Type | Application Examples |
-|--------|-----------|---------------------|
-| **Accelerometer** | 3-axis acceleration (m/sÂ²) | Vibration monitoring, motion detection, orientation |
-| **Gyroscope** | 3-axis angular velocity (rad/s) | Rotation measurement, stability monitoring |
-| **Light** | Ambient illumination (lux) | Automatic lighting, energy management |
-| **Orientation** | Device angle (degrees) | Position monitoring, tilt detection |
-| **Magnetometer** | Magnetic field (Î¼T) | Compass, metal detection |
-| **Proximity** | Distance (cm) | Object detection, presence sensing |
-| **Temperature** | Ambient temp (Â°C) | Environmental monitoring |
-| **Barometer** | Pressure (hPa) | Altitude, weather monitoring |
-
-!!! note "Sensor Availability"
-    Not all Android devices have all sensors. The Sensor Selection dropdown only shows sensors physically present in your device.
-
-#### Practical Example: Vibration Monitoring
-
-**Scenario**: Monitor equipment vibration using your phone's accelerometer.
-
-1. **Setup sensor server** with accelerometer (as described above)
-2. **Mount phone** securely to equipment
-3. **Configure SCADA** to poll the sensor address
-4. **Set thresholds** in SCADA for abnormal vibration
-5. **Trigger alerts** when vibration exceeds limits
-
-**Register Data**:
-- `400001-400002`: X-axis acceleration (float)
-- `400003-400004`: Y-axis acceleration (float)
-- `400005-400006`: Z-axis acceleration (float)
-
-#### Sensor Server Best Practices
-
-**Power Management**:
-
-- Keep device plugged in for continuous monitoring
-- Disable battery optimization for the app
-- Use "Auto Start" setting for unattended operation
-
-**Accuracy**:
-
-- Calibrate sensors if device supports it (usually in Android settings)
-- Allow warm-up time after starting
-- Mount device securely to reduce noise
-
-**Data Interpretation**:
-
-- Consult [Android Sensor Documentation](https://developer.android.com/guide/topics/sensors/sensors_overview.html)
-- Check manufacturer datasheets for sensor specifications
-- Test and validate sensor readings before deployment
-
-**Network Reliability**:
-
-- Use stable Wi-Fi connection
-- Consider static IP configuration
-- Monitor connection quality
-
-#### Troubleshooting Sensor Server
-
-| Problem | Solution |
-|---------|----------|
-| **No sensors in dropdown** | Device doesn't have that sensor hardware |
-| **Sensor data is zeros** | Sensor may require permissions, try restarting app |
-| **Erratic readings** | Device is moving, ensure stable mounting |
-| **Can't access from client** | Verify server is running, check network connectivity |
-| **Wrong data format** | Ensure client reads as floats, reads 6 registers (3 floats) |
-
-For detailed configuration, see the [Sensor Server Mode](#sensor-server-mode) section.
-
----
-
 ## Add-Ons Integration
 
 Modbus Monitor Advanced can be extended with cloud integration add-ons that enable real-time data logging, IoT dashboards, and remote monitoring capabilities. This section covers the three available add-ons.
@@ -1962,6 +1840,76 @@ Modbus Monitor Advanced can be extended with cloud integration add-ons that enab
 **Coming Soon**: Step-by-step instructions for Google account authentication, spreadsheet configuration, data formatting, and automated report generation.
 
 **Quick Access**: Configure in **[Settings  Google Sheets](#settings)**
+
+### Feature Summary
+
+| Add-On | Key Features | Best For |
+|--------|--------------|----------|
+| **📊 Google Sheets** | Real-time data publishing, automated reports, cloud storage | Data logging, sharing with teams, Excel-compatible exports |
+| **☁️ ThingSpeak** | IoT dashboards, API access, alerts and triggers, MATLAB analytics | Visualization, public data sharing, advanced analytics |
+| **📡 MQTT** | Industrial IoT integration, AWS/Azure/Google Cloud, pub/sub messaging | Enterprise systems, real-time streaming, distributed architectures |
+
+### Cloud Publishing FAQ
+
+Use these FAQs to understand how locally collected data (Bluetooth, Serial, TCP/IP) is forwarded to remote cloud services (MQTT, Google Sheets, ThingSpeak).
+
+??? question "How does local data reach the cloud?"
+    After each complete polling cycle (Client Mode) or after internal register updates (Server/Sensor Server), the app aggregates current monitor point values and triggers publishing routines for any enabled add-ons. Each add-on uses its own transport (HTTPS for Sheets/ThingSpeak, MQTT protocol for brokers).
+
+??? question "Do Bluetooth and Serial data publish the same as TCP/IP data?"
+    Yes. Channel type is abstracted at the monitor point layer. Once a value is updated (Bluetooth, Serial RTU/ASCII, TCP/IP), it is treated uniformly for cloud publishing. Failed reads (displayed as `?????`) are skipped or sent as blank (configurable in future versions).
+
+??? question "What is a good update interval for cloud publishing?"
+    Recommended polling interval: 1000–3000 ms for stable industrial devices. For Google Sheets use ≥5 s to avoid quota pressure; ThingSpeak free tier enforces 15 s minimum per channel; MQTT can handle high frequency but practical field deployments usually stay at 1–2 s unless streaming fast-changing data.
+
+??? question "How are Google Sheets columns mapped?"
+    Each monitor point becomes a row append or a column update depending on configuration (planned enhancement). Present implementation appends a timestamp plus sequential monitor point values in fixed order. Name and Units help downstream identification—use descriptive Names.
+
+??? question "How do I handle ThingSpeak's 8-field limit?"
+    Select up to 8 critical monitor points or aggregate related values into scaled/combined fields using Math Configuration. Create multiple channels if you need >8 distinct values; document mapping externally for traceability.
+
+??? question "What MQTT topic structure should I use?"
+    Suggested pattern:
+    ```
+    modbus/<deviceId>/<pointName>/<address>
+    ```
+    Example: `modbus/android01/TankLevel/400001`. For grouped payloads publish JSON on `modbus/<deviceId>/batch` containing an array of `{name,address,value,units,timestamp}` objects. Use QoS 1 for reliability; QoS 0 for fastest throughput; retain only configuration topics, not live telemetry.
+
+??? question "Can I publish Sensor Server values to MQTT?"
+    Yes—sensor-backed monitor points are just float values in registers. Once enabled, their current array elements are published like any other point. Consider a prefix `sensor/` or an additional attribute in JSON payload for differentiation.
+
+??? question "What happens if the network drops?"
+    MQTT: Messages fail and are retried automatically if the session can reconnect; offline periods lose non-retained telemetry.
+    Google Sheets / ThingSpeak: HTTP post fails silently; data is not cached for replay. For critical reliability consider an external buffering gateway or future app buffering feature.
+
+??? question "Security considerations?"
+    - Use TLS-enabled MQTT brokers (port 8883) where possible.
+    - Avoid publishing sensitive data to public ThingSpeak channels.
+    - Limit Google Sheets sharing permissions; treat spreadsheet URL as semi-sensitive.
+    - Keep Android device on trusted Wi‑Fi; avoid open networks for write-enabled points.
+
+??? question "How do I reduce data usage?"
+    Increase polling interval, publish only changing values (future delta mode), aggregate multiple points into a single MQTT JSON payload, and disable unused add-ons. Use Math/Scaling to condense data (e.g., packing status bits into one INT16 field).
+
+??? question "Troubleshooting: No data appears in cloud?"
+    | Symptom | Likely Cause | Action |
+    |---------|-------------|--------|
+    | Empty rows in Google Sheets | Spreadsheet ID or auth missing | Re-enter credentials; verify sheet exists |
+    | ThingSpeak update refused | Interval below 15 s limit | Increase delay to ≥15 s; check API key |
+    | MQTT broker disconnects | Wrong host/port or TLS mismatch | Verify broker settings; test with an external MQTT client |
+    | Values are `?????` locally | Communication failure upstream | Fix channel/protocol config; publishing skips invalid values |
+    | High data costs | Polling interval too low | Raise interval; batch MQTT messages |
+
+??? question "Choosing between MQTT, ThingSpeak, Google Sheets?"
+    | Need | Best Choice | Why |
+    |------|------------|-----|
+    | Real-time streaming & integration | MQTT | Low latency, flexible topics, enterprise brokers |
+    | Simple dashboard + public sharing | ThingSpeak | Built-in charts, MATLAB analytics, easy API |
+    | Spreadsheet logging & reporting | Google Sheets | Familiar interface, export to CSV/Excel |
+    | Hybrid (live + archival) | MQTT + Sheets | Stream critical data; log periodic summaries |
+
+??? tip "Best Practice Summary"
+    Poll locally at a stable interval (1–2 s), publish only required points, use descriptive names, apply scaling/units, test each add-on individually, then enable combined publishing. Document field/topic mapping for maintainability.
 
 ---
 
@@ -2050,12 +1998,6 @@ Device 3 - Sensor:
 **Recommended Chipsets**: FTDI FT232/FT4232, Prolific PL2303, Silicon Labs CP210x, CH340/CH341
 **Hardware**: USB-OTG adapter, USB-to-RS485 converter for industrial networks
 
-### Cloud Platform Add-ons
-
-- **ðŸ“Š Google Sheets** - Real-time data publishing and automated reports
-- **â˜ï¸ ThingSpeak** - IoT dashboards, API access, alerts and triggers  
-- **ðŸ“¡ MQTT** - Industrial IoT integration with AWS, Azure, Google Cloud
-
 ## Troubleshooting
 
 ### Common Issues
@@ -2091,16 +2033,169 @@ Device 3 - Sensor:
 
 ### Support Resources
 
-- ðŸ“§ **Email**: support@quantumbitsolutions.com
-- ðŸ“– **Documentation**: [quantumbitsolutions.com/help](https://quantumbitsolutions.com/help/)
-- ï¿½ **Forum**: [Expert community](https://quantumbitsolutions.com/forums/)
+- **Email**: [support@quantumbitsolutions.com](support@quantumbitsolutions.com)
+- **Documentation**: [docs.quantumbitsolutions.com](https://docs.quantumbitsolutions.com/)
+- **Forum**: [Expert community](https://quantumbitsolutions.com/forums/)
 
-## Get Started Today
 
-[:material-google-play: Download from Google Play Store](https://play.google.com/store/apps/details?id=com.Bhavan.Galex){ .md-button .md-button--primary }
+## Modbus Ecosystem & Complementary Tools
 
-**Professional Modbus monitoring** with unlimited monitor points, cloud integration, and priority support.
+Understanding the broader Modbus tool ecosystem helps you choose the right tool for each task. **Modbus Monitor Advanced** excels at mobile field monitoring with integrated sensor capabilities, but other tools serve complementary roles in mixed workflows.
 
+!!! info "Strategic Tool Selection"
+    These tools are part of the Modbus testing and automation ecosystem. We list them to help you understand when each tool fits bestand why Modbus Monitor Advanced remains the optimal choice for mobile industrial monitoring and on-site diagnostics.
+
+### Tool Comparison
+
+| Tool | Category | Best Use Case | Why Choose Modbus Monitor Advanced |
+|------|----------|---------------|-------------------------------------|
+| **Modbus Monitor Advanced** | Android Mobile, Professional | Field monitoring + sensor integration + cloud publishing | Mobile access, sensor server mode, integrated IoT workflows, real-time diagnostics |
+| **Modbus Monitor XPF** | Windows Desktop | Desktop monitoring with multi-channel operations | Advanced combines mobile + desktop companion; XPF for stationary HMI setups |
+| **QModMaster** | Cross-platform GUI | Manual frame testing on Linux/macOS workstations | Advanced offers mobile access, logging, cloud integration, sensor exposure |
+| **ModScan** | Windows Traditional | Legacy Windows workflows, quick register scanning | Advanced provides modern Android UI, mobile deployment, IoT integration |
+| **pymodbus / modbus-tk** | Python Libraries | Automated test scripts, CI/CD integration | Advanced for field visualization, non-coding technicians, instant mobile access |
+
+### When to Use Each Tool
+
+=== "Mobile Field Monitoring"
+    **Modbus Monitor Advanced** 
+    
+    - On-site diagnostics with Android phone/tablet
+    - Sensor Server Mode (accelerometer, gyroscope, GPS, etc.)
+    - Real-time cloud publishing (ThingSpeak, MQTT, Google Sheets)
+    - Multi-protocol support (TCP, RTU, ASCII, UDP, Bluetooth, USB-OTG)
+    - Portable field testing without laptop
+    
+    **Why choose this**: Purpose-built for mobile industrial environments, sensor integration, and on-site commissioning
+
+=== "Desktop Monitoring"
+    **Modbus Monitor XPF** <small>[Windows]</small>
+    
+    - Stationary HMI and control room monitoring
+    - Multi-channel concurrent polling
+    - Advanced data transformations
+    
+    **Complementary use**: Deploy Advanced for field work, XPF for control room dashboards
+    
+    **Why Advanced is better for field**: Mobile access, no PC required, integrated sensors
+
+=== "Quick Testing"
+    **QModMaster** <small>[Open Source]</small>
+    
+    - Manual frame construction for development
+    - Cross-platform (Linux, macOS, Windows)
+    - Basic read/write operations
+    
+    **Limitation**: Desktop-only, no mobile access, no sensor integration, no cloud publishing
+    
+    **Use Modbus Monitor Advanced for**: Field deployment, production monitoring, mobile access, sensor data
+
+=== "Legacy Systems"
+    **ModScan** <small>[Commercial Windows]</small>
+    
+    - Traditional Windows interface
+    - Established in industrial settings
+    - Register scanning utilities
+    
+    **Modbus Monitor Advanced advantage**: Mobile deployment, modern Android UI, sensor server, IoT integration
+
+=== "Programming & Automation"
+    **pymodbus / modbus-tk** <small>[Python]</small>
+    
+    - Custom automation scripts
+    - CI/CD test integration
+    - Embedded device testing
+    
+    **Complementary use**: Python scripts simulate devices; Modbus Monitor Advanced validates in field
+
+### Complementary Workflows
+
+**Scenario 1: Development to Deployment**
+```
+QModMaster (desktop dev)  pymodbus (automation)  Modbus Monitor Advanced (field validation)
+```
+
+**Scenario 2: Multi-Platform Teams**
+```
+Modbus Monitor XPF (control room)  Modbus Monitor Advanced (field technicians)  Cloud dashboards
+```
+
+**Scenario 3: Sensor Integration**
+```
+Android sensors  Modbus Monitor Advanced (Sensor Server)  pymodbus client  Data analysis
+```
+
+### Frequently Asked Questions
+
+??? question "What is the best Modbus monitoring tool for Android?"
+    **Modbus Monitor Advanced** is the premier Android Modbus solution with professional features including:
+    
+    - Client Mode (poll remote devices)
+    - Server Mode (phone as Modbus slave)
+    - Sensor Server Mode (expose phone sensors via Modbus)
+    - Multi-protocol support (TCP, RTU, ASCII, UDP, Bluetooth, USB-OTG)
+    - Cloud integration (ThingSpeak, Google Sheets, MQTT)
+    - Real-time logging and statistics
+    
+    For desktop-only workflows on Linux/macOS, QModMaster offers basic testing capabilities.
+
+??? question "How does Modbus Monitor Advanced differ from QModMaster?"
+    While QModMaster is useful for basic manual testing on desktop, **Modbus Monitor Advanced** adds:
+    
+    - **Mobile deployment**: Android phone/tablet field access
+    - **Sensor Server Mode**: Expose accelerometer, gyroscope, GPS as Modbus registers
+    - **Cloud integration**: Real-time publishing to ThingSpeak, Google Sheets, MQTT
+    - **Advanced logging**: CSV export with timed intervals, email sharing
+    - **Multi-protocol**: Bluetooth, USB-OTG, in addition to TCP
+    - **Professional support**: Documentation, updates, expert assistance
+    
+    QModMaster is desktop-only for manual testing; Modbus Monitor Advanced is built for mobile field operations.
+
+??? question "Can I use Modbus Monitor Advanced with Modbus Monitor XPF?"
+    Absolutely! Many users deploy both:
+    
+    - **XPF** for stationary control room monitoring and multi-channel dashboards
+    - **Advanced** for field technicians doing commissioning and on-site diagnostics
+    
+    Both can connect to the same devices, or use Advanced as a Modbus server that XPF polls for sensor data.
+
+??? question "Can I use Python libraries with Modbus Monitor Advanced?"
+    Yes! Common integration patterns:
+    
+    - **Validation**: Run `pymodbus` automation scripts, use Advanced to verify field behavior
+    - **Sensor client**: Use Advanced Sensor Server Mode to expose phone sensors; poll with pymodbus for data collection
+    - **Device simulation**: Python scripts simulate Modbus devices; Advanced validates responses
+    
+    This keeps automation logic in code while providing mobile visualization and field diagnostics.
+
+??? question "Should I use ModScan or Modbus Monitor Advanced for field work?"
+    **Modbus Monitor Advanced** is purpose-built for field deployment:
+    
+    - No laptop requiredruns on Android phone/tablet
+    - Sensor integration (measure vibration, orientation, location)
+    - Cloud publishing for remote team visibility
+    - Bluetooth and USB-OTG for serial devices
+    - Portable and rugged (use industrial Android tablets)
+    
+    ModScan requires Windows laptop and lacks sensor/mobile capabilities. Use Advanced for field work, ModScan only for legacy desktop workflows.
+
+??? question "Are these tools compatible with each other?"
+    Yes! All speak standard Modbus protocol:
+    
+    - Use **Modbus Monitor Advanced** as Server Mode; poll with QModMaster or XPF for verification
+    - Run pymodbus scripts writing to devices; monitor with **Advanced** from mobile
+    - Test configurations in QModMaster desktop; deploy production monitoring with **Advanced** mobile
+    - Use **Advanced** Sensor Server Mode; poll with pymodbus or XPF for sensor data collection
+
+### External Resources
+
+!!! tip "Third-Party Modbus Tools"
+    We provide these links for ecosystem awareness and complementary workflows. We are not affiliated with these projects.
+    
+    - [Modbus Monitor XPF](https://quantumbitsolutions.com/purchase/){:target="_blank"} - Professional Windows desktop monitoring
+    - [QModMaster GitHub](https://github.com/LeezQ/qmodmaster){:target="_blank" rel="nofollow"} - Cross-platform open source GUI
+    - [pymodbus Documentation](https://pymodbus.readthedocs.io/){:target="_blank" rel="nofollow"} - Python Modbus library
+    - [modbus-tk GitHub](https://github.com/ljean/modbus-tk){:target="_blank" rel="nofollow"} - Alternative Python library
 
 ---
 

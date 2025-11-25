@@ -15,6 +15,9 @@ extra:
   version:
     provider: mike
   generator: false
+  analytics:
+    provider: google
+    property: G-N7VJZYC4XW
 
 theme:
   name: material
@@ -165,6 +168,7 @@ nav:
     - 🔢 6-Digit Addressing: guides/6-digit-addressing.md
     - 📡 MQTT Add-on: guides/mqtt-addon.md
     - ☁️ ThingSpeak Add-on: guides/thingspeak-addon.md
+    - 🔧 Ecosystem Tools Template: guides/ecosystem-tools-template.md
 
   
   
