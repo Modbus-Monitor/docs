@@ -1095,33 +1095,19 @@ Each monitor point is a **complete configuration package** containing everything
   <figcaption>Figure 4: Accessing Monitor Points Management Dialog either by tap or swipe</figcaption>
 </figure>
 
-The Monitor Points Management dialog can be accessed either by clicking on the monitor points (after adding a point) or swiping left to expose the Menu option. The UI shows the Monitor Points Management dialog to configure each monitor point and customize it.
+**Two Ways to Access the Management Dialog**:
 
-To open the Management Menu:
+1. **Tap**: Click directly on any monitor point in the main list
+2. **Swipe Left**: Swipe left on a monitor point to reveal the menu option
 
-- Navigate to **[Hamburger Menu [1]](#hamburger-menu) → Settings → Server**
-- Set **Server Port** (recommended: 8888 for non-rooted devices)
-- Enable **Modbus Server** switch to show server icon on main interface
+**To Open the Management Menu**:
+1. **Tap** any specific Monitor Point in your main list  
+2. **Long-press** (depending on your device interaction settings)
+3. A dialog box titled **"Monitor Point Management"** will appear
 
-**Step 2: Port Selection Guidelines**
+#### Management Options
 
-- **Port 502**: Standard Modbus port, requires rooted Android device
-- **Port 8888**: Recommended default for most Android devices  
-- **Ports > 1024**: Safe choices for non-rooted devices
-- **Port "0"**: Auto-select (⚠️ may cause network conflicts)
-
-**Step 3: Add Monitor Points**
-
-- At least one monitor point required to start server
-- Click **(+)** to add new monitor point
-- Configure for server mode (see [Monitor Point Configuration](#monitor-point-configuration-for-server-mode) below)
-
-!!! warning "Port Conflicts"
-    Research existing network devices before selecting a port. For example, Port 5060 can interfere with VoIP services. Choose ports above 1024 for non-rooted devices to avoid system conflicts.
-
-### Setting Up Monitor Points for Server Mode
-
-The second setup step is to turn on the Server feature so it can be started. This can be done by checking the “Modbus Server?” option under the Preferences screen. Turning this feature on will place the familiar “server icon” on the icon bar. The Server Icon is the only way to turn the Server communication on.
+| Option | Icon | Description | Use Cases | This can be done by checking the “Modbus Server?” option under the Preferences screen. Turning this feature on will place the familiar “server icon” on the icon bar. The Server Icon is the only way to turn the Server communication on.
 
 #### B. Add Monitor Points
 
