@@ -628,11 +628,11 @@ The Math Configuration section provides powerful mathematical transformation cap
     |---------|------|-------|-------------|
     | **Gain (m)** | Number | Any decimal | Slope value in the linear equation (multiplication factor) |
     | **Offset (b)** | Number | Any decimal | Offset value in the linear equation (addition constant) |
-    | **Engineering Units** | Text | Custom text | Display suffix (e.g., "Â°C", "PSI", "RPM") |
+    | **Engineering Units** | Text | Custom text | Display suffix (e.g., "°C", "PSI", "RPM") |
     
     **Mathematical Formula**:
     ```
-    Display Value = (Raw Value Ã— Gain) + Offset
+    Display Value = (Raw Value × Gain) + Offset
     ```
     
     **Use Cases**:
@@ -654,7 +654,7 @@ The Math Configuration section provides powerful mathematical transformation cap
     
     **Scaling Formula**:
     ```
-    Display Value = Low Limit + ((Raw Value - Analog K1) Ã— (High Limit - Low Limit)) / (Analog K2 - Analog K1)
+    Display Value = Low Limit + ((Raw Value - Analog K1) × (High Limit - Low Limit)) / (Analog K2 - Analog K1)
     ```
 
 === "Configuration Examples"
@@ -942,7 +942,7 @@ Each monitor point defines registers that clients can access. **You need at leas
 ```yaml
 Protocol: Modbus TCP
 Address: 400001   # Holding register 1
-Count: 10         # 5 floats Ã— 2 registers each
+Count: 10         # 5 floats × 2 registers each
 Data Type: Float
 ```
 
@@ -1308,6 +1308,7 @@ Raw Data: [0]xxx.xx [1]xxx.xx [2]xxx.xx
     3. Select sensor (auto‑config sets Count=6, Data Type=Float for 3‑axis).
     4. Set starting Address (e.g. 400001) → OK.
     5. Start Server → Remote master reads 400001 Count=6 (3 floats).
+    6. Need to publish sensor values? See [Cloud Publishing FAQ](#cloud-publishing-faq).
 
 ??? info "Multi-Sensor Configuration"
     You can expose multiple sensors simultaneously. Use one monitor point per sensor; space addresses to avoid overlap.
@@ -1374,7 +1375,7 @@ Now that you understand the interface, settings, and monitor point configuration
 
 ### Guide 1: Using Modbus Client Mode (Master)
 
-**What is Client Mode?** In Client (Master) Mode, your Android device actively polls remote Modbus devices (servers/slaves) to retrieve data and optionally write values back to them. This is the most common use case for monitoring PLCs, sensors, meters, and other industrial equipment. In this guide, we will use configure three monitoring points each collecting data from three differnet channels 1. TCP 2. USB Serial 3. Bluetooth BLE using the diffrent DSD HM-10 Bluetooth 4.0 BLE commnication.
+**What is Client Mode?** In Client (Master) Mode, your Android device polls remote Modbus devices (servers/slaves) to retrieve data and optionally write values back to them. This is the most common use case for monitoring PLCs, sensors, meters, and other industrial equipment. In this guide we configure three monitoring points—each on a different channel (1. TCP/IP, 2. USB Serial, 3. Bluetooth BLE using an HM‑10 module)—to demonstrate simultaneous multi‑channel communication.
 
 <figure markdown>
   ![Modbus Client Mode Operation](../../assets/screenshots/android-advanced/mma-master-three-channels.webp){width="400"}
@@ -1874,6 +1875,19 @@ Use these FAQs to understand how locally collected data (Bluetooth, Serial, TCP/
     modbus/<deviceId>/<pointName>/<address>
     ```
     Example: `modbus/android01/TankLevel/400001`. For grouped payloads publish JSON on `modbus/<deviceId>/batch` containing an array of `{name,address,value,units,timestamp}` objects. Use QoS 1 for reliability; QoS 0 for fastest throughput; retain only configuration topics, not live telemetry.
+    
+        Example batch JSON payload:
+        ```json
+        {
+            "deviceId": "android01",
+            "timestamp": "2025-11-25T14:03:00Z",
+            "points": [
+                {"name": "TankLevel", "address": 400001, "value": 73.42, "units": "%"},
+                {"name": "MotorSpeed", "address": 400003, "value": 1450, "units": "RPM"},
+                {"name": "AccelX", "address": 400101, "value": -0.031, "units": "m/s²"}
+            ]
+        }
+        ```
 
 ??? question "Can I publish Sensor Server values to MQTT?"
     Yes—sensor-backed monitor points are just float values in registers. Once enabled, their current array elements are published like any other point. Consider a prefix `sensor/` or an additional attribute in JSON payload for differentiation.
@@ -1910,6 +1924,25 @@ Use these FAQs to understand how locally collected data (Bluetooth, Serial, TCP/
 
 ??? tip "Best Practice Summary"
     Poll locally at a stable interval (1–2 s), publish only required points, use descriptive names, apply scaling/units, test each add-on individually, then enable combined publishing. Document field/topic mapping for maintainability.
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": "https://docs.quantumbitsolutions.com/products/android/advanced-guide#cloud-publishing-faq",
+    "inLanguage": "en",
+    "mainEntity": [
+        {"@type": "Question","name": "How does local data reach the cloud?","acceptedAnswer": {"@type": "Answer","text": "After each polling cycle or register update the app aggregates current monitor point values and invokes enabled add-on publishers (MQTT, Google Sheets, ThingSpeak)."}},
+        {"@type": "Question","name": "Do Bluetooth and Serial data publish the same as TCP/IP data?","acceptedAnswer": {"@type": "Answer","text": "Yes. All channels unify at the monitor point layer; once a value updates it is eligible for the same publishing workflow."}},
+        {"@type": "Question","name": "What is a good update interval for cloud publishing?","acceptedAnswer": {"@type": "Answer","text": "1–3 s for MQTT, ≥5 s for Google Sheets, ≥15 s for ThingSpeak free tier."}},
+        {"@type": "Question","name": "How do I handle ThingSpeak's 8-field limit?","acceptedAnswer": {"@type": "Answer","text": "Choose 8 critical points, aggregate related readings via math/scaling, or create multiple channels."}},
+        {"@type": "Question","name": "What MQTT topic structure should I use?","acceptedAnswer": {"@type": "Answer","text": "Use modbus/<deviceId>/<pointName>/<address> for single values and modbus/<deviceId>/batch for JSON arrays with name,address,value,units,timestamp."}},
+        {"@type": "Question","name": "Can I publish Sensor Server values to MQTT?","acceptedAnswer": {"@type": "Answer","text": "Yes. Sensor-backed monitor points are floats and publish like any other; optionally prefix topics with sensor/ or include a type tag."}},
+        {"@type": "Question","name": "How do I reduce data usage?","acceptedAnswer": {"@type": "Answer","text": "Increase polling interval, batch MQTT messages, publish only required/changed points, disable unused add-ons."}},
+        {"@type": "Question","name": "Troubleshooting: No data appears in cloud?","acceptedAnswer": {"@type": "Answer","text": "Verify credentials/API keys, respect service rate limits, confirm network connectivity, ensure local values valid (not ?????)."}}
+    ]
+}
+</script>
 
 ---
 
