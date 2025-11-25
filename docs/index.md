@@ -24,8 +24,11 @@
 
     Mobile Modbus monitoring for field technicians and engineers.
 
-    [:octicons-arrow-right-24: Modbus Console (free)](products/android/free-guide.md)
-    [:octicons-arrow-right-24: Modbus Monitor Advanced](products/android/advanced-guide.md)
+    **Core Guides:**  
+    [:octicons-arrow-right-24: Modbus Console (free)](products/android/free-guide.md) · [:octicons-arrow-right-24: Modbus Monitor Advanced](products/android/advanced-guide.md)
+
+    **Add-on Features:**  
+    [:octicons-arrow-right-24: MQTT Add-on](guides/android-mqtt-addon.md) · [:octicons-arrow-right-24: ThingSpeak Add-on](guides/android-thingspeak-addon.md) · [:octicons-arrow-right-24: Google Sheets Add-on](guides/android-sheets-addon.md)
 
 -   :material-map:{ .lg } **Modbus Mapper Pro**
 

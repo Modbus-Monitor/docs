@@ -155,10 +155,14 @@ nav:
     - Help Center: support/index.md
     - Community Forum: https://quantumbitsolutions.com/forums/
   
-  - Documentation Guides:  
+  - Documentation Guides:
+    - Overview: guides/index.md
     - 🔢 6-Digit Addressing: guides/6-digit-addressing.md
-    - 📡 MQTT Add-on: guides/mqtt-addon.md
-    - ☁️ ThingSpeak Add-on: guides/thingspeak-addon.md
+    - 📡 MQTT Add-on (Android): guides/android-mqtt-addon.md
+    - ☁️ ThingSpeak Add-on (Android): guides/android-thingspeak-addon.md
+    - 🧮 Google Sheets Add-on (Android): guides/android-sheets-addon.md
+    - 📡 MQTT Add-on (XPF): guides/mqtt-addon.md
+    - ☁️ ThingSpeak Add-on (XPF): guides/thingspeak-addon.md
     - 🔧 Ecosystem Tools Template: guides/ecosystem-tools-template.md
 
   
