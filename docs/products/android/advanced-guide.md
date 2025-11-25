@@ -1,4 +1,4 @@
-﻿# Modbus Monitor Advanced - Complete User Manual
+# Modbus Monitor Advanced - Complete User Manual
 
 **Professional mobile Modbus monitoring for advanced users and field engineers**
 
@@ -18,10 +18,10 @@ The advantage of the Modbus Monitor Advanced is that it combines both modes in o
 
 **Essential App Features**:
 
-- **âš™ï¸ Settings** - Configure protocols, timing, and cloud integrations  
-- **ðŸ“¤ Export/Import** - CSV data management and email sharing
-- **â˜ï¸ Cloud Integration** - Google Sheets, ThingSpeak, MQTT support
-- **ðŸ”„ Data Management** - Real-time logging, statistics, and data transformations
+- **⚙️ Settings** - Configure protocols, timing, and cloud integrations  
+- **📤 Export/Import** - CSV data management and email sharing
+- **☁️ Cloud Integration** - Google Sheets, ThingSpeak, MQTT support
+- **🔄 Data Management** - Real-time logging, statistics, and data transformations
 
 ### Core Capabilities
 
@@ -46,7 +46,7 @@ Modbus TCP, UDP, Serial RTU, Serial ASCII, RTU over TCP, ASCII over TCP, ThingSp
 
 - **Client Mode**: Poll remote devices with full protocol flexibility
 - **Server Mode**: Turn Android into Modbus TCP slave device
-- **Sensor Mode**: Expose phone sensors via Modbus TCP protocol and MOdbus/TCP server
+- **Sensor Mode**: Expose phone sensors via Modbus TCP protocol and Modbus/TCP server
 
 **Download**: [:material-google-play: Google Play Store](https://play.google.com/store/apps/details?id=com.Bhavan.Galex) | [:material-download: Official Site](https://quantumbitsolutions.com/purchase/)
 
@@ -1557,66 +1557,98 @@ For complete write operation details, see the [Write Operations](#write-operatio
 | **No USB device** | Check USB-OTG support, adapter compatibility, USB permissions |
 | **Write failures** | Ensure write capability is enabled, correct write function selected |
 
-### Guide 2: Using Modbus Server Mode (Slave)
+### Guide 2: Modbus Server Mode (Slave)
 
-**What is Server Mode?** In Server (Slave) Mode, your Android device becomes a Modbus TCP server that responds to requests from remote Modbus clients (masters). This allows other devices or software to poll your phone/tablet for data you've configured.
+**Goal**: Make your Android device readable by other Modbus TCP masters in under 5 minutes.
 
-#### When to Use Server Mode
+**Server Mode Basics**: Your device answers Modbus TCP requests. Remote systems poll the register values you expose (and can write if enabled). Full theory is in the earlier [Modbus Server Mode](#modbus-server-mode-slave) section—this guide is the fast, beginner walkthrough.
 
-**Common Applications**:
+#### 1. When to Use
+| Use Case | Purpose |
+|----------|---------|
+| Testing | Simulate a Modbus device for SCADA / PLC validation |
+| Sensor Publishing | Share phone sensor data (see [Sensor Server Mode](#sensor-server-mode)) |
+| Protocol Bridge | Combine Client + Server to relay serial/Bluetooth data as TCP |
+| Demo / Training | Provide live registers for classroom or lab exercises |
 
-- **Testing**: Simulate Modbus devices for testing SCADA systems or PLCs
-- **Gateway**: Bridge data from sensors to industrial systems
-- **Data Publishing**: Make Android sensor data available via Modbus protocol
-- **Development**: Develop and test Modbus client software
+#### 2. Minimum Requirements
+- Wi‑Fi/Ethernet connection
+- One monitor point (at least) with Protocol = Modbus TCP
+- Open port (use `8888` if `502` blocked/non‑root)
 
-#### Prerequisites
+#### 3. Quick Start (Essential Steps)
+1. Menu → Settings → Server → Enable “Modbus Server?” (icon [2] appears)
+2. Set Port: `8888` (safe default). Leave Auto Start off for now.
+3. Tap (+) to add a monitor point → tap it → Change.
+4. Channel: TCP/IP | Protocol: Modbus TCP.
+5. Address: `400001` | Count: `2` (example float) | Data Type: FLOAT32 | Slave ID: `1`.
+6. OK → Tap Server icon [2] → Icon turns green → Note IP & Port.
+7. Test from a PC Modbus client reading 400001 Count=2 (should return a value or 0 if not written yet).
 
-- **Network Connection**: Wi-Fi or Ethernet with known IP address
-- **Port Availability**: Ensure your selected port isn't blocked or in use
-- **Data Plan**: Decide what data you want to serve and at which registers
+#### 4. Minimal Configuration Reference
+| Field | Example | Why It Matters |
+|-------|---------|----------------|
+| Port | 8888 | Accessible without root; avoids common conflicts |
+| Channel | TCP/IP | Required for Server Mode |
+| Protocol | Modbus TCP | Only protocol served |
+| Address | 400001 | First holding register (6‑digit format) |
+| Count | 2 | Size for one 32‑bit float (2 × 16‑bit registers) |
+| Data Type | FLOAT32 | Defines value interpretation |
+| Slave ID | 1 | Unit ID some clients still send |
+| Write Function | Read Only (start) | Prevent accidental writes |
 
-#### Quick Start: Setting Up Your First Server
+#### 5. Example Register Map (Small Demo)
+| Point | Name | Address | Count | Data Type | Purpose |
+|-------|------|---------|-------|----------|---------|
+| 1 | TankLevel | 400001 | 2 | FLOAT32 | Simulated level value |
+| 2 | MotorSpeed | 400003 | 2 | FLOAT32 | Simulated RPM |
+| 3 | StatusFlag | 400005 | 1 | INT16U | Bit/flag status |
 
-**Step 1: Enable Server Feature**
+Spacing keeps floats aligned (each float = 2 registers). Adjust addresses as needed; they must not overlap.
 
-1. Open **[Hamburger Menu [1]](#figure-1)  Settings**
-2. Go to **Server** tab
-3. Enable **"Modbus Server?"** toggle
-4. **Server icon [2]** now appears on main screen
+#### 6. Writing Data (Optional)
+To serve a non‑zero value: tap monitor point → Write → enter value → Change. Or set a preset: Change → Write Operations tab → Button Write Value → OK → Use “Write Preset Value”. Remote clients then read updated registers.
 
-**Step 2: Configure Server Settings**
+#### 7. Testing From a PC
+| Step | Action |
+|------|--------|
+| 1 | Open QModMaster / ModScan / pymodbus script |
+| 2 | Enter IP (shown near Server icon) & Port (e.g., 8888) |
+| 3 | Function: Read Holding Registers (FC3) |
+| 4 | Start Address: 400001 | Quantity: 2 |
+| 5 | Confirm value (0 or written float). Write test value and re‑read. |
 
-Stay in **[Settings  Server](#settings)**:
+If Address field requires “raw” number, subtract 400000 (e.g., 1) depending on client addressing style.
 
-1. **Server/Listen Port**: Choose your port number
-   - Default: `8888` (not standard 502 to avoid conflicts)
-   - Use `502` for standard Modbus TCP compatibility
-   - Avoid ports below 1024 unless rooted
-2. **Auto Start**: Enable if you want server to start automatically on app launch
+#### 8. Optional Enhancements
+- Enable Auto Start for dedicated gateways.
+- Add Sensor Server monitor points for live accelerometer data.
+- Use Copy/Paste to bulk duplicate similar registers.
+- Pre‑populate values with Preset for predictable startup diagnostics.
 
-!!! tip "Port Selection"
-    - **Standard Modbus**: Use port `502` for compatibility with most SCADA systems
-    - **Custom Port**: Use higher ports (`8888`, `5020`, etc.) to avoid conflicts
-    - **Multiple Servers**: Use different ports for different applications
+#### 9. Troubleshooting (Fast Table)
+| Problem | Likely Cause | Fix |
+|---------|--------------|-----|
+| Client timeout | Wrong IP/Port or firewall | Verify IP; try port 8888; check router rules |
+| Reads always 0 | No write performed / wrong address | Write a test value; confirm address matches 6‑digit format |
+| Client shows illegal function | Using non‑TCP protocol | Ensure monitor point Protocol = Modbus TCP |
+| Value length mismatch | Count incorrect | Set Count=2 for 32‑bit float, 1 for INT16 |
+| Cannot use port 502 | Non‑root Android restriction | Use 8888 or any >1024 |
+| Writes ignored | Write Function set to Read Only | Change Write Function, then retry |
+| Random disconnects | Power saving / sleep | Disable Battery Saver or keep device awake |
 
-For detailed port guidelines, see [Server Configuration](#server-configuration).
+#### 10. Safety & Good Practice
+| Tip | Reason |
+|-----|--------|
+| Start Read Only | Prevent unintended device control |
+| Document register map | Helps remote users avoid overlap/misuse |
+| Separate test vs production ports | Avoid accidental polling on live systems |
+| Avoid exposing sensitive data | No authentication built‑in; stay on trusted networks |
 
-**Step 3: Create Server Monitor Points**
-
-Server mode requires monitor points that define which registers contain what data:
-
-1. Tap **[+ button [11]](#figure-1)** to add monitor point
-2. Tap monitor point **"Change"**
-3. Configure **[Channel Settings](#channel-settings)**:
-   - **Channel**: `TCP/IP`
-   - **Protocol**: `Modbus TCP`
-4. Configure **[Modbus Configuration](#modbus-configuration)**:
-   - **Name**: Descriptive name (e.g., `Temperature Sensor 1`)
-   - **Address**: 6-digit address where this data will be stored
-     - Example: `400001` for holding register 1
-   - **Count**: Number of registers (1 for integer, 2 for float, etc.)
-   - **Data Type**: How data is formatted
+#### 11. Next Steps
+- Need more detail? See full [Modbus Server Mode](#modbus-server-mode-slave) section.
+- Want to publish sensor values? Jump to [Sensor Server Mode](#sensor-server-mode).
+- Ready for bidirectional control? Review [Write Operations](#write-operations).
 
 **Step 4: Populate Registers with Data**
 
