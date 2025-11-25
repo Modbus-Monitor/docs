@@ -57,6 +57,18 @@ Modbus TCP, UDP, Serial RTU, Serial ASCII, RTU over TCP, ASCII over TCP, ThingSp
 
 **Requirements**: Android 6.0+ (API23) with network and USB permissions; USB OTG support required for serial connections
 
+### First 60 Seconds (Rapid Quick Start)
+
+Follow this ultra-short sequence the first time you open the app:
+
+1. Tap **+** to create a new monitor point (defaults load).
+2. Tap the new point → **Change** → set Channel `TCP/IP`, Protocol `Modbus TCP`, IP, Port (e.g. 192.168.1.100:502), Address `400001`, Count `2`, Data Type `FLOAT32`.
+3. Press **OK** then tap **Client Mode** (link icon) → value appears (or `?????` if settings need adjustment).
+4. Optional: Set **Button Write Value** then use **Write Preset Value** to send a test value.
+5. Want cloud telemetry? Open **Settings → MQTT**, enter broker + topic prefix, enable, observe publish.
+
+You are now reading, (optionally) writing, and ready to expand.
+
 ## Getting Started
 
 ### Main Interface Overview
@@ -475,7 +487,7 @@ The Modbus Configuration section contains the essential parameters that define h
     | Setting | Type | Range/Options | Description |
     |---------|------|---------------|-------------|
     | **Name** | Text | Custom text | Name to describe this Monitor Point (e.g., Oven Temperature) |
-    | **Units** | Text | Custom text | Suffix to add after value (e.g., Â°C) |
+    | **Units** | Text | Custom text | Suffix to add after value (e.g., °C) |
     | **Address** | Number | 000001-665535 | Six-Digit Modbus (one-based) address that includes Function Code |
     | **Enron** | Dropdown | Yes/No | Choose Yes to use Enron address and protocol layer |
     | **Slave ID** | Number | 0-255 | Server or Slave ID of the remote Modbus server |
@@ -483,10 +495,10 @@ The Modbus Configuration section contains the essential parameters that define h
     
     **Addressing System Examples**:
 
-    - **Read 1st Holding Register**: 400001 (4 ‡’ Function 3)
-    - **Read 1st Input Register**: 300001 (3 ‡’ Function 4)
-    - **Read 1st Coil**: 000001 (0 ‡’ Modbus Function 1)
-    - **Read 1st Discrete Input**: 100001 (1 ‡’ Modbus Function 2)
+    - **Read 1st Holding Register**: 400001 (4 → Function 3)
+    - **Read 1st Input Register**: 300001 (3 → Function 4)
+    - **Read 1st Coil**: 000001 (0 → Modbus Function 1)
+    - **Read 1st Discrete Input**: 100001 (1 → Modbus Function 2)
     
     !!! info "Six-Digit Addressing Guide"
         The address field uses **Six-Digit Modbus format** (one-based) that includes the Function Code. For complete address information and examples, see: [quantumbitsolutions.com/address](https://quantumbitsolutions.com/address/)
@@ -605,13 +617,13 @@ The Sensor Server Configuration section enables your Android device's built-in s
     
     | Sensor | Description | Data Axes | Typical Units |
     |--------|-------------|-----------|---------------|
-    | **Accelerometer** | Device motion and orientation | 3 (X, Y, Z) | m/sÂ² |
+    | **Accelerometer** | Device motion and orientation | 3 (X, Y, Z) | m/s² |
     | **Gyroscope** | Angular velocity measurements | 3 (X, Y, Z) | rad/s |
     | **Light Sensor** | Ambient light levels | 1 | lux |
     | **Orientation** | Device position in 3D space | 3 (Azimuth, Pitch, Roll) | degrees |
-    | **Temperature** | Ambient temperature | 1 | Â°C |
+    | **Temperature** | Ambient temperature | 1 | °C |
     | **Barometer** | Atmospheric pressure | 1 | hPa |
-    | **Magnetometer** | Magnetic field strength | 3 (X, Y, Z) | ÂµT |
+    | **Magnetometer** | Magnetic field strength | 3 (X, Y, Z) | µT |
     | **Proximity** | Object detection near device | 1 | cm |
 
 #### Math Configuration
@@ -665,7 +677,7 @@ The Math Configuration section provides powerful mathematical transformation cap
     
     | Application | Gain (m) | Offset (b) | Units | Use Case |
     |-------------|----------|------------|-------|----------|
-    | **Temperature (Â°F to Â°C)** | 0.5556 | -17.78 | Â°C | Convert Fahrenheit to Celsius |
+    | **Temperature (°F to °C)** | 0.5556 | -17.78 | °C | Convert Fahrenheit to Celsius |
     | **Pressure Scaling** | 0.1 | 0 | PSI | Scale 0-1000 raw to 0-100 PSI |
     | **RPM Conversion** | 2.5 | 0 | RPM | Scale encoder counts to RPM |
     | **Percentage** | 0.1 | 0 | % | Convert 0-1000 raw to 0-100% |
@@ -675,7 +687,7 @@ The Math Configuration section provides powerful mathematical transformation cap
     | Application | K1 | K2 | Low Limit | High Limit | Units | Description |
     |-------------|----|----|-----------|------------|-------|-------------|
     | **4-20mA Current Loop** | 0 | 65535 | 0 | 1000 | Watts | PLC analog input to power measurement |
-    | **0-10V Voltage Input** | 0 | 32767 | -50 | 150 | Â°C | Analog voltage to temperature range |
+    | **0-10V Voltage Input** | 0 | 32767 | -50 | 150 | °C | Analog voltage to temperature range |
     | **Pressure Transmitter** | 819 | 16384 | 0 | 250 | PSI | 4-20mA pressure transmitter scaling |
     | **Flow Measurement** | 0 | 65535 | 0 | 5000 | LPM | Analog flow sensor to liters per minute |
     
@@ -1379,7 +1391,7 @@ Now that you understand the interface, settings, and monitor point configuration
 
 <figure markdown>
   ![Modbus Client Mode Operation](../../assets/screenshots/android-advanced/mma-master-three-channels.webp){width="400"}
-  <figcaption>Modbus Client Mode: Your device polls remote servers from TCP (i0), USB Serial (i1), and Bluetooth BLE servers (i1) simulatanoously</figcaption>
+  <figcaption>Modbus Client Mode: Your device polls remote servers from TCP (i0), USB Serial (i1), and Bluetooth BLE (i2) simultaneously</figcaption>
 </figure>
 
 #### Prerequisites
@@ -1406,7 +1418,7 @@ Expand the **[Channel Settings](#channel-settings)** section:
 
 === "TCP/IP Setup (i0)"
 
-    Standard network connection over Wi€‘Fi/Ethernet to a PLC, gateway, or Modbus TCP device.
+    Standard network connection over Wi-Fi/Ethernet to a PLC, gateway, or Modbus TCP device.
 
     1. **Channel**: Select `TCP/IP`
     2. **Protocol**: `Modbus TCP`
@@ -1425,7 +1437,7 @@ Expand the **[Channel Settings](#channel-settings)** section:
 
 === "Serial/USB Setup (i1)"
 
-    Direct wired connection using a USB€‘OTG serial adapter (RS€‘485/RS€‘232).
+    Direct wired connection using a USB-OTG serial adapter (RS-485/RS-232).
 
     1. **Channel**: Select `Serial`
     2. **USB Port**: Choose adapter from dropdown (appears when plugged in)
@@ -1436,7 +1448,7 @@ Expand the **[Channel Settings](#channel-settings)** section:
     7. **Stop Bits**: Usually `1`
     8. **Flow Control**: `None` (most Modbus devices)
     9. **Protocol**: `Modbus RTU` (most common) or `Modbus ASCII`
-    10. **Slave ID**: Device station number (1€“247)
+    10. **Slave ID**: Device station number (1–247)
 
     !!! example "Typical Serial Connection"
         ```
@@ -1455,7 +1467,7 @@ Expand the **[Channel Settings](#channel-settings)** section:
 
 === "Bluetooth Setup (i2)"
 
-    Wireless serial bridge using a BLE/Classic module (e.g., HM€‘10) to a Modbus RTU device.
+    Wireless serial bridge using a BLE/Classic module (e.g., HM-10) to a Modbus RTU device.
 
     1. **Channel**: Select `Bluetooth`
     2. **Device**: Choose paired module (e.g., `HM-10 4C:3F:D3:02:XX:XX`)
@@ -1822,7 +1834,12 @@ Modbus Monitor Advanced can be extended with cloud integration add-ons that enab
 
 **MQTT (Message Queuing Telemetry Transport)** is a lightweight publish/subscribe messaging protocol ideal for IoT applications. The MQTT add-on allows Modbus Monitor Advanced to publish monitor point data to any MQTT broker.
 
-**Coming Soon**: Detailed setup guide for MQTT configuration, broker connection, topic structure, and integration examples with AWS IoT, Azure IoT Hub, and Google Cloud IoT.
+**Minimal Setup**:
+1. Broker: enter host & port (e.g., `broker.hivemq.com:1883`).
+2. Client ID: unique per device (e.g., `android01`).
+3. Credentials: add username/password if broker requires.
+4. Base Topic: e.g., `modbus/android01`; app appends point/topic segments.
+5. Start polling; confirm single value publish; optionally enable batch JSON topic.
 
 **Quick Access**: Configure in **[Settings  MQTT](#settings)**
 
@@ -1830,7 +1847,12 @@ Modbus Monitor Advanced can be extended with cloud integration add-ons that enab
 
 **ThingSpeak** is a cloud-based IoT analytics platform that provides instant visualizations, MATLAB analytics, and data export capabilities.
 
-**Coming Soon**: Complete guide covering ThingSpeak account setup, API key configuration, channel creation, field mapping, and dashboard creation.
+**Minimal Setup**:
+1. Create channel; copy Write API Key.
+2. Ensure ≤8 needed points; ordering maps to fields 1–8.
+3. Set interval ≥15 s (free tier enforced limit).
+4. Enable add-on; start polling; verify chart updates.
+5. Add field names & units in ThingSpeak UI for clarity.
 
 **Quick Access**: Configure in **[Settings  ThingSpeak](#settings)**
 
@@ -1838,7 +1860,12 @@ Modbus Monitor Advanced can be extended with cloud integration add-ons that enab
 
 **Google Sheets** integration enables automatic real-time data logging to cloud spreadsheets, perfect for data collection, reporting, and sharing.
 
-**Coming Soon**: Step-by-step instructions for Google account authentication, spreadsheet configuration, data formatting, and automated report generation.
+**Minimal Setup**:
+1. Spreadsheet: capture ID from URL & sheet (tab) name.
+2. Authenticate once in app (stores token).
+3. Enable append mode (timestamp + ordered point values).
+4. Start polling; confirm rows append; adjust interval if quota pressure.
+5. Periodically archive/export large historical sheets.
 
 **Quick Access**: Configure in **[Settings  Google Sheets](#settings)**
 
@@ -1931,6 +1958,19 @@ Use these FAQs to understand how locally collected data (Bluetooth, Serial, TCP/
     "@type": "FAQPage",
     "@id": "https://docs.quantumbitsolutions.com/products/android/advanced-guide#cloud-publishing-faq",
     "inLanguage": "en",
+    "publisher": {"@type": "Organization","name": "Quantum Bit Solutions","url": "https://quantumbitsolutions.com/"},
+    "isPartOf": {"@type": "WebSite","name": "Modbus Monitor Documentation","url": "https://docs.quantumbitsolutions.com/"},
+    "dateModified": "2025-11-25",
+    "about": [
+        {"@type": "Thing", "name": "Modbus"},
+        {"@type": "Thing", "name": "Android Modbus Client"},
+        {"@type": "Thing", "name": "Android Modbus Server"},
+        {"@type": "Thing", "name": "Sensor Server"},
+        {"@type": "Thing", "name": "MQTT"},
+        {"@type": "Thing", "name": "ThingSpeak"},
+        {"@type": "Thing", "name": "Google Sheets"}
+    ],
+    "keywords": "Modbus Android app, sensor server, MQTT publishing, ThingSpeak integration, Google Sheets logging",
     "mainEntity": [
         {"@type": "Question","name": "How does local data reach the cloud?","acceptedAnswer": {"@type": "Answer","text": "After each polling cycle or register update the app aggregates current monitor point values and invokes enabled add-on publishers (MQTT, Google Sheets, ThingSpeak)."}},
         {"@type": "Question","name": "Do Bluetooth and Serial data publish the same as TCP/IP data?","acceptedAnswer": {"@type": "Answer","text": "Yes. All channels unify at the monitor point layer; once a value updates it is eligible for the same publishing workflow."}},
@@ -2076,7 +2116,7 @@ Device 3 - Sensor:
 Understanding the broader Modbus tool ecosystem helps you choose the right tool for each task. **Modbus Monitor Advanced** excels at mobile field monitoring with integrated sensor capabilities, but other tools serve complementary roles in mixed workflows.
 
 !!! info "Strategic Tool Selection"
-    These tools are part of the Modbus testing and automation ecosystem. We list them to help you understand when each tool fits bestand why Modbus Monitor Advanced remains the optimal choice for mobile industrial monitoring and on-site diagnostics.
+    These tools are part of the Modbus testing and automation ecosystem. We list them to help you understand when each tool fits best and why Modbus Monitor Advanced remains the optimal choice for mobile industrial monitoring and on-site diagnostics.
 
 ### Tool Comparison
 
@@ -2229,6 +2269,33 @@ Android sensors  Modbus Monitor Advanced (Sensor Server)  pymodbus client  Data 
     - [QModMaster GitHub](https://github.com/LeezQ/qmodmaster){:target="_blank" rel="nofollow"} - Cross-platform open source GUI
     - [pymodbus Documentation](https://pymodbus.readthedocs.io/){:target="_blank" rel="nofollow"} - Python Modbus library
     - [modbus-tk GitHub](https://github.com/ljean/modbus-tk){:target="_blank" rel="nofollow"} - Alternative Python library
+
+---
+
+## Glossary
+
+| Term | Definition |
+|------|------------|
+| Monitor Point | A complete configuration object defining how to read/write one Modbus data item (address, count, data type, channel, scaling, units). |
+| Holding Register | Read/Write 16-bit register range (400001+ in six-digit format, FC3 for reads, FC6/16 for writes). |
+| Input Register | Read-only 16-bit register range (300001+ in six-digit format, FC4). |
+| Coil | Single-bit read/write output (000001+ six-digit, FC1 read / FC5 write / FC15 multiple). |
+| Discrete Input | Single-bit read-only input (100001+ six-digit, FC2). |
+| Slave ID / Unit ID | Address of a Modbus server device on serial or logical network (1–247 typical). |
+| Count | Number of consecutive 16-bit registers requested; float32 = 2, int16 = 1, double64 = 4. |
+| Data Type | Interpretation layer converting raw registers into value (INT16U, FLOAT32, STRING, etc.). |
+| Endian / Swap | Byte/word order arrangement for multi-register types; configured via Swap (e.g., ABCD_BE, CDAB_LEBS). |
+| Sensor Server | Feature exposing Android sensor readings as Modbus TCP registers automatically. |
+| Write Function | Selected Modbus function for sends (single/multiple coil/register) controlling permissible operations. |
+| Batch Publishing | MQTT mode sending array of point objects in single JSON message (`modbus/<deviceId>/batch`). |
+| Delta Publishing | Planned feature to publish only changed values since last cycle to reduce bandwidth. |
+| Six-Digit Addressing | Address format embedding function code prefix (e.g., 400001) for unambiguous register targeting. |
+| Preset Value | Pre-configured write value sent instantly with Write Preset action for quick control. |
+| Scaling (Linear) | Range conversion formula mapping raw counts (e.g., 0–65535) to engineering limits (e.g., 0–100 PSI). |
+| Gain/Offset | y = m x + b linear transform for calibration or unit conversion. |
+| Server Mode | Device responds to Modbus TCP requests; values stored in app memory. |
+| Client Mode | Device polls remote Modbus servers/slaves to read (and optionally write) data. |
+| Address Collision | Overlapping address ranges across monitor points leading to unintended overwrites (avoid by spacing). |
 
 ---
 
