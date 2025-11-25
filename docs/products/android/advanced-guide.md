@@ -1176,11 +1176,6 @@ The **"Apply Settings to All"** option propagates communication settings from th
 
 ## Sensor Server Mode
 
-<figure markdown>
-  ![Sensor Server Configuration](../../assets/screenshots/android-advanced/sensor-server-config.webp){ width="500" }
-  <figcaption>Figure 7: Sensor server setup showing Android sensor selection and automatic configuration</figcaption>
-</figure>
-
 **Sensor Server** is an innovative extension of the Modbus Server that exposes your Android device's built-in sensors through the Modbus TCP protocol.
 
 !!! tip "Configuration Details"
@@ -1189,13 +1184,17 @@ The **"Apply Settings to All"** option propagates communication settings from th
 ### What is Sensor Server?
 
 #### Core Concept
+
 - **Hardware Integration**: Links Android sensors directly to Modbus registers  
 - **No Programming Required**: Any Modbus TCP Master can access phone sensors
 - **Automatic Configuration**: Sensor selection automatically configures register settings
 - **Real-time Data**: Live sensor readings available via standard Modbus polling
 
+
 #### Available Sensors
+
 **Common Android Sensors**:
+
 - **Accelerometer**: Device motion and orientation
 - **Gyroscope**: Angular velocity measurements  
 - **Light Sensor**: Ambient light levels
@@ -1208,8 +1207,8 @@ The **"Apply Settings to All"** option propagates communication settings from th
 ### Configuring Sensor Server
 
 <figure markdown>
-  ![Sensor Information Display](../../assets/screenshots/android-advanced/sensor-info-display.webp){ width="600" }
-  <figcaption>Figure 8: Automatic sensor information display showing specifications and real-time values</figcaption>
+![Sensor Information Display](../../assets/screenshots/android-advanced/mma-sensor-config.webp)
+<figcaption>Figure 8: Accelerometer configured in Server Mode showing real-time values accessible to remote Modbus TCP clients</figcaption>
 </figure>
 
 #### Setup Process
