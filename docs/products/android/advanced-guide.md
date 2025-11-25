@@ -910,11 +910,6 @@ These are **global server configuration settings** located in the main menu Sett
 
 #### B. Add Monitor Points
 
-<figure markdown>
-  ![Server Monitor Point Configuration](../../assets/screenshots/android-advanced/server-monitor-point.webp){ width="500" }
-  <figcaption>Figure 6: Monitor point configured for server mode</figcaption>
-</figure>
-
 **Path**: Main screen → **(+)** button
 
 Each monitor point defines registers that clients can access. **You need at least one monitor point** before starting the server.
@@ -1011,47 +1006,78 @@ Count: 10                 (your monitor point count)
 
 **Best Practices**:
 
-1. ✅ Default to port **8888** (tested and reliable)
-2. ✅ Document your port choice for troubleshooting
-3. ✅ Test port doesn't conflict with network services
-4. ✅ Research existing devices before selecting port
+1. Default to port **8888** (tested and reliable)
+2. Document your port choice for troubleshooting
+3. Test port doesn't conflict with network services
+4. Research existing devices before selecting port
 
 ---
 
-### How It Works (Technical)
-
-**Data Flow**:
-
-1. **Configuration**: You define monitor points with addresses and data types
-2. **Memory Allocation**: App reserves internal memory for each register
-3. **Client Requests**: Remote devices send Modbus TCP read/write commands
-4. **Response**: App returns current values from memory
-5. **Updates**: Written values stored and returned on subsequent reads
-
-**Multi-Client**: Multiple devices can connect and poll simultaneously
-
-**Protocol**: Only Modbus TCP recognized - other protocols ignored in server mode
-
 ## Monitor Points - Core Concept
+
+[:octicons-arrow-left-24: Back to Main Interface](#main-interface-overview)
+
+**Monitor Points** are the fundamental building blocks of Modbus Monitor Advanced. Think of them as intelligent tags (similar to PLC tags) that completely define how to communicate with a specific piece of data on a Modbus device.
 
 <figure markdown>
   ![Monitor Points List](../../assets/screenshots/android-advanced/monitor-points-list.webp){ width="450" }
   <figcaption>Figure 9: Monitor points showing live data from multiple devices</figcaption>
 </figure>
 
-**What are Monitor Points?**
+### What is a Monitor Point?
 
-A Monitor Point is similar to tags in a PLC and holds all information relevant to defining Modbus, the communication medium, display, and preset writing values. Each monitor point contains complete configuration for one data source:
+Each monitor point is a **complete configuration package** containing everything needed to:
 
-- **Communication settings** - Protocol, IP address, port, channel selection
-- **Modbus configuration** - Address, register count, slave ID  
-- **Data formatting** - Display options, data types, scaling
-- **Write values** - Preset values and mathematical transforms
-- **Advanced features** - Coded messages, sensor integration
+- 📡 **Communicate** - Protocol, IP address, port, channel selection (TCP/IP, Serial, Bluetooth)
+- 📍 **Locate Data** - Modbus address, register count, slave ID, function codes
+- 🎨 **Display Values** - Data type interpretation, scaling, engineering units
+- ✏️ **Control Devices** - Write values, preset commands, safety settings
+- ⚙️ **Transform Data** - Mathematical operations, coded messages, sensor integration
 
-**Key Advantage**: Each point can use different protocols and connections, enabling multi-device SCADA functionality. With Modbus Monitor Advanced, you can set different protocols, IP addresses, ports, and channels for each Monitor Point Entry. This advanced SCADA-level data collection approach allows you to set and view live values from various operation modes through a single interface.
+!!! tip "The Power of Monitor Points"
+    **Multi-Device SCADA Capability**: Each monitor point can use **completely different** protocols, IP addresses, ports, and channels. This means you can simultaneously monitor:
+    
+    - A PLC via Modbus TCP on one channel
+    - A sensor via Serial RTU on another channel  
+    - A controller via Bluetooth on a third channel
+    
+    All from a **single unified interface** - true SCADA-level data collection on your mobile device!
 
-The full list of Monitor Points can be built by adding new items one at a time or importing thousands of items from a CSV file from email or the mobile device's Downloads folder.
+### Building Your Monitor Point List
+
+**Three Ways to Add Monitor Points**:
+
+| Method | Best For | How To |
+|--------|----------|--------|
+| **Manual Entry** | Individual points, learning | Tap **(+)** button on main screen |
+| **Copy & Paste** | Similar configurations | Use [Monitor Point Management](#monitor-point-management) dialog |
+| **CSV Import** | Bulk deployment (hundreds/thousands) | [Hamburger Menu](#hamburger-menu) → Import |
+
+**CSV Import Benefits**: Load pre-configured monitor point lists from email attachments or the Downloads folder - perfect for deploying standardized configurations across multiple devices or sites.
+
+### Quick Configuration Reference
+
+**Essential Monitor Point Settings** (see [Monitor Point Configuration](#monitor-point-configuration) for details):
+
+=== "Communication"
+
+    - **[Channel Settings](#channel-settings)** - Choose TCP/IP, Serial, or Bluetooth
+    - **[Protocol](#channel-settings)** - Select Modbus variant (TCP, RTU, ASCII)
+    - **Connection Details** - IP/port, baud rate, or Bluetooth MAC
+
+=== "Modbus"
+
+    - **[Basic Settings](#basic-settings)** - Name, address, slave ID, register count
+    - **[Data Types](#data-types)** - INT16, FLOAT32, STRING, etc.
+    - **[Write Operations](#write-operations)** - Read-only vs write-enabled
+
+=== "Advanced"
+
+    - **[Math Configuration](#math-configuration)** - Linear scaling, gain/offset
+    - **[Coded Messages](#coded-messages-configuration)** - Number-to-text translation
+    - **[Sensor Server](#sensor-server-configuration)** - Android sensor integration
+
+---
 
 ### Monitor Point Management
 
@@ -1060,7 +1086,7 @@ The full list of Monitor Points can be built by adding new items one at a time o
   <figcaption>Figure 10: Management options (tap any monitor point to access)</figcaption>
 </figure>
 
-**The Monitor Points Management Dialog** is your central command hub for modifying, configuring, and controlling individual Modbus points (registers or coils) within your list.
+**The Monitor Points Management Dialog** is your central control hub for modifying, configuring, and managing individual monitor points in your list.
 
 #### Accessing the Management Dialog
 
@@ -1099,11 +1125,6 @@ The second setup step is to turn on the Server feature so it can be started. Thi
 
 #### B. Add Monitor Points
 
-<figure markdown>
-  ![Server Monitor Point Configuration](../../assets/screenshots/android-advanced/server-monitor-point.webp){ width="500" }
-  <figcaption>Figure 6: Monitor point configured for server mode</figcaption>
-</figure>
-
 **Path**: Main screen → **(+)** button
 
 Each monitor point defines registers that clients can access. **You need at least one monitor point** before starting the server.
@@ -1200,10 +1221,10 @@ Count: 10                 (your monitor point count)
 
 **Best Practices**:
 
-1. ✅ Default to port **8888** (tested and reliable)
-2. ✅ Document your port choice for troubleshooting
-3. ✅ Test port doesn't conflict with network services
-4. ✅ Research existing devices before selecting port
+1. Default to port **8888** (tested and reliable)
+2. Document your port choice for troubleshooting
+3. Test port doesn't conflict with network services
+4. Research existing devices before selecting port
 
 ---
 
