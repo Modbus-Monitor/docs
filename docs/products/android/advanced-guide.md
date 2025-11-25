@@ -2106,7 +2106,7 @@ Device 3 - Sensor:
 
 ### Support Resources
 
-- **Email**: [support@quantumbitsolutions.com](support@quantumbitsolutions.com)
+- **Email**: [support@quantumbitsolutions.com](mailto:support@quantumbitsolutions.com)
 - **Documentation**: [docs.quantumbitsolutions.com](https://docs.quantumbitsolutions.com/)
 - **Forum**: [Expert community](https://quantumbitsolutions.com/forums/)
 

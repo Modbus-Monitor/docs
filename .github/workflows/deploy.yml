@@ -120,6 +120,19 @@ jobs:
         run: mkdocs build
 
       # ────────────────────────────────
+      # 4️⃣a Verify built output (fail-fast guard)
+      # ────────────────────────────────
+      - name: Verify built site exists
+        run: |
+          if [ ! -f site/index.html ]; then
+            echo "❌ ERROR: site/index.html not found after build"
+            echo "This prevents uploading raw markdown to Pages"
+            exit 1
+          fi
+          echo "✅ Built site verified: site/index.html exists"
+          echo "📦 Site size: $(du -sh site | cut -f1)"
+
+      # ────────────────────────────────
       # 4️⃣b PDF generation (disabled for now)
       #     Uncomment later if PDF export is required
       # ────────────────────────────────

@@ -77,18 +77,9 @@ extra_css:
 
 plugins:
   - search:
-      separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+      separator: '[\s\u200b\-_,:!=\[\]()"`,/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
       lang: 
         - en
-      indexing: 'full'
-      prebuild_index: true
-      min_search_length: 2
-      exclusions:
-        - Legacy Content/*
-      boost:
-        - products/android/free-guide.md: 2.0
-        - products/xpf/user-guide.md: 2.0
-        - guides/6-digit-addressing.md: 1.5
   - include-markdown
   - awesome-pages
   - autorefs
