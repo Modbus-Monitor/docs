@@ -24,6 +24,88 @@ The Google Sheets Add-on enables automatic real-time logging of Modbus data dire
 
 ---
 
+## Architecture (Easy Concept View)
+
+```mermaid
+
+    flowchart LR
+        subgraph Device[Android Device]
+            App[Modbus Monitor Advanced]
+            Modbus[Modbus Client Polling]
+        end
+
+        RTU[Modbus RTU/TCP Server]:::modbus
+        GAuth[Google Auth & Token]
+        GSheets[Google Sheets API]
+        Sheet[(Spreadsheet: Sheet Tab)]
+
+        Modbus -->|Poll registers/coil data| App
+        App -->|Prepare row: timestamp + values| App
+        App -->|Authenticate| GAuth
+        GAuth -->|Access token| App
+        App -->|Append row| GSheets
+        GSheets -->|Write| Sheet
+
+        classDef modbus fill:#ffd54f,stroke:#b28900,color:#1a1a1a;
+        classDef cloud fill:#bbdefb,stroke:#1976d2,color:#0d47a1;
+        class GAuth, GSheets, Sheet cloud;
+```
+
+Notes:
+- Polling collects live Modbus register/coil values at your configured interval.
+- App formats a row (timestamp + selected points), then appends via Google Sheets API.
+- Optional local CSV logging can run in parallel for on-device backups.
+
+---
+
+## Log Data in Google Sheets
+
+Logging data in Google Sheets using the Modbus Monitor Advanced Android app supports two methods. Both use Google Sheets to log data periodically.
+
+### Method 1: Use a Shared Google Sheet (no account login)
+
+This method has the advantage that no Google account login is required and can be used when multiple devices log into one spreadsheet.
+
+1. Create a new Google Sheet using [sheets.google.com](https://sheets.google.com).
+2. Share the sheet using the “Share” button and select “Anyone with the link can edit”.
+3. In Modbus Monitor Advanced, go to Setup → Log tab and turn on “Use Google Sheets”.
+4. When prompted with “Google Account Setup”, click “Cancel” (account setup not necessary for this option).
+5. Adjust the logging interval to save battery and internet traffic.
+6. Click “Connect” (or tap the Link) to start communication. Verify data is logged in the shared Google Sheet.
+
+### Method 2: Use a Private Google Sheet (requires Google account)
+
+This method requires a Google Account. Data is kept private. You can create a new sheet automatically or reuse an existing one.
+
+1. Go to Settings and select “Use Google Sheets”.
+2. Enable “Create New Sheet on Start” if you want a new spreadsheet created each time the app starts; otherwise it reuses the same spreadsheet.
+3. If needed, enter minutes in “CSV Log Timer” to also create a local CSV file (set 0 to disable; large values can fill storage—move files regularly).
+4. Press “Back”.
+5. Choose a Google account to log in.
+
+### Sample Send (Account Setup Panel)
+
+Use the Account Setup control panel to test and validate your configuration:
+
+- **Log Out**: Log out of the current account.
+- **Log In**: Log in to your Google account; “Login OK” confirms success.
+- **Change Account**: Log out and log in to a different account.
+- **Write Sample Data**: Writes sample data to the spreadsheet to test settings.
+- **Create New Sheet**: Creates a new spreadsheet and remembers the Sheet ID.
+
+### Start Sending Data Periodically
+
+1. Adjust the logging interval to balance battery life and data usage (Settings → Log screen).
+2. Click “Connect” or tap the Link to begin communication; confirm that data appears in the selected Google Spreadsheet.
+
+---
+
+## Migration Note
+
+Content in this guide consolidates and updates material from the legacy page at https://quantumbitsolutions.com/sheets. The latest, canonical documentation lives here. If you find mismatches, use the feedback link at the end of this page.
+
+---
+
 ## Quick Start Setup
 
 ### Prerequisites
@@ -135,6 +217,66 @@ The Google Sheets Add-on enables automatic real-time logging of Modbus data dire
 - `userinfo.email`: Display signed-in account
 
 ---
+
+## Legacy Workflow: Shared vs Account Sheets
+
+### Method 1: Shared Google Sheet (No Account Login)
+
+Use a publicly editable shared sheet when multiple devices must log to one spreadsheet without signing into a Google account on the device.
+
+Steps:
+- Create a new Google Sheet at [sheets.google.com](https://sheets.google.com)
+- Click “Share” → set "Anyone with the link can edit"
+- Paste the sheet link/ID in the app Settings
+- Start Client Mode; data appends at the chosen interval
+
+Pros:
+- No per-device Google login required
+- Simple for fleets or temporary devices
+
+Cons:
+- Less secure; anyone with link can edit
+- Audit/history control is weaker
+
+### Method 2: Private Google Sheet (Account Login)
+
+Use a private sheet when data privacy and access control are required.
+
+Steps:
+1. Settings → Google Sheets → enable
+2. Tap "Sign in with Google" and choose the account
+3. Optionally enable "Create New Sheet on Start" to auto-create a fresh spreadsheet each app start
+4. Configure Append/Update mode and interval
+5. Start Client Mode; data appends with timestamp
+
+Pros:
+- Full control over access and sharing
+- Version history and ownership under your account
+
+Cons:
+- Requires device/account login flow
+
+---
+
+## Account Setup Panel (Testing Controls)
+
+Use the Account Setup panel to validate connectivity and permissions:
+
+- **Log In / Log Out**: Authenticate or clear the session
+- **Change Account**: Switch to a different Google account
+- **Write Sample Data**: Append test values to confirm permissions and sheet configuration
+- **Create New Sheet**: Programmatically create a spreadsheet and store its Sheet ID
+
+---
+
+## Start Sending Data Periodically
+
+- Choose a sensible interval to reduce battery and data usage (5–60 seconds typical)
+- Press **Link/Connect** in the main UI to start client polling
+- Confirm rows appear in your spreadsheet with timestamps and values
+
+---
+ 
 
 ## Data Format
 
@@ -483,6 +625,9 @@ function dailyExport() {
 - **API Reference**: [developers.google.com/sheets/api](https://developers.google.com/sheets/api)
 
 **Need Help?** Contact [support@quantumbitsolutions.com](mailto:support@quantumbitsolutions.com)
+
+[:octicons-issue-opened-24: Suggest an improvement](https://docs.quantumbitsolutions.com/support/)  
+[:octicons-history-24: Legacy page](https://quantumbitsolutions.com/sheets)
 
 ---
 

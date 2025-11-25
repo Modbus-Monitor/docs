@@ -2,7 +2,7 @@
 
 **Real-time IoT data publishing from Android to any MQTT broker**
 
-![MQTT Integration](../assets/screenshots/android-advanced/mma-mqtt-overview.webp){ .screenshot-center loading="lazy" }
+![MQTT Integration](../assets/screenshots/android-advanced/mma-main-ui.webp){ .screenshot-center loading="lazy" }
 
 !!! success "Quick Links"
     [:material-rocket-launch-outline: **Quick Start**](#quick-start-setup) | [:material-cog: **Configuration Guide**](#detailed-configuration) | [:material-frequently-asked-questions: **FAQ**](#frequently-asked-questions)
@@ -64,7 +64,7 @@ The MQTT Add-on extends Modbus Monitor Advanced with professional IoT capabiliti
 
 ### Connection Settings
 
-![MQTT Connection Settings](../assets/screenshots/android-advanced/mma-mqtt-settings.webp){ .screenshot-center loading="lazy" }
+![MQTT Connection Settings](../assets/screenshots/android-advanced/server-config.webp){ .screenshot-center loading="lazy" }
 
 **Broker Configuration:**
 
@@ -112,7 +112,7 @@ Payload: {
 
 ### TLS/SSL Configuration
 
-![MQTT TLS Setup](../assets/screenshots/android-advanced/mma-mqtt-tls.webp){ .screenshot-center loading="lazy" }
+![MQTT TLS Setup](../assets/screenshots/android-advanced/server.webp){ .screenshot-center loading="lazy" }
 
 **For Secure Brokers:**
 
