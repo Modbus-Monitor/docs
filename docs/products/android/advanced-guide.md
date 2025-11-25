@@ -973,9 +973,9 @@ Count: 10                 (your monitor point count)
 
 **What Clients Can Do**:
 
-- âœ… **Read**: Poll monitor point values in real-time
-- âœ… **Write**: Send values to your server (stored in memory)
-- âœ… **Multiple Clients**: Several devices can connect simultaneously
+- **Read**: Poll monitor point values in real-time
+- **Write**: Send values to your server (stored in memory)
+- **Multiple Clients**: Several devices can connect simultaneously
 
 !!! tip "Pre-Populate Data"
     Use **Write Preset Value** (see [Monitor Point Management](#monitor-point-management)) to fill registers with default data before clients connect. Full details in [Write Operations](#write-operations).
@@ -1019,20 +1019,23 @@ Count: 10                 (your monitor point count)
 
 **Monitor Points** are the fundamental building blocks of Modbus Monitor Advanced. Think of them as intelligent tags (similar to PLC tags) that completely define how to communicate with a specific piece of data on a Modbus device.
 
-<figure markdown>
-  ![Monitor Points List](../../assets/screenshots/android-advanced/monitor-points-list.webp){ width="450" }
-  <figcaption>Figure 9: Monitor points showing live data from multiple devices</figcaption>
+<figure markdown id="figure-9">
+![Monitor Points List](../../assets/screenshots/android-advanced/mma-main-ui.webp)
+<figcaption>Figure 9: Main interface highlighting Monitor Points [9] - the data display area showing live values from multiple devices</figcaption>
 </figure>
+
+!!! note "Figure Reference"
+    Figure 9 shows the same main interface as [Figure 1](#figure-1), but specifically highlights the **Monitor Points [9]** section where all your configured data points are displayed with live values, configuration details, and communication status.
 
 ### What is a Monitor Point?
 
 Each monitor point is a **complete configuration package** containing everything needed to:
 
-- ðŸ“¡ **Communicate** - Protocol, IP address, port, channel selection (TCP/IP, Serial, Bluetooth)
-- ðŸ“ **Locate Data** - Modbus address, register count, slave ID, function codes
-- ðŸŽ¨ **Display Values** - Data type interpretation, scaling, engineering units
-- âœï¸ **Control Devices** - Write values, preset commands, safety settings
-- âš™ï¸ **Transform Data** - Mathematical operations, coded messages, sensor integration
+- **Communicate** - Protocol, IP address, port, channel selection (TCP/IP, Serial, Bluetooth)
+- **Locate Data** - Modbus address, register count, slave ID, function codes
+- **Display Values** - Data type interpretation, scaling, engineering units
+- **Control Devices** - Write values, preset commands, safety settings
+- **Transform Data** - Mathematical operations, coded messages, sensor integration
 
 !!! tip "The Power of Monitor Points"
     **Multi-Device SCADA Capability**: Each monitor point can use **completely different** protocols, IP addresses, ports, and channels. This means you can simultaneously monitor:
@@ -1081,89 +1084,95 @@ Each monitor point is a **complete configuration package** containing everything
 
 ### Monitor Point Management
 
-<figure markdown>
-  ![Monitor Point Management Dialog](../../assets/screenshots/android-advanced/monitor-point-management.webp){ width="400" }
-  <figcaption>Figure 10: Management options (tap any monitor point to access)</figcaption>
-</figure>
+**The Monitor Point Management Dialog** is your central control hub for managing individual monitor points. This dialog provides quick access to all configuration, modification, and control operations for the selected monitor point.
 
-**The Monitor Points Management Dialog** is your central control hub for modifying, configuring, and managing individual monitor points in your list.
-
-#### Accessing the Management Dialog
+#### How to Open the Management Dialog
 
 <figure markdown>
   ![Accessing Monitor Points Management Dialog](../../assets/screenshots/android-advanced/mma-monitor-points-mangement.webp)
-  <figcaption>Figure 4: Accessing Monitor Points Management Dialog either by tap or swipe</figcaption>
+  <figcaption>Figure 11: Two ways to access - tap any monitor point directly or swipe left to reveal menu</figcaption>
 </figure>
 
-**Two Ways to Access the Management Dialog**:
+**Quick Access Methods**:
 
-1. **Tap**: Click directly on any monitor point in the main list
-2. **Swipe Left**: Swipe left on a monitor point to reveal the menu option
+1. **Direct Tap**: Touch any monitor point in the main list [9](#figure-1)
+2. **Swipe Left**: Swipe left on a monitor point to expose the menu button, then tap it
 
-**To Open the Management Menu**:
-1. **Tap** any specific Monitor Point in your main list  
-2. **Long-press** (depending on your device interaction settings)
-3. A dialog box titled **"Monitor Point Management"** will appear
+The dialog appears immediately, displaying all available management options as radio buttons.
 
-#### Management Options
+#### Available Management Options
 
-| Option | Icon | Description | Use Cases |
-|--------|------|-------------|----------|
-| **Communications** | Link | Toggles communication status for selected item | Pause queries to specific device without stopping entire system |
-| **Add** | Plus | Opens "Add Point" configuration screen | Insert new Modbus register or coil into monitoring list |
-| **Remove** | Delete | Permanently deletes selected Monitor Point | Clean up unused or obsolete monitoring points |
-| **Change** | Edit | Opens configuration screen for selected point | Modify Address, Function Code, Data Type, or other settings |
-| **Copy** | Copy | Copies configuration of selected point to clipboard | Backup configurations or prepare for duplication |
-| **Paste** | Paste | Pastes previously copied configuration as new item | Quickly duplicate similar sensors or registers |
-| **Write** | Write | Initiates write command to device | Send custom values to device (requires write capability enabled) |
-| **Write Preset Value** | Preset | Sends pre-configured default value to device | Quick setpoint adjustments or restore to known values |
-| **Hide/Unhide Configuration** | View | Toggles visibility of technical details in main list | Clean interface by hiding register addresses and data types |
-| **Apply Settings to All** | Global | Applies settings from selected point to all other points | Bulk update Channel/IP settings across all monitor points (use with caution) |
+| Option | Description | When to Use |
+|--------|-------------|-------------|
+| **Communications** | Toggle communication on/off for this point | Temporarily pause polling without deleting the configuration |
+| **Add** | Create a new monitor point with default settings | Add another device or register to your monitoring list |
+| **Remove** | Permanently delete this monitor point | Clean up unused or obsolete monitor points |
+| **Change** | Open full configuration dialog | Modify any setting: Address, Data Type, Channel, Protocol, etc. - see [Monitor Point Configuration](#monitor-point-configuration) |
+| **Copy** | Copy all settings to clipboard | Backup configuration or prepare to duplicate similar points |
+| **Paste** | Create new point from copied settings | Quickly duplicate similar configurations with minor variations |
+| **Write** | Send custom value to device | Enter specific value to write - opens dialog for input (see [Write Operations](#write-operations)) |
+| **Write Preset Value** | Send pre-configured default value | Instantly write the preset value configured in point settings |
+| **Hide/Unhide Configuration** | Toggle visibility of technical details | Clean up interface by hiding [9c](#figure-1), [9d](#figure-1), [9e](#figure-1) configuration lines |
+| **Apply Settings to All** | Copy communication settings to all points | ⚠️ Bulk update IP/port/channel - use with extreme caution |
 
-#### How to Use the Management Dialog
+#### Using the Management Dialog
 
-**Step-by-Step Process**:
-1. **Select an Action**: Tap the radio button next to desired action (e.g., "Change" or "Copy")
-2. **Confirm**: Press the **OK** button at bottom of dialog
-3. **Cancel**: Press **Cancel** to close menu without making changes
+**Simple 3-Step Process**:
 
-#### Advanced Features
+1. **Select**: Tap the radio button next to your desired action
+2. **Execute**: Press **OK** to perform the action
+3. **Cancel**: Press **Cancel** to exit without changes
 
-**Configuration Auto-Switching**: The app automatically switches between "Simple" and "Advanced" views depending on the point's configuration complexity.
+!!! tip "Quick Configuration Workflow"
+    - **First Time Setup**: Use **Change** to configure all settings
+    - **Duplicate Points**: Use **Copy** → **Paste** → **Change** to modify specifics
+    - **Ongoing Use**: Use **Write** or **Write Preset Value** for value changes
 
-**Bulk Operations**: Use "Apply Settings to All" to propagate network settings (IP address, port, protocol) from one point to all others in your list.
+#### Key Features & Capabilities
 
-#### Troubleshooting Management Operations
+**Smart Interface Adaptation**
 
-**Common Issues**:
+The configuration dialog automatically adapts its view based on complexity:
 
-- **Error Messages**: If you see error notifications (e.g., "Error 343235"), it usually indicates:
-  - Monitor Point configuration is invalid
-  - Background communication driver is busy
-  - **Solution**: Wait a moment and try the action again
+- **Simple View**: Shows only essential settings for basic monitor points
+- **Advanced View**: Expands to show all options when complex features are configured (Math, Coded Messages, Sensor Server)
 
-- **Read-Only Points**: If you select "Write" on points configured as Read-Only (e.g., Input Registers):
-  - The command may not execute
-  - **Solution**: Verify the register type supports write operations
+**Bulk Operations**
 
-- **Write Operations Disabled**: Write and Write Preset commands require:
-  - Write capability enabled in monitor point configuration
-  - Proper Modbus function codes configured
-  - **Solution**: Use "Change" to enable write capability in point settings
+The **"Apply Settings to All"** option propagates communication settings from the selected point to all other monitor points in your list:
 
-!!! tip "Management Best Practices"
-    - **Copy Before Modifying**: Always copy important configurations before making changes
-    - **Test Write Operations**: Verify write commands work correctly before deploying in production
-    - **Use Descriptive Names**: Give monitor points clear, descriptive names for easier management
-    - **Group Similar Points**: Organize related monitor points together for easier bulk operations
+- **What Gets Copied**: Channel, Protocol, IP Address, Port, Connection settings
+- **What Stays Unique**: Name, Address, Slave ID, Data Type, Count
+- **Warning**: This affects ALL monitor points - use carefully in multi-device scenarios
 
-!!! info "Write Operations Access"
-    Both **Write** and **Write Preset Value** options are available in this menu and work in both Client and Server modes:
+#### Common Issues & Solutions
+
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| **Error notifications** (e.g., "Error 343235") | Configuration invalid or driver busy | Wait a few seconds and retry the operation |
+| **Write commands fail** | Write capability not enabled | Use **Change** → [Modbus Configuration](#modbus-configuration) → Enable write function |
+| **Write to Input Registers fails** | Register type is read-only | Verify you're writing to Holding Registers (400001+), not Input Registers (300001+) |
+| **Paste doesn't work** | No configuration in clipboard | Select a point and use **Copy** first |
+| **Apply Settings to All affects wrong points** | Applied to all without distinction | Manually configure each point, or group similar devices and apply selectively |
+
+!!! tip "Best Practices for Monitor Point Management"
+    **Configuration Safety**:
     
-    - **Write**: Opens dialog for custom value entry - see [Write Operations](#write-operations) for detailed usage
-    - **Write Preset Value**: Immediate transmission of pre-configured default value
-    - **Safety**: Both options require write capability to be enabled in monitor point configuration
-    - **Cross-Mode**: Available whether operating as Modbus Client or Server
+    - Always **Copy** important configurations before making major changes
+    - Test write operations on non-critical devices first
+    - Use descriptive names that identify device, location, and data type
+    
+    **Efficiency Tips**:
+    
+    - Configure one point completely, then **Copy** → **Paste** → **Change** specific fields for similar devices
+    - Group related monitor points together in the list for easier management
+    - Use **Hide/Unhide Configuration** to reduce screen clutter once points are configured
+    
+    **Write Operations**:
+    
+    - Both **Write** and **Write Preset Value** work in Client Mode (sends to remote device) and Server Mode (stores in internal registers)
+    - Configure preset values for frequently used settings (emergency stops, default setpoints)
+    - See [Write Operations](#write-operations) for complete write functionality details
 
 ## Sensor Server Mode
 
@@ -1187,14 +1196,14 @@ Each monitor point is a **complete configuration package** containing everything
 
 #### Available Sensors
 **Common Android Sensors**:
-- **ðŸ“± Accelerometer**: Device motion and orientation
-- **ðŸ§­ Gyroscope**: Angular velocity measurements  
-- **ðŸŒŸ Light Sensor**: Ambient light levels
-- **ðŸ—“ï¸ Orientation**: Device position in 3D space
-- **ðŸŒ¡ï¸ Temperature**: Ambient temperature (device-dependent)
-- **ðŸ“Š Barometer**: Atmospheric pressure
-- **ðŸ§² Magnetometer**: Magnetic field strength
-- **ðŸ“ Proximity**: Object detection near device
+- **Accelerometer**: Device motion and orientation
+- **Gyroscope**: Angular velocity measurements  
+- **Light Sensor**: Ambient light levels
+- **Orientation**: Device position in 3D space
+- **Temperature**: Ambient temperature (device-dependent)
+- **Barometer**: Atmospheric pressure
+- **Magnetometer**: Magnetic field strength
+- **Proximity**: Object detection near device
 
 ### Configuring Sensor Server
 
