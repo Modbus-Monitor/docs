@@ -1,4 +1,4 @@
-# Modbus Monitor Advanced - Complete User Manual
+﻿# Modbus Monitor Advanced - Complete User Manual
 
 **Professional mobile Modbus monitoring for advanced users and field engineers**
 
@@ -18,10 +18,10 @@ The advantage of the Modbus Monitor Advanced is that it combines both modes in o
 
 **Essential App Features**:
 
-- **⚙️ Settings** - Configure protocols, timing, and cloud integrations  
-- **📤 Export/Import** - CSV data management and email sharing
-- **☁️ Cloud Integration** - Google Sheets, ThingSpeak, MQTT support
-- **🔄 Data Management** - Real-time logging, statistics, and data transformations
+- **âš™ï¸ Settings** - Configure protocols, timing, and cloud integrations  
+- **ðŸ“¤ Export/Import** - CSV data management and email sharing
+- **â˜ï¸ Cloud Integration** - Google Sheets, ThingSpeak, MQTT support
+- **ðŸ”„ Data Management** - Real-time logging, statistics, and data transformations
 
 ### Core Capabilities
 
@@ -174,7 +174,7 @@ The main interface combines status indicators with action buttons for easy opera
 
 [:octicons-arrow-left-24: Back to Main Interface](#main-interface-overview)
 
-Access comprehensive app configuration through **[Hamburger Menu [1]](#hamburger-menu) → Settings**. The Settings screen organizes all configuration options into logical categories for easy management of communication protocols, timing parameters, logging options, cloud integrations, and hardware-specific settings.
+Access comprehensive app configuration through **[Hamburger Menu [1]](#hamburger-menu) â†’ Settings**. The Settings screen organizes all configuration options into logical categories for easy management of communication protocols, timing parameters, logging options, cloud integrations, and hardware-specific settings.
 
 === "Modbus Master"
 
@@ -468,7 +468,7 @@ The Modbus Configuration section contains the essential parameters that define h
     | Setting | Type | Range/Options | Description |
     |---------|------|---------------|-------------|
     | **Name** | Text | Custom text | Name to describe this Monitor Point (e.g., Oven Temperature) |
-    | **Units** | Text | Custom text | Suffix to add after value (e.g., °C) |
+    | **Units** | Text | Custom text | Suffix to add after value (e.g., Â°C) |
     | **Address** | Number | 000001-665535 | Six-Digit Modbus (one-based) address that includes Function Code |
     | **Enron** | Dropdown | Yes/No | Choose Yes to use Enron address and protocol layer |
     | **Slave ID** | Number | 0-255 | Server or Slave ID of the remote Modbus server |
@@ -476,10 +476,10 @@ The Modbus Configuration section contains the essential parameters that define h
     
     **Addressing System Examples**:
 
-    - **Read 1st Holding Register**: 400001 (4 ⇒ Function 3)
-    - **Read 1st Input Register**: 300001 (3 ⇒ Function 4)
-    - **Read 1st Coil**: 000001 (0 ⇒ Modbus Function 1)
-    - **Read 1st Discrete Input**: 100001 (1 ⇒ Modbus Function 2)
+    - **Read 1st Holding Register**: 400001 (4 â‡’ Function 3)
+    - **Read 1st Input Register**: 300001 (3 â‡’ Function 4)
+    - **Read 1st Coil**: 000001 (0 â‡’ Modbus Function 1)
+    - **Read 1st Discrete Input**: 100001 (1 â‡’ Modbus Function 2)
     
     !!! info "Six-Digit Addressing Guide"
         The address field uses **Six-Digit Modbus format** (one-based) that includes the Function Code. For complete address information and examples, see: [quantumbitsolutions.com/address](https://quantumbitsolutions.com/address/)
@@ -584,7 +584,7 @@ The Sensor Server Configuration section enables your Android device's built-in s
 
     When you select a sensor, the app automatically configures:
 
-    - **Count**: Set to 6 words (3 floats × 2 words each) for 3-axis sensor data
+    - **Count**: Set to 6 words (3 floats Ã— 2 words each) for 3-axis sensor data
     - **Protocol**: Set to Modbus TCP (required for sensor server mode)
     - **Data Type**: Set to Float for proper sensor value representation
     - **Register Name**: Updated with comprehensive sensor specifications and live readings
@@ -598,13 +598,13 @@ The Sensor Server Configuration section enables your Android device's built-in s
     
     | Sensor | Description | Data Axes | Typical Units |
     |--------|-------------|-----------|---------------|
-    | **Accelerometer** | Device motion and orientation | 3 (X, Y, Z) | m/s² |
+    | **Accelerometer** | Device motion and orientation | 3 (X, Y, Z) | m/sÂ² |
     | **Gyroscope** | Angular velocity measurements | 3 (X, Y, Z) | rad/s |
     | **Light Sensor** | Ambient light levels | 1 | lux |
     | **Orientation** | Device position in 3D space | 3 (Azimuth, Pitch, Roll) | degrees |
-    | **Temperature** | Ambient temperature | 1 | °C |
+    | **Temperature** | Ambient temperature | 1 | Â°C |
     | **Barometer** | Atmospheric pressure | 1 | hPa |
-    | **Magnetometer** | Magnetic field strength | 3 (X, Y, Z) | µT |
+    | **Magnetometer** | Magnetic field strength | 3 (X, Y, Z) | ÂµT |
     | **Proximity** | Object detection near device | 1 | cm |
 
 #### Math Configuration
@@ -621,11 +621,11 @@ The Math Configuration section provides powerful mathematical transformation cap
     |---------|------|-------|-------------|
     | **Gain (m)** | Number | Any decimal | Slope value in the linear equation (multiplication factor) |
     | **Offset (b)** | Number | Any decimal | Offset value in the linear equation (addition constant) |
-    | **Engineering Units** | Text | Custom text | Display suffix (e.g., "°C", "PSI", "RPM") |
+    | **Engineering Units** | Text | Custom text | Display suffix (e.g., "Â°C", "PSI", "RPM") |
     
     **Mathematical Formula**:
     ```
-    Display Value = (Raw Value × Gain) + Offset
+    Display Value = (Raw Value Ã— Gain) + Offset
     ```
     
     **Use Cases**:
@@ -647,7 +647,7 @@ The Math Configuration section provides powerful mathematical transformation cap
     
     **Scaling Formula**:
     ```
-    Display Value = Low Limit + ((Raw Value - Analog K1) × (High Limit - Low Limit)) / (Analog K2 - Analog K1)
+    Display Value = Low Limit + ((Raw Value - Analog K1) Ã— (High Limit - Low Limit)) / (Analog K2 - Analog K1)
     ```
 
 === "Configuration Examples"
@@ -658,7 +658,7 @@ The Math Configuration section provides powerful mathematical transformation cap
     
     | Application | Gain (m) | Offset (b) | Units | Use Case |
     |-------------|----------|------------|-------|----------|
-    | **Temperature (°F to °C)** | 0.5556 | -17.78 | °C | Convert Fahrenheit to Celsius |
+    | **Temperature (Â°F to Â°C)** | 0.5556 | -17.78 | Â°C | Convert Fahrenheit to Celsius |
     | **Pressure Scaling** | 0.1 | 0 | PSI | Scale 0-1000 raw to 0-100 PSI |
     | **RPM Conversion** | 2.5 | 0 | RPM | Scale encoder counts to RPM |
     | **Percentage** | 0.1 | 0 | % | Convert 0-1000 raw to 0-100% |
@@ -668,7 +668,7 @@ The Math Configuration section provides powerful mathematical transformation cap
     | Application | K1 | K2 | Low Limit | High Limit | Units | Description |
     |-------------|----|----|-----------|------------|-------|-------------|
     | **4-20mA Current Loop** | 0 | 65535 | 0 | 1000 | Watts | PLC analog input to power measurement |
-    | **0-10V Voltage Input** | 0 | 32767 | -50 | 150 | °C | Analog voltage to temperature range |
+    | **0-10V Voltage Input** | 0 | 32767 | -50 | 150 | Â°C | Analog voltage to temperature range |
     | **Pressure Transmitter** | 819 | 16384 | 0 | 250 | PSI | 4-20mA pressure transmitter scaling |
     | **Flow Measurement** | 0 | 65535 | 0 | 5000 | LPM | Analog flow sensor to liters per minute |
     
@@ -836,11 +836,11 @@ Turn your Android device into a **Modbus TCP Server** that other devices can pol
 
 **Key Benefits**:
 
-- ✅ **Multiple Clients**: Handle several remote devices at once
-- ✅ **Standard Protocol**: Industry-standard Modbus TCP (no custom drivers needed)
-- ✅ **Read & Write**: Clients can both read values and write updates
-- ✅ **Easy Setup**: Shared configuration with Client mode
-- ✅ **Gateway Capability**: Run Client + Server simultaneously to bridge protocols (e.g., Serial RTU → Modbus TCP)
+- âœ… **Multiple Clients**: Handle several remote devices at once
+- âœ… **Standard Protocol**: Industry-standard Modbus TCP (no custom drivers needed)
+- âœ… **Read & Write**: Clients can both read values and write updates
+- âœ… **Easy Setup**: Shared configuration with Client mode
+- âœ… **Gateway Capability**: Run Client + Server simultaneously to bridge protocols (e.g., Serial RTU â†’ Modbus TCP)
 
 !!! warning "Protocol Converter Mode"
     When using Client and Server modes simultaneously as a protocol converter, ensure monitor points use compatible configurations. Only certain channel/protocol combinations are supported - test your specific setup thoroughly before final deployment.
@@ -854,11 +854,11 @@ Turn your Android device into a **Modbus TCP Server** that other devices can pol
 
 | Task | Location | Quick Steps |
 |------|----------|-------------|
-| **Enable Server Icon** | [Menu](#hamburger-menu) → Settings → Server | Check "Modbus Server?" |
-| **Set Port** | Settings → Server → Server/Listen Port | Default: 8888 |
-| **Auto Start** | Settings → Server → Auto Start | Optional auto-launch |
-| **Add Monitor Points** | Main → **(+)** button | Required: at least 1 point |
-| **Start Server** | Main → **Server Mode [2]** icon | Click to activate |
+| **Enable Server Icon** | [Menu](#hamburger-menu) â†’ Settings â†’ Server | Check "Modbus Server?" |
+| **Set Port** | Settings â†’ Server â†’ Server/Listen Port | Default: 8888 |
+| **Auto Start** | Settings â†’ Server â†’ Auto Start | Optional auto-launch |
+| **Add Monitor Points** | Main â†’ **(+)** button | Required: at least 1 point |
+| **Start Server** | Main â†’ **Server Mode [2]** icon | Click to activate |
 | **Check Status** | **Server Info [8]** | Shows IP, port, clients |
 | **Monitor Point Setup** | [Jump to config](#server-monitor-point-configuration) | Protocol: TCP, Address format |
 | **Write Operations** | [Write Operations](#write-operations) | Pre-populate or client writes |
@@ -869,7 +869,7 @@ Turn your Android device into a **Modbus TCP Server** that other devices can pol
 
 #### A. Enable Server Feature
 
-**Path**: [Hamburger Menu](#hamburger-menu) → **Settings** → **Server**
+**Path**: [Hamburger Menu](#hamburger-menu) â†’ **Settings** â†’ **Server**
 
 <figure markdown>
   ![Server Configuration Settings](../../assets/screenshots/android-advanced/server-config.webp){width="600"}
@@ -879,7 +879,7 @@ Turn your Android device into a **Modbus TCP Server** that other devices can pol
 These are **global server configuration settings** located in the main menu Settings. They apply to the entire Modbus TCP server instance and control server-wide behavior. Configure these settings once for all clients.
 
 !!! note "Settings Location Explained"
-    **Global Server Settings** (configured in [Hamburger Menu](#hamburger-menu) → Settings → Server):
+    **Global Server Settings** (configured in [Hamburger Menu](#hamburger-menu) â†’ Settings â†’ Server):
     
     - **Modbus Server** switch - Enable/disable server icon on main screen
     - **Server Port** - Port number for ALL client connections (default: 8888)
@@ -901,16 +901,16 @@ These are **global server configuration settings** located in the main menu Sett
 | **Auto Start** | Optional | Automatically starts server when app launches |
 
 !!! info "Port Selection Guide"
-    - **8888**: ✅ Recommended - works on all devices (non-rooted)
-    - **502**: ⚠️ Standard Modbus port (requires rooted Android)
-    - **1024+**: ✅ Safe range for non-rooted devices
+    - **8888**: âœ… Recommended - works on all devices (non-rooted)
+    - **502**: âš ï¸ Standard Modbus port (requires rooted Android)
+    - **1024+**: âœ… Safe range for non-rooted devices
     - **Avoid**: Port 5060 (VoIP conflicts), "0" (auto-select is unpredictable)
 
 ---
 
 #### B. Add Monitor Points
 
-**Path**: Main screen → **(+)** button
+**Path**: Main screen â†’ **(+)** button
 
 Each monitor point defines registers that clients can access. **You need at least one monitor point** before starting the server.
 
@@ -926,7 +926,7 @@ Each monitor point defines registers that clients can access. **You need at leas
 
 **Auto-Configured** (ignored by server):
 - IP Address (uses your device IP)
-- Port (uses port from Settings → Server)
+- Port (uses port from Settings â†’ Server)
 
 !!! warning "Use 6-Digit Addressing"
     Addresses use **Modbus protocol format** (e.g., 400001 = holding register 1). See [6-Digit Addressing Guide](../../guides/6-digit-addressing.md) for help.
@@ -935,7 +935,7 @@ Each monitor point defines registers that clients can access. **You need at leas
 ```yaml
 Protocol: Modbus TCP
 Address: 400001   # Holding register 1
-Count: 10         # 5 floats × 2 registers each
+Count: 10         # 5 floats Ã— 2 registers each
 Data Type: Float
 ```
 
@@ -973,9 +973,9 @@ Count: 10                 (your monitor point count)
 
 **What Clients Can Do**:
 
-- ✅ **Read**: Poll monitor point values in real-time
-- ✅ **Write**: Send values to your server (stored in memory)
-- ✅ **Multiple Clients**: Several devices can connect simultaneously
+- âœ… **Read**: Poll monitor point values in real-time
+- âœ… **Write**: Send values to your server (stored in memory)
+- âœ… **Multiple Clients**: Several devices can connect simultaneously
 
 !!! tip "Pre-Populate Data"
     Use **Write Preset Value** (see [Monitor Point Management](#monitor-point-management)) to fill registers with default data before clients connect. Full details in [Write Operations](#write-operations).
@@ -988,7 +988,7 @@ Count: 10                 (your monitor point count)
 
 **When to Use**: Dedicated server deployments where Android runs as permanent Modbus server
 
-**Enable**: Settings → Server → Check **Auto Start**
+**Enable**: Settings â†’ Server â†’ Check **Auto Start**
 
 **Behavior**: Server starts automatically on app launch (monitor points must be pre-configured)
 
@@ -1028,11 +1028,11 @@ Count: 10                 (your monitor point count)
 
 Each monitor point is a **complete configuration package** containing everything needed to:
 
-- 📡 **Communicate** - Protocol, IP address, port, channel selection (TCP/IP, Serial, Bluetooth)
-- 📍 **Locate Data** - Modbus address, register count, slave ID, function codes
-- 🎨 **Display Values** - Data type interpretation, scaling, engineering units
-- ✏️ **Control Devices** - Write values, preset commands, safety settings
-- ⚙️ **Transform Data** - Mathematical operations, coded messages, sensor integration
+- ðŸ“¡ **Communicate** - Protocol, IP address, port, channel selection (TCP/IP, Serial, Bluetooth)
+- ðŸ“ **Locate Data** - Modbus address, register count, slave ID, function codes
+- ðŸŽ¨ **Display Values** - Data type interpretation, scaling, engineering units
+- âœï¸ **Control Devices** - Write values, preset commands, safety settings
+- âš™ï¸ **Transform Data** - Mathematical operations, coded messages, sensor integration
 
 !!! tip "The Power of Monitor Points"
     **Multi-Device SCADA Capability**: Each monitor point can use **completely different** protocols, IP addresses, ports, and channels. This means you can simultaneously monitor:
@@ -1051,7 +1051,7 @@ Each monitor point is a **complete configuration package** containing everything
 |--------|----------|--------|
 | **Manual Entry** | Individual points, learning | Tap **(+)** button on main screen |
 | **Copy & Paste** | Similar configurations | Use [Monitor Point Management](#monitor-point-management) dialog |
-| **CSV Import** | Bulk deployment (hundreds/thousands) | [Hamburger Menu](#hamburger-menu) → Import |
+| **CSV Import** | Bulk deployment (hundreds/thousands) | [Hamburger Menu](#hamburger-menu) â†’ Import |
 
 **CSV Import Benefits**: Load pre-configured monitor point lists from email attachments or the Downloads folder - perfect for deploying standardized configurations across multiple devices or sites.
 
@@ -1102,173 +1102,6 @@ Each monitor point is a **complete configuration package** containing everything
 
 **To Open the Management Menu**:
 1. **Tap** any specific Monitor Point in your main list  
-2. **Long-press** (depending on your device interaction settings)
-3. A dialog box titled **"Monitor Point Management"** will appear
-
-#### Management Options
-
-| Option | Icon | Description | Use Cases | This can be done by checking the “Modbus Server?” option under the Preferences screen. Turning this feature on will place the familiar “server icon” on the icon bar. The Server Icon is the only way to turn the Server communication on.
-
-#### B. Add Monitor Points
-
-**Path**: Main screen → **(+)** button
-
-Each monitor point defines registers that clients can access. **You need at least one monitor point** before starting the server.
-
-**Required Settings**:
-
-| Setting | Value | Notes |
-|---------|-------|-------|
-| **Protocol** | **Modbus TCP** | Only protocol supported in server mode |
-| **Channel** | **TCP/IP (i0)** | Other channels ignored |
-| **Address** | e.g., **400001** | Register address ([6-digit format](../../guides/6-digit-addressing.md)) |
-| **Count** | e.g., **10** | Number of registers (5 floats = 10 words) |
-| **Data Type** | **Float**, **INT16U**, etc. | How data is interpreted |
-
-**Auto-Configured** (ignored by server):
-- IP Address (uses your device IP)
-- Port (uses port from Settings → Server)
-
-!!! warning "Use 6-Digit Addressing"
-    Addresses use **Modbus protocol format** (e.g., 400001 = holding register 1). See [6-Digit Addressing Guide](../../guides/6-digit-addressing.md) for help.
-
-**Example - Serve 5 Float Values**:
-```yaml
-Protocol: Modbus TCP
-Address: 400001   # Holding register 1
-Count: 10         # 5 floats × 2 registers each
-Data Type: Float
-```
-
----
-
-#### C. Start Server
-
-**Steps**:
-
-1. **Verify Setup**: Ensure at least one monitor point is configured
-2. **Click Server Icon**: Tap **Server Mode [2]** button on main screen
-3. **Check Status**: **Server Info [8]** will show:
-   - Your device IP address (e.g., 192.168.1.100)
-   - Port number (e.g., 8888)
-   - Number of connected clients
-
-!!! success "Server Active"
-    When running, remote devices can connect: `modbus://your-device-ip:8888`
-
----
-
-#### D. Test & Monitor
-
-**How Clients Connect**:
-
-Remote Modbus masters connect using these settings:
-
-```
-IP Address: 192.168.1.100  (from Server Info [8])
-Port: 8888                 (your configured port)
-Slave ID: 1               (standard)
-Register: 400001          (your monitor point address)
-Count: 10                 (your monitor point count)
-```
-
-**What Clients Can Do**:
-
-- ✅ **Read**: Poll monitor point values in real-time
-- ✅ **Write**: Send values to your server (stored in memory)
-- ✅ **Multiple Clients**: Several devices can connect simultaneously
-
-!!! tip "Pre-Populate Data"
-    Use **Write Preset Value** (see [Monitor Point Management](#monitor-point-management)) to fill registers with default data before clients connect. Full details in [Write Operations](#write-operations).
-
----
-
-### Advanced Configuration
-
-#### Auto Start Feature
-
-**When to Use**: Dedicated server deployments where Android runs as permanent Modbus server
-
-**Enable**: Settings → Server → Check **Auto Start**
-
-**Behavior**: Server starts automatically on app launch (monitor points must be pre-configured)
-
----
-
-#### Port Conflicts & Best Practices
-
-**Common Port Issues**:
-
-| Port | Problem | Solution |
-|------|---------|----------|
-| **< 1024** | Requires root access | Use 1024+ on non-rooted devices |
-| **5060** | VoIP conflicts (audio issues) | Use 8888 or other high port |
-| **0** | Auto-select causes conflicts | Pick specific port manually |
-
-**Best Practices**:
-
-1. Default to port **8888** (tested and reliable)
-2. Document your port choice for troubleshooting
-3. Test port doesn't conflict with network services
-4. Research existing devices before selecting port
-
----
-
-### How It Works (Technical)
-
-**Data Flow**:
-
-1. **Configuration**: You define monitor points with addresses and data types
-2. **Memory Allocation**: App reserves internal memory for each register
-3. **Client Requests**: Remote devices send Modbus TCP read/write commands
-4. **Response**: App returns current values from memory
-5. **Updates**: Written values stored and returned on subsequent reads
-
-**Multi-Client**: Multiple devices can connect and poll simultaneously
-
-**Protocol**: Only Modbus TCP recognized - other protocols ignored in server mode
-
-## Monitor Points - Core Concept
-
-<figure markdown>
-  ![Monitor Points List](../../assets/screenshots/android-advanced/monitor-points-list.webp){ width="450" }
-  <figcaption>Figure 9: Monitor points showing live data from multiple devices</figcaption>
-</figure>
-
-**What are Monitor Points?**
-
-A Monitor Point is similar to tags in a PLC and holds all information relevant to defining Modbus, the communication medium, display, and preset writing values. Each monitor point contains complete configuration for one data source:
-
-- **Communication settings** - Protocol, IP address, port, channel selection
-- **Modbus configuration** - Address, register count, slave ID  
-- **Data formatting** - Display options, data types, scaling
-- **Write values** - Preset values and mathematical transforms
-- **Advanced features** - Coded messages, sensor integration
-
-**Key Advantage**: Each point can use different protocols and connections, enabling multi-device SCADA functionality. With Modbus Monitor Advanced, you can set different protocols, IP addresses, ports, and channels for each Monitor Point Entry. This advanced SCADA-level data collection approach allows you to set and view live values from various operation modes through a single interface.
-
-The full list of Monitor Points can be built by adding new items one at a time or importing thousands of items from a CSV file from email or the mobile device's Downloads folder.
-
-### Monitor Point Management
-
-<figure markdown>
-  ![Monitor Point Management Dialog](../../assets/screenshots/android-advanced/monitor-point-management.webp){ width="400" }
-  <figcaption>Figure 10: Management options (tap any monitor point to access)</figcaption>
-</figure>
-
-**The Monitor Points Management Dialog** is your central command hub for modifying, configuring, and controlling individual Modbus points (registers or coils) within your list.
-
-#### Accessing the Management Dialog
-
-<figure markdown>
-  ![Accessing Monitor Points Management Dialog](../../assets/screenshots/android-advanced/mma-monitor-points-mangement.webp)
-  <figcaption>Figure 4: Accessing Monitor Points Management Dialog either by tap or swipe</figcaption>
-</figure>
-
-The Monitor Points Management dialog can be accessed either by clicking on the monitor points (after adding a point) or swiping left to expose the Menu option. The UI shows the Monitor Points Management dialog to configure each monitor point and customize it.
-
-To open the Management Menu:
-1. **Tap** any specific Monitor Point in your main list
 2. **Long-press** (depending on your device interaction settings)
 3. A dialog box titled **"Monitor Point Management"** will appear
 
@@ -1354,14 +1187,14 @@ To open the Management Menu:
 
 #### Available Sensors
 **Common Android Sensors**:
-- **📱 Accelerometer**: Device motion and orientation
-- **🧭 Gyroscope**: Angular velocity measurements  
-- **🌟 Light Sensor**: Ambient light levels
-- **🗓️ Orientation**: Device position in 3D space
-- **🌡️ Temperature**: Ambient temperature (device-dependent)
-- **📊 Barometer**: Atmospheric pressure
-- **🧲 Magnetometer**: Magnetic field strength
-- **📍 Proximity**: Object detection near device
+- **ðŸ“± Accelerometer**: Device motion and orientation
+- **ðŸ§­ Gyroscope**: Angular velocity measurements  
+- **ðŸŒŸ Light Sensor**: Ambient light levels
+- **ðŸ—“ï¸ Orientation**: Device position in 3D space
+- **ðŸŒ¡ï¸ Temperature**: Ambient temperature (device-dependent)
+- **ðŸ“Š Barometer**: Atmospheric pressure
+- **ðŸ§² Magnetometer**: Magnetic field strength
+- **ðŸ“ Proximity**: Object detection near device
 
 ### Configuring Sensor Server
 
@@ -1382,7 +1215,7 @@ To open the Management Menu:
 
 **When you select a sensor, the app automatically**:
 - **Updates Register Name**: Fills with comprehensive sensor specifications
-- **Sets Count Field**: Configures to 6 words (3 floats × 2 words each)
+- **Sets Count Field**: Configures to 6 words (3 floats Ã— 2 words each)
 - **Configures Protocol**: Sets to Modbus TCP
 - **Sets Data Type**: Configures as Float
 
@@ -1437,12 +1270,12 @@ Sensor Server Requirements:
 - **X-Axis**: Lateral acceleration (left/right)
 - **Y-Axis**: Longitudinal acceleration (forward/back)
 - **Z-Axis**: Vertical acceleration (up/down)
-- **Units**: Typically m/s² (meters per second squared)
+- **Units**: Typically m/sÂ² (meters per second squared)
 
 **Reference Documentation**: 
 
-- 📖 [Android Sensor Developer Guide](https://developer.android.com/guide/topics/sensors/sensors_overview.html)
-- 📋 Manufacturer sensor datasheets for specific interpretations
+- ðŸ“– [Android Sensor Developer Guide](https://developer.android.com/guide/topics/sensors/sensors_overview.html)
+- ðŸ“‹ Manufacturer sensor datasheets for specific interpretations
 
 ### Practical Applications
 
@@ -1499,7 +1332,7 @@ Expand the **[Channel Settings](#channel-settings)** section:
 
 === "TCP/IP Setup (i0)"
 
-    Standard network connection over Wi‑Fi/Ethernet to a PLC, gateway, or Modbus TCP device.
+    Standard network connection over Wiâ€‘Fi/Ethernet to a PLC, gateway, or Modbus TCP device.
 
     1. **Channel**: Select `TCP/IP`
     2. **Protocol**: `Modbus TCP`
@@ -1518,7 +1351,7 @@ Expand the **[Channel Settings](#channel-settings)** section:
 
 === "Serial/USB Setup (i1)"
 
-    Direct wired connection using a USB‑OTG serial adapter (RS‑485/RS‑232).
+    Direct wired connection using a USBâ€‘OTG serial adapter (RSâ€‘485/RSâ€‘232).
 
     1. **Channel**: Select `Serial`
     2. **USB Port**: Choose adapter from dropdown (appears when plugged in)
@@ -1529,7 +1362,7 @@ Expand the **[Channel Settings](#channel-settings)** section:
     7. **Stop Bits**: Usually `1`
     8. **Flow Control**: `None` (most Modbus devices)
     9. **Protocol**: `Modbus RTU` (most common) or `Modbus ASCII`
-    10. **Slave ID**: Device station number (1–247)
+    10. **Slave ID**: Device station number (1â€“247)
 
     !!! example "Typical Serial Connection"
         ```
@@ -1548,7 +1381,7 @@ Expand the **[Channel Settings](#channel-settings)** section:
 
 === "Bluetooth Setup (i2)"
 
-    Wireless serial bridge using a BLE/Classic module (e.g., HM‑10) to a Modbus RTU device.
+    Wireless serial bridge using a BLE/Classic module (e.g., HMâ€‘10) to a Modbus RTU device.
 
     1. **Channel**: Select `Bluetooth`
     2. **Device**: Choose paired module (e.g., `HM-10 4C:3F:D3:02:XX:XX`)
@@ -1670,8 +1503,8 @@ Once your monitor point is configured and reading successfully, you can write va
 
 **Enable Write Capability**:
 
-1. Tap monitor point → **"Change"**
-2. Expand **[Modbus Configuration](#modbus-configuration)** → scroll to Write Operations tab
+1. Tap monitor point â†’ **"Change"**
+2. Expand **[Modbus Configuration](#modbus-configuration)** â†’ scroll to Write Operations tab
 3. **Write Function**: Select appropriate function (already set in during Modbus Monitoring Configuration)
    - `Write Single Coil (05)` for boolean values
    - `Write Single Register (06)` for single registers
@@ -1682,12 +1515,12 @@ Once your monitor point is configured and reading successfully, you can write va
 **Two Ways to Write**:
 
 1. **Custom Value Write**:
-   - Tap monitor point → **"Write"**
+   - Tap monitor point â†’ **"Write"**
    - Enter value in dialog
    - Tap **"Change"** to send
    
 2. **Preset Value Write** (faster):
-   - Tap monitor point → **"Write Preset Value"**
+   - Tap monitor point â†’ **"Write Preset Value"**
    - Instantly sends pre-configured value
 
 !!! warning "Write Safety"
@@ -1701,13 +1534,13 @@ For complete write operation details, see the [Write Operations](#write-operatio
 
 **Polling Optimization**:
 
-- **Interval**: Set in [Settings → Timing](#settings) (default: 1000ms)
+- **Interval**: Set in [Settings â†’ Timing](#settings) (default: 1000ms)
 - **Timeout**: Adjust if devices are slow to respond
 - **Retries**: Configure retry attempts for failed communications
 
 **Data Scaling and Transformation**:
 
-- Use **[Math → Linear Transformation](#math-configuration)** to scale raw values
+- Use **[Math â†’ Linear Transformation](#math-configuration)** to scale raw values
 - Apply **[Coded Messages](#coded-messages-configuration)** to translate numbers to text
 
 **Cloud Integration**: Enable real-time data logging to Google Sheets, ThingSpeak, or MQTT brokers (requires add-ons). Data is sent to the cloud after each complete monitoring loop through all configured points.
@@ -1717,7 +1550,7 @@ For complete write operation details, see the [Write Operations](#write-operatio
 | Problem | Solution |
 |---------|----------|
 | **"?????" values** | Check IP address, port, slave ID, and network connectivity |
-| **Timeouts** | Increase timeout in Settings → Timing, verify device is online |
+| **Timeouts** | Increase timeout in Settings â†’ Timing, verify device is online |
 | **Wrong values** | Verify address format (6-digit), data type, and byte order |
 | **No USB device** | Check USB-OTG support, adapter compatibility, USB permissions |
 | **Write failures** | Ensure write capability is enabled, correct write function selected |
@@ -1750,14 +1583,14 @@ For complete write operation details, see the [Write Operations](#write-operatio
 
 **Step 1: Enable Server Feature**
 
-1. Open **[Hamburger Menu [1]](#figure-1) → Settings**
+1. Open **[Hamburger Menu [1]](#figure-1) â†’ Settings**
 2. Go to **Server** tab
 3. Enable **"Modbus Server?"** toggle
 4. **Server icon [2]** now appears on main screen
 
 **Step 2: Configure Server Settings**
 
-Stay in **[Settings → Server](#settings)**:
+Stay in **[Settings â†’ Server](#settings)**:
 
 1. **Server/Listen Port**: Choose your port number
    - Default: `8888` (not standard 502 to avoid conflicts)
@@ -1777,7 +1610,7 @@ For detailed port guidelines, see [Server Configuration](#server-configuration).
 Server mode requires monitor points that define which registers contain what data:
 
 1. Tap **[+ button [11]](#figure-1)** to add monitor point
-2. Tap monitor point → **"Change"**
+2. Tap monitor point â†’ **"Change"**
 3. Configure **[Channel Settings](#channel-settings)**:
    - **Channel**: `TCP/IP`
    - **Protocol**: `Modbus TCP`
@@ -1794,18 +1627,18 @@ Server mode stores data in internal memory. You have two options:
 
 === "Option 1: Manual Write"
 
-    1. Tap monitor point → **"Write"**
+    1. Tap monitor point â†’ **"Write"**
     2. Enter value
     3. Tap **"Change"** to store in register
     4. Value is now available for remote clients to read
 
 === "Option 2: Preset Values"
 
-    1. Tap monitor point → **"Change"**
-    2. In Modbus Configuration → Write Operations tab
+    1. Tap monitor point â†’ **"Change"**
+    2. In Modbus Configuration â†’ Write Operations tab
     3. Set **"Button Write Value"** to your default value
     4. Tap **OK** to save
-    5. Tap monitor point → **"Write Preset Value"** to load default
+    5. Tap monitor point â†’ **"Write Preset Value"** to load default
 
 **Step 5: Start the Server**
 
@@ -1908,7 +1741,7 @@ For detailed explanation, see [How Server Mode Works](#how-server-mode-works).
 
 **Step 1: Enable Server Mode**
 
-1. **[Hamburger Menu [1]](#figure-1) → Settings → Server**
+1. **[Hamburger Menu [1]](#figure-1) â†’ Settings â†’ Server**
 2. Enable **"Modbus Server?"** toggle
 3. Configure **Server/Listen Port** (default: 8888)
 4. Tap **OK**
@@ -1916,7 +1749,7 @@ For detailed explanation, see [How Server Mode Works](#how-server-mode-works).
 **Step 2: Add Sensor Monitor Point**
 
 1. Tap **[+ button [10]](#figure-1)** to add new monitor point
-2. Tap monitor point → **"Change"**
+2. Tap monitor point â†’ **"Change"**
 3. In **[Channel Settings](#channel-settings)**:
    - **Channel**: Must be `TCP/IP`
    - **Protocol**: Must be `Modbus TCP`
@@ -1929,7 +1762,7 @@ For detailed explanation, see [How Server Mode Works](#how-server-mode-works).
    - Available sensors depend on your device hardware
 3. **Select a sensor** from the list
 
-**Magic Happens** ✨: The app automatically configures:
+**Magic Happens** âœ¨: The app automatically configures:
 
 - **Register Name**: Filled with detailed sensor information
 - **Count**: Set to `6` (for 3 float values)
@@ -1975,9 +1808,9 @@ Remote Modbus clients can now:
 
 | Axis | Meaning | Example Value | Units |
 |------|---------|---------------|-------|
-| **X** | Lateral (left/right) | 0.05 | m/s² |
-| **Y** | Longitudinal (forward/back) | -0.12 | m/s² |
-| **Z** | Vertical (up/down) | 9.81 | m/s² |
+| **X** | Lateral (left/right) | 0.05 | m/sÂ² |
+| **Y** | Longitudinal (forward/back) | -0.12 | m/sÂ² |
+| **Z** | Vertical (up/down) | 9.81 | m/sÂ² |
 
 !!! tip "Understanding Sensor Readings"
     The Register Name field shows real-time sensor values as `[0]`, `[1]`, `[2]`. These correspond to X, Y, Z axes for most sensors. See [Android Sensor Documentation](https://developer.android.com/guide/topics/sensors/sensors_overview.html) for detailed interpretation.
@@ -1994,22 +1827,22 @@ You can expose multiple sensors simultaneously:
 **Example Multi-Sensor Setup**:
 
 ```
-Monitor Point 1: Accelerometer → Address 400001 (registers 400001-400006)
-Monitor Point 2: Gyroscope     → Address 400007 (registers 400007-400012)
-Monitor Point 3: Light Sensor  → Address 400013 (registers 400013-400018)
+Monitor Point 1: Accelerometer â†’ Address 400001 (registers 400001-400006)
+Monitor Point 2: Gyroscope     â†’ Address 400007 (registers 400007-400012)
+Monitor Point 3: Light Sensor  â†’ Address 400013 (registers 400013-400018)
 ```
 
 #### Common Sensors and Their Uses
 
 | Sensor | Data Type | Application Examples |
 |--------|-----------|---------------------|
-| **Accelerometer** | 3-axis acceleration (m/s²) | Vibration monitoring, motion detection, orientation |
+| **Accelerometer** | 3-axis acceleration (m/sÂ²) | Vibration monitoring, motion detection, orientation |
 | **Gyroscope** | 3-axis angular velocity (rad/s) | Rotation measurement, stability monitoring |
 | **Light** | Ambient illumination (lux) | Automatic lighting, energy management |
 | **Orientation** | Device angle (degrees) | Position monitoring, tilt detection |
-| **Magnetometer** | Magnetic field (μT) | Compass, metal detection |
+| **Magnetometer** | Magnetic field (Î¼T) | Compass, metal detection |
 | **Proximity** | Distance (cm) | Object detection, presence sensing |
-| **Temperature** | Ambient temp (°C) | Environmental monitoring |
+| **Temperature** | Ambient temp (Â°C) | Environmental monitoring |
 | **Barometer** | Pressure (hPa) | Altitude, weather monitoring |
 
 !!! note "Sensor Availability"
@@ -2083,7 +1916,7 @@ Modbus Monitor Advanced can be extended with cloud integration add-ons that enab
 
 **Coming Soon**: Detailed setup guide for MQTT configuration, broker connection, topic structure, and integration examples with AWS IoT, Azure IoT Hub, and Google Cloud IoT.
 
-**Quick Access**: Configure in **[Settings → MQTT](#settings)**
+**Quick Access**: Configure in **[Settings â†’ MQTT](#settings)**
 
 ### ThingSpeak Integration  
 
@@ -2091,7 +1924,7 @@ Modbus Monitor Advanced can be extended with cloud integration add-ons that enab
 
 **Coming Soon**: Complete guide covering ThingSpeak account setup, API key configuration, channel creation, field mapping, and dashboard creation.
 
-**Quick Access**: Configure in **[Settings → ThingSpeak](#settings)**
+**Quick Access**: Configure in **[Settings â†’ ThingSpeak](#settings)**
 
 ### Google Sheets Integration
 
@@ -2099,7 +1932,7 @@ Modbus Monitor Advanced can be extended with cloud integration add-ons that enab
 
 **Coming Soon**: Step-by-step instructions for Google account authentication, spreadsheet configuration, data formatting, and automated report generation.
 
-**Quick Access**: Configure in **[Settings → Google Sheets](#settings)**
+**Quick Access**: Configure in **[Settings â†’ Google Sheets](#settings)**
 
 ---
 
@@ -2158,11 +1991,11 @@ Serial Connection:
 ### Multi-Device Monitoring
 ```yaml
 Device 1 - PLC:
-  TCP/IP → 192.168.1.10:502
+  TCP/IP â†’ 192.168.1.10:502
 Device 2 - HMI:  
-  TCP/IP → 192.168.1.20:503
+  TCP/IP â†’ 192.168.1.20:503
 Device 3 - Sensor:
-  Serial → USB-OTG @ 19200 baud
+  Serial â†’ USB-OTG @ 19200 baud
 ```
 
 ## Hardware Requirements
@@ -2190,9 +2023,9 @@ Device 3 - Sensor:
 
 ### Cloud Platform Add-ons
 
-- **📊 Google Sheets** - Real-time data publishing and automated reports
-- **☁️ ThingSpeak** - IoT dashboards, API access, alerts and triggers  
-- **📡 MQTT** - Industrial IoT integration with AWS, Azure, Google Cloud
+- **ðŸ“Š Google Sheets** - Real-time data publishing and automated reports
+- **â˜ï¸ ThingSpeak** - IoT dashboards, API access, alerts and triggers  
+- **ðŸ“¡ MQTT** - Industrial IoT integration with AWS, Azure, Google Cloud
 
 ## Troubleshooting
 
@@ -2204,7 +2037,7 @@ Device 3 - Sensor:
   - Verify network connectivity and device accessibility
   - Confirm correct Channel/Protocol combinations
 - **Protocol Errors** - Ensure correct Channel/Protocol combinations (see compatibility table in Client Mode section)
-- **Timeouts** - Increase timeout values in Settings → Timing
+- **Timeouts** - Increase timeout values in Settings â†’ Timing
 
 **Hardware Issues**:
 - **USB Issues** - Verify OTG adapter compatibility and USB permissions
@@ -2229,9 +2062,9 @@ Device 3 - Sensor:
 
 ### Support Resources
 
-- 📧 **Email**: support@quantumbitsolutions.com
-- 📖 **Documentation**: [quantumbitsolutions.com/help](https://quantumbitsolutions.com/help/)
-- � **Forum**: [Expert community](https://quantumbitsolutions.com/forums/)
+- ðŸ“§ **Email**: support@quantumbitsolutions.com
+- ðŸ“– **Documentation**: [quantumbitsolutions.com/help](https://quantumbitsolutions.com/help/)
+- ï¿½ **Forum**: [Expert community](https://quantumbitsolutions.com/forums/)
 
 ## Get Started Today
 
