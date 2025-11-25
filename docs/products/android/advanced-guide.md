@@ -174,7 +174,7 @@ The main interface combines status indicators with action buttons for easy opera
 
 [:octicons-arrow-left-24: Back to Main Interface](#main-interface-overview)
 
-Access comprehensive app configuration through **[Hamburger Menu [1]](#hamburger-menu) â†’ Settings**. The Settings screen organizes all configuration options into logical categories for easy management of communication protocols, timing parameters, logging options, cloud integrations, and hardware-specific settings.
+Access comprehensive app configuration through **[Hamburger Menu [1]](#hamburger-menu) Settings**. The Settings screen organizes all configuration options into logical categories for easy management of communication protocols, timing parameters, logging options, cloud integrations, and hardware-specific settings.
 
 === "Modbus Master"
 
@@ -840,7 +840,7 @@ Turn your Android device into a **Modbus TCP Server** that other devices can pol
 - âœ… **Standard Protocol**: Industry-standard Modbus TCP (no custom drivers needed)
 - âœ… **Read & Write**: Clients can both read values and write updates
 - âœ… **Easy Setup**: Shared configuration with Client mode
-- âœ… **Gateway Capability**: Run Client + Server simultaneously to bridge protocols (e.g., Serial RTU â†’ Modbus TCP)
+- âœ… **Gateway Capability**: Run Client + Server simultaneously to bridge protocols (e.g., Serial RTU Modbus TCP)
 
 !!! warning "Protocol Converter Mode"
     When using Client and Server modes simultaneously as a protocol converter, ensure monitor points use compatible configurations. Only certain channel/protocol combinations are supported - test your specific setup thoroughly before final deployment.
@@ -854,11 +854,11 @@ Turn your Android device into a **Modbus TCP Server** that other devices can pol
 
 | Task | Location | Quick Steps |
 |------|----------|-------------|
-| **Enable Server Icon** | [Menu](#hamburger-menu) â†’ Settings â†’ Server | Check "Modbus Server?" |
-| **Set Port** | Settings â†’ Server â†’ Server/Listen Port | Default: 8888 |
-| **Auto Start** | Settings â†’ Server â†’ Auto Start | Optional auto-launch |
-| **Add Monitor Points** | Main â†’ **(+)** button | Required: at least 1 point |
-| **Start Server** | Main â†’ **Server Mode [2]** icon | Click to activate |
+| **Enable Server Icon** | [Menu](#hamburger-menu) Settings Server | Check "Modbus Server?" |
+| **Set Port** | Settings Server Server/Listen Port | Default: 8888 |
+| **Auto Start** | Settings Server Auto Start | Optional auto-launch |
+| **Add Monitor Points** | Main **(+)** button | Required: at least 1 point |
+| **Start Server** | Main **Server Mode [2]** icon | Click to activate |
 | **Check Status** | **Server Info [8]** | Shows IP, port, clients |
 | **Monitor Point Setup** | [Jump to config](#server-monitor-point-configuration) | Protocol: TCP, Address format |
 | **Write Operations** | [Write Operations](#write-operations) | Pre-populate or client writes |
@@ -1211,95 +1211,89 @@ The **"Apply Settings to All"** option propagates communication settings from th
 <figcaption>Figure 8: Accelerometer configured in Server Mode showing real-time values accessible to remote Modbus TCP clients</figcaption>
 </figure>
 
-#### Setup Process
+#### Quick Setup (5 Steps)
 
-1. **Enable Server Mode**: Turn on Modbus Server feature (required)
-2. **Add Monitor Point**: Create new monitoring point
-3. **Select Sensor**: Choose desired sensor from dropdown list
-4. **Review Configuration**: Verify automatic settings
-5. **Start Server**: Activate server to begin data collection
+1. **Enable Server Mode** - Turn on Modbus Server in [Settings → Server](#settings)
+2. **Add Monitor Point** - Tap **(+)** button on main screen
+3. **Select Sensor** - Choose sensor from dropdown (e.g., Accelerometer)
+4. **Verify Auto-Config** - App automatically sets all Modbus parameters
+5. **Start Server** - Tap **[Server Mode icon [2]](#figure-1)** to begin
 
-#### Automatic Configuration
+!!! success "Automatic Configuration"
+    When you select a sensor, the app automatically configures:
+    
+    - **Protocol**: Modbus TCP
+    - **Data Type**: Float (32-bit IEEE 754)
+    - **Count**: 6 registers (3 float values × 2 registers each)
+    - **Register Name**: Live sensor specifications and readings
 
-**When you select a sensor, the app automatically**:
-- **Updates Register Name**: Fills with comprehensive sensor specifications
-- **Sets Count Field**: Configures to 6 words (3 floats Ã— 2 words each)
-- **Configures Protocol**: Sets to Modbus TCP
-- **Sets Data Type**: Configures as Float
+#### Understanding Sensor Data Format
+
+**Scalar Array Structure**: Sensor values are exposed as arrays in consecutive Modbus registers.
+
+**Example - Accelerometer Reading**:
+
+| Array Index | Axis | Value | Register Address | Purpose |
+|-------------|------|-------|------------------|---------|
+| **[0]** -0.031 | X | -0.031 m/s² | 400001-400002 | Lateral motion (left/right) |
+| **[1]** 8.272 | Y | 8.272 m/s² | 400003-400004 | Longitudinal motion (forward/back) |
+| **[2]** 5.102 | Z | 5.102 m/s² | 400005-400006 | Vertical motion (up/down) |
+
+!!! info "Key Points"
+    - Each **float value** occupies **2 consecutive registers** (32-bit format)
+    - Remote clients read starting at the **configured address** (e.g., 400001)
+    - Number of array elements **varies by sensor type** (1-axis to 3-axis)
+    - Readings update in **real-time** as sensor values change
 
 #### Sensor Information Display
 
-**Register Name Format** (automatically generated):
+The register name field shows comprehensive sensor specifications automatically:
+
 ```
-Sensor #[number] [SensorName] 
-Power:[value]mA Resolution:[value] 
-Range:[value] Vendor:[name] Version:[number]
+Sensor #[ID] [SensorName]
+Power:[mA] Resolution:[value] Range:[max]
+Vendor:[manufacturer] Version:[number]
 Raw Data: [0]xxx.xx [1]xxx.xx [2]xxx.xx
 ```
 
-**Example Information**:
+**What Each Field Means**:
 
-- **Sensor Number**: Internal Android sensor ID
-- **Sensor Name**: Human-readable sensor type
-- **Power Consumption**: Current draw in milliamps
+- **Sensor ID**: Android system identifier
+- **Power**: Current consumption (mA)
 - **Resolution**: Measurement precision
-- **Maximum Range**: Sensor measurement limits
-- **Vendor**: Sensor manufacturer
-- **Version**: Hardware/driver version
-- **Raw Data**: Live 3-axis readings in real-time
+- **Range**: Maximum measurable value
+- **Vendor**: Hardware manufacturer
+- **Version**: Sensor driver version
+- **Raw Data**: Live readings updated in real-time
 
-### Required Sensor Server Configuration
+#### Configuration Requirements
 
-#### Mandatory Settings
-```yaml
-Sensor Server Requirements:
-  Sensor Selection: [Choose from dropdown]
-  Address: Use 6-digit format (see addressing guide)
-  Count: 6 (minimum for 3 float values)
-  Protocol: Modbus TCP
-  Data Type: Float  
-```
+**Minimum Settings** (auto-configured when sensor selected):
 
-!!! warning "Configuration Requirements"
-    All fields above must be properly configured for Sensor Server to work correctly. The Count field must be minimum 6 words to accommodate the 3-axis float data.
+| Setting | Required Value | Notes |
+|---------|---------------|-------|
+| **Sensor Selection** | Choose from dropdown | Varies by device hardware |
+| **Address** | 6-digit format (e.g., 400001) | Starting register for data |
+| **Count** | 6 minimum | 3 floats × 2 registers each |
+| **Protocol** | Modbus TCP | Server mode requirement |
+| **Data Type** | Float | 32-bit IEEE 754 format |
 
-### Understanding Sensor Data
+!!! tip "Device-Specific Sensors"
+    Available sensors depend on your device hardware. Common sensors: Accelerometer, Gyroscope, Magnetometer, Light, Barometer, Temperature, Proximity. Check your device specifications for exact sensor list.
 
-#### Data Format
-**3-Axis Readings**: Most sensors provide data in 3-dimensional arrays
+### Common Use Cases
 
-- **[0] X-Axis**: First dimensional reading
-- **[1] Y-Axis**: Second dimensional reading  
-- **[2] Z-Axis**: Third dimensional reading
+| Application | Sensor Used | Description |
+|-------------|-------------|-------------|
+| **Vibration Monitoring** | Accelerometer | Monitor equipment vibration patterns for predictive maintenance |
+| **Environmental Data** | Temperature, Barometer, Light | Collect ambient conditions for HVAC or industrial processes |
+| **Motion Detection** | Proximity, Accelerometer | Security systems and automated access control |
+| **Equipment Orientation** | Orientation, Magnetometer | Track device position and alignment in 3D space |
+| **Light Automation** | Light Sensor | Automatic lighting control based on ambient levels |
+| **Prototype Testing** | Any sensor | Quick sensor integration without custom programming |
 
-#### Data Interpretation
-**Accelerometer Example**:
-
-- **X-Axis**: Lateral acceleration (left/right)
-- **Y-Axis**: Longitudinal acceleration (forward/back)
-- **Z-Axis**: Vertical acceleration (up/down)
-- **Units**: Typically m/sÂ² (meters per second squared)
-
-**Reference Documentation**: 
-
-- ðŸ“– [Android Sensor Developer Guide](https://developer.android.com/guide/topics/sensors/sensors_overview.html)
-- ðŸ“‹ Manufacturer sensor datasheets for specific interpretations
-
-### Practical Applications
-
-#### Industrial IoT Integration
-
-- **Environmental Monitoring**: Use phone as environmental sensor station
-- **Vibration Analysis**: Monitor equipment vibration via accelerometer
-- **Light Control Systems**: Automatic lighting based on ambient conditions
-- **Security Systems**: Motion detection and proximity alerts
-
-#### Research and Development
-
-- **Data Collection**: Gather sensor data for analysis projects  
-- **Prototype Testing**: Quick sensor integration without custom programming
-- **Educational Demonstrations**: Teach industrial protocols and sensor integration
-- **Mobile Sensor Networks**: Deploy phones as distributed sensor nodes
+!!! tip "Learn More"
+    For detailed sensor specifications, data formats, and best practices, see: [Android Sensors Overview](https://developer.android.com/develop/sensors-and-location/sensors/sensors_overview)
 
 ---
 
@@ -1511,7 +1505,7 @@ Once your monitor point is configured and reading successfully, you can write va
 
 **Enable Write Capability**:
 
-1. Tap monitor point â†’ **"Change"**
+1. Tap monitor point **"Change"**
 2. Expand **[Modbus Configuration](#modbus-configuration)** â†’ scroll to Write Operations tab
 3. **Write Function**: Select appropriate function (already set in during Modbus Monitoring Configuration)
    - `Write Single Coil (05)` for boolean values
@@ -1523,12 +1517,12 @@ Once your monitor point is configured and reading successfully, you can write va
 **Two Ways to Write**:
 
 1. **Custom Value Write**:
-   - Tap monitor point â†’ **"Write"**
+   - Tap monitor point **"Write"**
    - Enter value in dialog
    - Tap **"Change"** to send
    
 2. **Preset Value Write** (faster):
-   - Tap monitor point â†’ **"Write Preset Value"**
+   - Tap monitor point **"Write Preset Value"**
    - Instantly sends pre-configured value
 
 !!! warning "Write Safety"
@@ -1618,7 +1612,7 @@ For detailed port guidelines, see [Server Configuration](#server-configuration).
 Server mode requires monitor points that define which registers contain what data:
 
 1. Tap **[+ button [11]](#figure-1)** to add monitor point
-2. Tap monitor point â†’ **"Change"**
+2. Tap monitor point **"Change"**
 3. Configure **[Channel Settings](#channel-settings)**:
    - **Channel**: `TCP/IP`
    - **Protocol**: `Modbus TCP`
@@ -1635,18 +1629,18 @@ Server mode stores data in internal memory. You have two options:
 
 === "Option 1: Manual Write"
 
-    1. Tap monitor point â†’ **"Write"**
+    1. Tap monitor point **"Write"**
     2. Enter value
     3. Tap **"Change"** to store in register
     4. Value is now available for remote clients to read
 
 === "Option 2: Preset Values"
 
-    1. Tap monitor point â†’ **"Change"**
+    1. Tap monitor point **"Change"**
     2. In Modbus Configuration â†’ Write Operations tab
     3. Set **"Button Write Value"** to your default value
     4. Tap **OK** to save
-    5. Tap monitor point â†’ **"Write Preset Value"** to load default
+    5. Tap monitor point **"Write Preset Value"** to load default
 
 **Step 5: Start the Server**
 
@@ -1757,7 +1751,7 @@ For detailed explanation, see [How Server Mode Works](#how-server-mode-works).
 **Step 2: Add Sensor Monitor Point**
 
 1. Tap **[+ button [10]](#figure-1)** to add new monitor point
-2. Tap monitor point â†’ **"Change"**
+2. Tap monitor point **"Change"**
 3. In **[Channel Settings](#channel-settings)**:
    - **Channel**: Must be `TCP/IP`
    - **Protocol**: Must be `Modbus TCP`
