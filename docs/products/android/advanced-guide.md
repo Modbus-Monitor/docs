@@ -855,11 +855,11 @@ Turn your Android device into a **Modbus TCP Server** that other devices can pol
 
 **Key Benefits**:
 
-- œ… **Multiple Clients**: Handle several remote devices at once
-- œ… **Standard Protocol**: Industry-standard Modbus TCP (no custom drivers needed)
-- œ… **Read & Write**: Clients can both read values and write updates
-- œ… **Easy Setup**: Shared configuration with Client mode
-- œ… **Gateway Capability**: Run Client + Server simultaneously to bridge protocols (e.g., Serial RTU Modbus TCP)
+- **Multiple Clients**: Handle several remote devices at once
+- **Standard Protocol**: Industry-standard Modbus TCP (no custom drivers needed)
+- **Read & Write**: Clients can both read values and write updates
+- **Easy Setup**: Shared configuration with Client mode
+- **Gateway Capability**: Run Client + Server simultaneously to bridge protocols (e.g., Serial RTU Modbus TCP)
 
 !!! warning "Protocol Converter Mode"
     When using Client and Server modes simultaneously as a protocol converter, ensure monitor points use compatible configurations. Only certain channel/protocol combinations are supported - test your specific setup thoroughly before final deployment.
@@ -920,9 +920,9 @@ These are **global server configuration settings** located in the main menu Sett
 | **Auto Start** | Optional | Automatically starts server when app launches |
 
 !!! info "Port Selection Guide"
-    - **8888**: œ… Recommended - works on all devices (non-rooted)
-    - **502**: š ¸ Standard Modbus port (requires rooted Android)
-    - **1024+**: œ… Safe range for non-rooted devices
+    - **8888**: Recommended - works on all devices (non-rooted)
+    - **502**: Standard Modbus port (requires rooted Android)
+    - **1024+**: Safe range for non-rooted devices
     - **Avoid**: Port 5060 (VoIP conflicts), "0" (auto-select is unpredictable)
 
 ---
