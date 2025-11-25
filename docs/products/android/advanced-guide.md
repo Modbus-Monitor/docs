@@ -869,7 +869,7 @@ Turn your Android device into a **Modbus TCP Server** that other devices can pol
 
 #### A. Enable Server Feature
 
-**Path**: [Hamburger Menu](#hamburger-menu) â†’ **Settings** â†’ **Server**
+**Path**: [Hamburger Menu](#hamburger-menu) → **Settings** → **Server**
 
 <figure markdown>
   ![Server Configuration Settings](../../assets/screenshots/android-advanced/server-config.webp){width="600"}
@@ -879,7 +879,7 @@ Turn your Android device into a **Modbus TCP Server** that other devices can pol
 These are **global server configuration settings** located in the main menu Settings. They apply to the entire Modbus TCP server instance and control server-wide behavior. Configure these settings once for all clients.
 
 !!! note "Settings Location Explained"
-    **Global Server Settings** (configured in [Hamburger Menu](#hamburger-menu) â†’ Settings â†’ Server):
+    **Global Server Settings** (configured in [Hamburger Menu](#hamburger-menu)  Settings  Server):
     
     - **Modbus Server** switch - Enable/disable server icon on main screen
     - **Server Port** - Port number for ALL client connections (default: 8888)
@@ -910,7 +910,7 @@ These are **global server configuration settings** located in the main menu Sett
 
 #### B. Add Monitor Points
 
-**Path**: Main screen â†’ **(+)** button
+**Path**: Main screen **(+)** button
 
 Each monitor point defines registers that clients can access. **You need at least one monitor point** before starting the server.
 
@@ -926,7 +926,7 @@ Each monitor point defines registers that clients can access. **You need at leas
 
 **Auto-Configured** (ignored by server):
 - IP Address (uses your device IP)
-- Port (uses port from Settings â†’ Server)
+- Port (uses port from Settings  Server)
 
 !!! warning "Use 6-Digit Addressing"
     Addresses use **Modbus protocol format** (e.g., 400001 = holding register 1). See [6-Digit Addressing Guide](../../guides/6-digit-addressing.md) for help.
@@ -988,7 +988,7 @@ Count: 10                 (your monitor point count)
 
 **When to Use**: Dedicated server deployments where Android runs as permanent Modbus server
 
-**Enable**: Settings â†’ Server â†’ Check **Auto Start**
+**Enable**: Settings  Server  Check **Auto Start**
 
 **Behavior**: Server starts automatically on app launch (monitor points must be pre-configured)
 
@@ -1054,7 +1054,7 @@ Each monitor point is a **complete configuration package** containing everything
 |--------|----------|--------|
 | **Manual Entry** | Individual points, learning | Tap **(+)** button on main screen |
 | **Copy & Paste** | Similar configurations | Use [Monitor Point Management](#monitor-point-management) dialog |
-| **CSV Import** | Bulk deployment (hundreds/thousands) | [Hamburger Menu](#hamburger-menu) â†’ Import |
+| **CSV Import** | Bulk deployment (hundreds/thousands) | [Hamburger Menu](#hamburger-menu)  Import |
 
 **CSV Import Benefits**: Load pre-configured monitor point lists from email attachments or the Downloads folder - perfect for deploying standardized configurations across multiple devices or sites.
 
@@ -1506,7 +1506,7 @@ Once your monitor point is configured and reading successfully, you can write va
 **Enable Write Capability**:
 
 1. Tap monitor point **"Change"**
-2. Expand **[Modbus Configuration](#modbus-configuration)** â†’ scroll to Write Operations tab
+2. Expand **[Modbus Configuration](#modbus-configuration)**  scroll to Write Operations tab
 3. **Write Function**: Select appropriate function (already set in during Modbus Monitoring Configuration)
    - `Write Single Coil (05)` for boolean values
    - `Write Single Register (06)` for single registers
@@ -1536,13 +1536,13 @@ For complete write operation details, see the [Write Operations](#write-operatio
 
 **Polling Optimization**:
 
-- **Interval**: Set in [Settings â†’ Timing](#settings) (default: 1000ms)
+- **Interval**: Set in [Settings  Timing](#settings) (default: 1000ms)
 - **Timeout**: Adjust if devices are slow to respond
 - **Retries**: Configure retry attempts for failed communications
 
 **Data Scaling and Transformation**:
 
-- Use **[Math â†’ Linear Transformation](#math-configuration)** to scale raw values
+- Use **[Math  Linear Transformation](#math-configuration)** to scale raw values
 - Apply **[Coded Messages](#coded-messages-configuration)** to translate numbers to text
 
 **Cloud Integration**: Enable real-time data logging to Google Sheets, ThingSpeak, or MQTT brokers (requires add-ons). Data is sent to the cloud after each complete monitoring loop through all configured points.
@@ -1552,7 +1552,7 @@ For complete write operation details, see the [Write Operations](#write-operatio
 | Problem | Solution |
 |---------|----------|
 | **"?????" values** | Check IP address, port, slave ID, and network connectivity |
-| **Timeouts** | Increase timeout in Settings â†’ Timing, verify device is online |
+| **Timeouts** | Increase timeout in Settings  Timing, verify device is online |
 | **Wrong values** | Verify address format (6-digit), data type, and byte order |
 | **No USB device** | Check USB-OTG support, adapter compatibility, USB permissions |
 | **Write failures** | Ensure write capability is enabled, correct write function selected |
@@ -1560,11 +1560,6 @@ For complete write operation details, see the [Write Operations](#write-operatio
 ### Guide 2: Using Modbus Server Mode (Slave)
 
 **What is Server Mode?** In Server (Slave) Mode, your Android device becomes a Modbus TCP server that responds to requests from remote Modbus clients (masters). This allows other devices or software to poll your phone/tablet for data you've configured.
-
-<figure markdown>
-  ![Modbus Server Mode Operation](../../assets/screenshots/android-advanced/server-mode-diagram.webp)
-  <figcaption>Modbus Server Mode: Remote masters poll your device for data</figcaption>
-</figure>
 
 #### When to Use Server Mode
 
@@ -1585,14 +1580,14 @@ For complete write operation details, see the [Write Operations](#write-operatio
 
 **Step 1: Enable Server Feature**
 
-1. Open **[Hamburger Menu [1]](#figure-1) â†’ Settings**
+1. Open **[Hamburger Menu [1]](#figure-1)  Settings**
 2. Go to **Server** tab
 3. Enable **"Modbus Server?"** toggle
 4. **Server icon [2]** now appears on main screen
 
 **Step 2: Configure Server Settings**
 
-Stay in **[Settings â†’ Server](#settings)**:
+Stay in **[Settings  Server](#settings)**:
 
 1. **Server/Listen Port**: Choose your port number
    - Default: `8888` (not standard 502 to avoid conflicts)
@@ -1637,7 +1632,7 @@ Server mode stores data in internal memory. You have two options:
 === "Option 2: Preset Values"
 
     1. Tap monitor point **"Change"**
-    2. In Modbus Configuration â†’ Write Operations tab
+    2. In Modbus Configuration  Write Operations tab
     3. Set **"Button Write Value"** to your default value
     4. Tap **OK** to save
     5. Tap monitor point **"Write Preset Value"** to load default
@@ -1743,7 +1738,7 @@ For detailed explanation, see [How Server Mode Works](#how-server-mode-works).
 
 **Step 1: Enable Server Mode**
 
-1. **[Hamburger Menu [1]](#figure-1) â†’ Settings â†’ Server**
+1. **[Hamburger Menu [1]](#figure-1)  Settings  Server**
 2. Enable **"Modbus Server?"** toggle
 3. Configure **Server/Listen Port** (default: 8888)
 4. Tap **OK**
@@ -1829,9 +1824,9 @@ You can expose multiple sensors simultaneously:
 **Example Multi-Sensor Setup**:
 
 ```
-Monitor Point 1: Accelerometer â†’ Address 400001 (registers 400001-400006)
-Monitor Point 2: Gyroscope     â†’ Address 400007 (registers 400007-400012)
-Monitor Point 3: Light Sensor  â†’ Address 400013 (registers 400013-400018)
+Monitor Point 1: Accelerometer  Address 400001 (registers 400001-400006)
+Monitor Point 2: Gyroscope      Address 400007 (registers 400007-400012)
+Monitor Point 3: Light Sensor   Address 400013 (registers 400013-400018)
 ```
 
 #### Common Sensors and Their Uses
@@ -1918,7 +1913,7 @@ Modbus Monitor Advanced can be extended with cloud integration add-ons that enab
 
 **Coming Soon**: Detailed setup guide for MQTT configuration, broker connection, topic structure, and integration examples with AWS IoT, Azure IoT Hub, and Google Cloud IoT.
 
-**Quick Access**: Configure in **[Settings â†’ MQTT](#settings)**
+**Quick Access**: Configure in **[Settings  MQTT](#settings)**
 
 ### ThingSpeak Integration  
 
@@ -1926,7 +1921,7 @@ Modbus Monitor Advanced can be extended with cloud integration add-ons that enab
 
 **Coming Soon**: Complete guide covering ThingSpeak account setup, API key configuration, channel creation, field mapping, and dashboard creation.
 
-**Quick Access**: Configure in **[Settings â†’ ThingSpeak](#settings)**
+**Quick Access**: Configure in **[Settings  ThingSpeak](#settings)**
 
 ### Google Sheets Integration
 
@@ -1934,7 +1929,7 @@ Modbus Monitor Advanced can be extended with cloud integration add-ons that enab
 
 **Coming Soon**: Step-by-step instructions for Google account authentication, spreadsheet configuration, data formatting, and automated report generation.
 
-**Quick Access**: Configure in **[Settings â†’ Google Sheets](#settings)**
+**Quick Access**: Configure in **[Settings  Google Sheets](#settings)**
 
 ---
 
@@ -1993,11 +1988,11 @@ Serial Connection:
 ### Multi-Device Monitoring
 ```yaml
 Device 1 - PLC:
-  TCP/IP â†’ 192.168.1.10:502
+  TCP/IP  192.168.1.10:502
 Device 2 - HMI:  
-  TCP/IP â†’ 192.168.1.20:503
+  TCP/IP  192.168.1.20:503
 Device 3 - Sensor:
-  Serial â†’ USB-OTG @ 19200 baud
+  Serial  USB-OTG @ 19200 baud
 ```
 
 ## Hardware Requirements
@@ -2039,7 +2034,7 @@ Device 3 - Sensor:
   - Verify network connectivity and device accessibility
   - Confirm correct Channel/Protocol combinations
 - **Protocol Errors** - Ensure correct Channel/Protocol combinations (see compatibility table in Client Mode section)
-- **Timeouts** - Increase timeout values in Settings â†’ Timing
+- **Timeouts** - Increase timeout values in Settings  Timing
 
 **Hardware Issues**:
 - **USB Issues** - Verify OTG adapter compatibility and USB permissions
