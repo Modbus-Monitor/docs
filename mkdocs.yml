@@ -7,7 +7,7 @@ use_directory_urls: true
 
 # Footer with version information
 copyright: |
-  Documentation Version 1.0.31 • Last Updated: November 25, 2025
+  Documentation Version 1.0.33 • Last Updated: November 26, 2025
 
 nav:
   - Home: index.md
@@ -185,7 +185,7 @@ markdown_extensions:
 
 # Footer with version information
 copyright: |
-  Documentation Version 1.0.32 • Last Updated: November 25, 2025
+  Documentation Version 1.0.33 • Last Updated: November 26, 2025
 
 nav:
   - Home: index.md
@@ -302,7 +302,7 @@ markdown_extensions:
 
 # Footer with version information
 copyright: |
-  Documentation Version 1.0.32 • Last Updated: November 25, 2025
+  Documentation Version 1.0.33 • Last Updated: November 26, 2025
 
 nav:
   - Home: index.md
