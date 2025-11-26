@@ -6,29 +6,23 @@
 
 ## Overview
 
-The Google Sheets Add‑on makes real‑time Modbus data logging simple. With the Modbus Monitor Advanced Android app you can send live values straight to a private Google Sheet (no server, database, or coding required). Each polling cycle becomes one clean row: timestamp, device ID, and one column per point. This gives you searchable, shareable, exportable industrial data in seconds.
+The Google Sheets Add‑on logs your Modbus data directly to a Google spreadsheet—no server or coding needed. Just connect your Android device to a Modbus source, sign in with Google, and start collecting data in the cloud.
+
+**What it does:**
+- Automatically saves one row per reading (timestamp, device name, and your sensor values)
+- Works with any Modbus source: serial cables (RTU), network devices (TCP), or Bluetooth sensors
+- All data appears instantly in Google Sheets where you can view charts, share with your team, and export to Excel
+
+**Why use it:**
+- Fast setup—create a spreadsheet with one button
+- No server to maintain
+- Access your data from any device with a web browser
+- Built-in backup and version history from Google Drive
 
 <div class="video-wrapper" style="text-align: center; margin: 1.5em 0;">
   <iframe width="560" height="315" src="https://www.youtube.com/embed/GAkMOEzmZ-k" title="Google Sheets Add-on Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   <p style="margin-top: 0.5em;"><strong>📺 Watch:</strong> Complete setup and configuration walkthrough</p>
 </div>
-
-You can collect data from multiple field interfaces and send them all to the same spreadsheet:
-
-- Modbus RTU (serial) devices via USB/RS-485 adapters
-- Modbus TCP endpoints over WiFi or Ethernet
-- Bluetooth / BLE sensor gateways (wrapped into Modbus-style polling internally)
-- Mixed hybrid networks where RTU sources are bridged to TCP
-
-Regardless of source (RTU serial line, TCP network, or BLE gateway), everything is converted into the same simple row format and appended for historical trends. Benefits:
-
-- Rapid cloud visibility without deploying a server stack
-- Seamless multi-device fleet aggregation (optional device ID column)
-- Secure audit history, revision tracking, and export (XLSX / CSV / PDF)
-- Immediate use of Google Sheets formulas, charts, pivot tables, and Apps Script automation
-
-
-Typical architecture: multiple local Modbus RTU or TCP nodes + BLE peripherals → Android app polling & row assembly → OAuth token exchange → append via Sheets API → cloud spreadsheet for analysis and collaboration.
 
 **Key Features:**
 
@@ -42,7 +36,6 @@ Typical architecture: multiple local Modbus RTU or TCP nodes + BLE peripherals �
 - **Version History** - Track all changes with timestamps
 - **Mobile & Desktop** - Access from any device
 
-
 !!! success "Quick Links"
     [:material-rocket-launch-outline: **Quick Start**](#quick-start-setup) | [:material-table: **Data Format**](#data-format) | [:material-frequently-asked-questions: **FAQ**](#frequently-asked-questions)
 
@@ -52,7 +45,7 @@ Typical architecture: multiple local Modbus RTU or TCP nodes + BLE peripherals �
 
 ```mermaid
 flowchart LR
-    subgraph Sources[Local / Field Interfaces]
+    subgraph Sources[Local / Field Interfaces]    
         RTUServer[Modbus RTU Devices]:::modbus
         TCPEndpoints[Modbus TCP Devices]:::modbus
         BLEGateways[Bluetooth / BLE Sensors]:::modbus
@@ -78,6 +71,7 @@ flowchart LR
 ```
 
 Notes:
+
 - Polling collects live Modbus register/coil values at your configured interval.
 - App formats a row (timestamp + selected points), then appends via Google Sheets API.
 - Optional local CSV logging can run in parallel for on-device backups.
@@ -125,41 +119,54 @@ Requires a Google Account. Data is kept private. You can create a new sheet auto
 
 ### Step 2: Understanding the Google Sheets Control Panel
 
-The control panel shows:
+The control panel is your central hub for configuring Google account login, creating spreadsheets, and verifying connections. You can access it three ways:
 
-**Header Status Bar:**
-
-- **Account**: Currently signed-in Google email
-- **Spreadsheet ID**: Active sheet identifier (auto-saved after Create)
-- **Access Permission**: Token status (Valid/Expired)
-- **Auto-Data Logging Status**: ON/OFF indicator
-
-**Control Buttons:**
-
-| Button | Function | When to Use |
-|--------|----------|-------------|
-| **Setup** | Choose or switch Google account | First-time setup or changing accounts |
-| **Create** | Create new spreadsheet, write initial header row, and auto-save ID | Quick start without manual spreadsheet creation |
-| **Log Out** | Sign out of current account | Switch accounts or revoke access |
-| **Read Sheet** | Fetch and display a few rows from current spreadsheet | Verify connection and existing data |
-| **Write Sample** | Append test row to spreadsheet | Validate write permissions before real logging |
-| **Set** | Save the Spreadsheet ID from the text field | Manually enter or paste a spreadsheet ID into the text box, then click Set to save |
+1. **Main Menu → Google Sheets** (full control panel)
+2. **Tap the spreadsheet icon** on the main screen (quick access)
+3. **Main Menu → Settings → Google Sheets section** (configuration view)
 
 <figure markdown="span">
   ![Google Sheets Control Panel](../assets/screenshots/android-advanced/control-panel.webp){ .screenshot-center loading="lazy" }
   <figcaption><strong>Control Panel Layout:</strong> Three sections—<strong>STATUS</strong> (top: account, spreadsheet ID, permissions, logging state), <strong>SETUP</strong> (middle: all control buttons), and <strong>MESSAGE</strong> (bottom: operation results and feedback)</figcaption>
 </figure>
 
+The control panel has three main sections:
+
+1. **STATUS** (top) - Shows current account, spreadsheet ID, connection status, and logging state
+2. **SETUP** (middle) - Contains all control buttons for configuration and testing
+3. **MESSAGE** (bottom) - Displays responses from Google, error messages, and data from Read operations
+
+**Status Section:**
+
+| Field | What It Shows | Example |
+|-------|---------------|---------|
+| **Account** | Currently signed-in Google email | `user@gmail.com` or `---` when not logged in |
+| **Spreadsheet ID** | Active sheet identifier used for logging | `1Abc2Def3Ghi4Jkl5Mno6Pqr` |
+| **Status** | Setup progress indicator | `Ready` or steps needed to complete setup |
+| **Data Logging** | Auto-logging state | `ON` or `OFF` |
+
+**Control Buttons:**
+
+| Button | Function | When to Use |
+|--------|----------|-------------|
+| **Setup** | Choose or switch Google account | First-time setup or changing accounts to use to create, read, or update the online spreadsheet |
+| **Create** | Create new spreadsheet, write initial header row, and auto-save ID | Quick start without manual spreadsheet creation |
+| **Log Out** | Sign out of current account | Switch accounts or revoke access |
+| **Read Sheet** | Fetch and display a few rows from current spreadsheet | Verify connection and existing data |
+| **Write Sample** | Append test row to spreadsheet | Validate write permissions before real logging |
+| **Set** | Save the Spreadsheet ID from the text field | Manually enter or paste a spreadsheet ID into the text box, then click Set to save |
+
+
+
 ### Step 3: Connect Your Google Account
 
 1. Click **Setup** button
-2. Browser opens with Google sign-in screen
-3. Select your Google account
-4. **Click "Allow"** to grant permissions:
-   - ✓ View and manage your spreadsheets
-   - ✓ See your email address
-5. Browser redirects back to app
-6. Confirmation: Account email appears in header
+2. Device opens with Google account sign-in screen
+3. Select your Google account and click OK
+4. **Click "Continue"** to grant permissions:
+   - ✓ View and manage your spreadsheets (Create, Read, and Write)
+5. Device redirects back to app to cntrol panel
+6. **Confirmation**: Account email appears in header
 
 ![Permission Screen](../assets/screenshots/android-advanced/google-permission.webp){ .screenshot-center loading="lazy" }
 
@@ -185,6 +192,8 @@ The control panel shows:
    
       - Find newly created spreadsheet
       - Verify sample row appeared
+
+![Creat and Read Google Sheets](../assets/screenshots/android-advanced/google-sheets-create.webp){ .screenshot-center loading="lazy" }
 
 !!! tip "Alternative: Use Existing Spreadsheet"
     Instead of clicking **Create**, you can manually enter a **Spreadsheet ID** if you want to log to an existing sheet.
