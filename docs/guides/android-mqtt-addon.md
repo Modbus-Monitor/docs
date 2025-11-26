@@ -2,67 +2,376 @@
 
 **Real-time IoT data publishing from Android to any MQTT broker**
 
-![MQTT Integration](../assets/screenshots/android-advanced/mma-main-ui.webp){ .screenshot-center loading="lazy" }
+![MQTT Integration](../assets/screenshots/android-advanced/mma-mqtt-hero.webp){ .screenshot-center loading="lazy" }
 
-!!! success "Quick Links"
-    [:material-rocket-launch-outline: **Quick Start**](#quick-start-setup) | [:material-cog: **Configuration Guide**](#detailed-configuration) | [:material-frequently-asked-questions: **FAQ**](#frequently-asked-questions)
 
 ## Overview
 
 The MQTT Add-on extends Modbus Monitor Advanced with professional IoT capabilities, enabling real-time data publishing to cloud platforms, enterprise message brokers, and custom dashboards.
 
-**Key Features:**
+**How It Works:**
 
-- ✅ **Universal Broker Support** - AWS IoT, Azure IoT Hub, HiveMQ, Mosquitto, EMQX
-- ✅ **Secure Connections** - TLS/SSL encryption with certificate authentication
-- ✅ **Flexible Topics** - Customizable topic structure with device ID and point names
-- ✅ **Batch Publishing** - Single JSON message or individual topics per monitor point
-- ✅ **Real-time Streaming** - Automatic publish on each polling cycle completion
-- ✅ **QoS Control** - Quality of Service levels 0, 1, 2 for reliability tuning
+Modbus Monitor Advanced can read data from **any local source** (Modbus TCP servers, serial devices, Bluetooth adapters, sensors, or simulated data) through **three communication channels**—and automatically publish everything to your cloud MQTT broker. No databases, servers, or coding required. Perfect for remote monitoring, edge computing, and IoT dashboards.
 
----
+**Data Flow Example:**
+```
+Local Modbus Server (TCP/IP, USB Serial, or Bluetooth)
+        ↓
+Modbus Monitor Advanced (reads data every polling cycle)
+        ↓
+MQTT Add-on (transforms data to JSON)
+        ↓
+Cloud MQTT Broker (HiveMQ, AWS IoT, Azure, Mosquitto, etc.)
+        ↓
+Dashboards, Analytics, Mobile Apps, Alerts
+```
 
-## Quick Start Setup
+!!! success "Quick Links"
+    [:material-rocket-launch-outline: **Get Started (5 min)**](#quick-start-setup) | [:material-play-circle: **Step-by-Step Guide**](#mqtt-in-action-step-by-step-workflow) | [:material-table: **Expert Reference**](#detailed-configuration)
 
-### Prerequisites
-
-- Modbus Monitor Advanced installed (v1.x or later)
-- MQTT Add-on purchased and activated
-- MQTT broker accessible (cloud or local)
-- Broker connection details (host, port, credentials)
-
-### 5-Minute Configuration
-
-1. **Enable MQTT in Settings**
-   - Open app → Hamburger Menu → Settings → MQTT
-   - Toggle "Enable MQTT" ON
-
-2. **Configure Broker Connection**
-   - **Broker Host**: Enter broker address (e.g., `broker.hivemq.com`)
-   - **Port**: Standard MQTT port (1883 non-TLS, 8883 TLS)
-   - **Client ID**: Unique identifier for this device (e.g., `android-field-01`)
-
-3. **Set Base Topic**
-   - **Topic Prefix**: Base path for all published data (e.g., `modbus/devices/android01`)
-   - App auto-appends monitor point names or `/batch` for JSON mode
-
-4. **Add Credentials** (if required)
-   - **Username**: MQTT broker username
-   - **Password**: MQTT broker password
-
-5. **Start Publishing**
-   - Start Client Mode polling
-   - Data publishes automatically after each cycle
-
-**Verify Publishing:**
-- Use MQTT Explorer or `mosquitto_sub` to subscribe to your topics
-- Check broker logs for successful connections
+!!! tip "YouTube Walkthrough"
+    Watch the complete MQTT setup and live publishing demo: [:material-youtube: MQTT Publisher Video](https://youtu.be/vhivTbEz7hY?si=9dGFPTGUoaKHLWSc){:target="_blank"}
 
 ---
 
-## Detailed Configuration
+## Quick Start Setup (5 Minutes)
 
-### Connection Settings
+**Perfect for first-time users—get your data publishing to the cloud in 5 minutes using HiveMQ free broker.**
+
+### What You Need
+
+- ✅ Android device with Modbus Monitor Advanced + MQTT add-on **purchased**
+- ✅ A Modbus server to read from (TCP/IP, USB Serial, or Bluetooth—see examples below)
+- ✅ Free HiveMQ broker account (or any MQTT broker: local Mosquitto, AWS IoT, Azure, etc.)
+
+### The Simplest Setup (TCP/IP Example)
+
+**Step 1: Create a Monitor Point (30 seconds)**
+
+1. Open Modbus Monitor Advanced → Tap **+** (add button)
+2. Tap **Change** and configure:
+   - **Channel**: `TCP/IP`
+   - **IP Address**: `192.168.68.62` (your Modbus server)
+   - **Port**: `502`
+   - **Address**: `400001`
+   - **Data Type**: `INT16`
+3. Tap **OK**
+
+![Monitor Point MQTT Topic ](../assets/screenshots/android-advanced/mma-addon-mqtt-monitoring-point-topic.webp){ .screenshot-center loading="lazy" }
+
+💡 **Need help?** See [:octicons-book-24: Advanced Guide → Creating Monitor Points](../products/android/advanced-guide.md#monitor-points) for detailed explanations of each field.
+
+**Step 2: Enable MQTT (60 seconds)**
+
+1. Tap **Hamburger Menu** → **Settings** → **MQTT**
+2. Toggle **Enable MQTT** ON
+3. Fill in:
+   - **Broker Host**: `broker.hivemq.com`
+   - **Port**: `1883`
+   - **Client ID**: `myandroid01` (any unique name)
+   - **Topic**: `modbusmonitor/tanklevel1` (any path you like)
+4. Tap **Save**
+
+
+**Step 3: Start Publishing (10 seconds)**
+
+1. Return to main screen
+2. Tap the **Link icon** to start polling
+3. **Done!** Data is now publishing to HiveMQ
+
+**Verify It Works:**
+
+1. Go to [HiveMQ Web Client](https://www.hivemq.com/demos/websocket-client/){:target="_blank"}
+2. Click **Connect**
+3. Subscribe to `modbusmonitor/#`
+4. Watch your data appear in real-time! 🎉
+
+**Diagram reference:**
+
+- (Left) Monitoring point polls the local Modbus server (configuration).
+- (Middle) App reads data from the TCP device.
+- (Right) MQTT tool subscribes to the topic and receives values broadcast by the remote broker.
+- The arrow shows topics published by the Modbus Monitor Android configuration (name: modbusmonitor/tanklevel1). The value is published after polling (modbusmonitor/tanklevel1) and is subscribed to by the remote monitoring tool (modbusmonitor/#).
+
+<figure markdown="span">
+  ![MQTT Publishing Flow](../assets/screenshots/android-advanced/mma-addon-mqtt-topic-publish.webp){ loading="lazy" }
+  <figcaption>
+    MQTT Publishing Flow: Modbus → Android app → MQTT broker → Remote subscribers
+  </figcaption>
+</figure>
+---
+
+## MQTT in Action: Step-by-Step Workflow
+
+**Detailed walkthrough with all settings explained—follow this if Quick Start feels too fast.**
+
+### Setup Your Test Environment
+
+**What You'll Need:**
+
+1. **Android device** running Modbus Monitor Advanced with MQTT add-on purchased
+2. **Remote Modbus Server** (can be Modbus Monitor XPF on Windows, or any Modbus TCP server)
+3. **MQTT Broker** (we'll use public HiveMQ: `broker.hivemq.com`)
+4. **MQTT Client** (MQTT Explorer to subscribe and verify publishing)
+
+**System Overview:**
+```
+Modbus Server (Windows XPF)
+        ↓ {TCP/IP}
+Android Device (Modbus Monitor Advanced)
+        ↓ {WiFi/Ethernet → Internet}
+HiveMQ Public Broker
+        ↓ {MQTT}
+MQTT Explorer (or other subscribers)
+```
+
+### Step 1: Connect to Modbus Server
+
+1. Open Modbus Monitor Advanced → **Hamburger Menu** → **+** to create a Monitor Point
+2. Tap **Change** to configure:   
+      - **Channel**: `TCP/IP` (WiFi)
+      - **Protocol**: `Modbus TCP`
+      - **Device IP**: Enter your Windows/Modbus server IP (e.g., `192.168.1.100`)
+      - **Port**: Default Modbus TCP port (e.g., `502` or `8888` if custom)
+      - **Slave ID**: `1` (or appropriate value for your server)
+      - **Address**: `400001` (Holding Register example)
+      - **Count**: `2` (read 2 registers)
+      - **Data Type**: `FLOAT32`
+      - **Name**: `temperature` (use naming similar to MQTT topics)
+3. Tap **OK** to save the monitor point
+
+📖 **For detailed field explanations**, see [:octicons-book-24: Advanced Guide → Monitor Point Configuration](../products/android/advanced-guide.md#monitor-point-configuration)
+
+### Step 2: Open MQTT Console
+
+1. Tap **Hamburger Menu** → **Cloud** → **MQTT** (or look for MQTT button in menu)
+2. MQTT Console opens showing connection status
+
+### Step 3: Connect to HiveMQ Broker (Manual Test)
+
+1. In MQTT Console, fill in broker details:
+   - **Broker Host**: `broker.hivemq.com`
+   - **Port**: `1883` (or `8883` for TLS/SSL secure connection)
+   - **Client ID**: `android-modbus-monitor` (or any unique ID)
+   - **Username**: Leave blank (HiveMQ public broker requires no auth)
+   - **Password**: Leave blank
+   - **Use TLS/SSL**: Toggle OFF for port `1883`, toggle ON for port `8883`
+
+2. Tap **Connect** button
+3. **Header lights up GREEN** → Connection successful!
+4. Any connection messages display at bottom of console
+
+**Secure Port Options:**
+
+| Protocol | Port | Use Case | TLS Toggle |
+|----------|------|----------|-----------|
+| **TCP (Unencrypted)** | `1883` | Testing, local networks | OFF |
+| **TLS/SSL (Encrypted)** | `8883` | Production, cloud brokers | ON |
+| **WebSocket** | `8000` | Browser/web apps | OFF |
+| **WebSocket Secure** | `8001` | Secure web apps | ON |
+
+**Example Brokers with Secure Ports:**
+- HiveMQ: `tcp://broker.hivemq.com:1883` or `ssl://broker.hivemq.com:8883`
+- AWS IoT: `ssl://<endpoint>.iot.region.amazonaws.com:8883`
+- Azure IoT: `ssl://your-hub.azure-devices.net:8883`
+- Mosquitto: `tcp://test.mosquitto.org:1883` or `ssl://test.mosquitto.org:8883`
+
+### Step 4: Manually Publish Test Data
+
+1. In MQTT Console, tap **Publish** button
+2. Configure publish settings:
+      - **Topic**: `modbusmonitor/temperature`
+      - **Payload**: `75.3` (sample temperature value)
+3. Tap **Send**
+4. Data is now published to the broker for remote subscribers
+
+=== "Verify in Modbus Monitor Advanced"
+
+    **Verify directly inside the app—no external tools required:**
+
+    1. In the same MQTT Console where you published
+    2. Find the **Subscribe** section (or **Subscriptions** tab)
+    3. Enter the topic: `modbusmonitor/temperature`
+    4. Tap **Subscribe**
+    5. Watch the console—you'll see incoming messages in real-time:
+       ```
+       Subscribed to: modbusmonitor/temperature
+       Message: 75.3
+       ```
+    6. When finished, tap **Unsubscribe** to stop listening
+    ![MQTT Subscribe Verify](../assets/screenshots/android-advanced/mma-addon-mqtt-topic-subscribe.webp){.screenshot-center loading="lazy"}
+
+=== "Verify using MQTT Explorer (or similar)"
+
+    **Verify using an external MQTT tool on your computer:**
+
+    - Open MQTT Explorer or similar tool on your computer
+    - Connect to `broker.hivemq.com`
+    - Subscribe to `modbusmonitor/#` (wildcard to see all topics)
+    - You should see: `modbusmonitor/temperature` = `75.3`
+
+### Step 5: Configure Automatic Publishing
+
+**Now let's automate this so data publishes continuously:**
+
+1. Go back to Monitor Points list
+2. Tap your monitor point (e.g., `temperature`) → **Change**
+3. Confirm TCP/IP, Modbus TCP, and data type settings are correct
+4. Tap **OK** to return to list
+
+💡 **Tip**: If your values aren't updating correctly, review [:octicons-book-24: Advanced Guide → Troubleshooting Monitor Points](../products/android/advanced-guide.md#troubleshooting-monitor-points)
+
+5. Open **Hamburger Menu** → **Settings** → **MQTT**
+6. Configure MQTT settings:
+   - **Enable MQTT**: Toggle ON
+   - **Broker Host**: `broker.hivemq.com`
+   - **Port**: `1883`
+   - **Client ID**: `android-modbus-monitor`
+   - **Base Topic**: `modbus/monitor` (auto-appends point name or `/batch`)
+   - **Publish Mode**: Choose:
+     - **Individual Topics**: Each point publishes separately (e.g., `.../temperature`, `.../pressure`)
+     - **Batch JSON**: All points in one message (e.g., `.../batch`)
+   - **QoS**: `0` (for testing) or `1` (for reliability)
+
+7. Tap **Save** to apply settings
+
+### Step 6: Start Real-Time Publishing
+
+1. Return to main screen with your Monitor Point
+2. Tap the **Link icon** to start Client Mode
+   - App begins polling the Modbus server every cycle
+   - Data updates are displayed in real-time
+   - MQTT automatically publishes after each complete polling cycle
+
+3. **Watch in MQTT Explorer:**
+   - You'll see `modbusmonitor/tank1/temperature` update in real-time
+   - Each time the polling cycle completes, a new value publishes
+   - Example sequence: `75.3` → `75.5` → `76.1` → (repeating)
+
+### Step 7: Stop Communication
+
+1. Tap the **Link icon** again to halt Client Mode
+2. Polling stops and MQTT publishing stops
+3. Last published values remain in broker (subscribers see last-known values)
+
+### Step 8: View Published Data Flow
+
+**What's Happening Behind the Scenes:**
+
+```
+[Polling Cycle]
+1. App connects to Modbus server
+2. Requests holding register 400001 (2 registers)
+3. Server responds with raw data
+4. App converts to FLOAT32 → "75.3"
+5. [MQTT Automatically Publishes]
+6. Data sent to HiveMQ broker
+7. Remote subscribers (MQTT Explorer) receive: "modbus/monitor/temperature = 75.3"
+8. Repeat cycle every ~1000ms (configurable)
+```
+
+**Batch Mode Example:**
+If you enable batch publishing, one message publishes to `modbus/monitor/batch`:
+```json
+{
+  "timestamp": "2025-11-26T14:30:22Z",
+  "points": [
+    {"name": "temperature", "value": 75.3},
+    {"name": "pressure", "value": 1013.2}
+  ]
+}
+```
+
+---
+
+## Data Sources: Three Communication Channels
+
+Modbus Monitor Advanced can read data from **any of three communication channels**, and MQTT will seamlessly publish all data to your cloud broker without any additional configuration.
+
+📖 **For complete channel documentation**, see [:octicons-book-24: Advanced Guide → Communication Channels](../products/android/advanced-guide.md#communication-channels)
+
+### Channel 1: TCP/IP (WiFi/Ethernet)
+
+**Best For**: Remote Modbus servers, industrial equipment on network, desktop applications
+
+**Setup:**
+- Server IP: `192.168.1.100` (or public IP if remote)
+- Port: `502` (Modbus TCP standard) or custom port like `8888`
+- Protocol: `Modbus TCP`, `Modbus UDP`
+- Perfect for: Factory equipment, SCADA systems, remote gateways
+
+**MQTT Publishing:**
+```
+Data Flow: Remote Server (TCP/IP) → Android App → MQTT Broker → Dashboard
+Example: Industrial PLC reading temperature → Android polling → HiveMQ cloud
+```
+
+### Channel 2: USB-OTG Serial (Hardwired)
+
+**Best For**: Direct serial connections, legacy equipment, RS232/RS485 devices
+
+**Setup:**
+- USB adapter: FTDI, Prolific, or SiLab chipset
+- Protocol: `Modbus RTU`, `Modbus ASCII`
+- Physical cable from Android to device (5m max)
+- Perfect for: Field service, equipment commissioning, portable diagnostics
+
+**MQTT Publishing:**
+```
+Data Flow: Serial Device (RS232/485) → USB Adapter → Android → MQTT Broker
+Example: Energy meter on RS485 → USB converter → Android → Cloud MQTT → Analytics
+```
+
+### Channel 3: Bluetooth (Wireless)
+
+**Best For**: Wireless connections, portable devices, flexible range monitoring
+
+**Setup:**
+- Bluetooth serial adapter (tested: SIIG, Broadcom)
+- Protocol: `Modbus RTU`, `Modbus ASCII` (wireless)
+- Range: 10–30 meters (line of sight)
+- Perfect for: Warehouse scanning, mobile equipment monitoring, IoT sensors
+
+**MQTT Publishing:**
+```
+Data Flow: Bluetooth Device → Android (wireless) → MQTT Broker → Mobile App
+Example: Bluetooth sensor in storage → Android warehouse device → AWS IoT → Alerts
+```
+
+### Multi-Channel Configuration Example
+
+**Scenario: Monitor everything simultaneously**
+
+You can create multiple monitor points, each using a different channel:
+
+| Monitor Point | Channel | Source | MQTT Topic |
+|---------------|---------|--------|-----------|
+| Tank Level | **TCP/IP** | Factory PLC (192.168.1.100:502) | `factory/tank_level` |
+| Motor Speed | **Serial (USB)** | VFD via RS485 converter | `factory/motor_speed` |
+| Ambient Temp | **Bluetooth** | Wireless sensor in room | `warehouse/temp_ambient` |
+
+**Automatic Publishing:**
+All three data sources are polled every cycle and published to the MQTT broker in a single batch message:
+
+```json
+{
+  "timestamp": "2025-11-26T14:30:22Z",
+  "device_id": "android-factory-01",
+  "points": [
+    {"name": "Tank Level", "value": 75.3, "channel": "TCP/IP"},
+    {"name": "Motor Speed", "value": 1450, "channel": "Serial"},
+    {"name": "Ambient Temp", "value": 22.5, "channel": "Bluetooth"}
+  ]
+}
+```
+
+---
+
+## Expert Reference: Detailed Configuration
+
+**For advanced users and customization. Bookmark this section for quick reference.**
+
+### Connection Settings Quick Reference
 
 ![MQTT Connection Settings](../assets/screenshots/android-advanced/server-config.webp){ .screenshot-center loading="lazy" }
 
