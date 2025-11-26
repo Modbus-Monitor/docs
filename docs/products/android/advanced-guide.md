@@ -162,7 +162,7 @@ The main interface combines status indicators with action buttons for easy opera
 | **Expose phone sensors** | [Sensor Server Mode](#sensor-server-mode) | Share accelerometer, gyro, etc. via Modbus |
 | **Understand data organization** | [Monitor Points](#monitor-points---core-concept) | Core configuration concepts |
 | **Compare with other tools** | [Ecosystem Tools](#modbus-ecosystem-complementary-tools) | QModMaster, pymodbus, ModScan, XPF |
-| **Troubleshoot issues** | [Troubleshooting](#troubleshooting) | Common problems and solutions |
+| **Troubleshoot issues** | [Troubleshooting](#troubleshooting) | Common problems and solutions ([Error Codes Guide](../../guides/error-codes.md)) |
 | **Learn about hardware** | [Hardware Requirements](#hardware-requirements) | USB, Bluetooth, network setup |
 | **Publish local data to cloud** | [Cloud Publishing FAQ](#cloud-publishing-faq) | MQTT / Sheets / ThingSpeak workflows |
 
@@ -1731,6 +1731,8 @@ If Address field requires “raw” number, subtract 400000 (e.g., 1) depending 
 - Pre‑populate values with Preset for predictable startup diagnostics.
 
 #### 9. Troubleshooting (Fast Table)
+
+For detailed error code explanations and solutions, see the [:octicons-alert-circle: Error Codes & Troubleshooting Guide](../../guides/error-codes.md).
 | Problem | Likely Cause | Fix |
 |---------|--------------|-----|
 | Client timeout | Wrong IP/Port or firewall | Verify IP; try port 8888; check router rules |
@@ -2279,6 +2281,86 @@ Android sensors  Modbus Monitor Advanced (Sensor Server)  pymodbus client  Data 
     - Run pymodbus scripts writing to devices; monitor with **Advanced** from mobile
     - Test configurations in QModMaster desktop; deploy production monitoring with **Advanced** mobile
     - Use **Advanced** Sensor Server Mode; poll with pymodbus or XPF for sensor data collection
+
+??? question "My USB Serial Port is not working; what should I do?"
+    USB-OTG connectivity requires several checks:
+    
+    **Prerequisites**:
+    - Device must support USB-OTG (not all phones/tablets have this hardware)
+    - You must use a **proper USB-OTG cable**, not a standard USB cable
+    - See [:material-chip: Android Hardware Guide](../../guides/android-hardware.md) for approved cables and adapters
+    
+    **Troubleshooting Steps**:
+    
+    1. **Exit and restart the app** after plugging in USB cable. On first connection, Android selects which app has access to the serial port. The app needs a second launch to properly detect the driver.
+    
+    2. **Verify USB-OTG hardware support**: Test with free Android utilities:
+       - **Easy OTG Checker** ([Google Play](https://play.google.com/store/apps/details?id=com.kjarvel.easyotgchecker){:target="_blank"}) - Check if your device supports USB-OTG
+       - **FTDI Android App** ([Google Play](https://play.google.com/store/apps/details?id=com.ftdi.j2xx.hyperterm){:target="_blank"}) - For FTDI-type dongles
+       - **Prolific Android App** - For Prolific-type serial adapters
+    
+    3. **Check USB cable quality**: Poor-quality USB-OTG cables are a common cause. Verify with Easy OTG Checker; if it shows "not good," the cable needs replacement.
+    
+    4. **Grant app permissions**: When you plug in the USB device, a permission dialog appears asking you to select which app has access. **Select "Modbus Monitor Advanced"** explicitly.
+    
+    5. **Verify driver compatibility**: Confirm your USB-to-serial adapter is compatible (FTDI, Prolific, or SiLab chips are most reliable).
+    
+    6. **Check for rooting/manufacturer restrictions**: Some manufacturers disable USB-OTG even when Android supports it. If all utilities show "good" but it still doesn't work, contact the device manufacturer.
+
+??? question "What is a Modbus (TCP) Server?"
+    A **Modbus TCP Server** is a Modbus slave device that listens for incoming TCP/IP connections and serves data to clients that request it.
+    
+    **Key Facts**:
+    - Only protocol used is **Modbus TCP** (TCP/IP format)
+    - Standard port is **502**, but that's locked on Android
+    - Android requires ports **> 1024** (unless device is rooted)
+    - Recommended testing port: **8888**
+    - Your Modbus controller device must connect to the same port you configure
+    - You can use the same monitor point configuration as Client Mode
+    
+    See the **Server Mode** section of this guide for detailed configuration steps.
+
+??? question "What can I do with Modbus (TCP) Server Mode?"
+    **Server Mode** enables several professional workflows:
+    
+    **1. Test and Validate Your Setup**
+    - Use two phones: one in **Master (Client)** mode, one in **Server** mode
+    - Have them talk to each other to test configuration, addresses, and data types
+    - Great for learning and troubleshooting without external equipment
+    
+    **2. Extract Sensor Data from Your Phone**
+    - Read phone sensors remotely via Modbus TCP: GPS location, orientation, light sensor, accelerometer, gyroscope, barometer, etc.
+    - Connect your Modbus controller to your phone's Sensor Server to receive real-time sensor data
+    - Perfect for mobile data collection and IoT applications
+    
+    **3. Multi-Platform Monitoring**
+    - Run **Server Mode** on tablet/minicomputer
+    - Have desktop apps (XPF, QModMaster) or other devices poll your Android server
+    - Enables remote monitoring via Modbus TCP without additional hardware
+    
+    **Port Conflict Check**: Ensure no other apps are using your selected port. Test with ports **8888**, **9999**, or **5020** first.
+    
+    See the [:octicons-server-24: Sensor Server feature section](#sensor-server-mode) for sensor-specific applications.
+
+??? question "What is Sensor Server?"
+    **Sensor Server** is an extension of Server Mode that turns your Android device into a **portable Modbus TCP server publishing sensor data**.
+    
+    **What It Does**:
+    - Converts Android device sensors into Modbus TCP registers
+    - Clients can poll your phone/tablet remotely to read sensor values
+    - Sensor types: GPS (latitude/longitude/altitude), light, accelerometer (X/Y/Z), gyroscope, barometer, etc.
+    - Raw sensor data is automatically stuffed into 6 consecutive Modbus TCP registers
+    
+    **Common Applications**:
+    - **Mobile asset tracking**: GPS-enabled monitoring points for vehicles/equipment
+    - **Environmental monitoring**: Light and pressure sensors for facility management
+    - **Motion detection**: Accelerometer and gyroscope for vibration analysis
+    - **Sensor research**: Validate sensor data before production deployment
+    - **IoT prototyping**: Quickly add Android sensor data to industrial workflows
+    
+    **No Extra Purchase Required**: This feature is included with Modbus Monitor Advanced; no additional add-ons needed.
+    
+    For detailed setup and examples, see [:material-dip-switch: Sensor Server Mode](#sensor-server-mode) section.
 
 ### External Resources
 
