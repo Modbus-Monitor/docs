@@ -354,50 +354,6 @@ Google Sheets browser view showing header row (Timestamp, Device ID, Point1, Poi
 | **Append Mode** | Insert new row each cycle | Enabled | Most common use case |
 | **Update Mode** | Overwrite last row | Disabled | For live dashboards |
 
-### Authentication
-
-**First-Time Setup:**
-
-1. Tap "Sign in with Google"
-2. Browser opens with Google consent screen
-3. Select account and grant permissions
-4. Browser redirects back to app
-5. "Authenticated as [email]" confirmation
-
-**Token Management:**
-
-- Token stored securely on device
-- Auto-refreshes when expired
-- Revoke via Google Account settings
-- Re-authenticate if issues occur
-
-**Permissions Required:**
-
-- `spreadsheets`: Read and write to spreadsheets
-- `drive.file`: Access spreadsheets created/opened by app
-- `userinfo.email`: Display signed-in account
-
----
-
- 
-
-## Account Setup Panel (Testing Controls)
-
-Use the Account Setup panel to validate connectivity and permissions:
-
-- **Log In / Log Out**: Authenticate or clear the session
-- **Change Account**: Switch to a different Google account
-- **Write Sample Data**: Append test values to confirm permissions and sheet configuration
-- **Create New Sheet**: Programmatically create a spreadsheet and store its Sheet ID
-
----
-
-## Start Sending Data Periodically
-
-- Choose a sensible interval to reduce battery and data usage (5–60 seconds typical)
-- Press **Link/Connect** in the main UI to start client polling
-- Confirm rows appear in your spreadsheet with timestamps and values
-
 ---
  
 
@@ -422,20 +378,12 @@ On the first data upload, the app automatically creates a header row:
 
 ### Data Types
 
-**Column Data Types:**
+For detailed information about Modbus data types (INT16, FLOAT32, etc.) and how to configure them, see the [:octicons-arrow-right-24: Advanced Guide — Data Types](../products/android/advanced-guide.md#data-types).
 
-| Monitor Point Data Type | Sheets Cell Format | Example |
-|------------------------|-------------------|---------|
-| **Integer (16-bit, 32-bit)** | Number | `1450` |
-| **Float (32-bit, 64-bit)** | Number (2 decimals) | `75.30` |
-| **Boolean** | TRUE/FALSE | `TRUE` |
-| **String** | Text | `Running` |
-
-**Timestamp Format:**
-
-- **ISO 8601**: `2025-11-25T14:30:00Z` (UTC)
-- **Local Time**: `2025-11-25 14:30:00` (device timezone)
-- Google Sheets auto-detects as date/time
+**In Google Sheets:**
+- Numbers appear as regular cells (e.g., `1450`, `75.30`)
+- Timestamps are auto-detected as date/time format
+- Boolean values display as `TRUE` or `FALSE`
 
 ### Row Append Behavior
 
@@ -471,24 +419,6 @@ Sheet: Sensor Data
 - Column B-Z: Monitor point values
 - New row every polling cycle
 ```
-
-### Multi-Sheet Structure
-
-**Organized by Category:**
-
-```
-Spreadsheet: Factory Monitoring
-├─ Sheet: Line 1 Sensors
-├─ Sheet: Line 2 Sensors
-├─ Sheet: Power Meters
-└─ Sheet: Summary Dashboard
-```
-
-**Configuration:**
-
-- Use different sheet names for each Android device/location
-- Point each app instance to its own sheet
-- Create summary sheet with references
 
 ### Dashboard Sheet
 
