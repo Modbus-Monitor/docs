@@ -8,6 +8,11 @@
 
 The Google Sheets Add‑on makes real‑time Modbus data logging simple. With the Modbus Monitor Advanced Android app you can send live values straight to a private Google Sheet (no server, database, or coding required). Each polling cycle becomes one clean row: timestamp, device ID, and one column per point. This gives you searchable, shareable, exportable industrial data in seconds.
 
+<div class="video-wrapper" style="text-align: center; margin: 1.5em 0;">
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/GAkMOEzmZ-k" title="Google Sheets Add-on Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <p style="margin-top: 0.5em;"><strong>📺 Watch:</strong> Complete setup and configuration walkthrough</p>
+</div>
+
 You can collect data from multiple field interfaces and send them all to the same spreadsheet:
 
 - Modbus RTU (serial) devices via USB/RS-485 adapters
@@ -103,92 +108,222 @@ Requires a Google Account. Data is kept private. You can create a new sheet auto
 4. Press “Back”.
 5. Choose a Google account to log in.
 
-### Sample Send (Account Setup Panel)
+### Step 2: Understanding the Google Sheets Control Panel
 
-Use the Account Setup control panel to test and validate your configuration:
+The control panel shows:
 
-- **Log Out**: Log out of the current account.
-- **Log In**: Log in to your Google account; “Login OK” confirms success.
-- **Change Account**: Log out and log in to a different account.
-- **Write Sample Data**: Writes sample data to the spreadsheet to test settings.
-- **Create New Sheet**: Creates a new spreadsheet and remembers the Sheet ID.
+**Header Status Bar:**
 
-### Start Sending Data Periodically
+- **Account**: Currently signed-in Google email
+- **Spreadsheet ID**: Active sheet identifier (auto-saved after Create)
+- **Access Permission**: Token status (Valid/Expired)
+- **Auto-Data Logging Status**: ON/OFF indicator
 
-1. Adjust the logging interval to balance battery life and data usage (Settings → Log screen).
-2. Click “Connect” or tap the Link to begin communication; confirm that data appears in the selected Google Spreadsheet.
+**Control Buttons:**
+
+| Button | Function | When to Use |
+|--------|----------|-------------|
+| **Setup** | Choose or switch Google account | First-time setup or changing accounts |
+| **Create** | Create new spreadsheet, write initial header row, and auto-save ID | Quick start without manual spreadsheet creation |
+| **Log Out** | Sign out of current account | Switch accounts or revoke access |
+| **Read Sheet** | Fetch and display a few rows from current spreadsheet | Verify connection and existing data |
+| **Write Sample** | Append test row to spreadsheet | Validate write permissions before real logging |
+| **Set** | Save the Spreadsheet ID from the text field | Manually enter or paste a spreadsheet ID into the text box, then click Set to save |
+
+<figure markdown="span">
+  ![Google Sheets Control Panel](../assets/screenshots/android-advanced/control-panel.webp){ .screenshot-center loading="lazy" }
+  <figcaption><strong>Control Panel Layout:</strong> Three sections—<strong>STATUS</strong> (top: account, spreadsheet ID, permissions, logging state), <strong>SETUP</strong> (middle: all control buttons), and <strong>MESSAGE</strong> (bottom: operation results and feedback)</figcaption>
+</figure>
+
+### Step 3: Connect Your Google Account
+
+1. Click **Setup** button
+2. Browser opens with Google sign-in screen
+3. Select your Google account
+4. **Click "Allow"** to grant permissions:
+   - ✓ View and manage your spreadsheets
+   - ✓ See your email address
+5. Browser redirects back to app
+6. Confirmation: Account email appears in header
+
+![Permission Screen](../assets/screenshots/android-advanced/google-permission.webp){ .screenshot-center loading="lazy" }
+
+### Step 4: Create Spreadsheet and Test Connection
+
+1. Click **Create** button
+   - App automatically creates new spreadsheet in your Google Drive
+   - Writes an initial header row with timestamp and device ID columns
+   - Spreadsheet ID saved to app settings
+   - Confirmation message appears in the MESSAGE section
+2. Click **Read Sheet** button
+   - Fetches a few rows from spreadsheet (empty initially)
+   - Confirms connection is working
+3. Click **Write Sample** button
+   - Writes test data row to spreadsheet
+   - Verifies write permissions
+4. **(Optional)** Open [sheets.google.com](https://sheets.google.com) in browser
+   - Find newly created spreadsheet
+   - Verify sample row appeared
+
+!!! tip "Alternative: Use Existing Spreadsheet"
+    Instead of clicking **Create**, you can manually enter a **Spreadsheet ID** if you want to log to an existing sheet.
+    
+    **How to Extract the Spreadsheet ID:**
+    
+    1. Open your spreadsheet in a browser
+    2. Look at the URL in the address bar:
+       ```
+       https://docs.google.com/spreadsheets/d/1Abc2Def3Ghi4Jkl5Mno6Pqr/edit
+                                           ^^^^^^^^^^^^^^^^^^^^^^^
+                                           This is the Spreadsheet ID
+       ```
+    3. **Copy only the ID portion** (between `/d/` and `/edit`): `1Abc2Def3Ghi4Jkl5Mno6Pqr`
+    4. Paste it into the **Spreadsheet ID text field** in the control panel
+    5. Click the **Set** button to save it to global settings
+    
+    ⚠️ **Important:** Do NOT paste the full URL—only the ID string.
+
+### Step 5: Configure Monitoring Points for Your Data Source
+
+Before enabling auto-logging, ensure your monitoring points are properly configured for the channel you're using.
+
+!!! example "Example Setup from Video"
+    **Scenario:** Android device polling a Modbus TCP server running on a Windows workstation (using Modbus Monitor XPF to simulate a Modbus device).
+
+**For TCP/IP Channel (Most Common):**
+
+1. **Main Menu → Monitoring Points**
+2. **Select TCP Channel** (if using RTU or BLE, select accordingly)
+3. **Configure Connection:**
+   - **IP Address/Hostname**: Remote server address (e.g., `192.168.1.100` or `modbus.example.com`)
+   - **Port Number**: Modbus TCP port (default: `502`)
+   - **Station ID (Slave ID)**: Device unit identifier (typically `1`)
+4. **Data Configuration:**
+   - **Register Address**: Starting register (e.g., `400001` for holding registers)
+   - **Number of Registers**: How many registers to poll (e.g., `10`)
+   - **Data Type**: INT16, FLOAT32, etc. (match your device)
+5. **OK** and repeat for additional points.
+
+For a deeper walkthrough of monitoring point setup (including addressing formats, data types, and common pitfalls), see the Advanced Guide:
+
+- [:octicons-arrow-right-24: Advanced Guide — Monitoring Points](../products/android/advanced-guide.md#monitoring-points)
+- [:octicons-arrow-right-24: Advanced Guide — Client Mode Setup](../products/android/advanced-guide.md#client-mode-setup)
+
+You can also reuse the monitoring point screenshots from the Advanced Guide in this section, or click through for step-by-step visuals.
+
+**For RTU Serial Channel:**
+
+- Use USB-to-RS485 adapter
+- Configure baud rate (9600, 19200, etc.)
+- Set parity, stop bits, data bits
+
+**For Bluetooth/BLE:**
+
+- Pair device first
+- Select from available BLE sensors
+- Configure sensor-specific parameters
+
+!!! example "Quick Multi-Point Setup (Advanced)"
+    **Import from Desktop:** If you've configured monitoring points on Modbus Monitor XPF (Windows), export the configuration file and import it into the Android app. 
+    
+    **Example:** Import a configuration file with 47 pre-configured monitoring points. When auto-logging is enabled:
+    
+    - **One row per polling cycle**
+    - **47 columns** (one per monitoring point)
+    - **Comma-separated values** in spreadsheet
+    - All data collected simultaneously and logged together
+    
+    This is ideal for complex setups with many registers spread across multiple devices or address ranges.
+
+### Step 6: Enable Auto-Logging
+
+1. **Main Menu → Settings**
+2. **Locate "Use Google Sheets" toggle**
+3. **Toggle ON** (switches to green/enabled state)
+4. *(Optional)* Set **CSV Log Timer** for local backup (0 = disabled)
+5. **Press Back** to return to main screen
+
+![Settings Screen](../assets/screenshots/android-advanced/settings-use-sheets.webp){ .screenshot-center loading="lazy" }
+*Settings screen with "Use Google Sheets" toggle highlighted in ON position*
+
+### Step 7: Start Polling and Data Collection
+
+1. On the **Main Screen**, locate the **Link Icon** (🔗)
+2. **Tap the Link Icon** to start communication
+3. Status changes to **"Connected"** with green indicator
+4. Watch the poll counter increment
+5. Data automatically logs to Google Sheets after each polling cycle
+
+### Step 8: Verify Data Logging
+
+**Option A: Verify from the App**
+
+1. Return to **Main Menu → Google Sheets**
+2. Check **header status bar**:
+   - Last upload timestamp
+   - Rows written counter
+3. Click **Read Sheet** button to fetch latest rows
+
+**Option B: Verify from Google Sheets (Recommended)**
+
+1. Open your spreadsheet at [sheets.google.com](https://sheets.google.com) in a browser
+2. **Refresh the page** (or open the sheet for the first time)
+3. **First row (Row 1)** = Auto-generated headers:
+   - Timestamp
+   - Device ID (unique mobile device identifier)
+   - Monitoring point names (one column per point)
+4. **Subsequent rows (Row 2, 3, 4...)** = Data from each polling cycle
+5. **Each column** = Value for one monitoring point at that timestamp
+
+![Logged Data in Google Sheets](../assets/screenshots/android-advanced/sheets-logged-data.webp){ .screenshot-center loading="lazy" }
+Google Sheets browser view showing header row (Timestamp, Device ID, Point1, Point2, Point3...) and multiple data rows with timestamped values*
+
+**To Stop Logging:**
+
+1. Return to **Main Screen** in app
+2. **Tap the Link Icon** again to disconnect
+3. Status changes to "Disconnected"
+4. Data logging stops; all existing data remains safely in the spreadsheet
+
+!!! success "Multi-Device Logging Benefit"
+    **Fleet & Team Use:** The same spreadsheet can receive data from **multiple Android devices simultaneously**. Each row includes:
+    
+    - **Timestamp**: When data was logged
+    - **Device ID**: Unique identifier per mobile device (auto-generated)
+    - **Values**: Monitoring point data
+    
+    This enables centralized logging from field technicians, remote sites, or distributed sensors—all merging into one searchable database for analysis and trending.
 
 ---
-
-## Migration Note
-
-Content in this guide consolidates and updates material from the legacy page at https://quantumbitsolutions.com/sheets. The latest, canonical documentation lives here. If you find mismatches, use the feedback link at the end of this page.
 
 ---
 
 ## Quick Start Setup
 
-### Prerequisites
+!!! info "Before You Begin"
+    **Required:**
+    
+    - Modbus Monitor Advanced app installed on Android device
+    - **Google Sheets Add-on purchased and activated** (separate in-app purchase)
+    - Google account (free Gmail account works)
+    - At least one Modbus data source: TCP server, RTU device, or BLE gateway
+    
+    **What You'll Do:**
+    
+    1. Connect your Google account to the app
+    2. Create or select a spreadsheet
+    3. Test the connection with sample data
+    4. Configure monitoring points (TCP/RTU/BLE)
+    5. Enable auto-logging and start polling
+    6. Verify data appears in Google Sheets
 
-- Modbus Monitor Advanced installed
-- Google Sheets Add-on purchased and activated
-- Google account (free Gmail account works)
-- Monitor points configured and polling
+### Step 1: Access Google Sheets Menu
 
-### Create Spreadsheet (3 Minutes)
+1. Open **Modbus Monitor Advanced** on your Android device
+2. Tap **Main Menu** (hamburger icon ☰)
+3. Select **Google Sheets**
 
-1. **Open Google Sheets**
-   - Visit [sheets.google.com](https://sheets.google.com)
-   - Sign in with Google account
-
-2. **Create New Spreadsheet**
-   - Click "Blank" to create new sheet
-   - **Name**: e.g., "Modbus Data Log - Factory Line 1"
-   - Note the **Spreadsheet ID** from URL:
-     ```
-     https://docs.google.com/spreadsheets/d/SPREADSHEET_ID_HERE/edit
-     ```
-
-3. **Prepare First Sheet**
-   - Rename "Sheet1" to a descriptive name (e.g., "Sensor Data")
-   - Leave cells empty - app will auto-create headers
-
-4. **Get Sharing Link**
-   - Click "Share" button
-   - Get shareable link (for reference only)
-
-### App Configuration (5 Minutes)
-
-1. **Enable Google Sheets in App**
-   - Hamburger Menu → Settings → Google Sheets
-   - Toggle "Enable Google Sheets" ON
-
-2. **Authenticate Google Account**
-   - Tap "Sign in with Google"
-   - Select your Google account
-   - Grant permissions:
-     - ✓ View and manage spreadsheets
-     - ✓ See your email address
-   - App stores authentication token securely
-
-3. **Enter Spreadsheet Details**
-   - **Spreadsheet ID**: Paste from URL (just the ID part)
-   - **Sheet Name**: Tab name (e.g., "Sensor Data", "Sheet1")
-
-4. **Configure Logging Options**
-   - **Append Mode**: New row for each cycle (recommended)
-   - **Update Mode**: Overwrite last row (for dashboards)
-   - **Include Timestamp**: Auto-add date/time column (recommended)
-
-5. **Start Logging**
-   - Start Client Mode polling
-   - First cycle creates headers automatically
-   - Subsequent cycles append data rows
-
-**Verify Logging:**
-- Open your Google Sheets spreadsheet
-- Refresh page
-- New rows should appear after each polling cycle
+![Google Sheets Menu Screenshot](../assets/screenshots/android-advanced/google-sheets-menu.webp){ .screenshot-center loading="lazy" }
 
 ---
 
@@ -196,7 +331,7 @@ Content in this guide consolidates and updates material from the legacy page at 
 
 ### App Settings
 
-![Google Sheets Settings](../assets/screenshots/android-advanced/mma-sheets-settings.webp){ .screenshot-center loading="lazy" }
+![Google Sheets Settings](../assets/screenshots/android-advanced/control-panel.webp){ .screenshot-center loading="lazy" }
 
 **Required Settings:**
 
