@@ -1,12 +1,39 @@
 # Google Sheets Add-on for Modbus Monitor Advanced
 
-**Real-time cloud spreadsheet logging for Android Modbus data**
+**Unified real-time cloud spreadsheet logging for Android field data**
 
 ![Google Sheets Integration](../assets/screenshots/android-advanced/mma-addon-sheets-concept.webp){ .screenshot-center loading="lazy" }
 
 ## Overview
 
-The Google Sheets Add-on enables automatic real-time logging of Modbus data directly to Google Sheets. Perfect for data collection, reporting, team collaboration, and long-term archival with Excel-compatible exports.
+The Google Sheets Add‑on makes real‑time Modbus data logging simple. With the Modbus Monitor Advanced Android app you can send live values straight to a private Google Sheet (no server, database, or coding required). Each polling cycle becomes one clean row: timestamp, device ID, and one column per point. This gives you searchable, shareable, exportable industrial data in seconds.
+
+You can collect data from multiple field interfaces and send them all to the same spreadsheet:
+
+- Modbus RTU (serial) devices via USB/RS-485 adapters
+- Modbus TCP endpoints over WiFi or Ethernet
+- Bluetooth / BLE sensor gateways (wrapped into Modbus-style polling internally)
+- Mixed hybrid networks where RTU sources are bridged to TCP
+
+Regardless of source (RTU serial line, TCP network, or BLE gateway), everything is converted into the same simple row format and appended for historical trends. Benefits:
+
+- Rapid cloud visibility without deploying a server stack
+- Seamless multi-device fleet aggregation (optional device ID column)
+- Secure audit history, revision tracking, and export (XLSX / CSV / PDF)
+- Immediate use of Google Sheets formulas, charts, pivot tables, and Apps Script automation
+
+### FAQ: Why Only Private Authenticated Sheets?
+
+??? question "Why are only private Google Sheets supported?"
+    Public "anyone with the link can edit" sheets were deprecated for several reasons:
+    - Data integrity risks (unauthorized edits or deletions)
+    - Privacy and compliance requirements in industrial environments
+    - No reliable per-user audit trail on public edit links
+    - Stronger security via token-based authenticated access and revocation
+
+    Each write uses your authenticated Google account token. Share the sheet explicitly with Viewer or Editor roles for controlled collaboration. For dashboards, keep edit access limited and grant View-only to broader audiences.
+
+Typical architecture: multiple local Modbus RTU or TCP nodes + BLE peripherals → Android app polling & row assembly → OAuth token exchange → append via Sheets API → cloud spreadsheet for analysis and collaboration.
 
 **Key Features:**
 
@@ -29,28 +56,30 @@ The Google Sheets Add-on enables automatic real-time logging of Modbus data dire
 ## Architecture (Easy Concept View)
 
 ```mermaid
+flowchart LR
+    subgraph Sources[Local / Field Interfaces]
+        RTUServer[Modbus RTU Devices]:::modbus
+        TCPEndpoints[Modbus TCP Devices]:::modbus
+        BLEGateways[Bluetooth / BLE Sensors]:::modbus
+    end
 
-    flowchart LR
-        subgraph Device[Android Device]
-            App[Modbus Monitor Advanced]
-            Modbus[Modbus Client Polling]
-        end
+    App[Android App\nModbus Monitor Advanced]:::app
+    GAuth[Google OAuth]:::cloud
+    GSheets[Sheets API]:::cloud
+    Sheet[(Private Spreadsheet)]:::cloud
 
-        RTU[Modbus RTU/TCP Server]:::modbus
-        GAuth[Google Auth & Token]
-        GSheets[Google Sheets API]
-        Sheet[(Spreadsheet: Sheet Tab)]
+    RTUServer --> App
+    TCPEndpoints --> App
+    BLEGateways --> App
+    App -->|Poll + Aggregate| App
+    App -->|Authenticate| GAuth
+    GAuth -->|Token| App
+    App -->|Append Row| GSheets
+    GSheets -->|Write| Sheet
 
-        Modbus -->|Poll registers/coil data| App
-        App -->|Prepare row: timestamp + values| App
-        App -->|Authenticate| GAuth
-        GAuth -->|Access token| App
-        App -->|Append row| GSheets
-        GSheets -->|Write| Sheet
-
-        classDef modbus fill:#ffd54f,stroke:#b28900,color:#1a1a1a;
-        classDef cloud fill:#bbdefb,stroke:#1976d2,color:#0d47a1;
-        class GAuth, GSheets, Sheet cloud;
+    classDef modbus fill:#ffd54f,stroke:#b28900,color:#1a1a1a;
+    classDef cloud fill:#bbdefb,stroke:#1976d2,color:#0d47a1;
+    classDef app fill:#c8e6c9,stroke:#2e7d32,color:#1b5e20;
 ```
 
 Notes:
@@ -62,22 +91,11 @@ Notes:
 
 ## Log Data in Google Sheets
 
-Logging data in Google Sheets using the Modbus Monitor Advanced Android app supports two methods. Both use Google Sheets to log data periodically.
+Logging data in Google Sheets using the Modbus Monitor Advanced Android app now exclusively uses a private Google Sheet linked to your authenticated Google account. This ensures strict privacy, audit history, and controlled access. Public "anyone can edit" shared sheets are no longer supported.
 
-### Method 1: Use a Shared Google Sheet (no account login)
+### Private Google Sheet (Authenticated)
 
-This method has the advantage that no Google account login is required and can be used when multiple devices log into one spreadsheet.
-
-1. Create a new Google Sheet using [sheets.google.com](https://sheets.google.com).
-2. Share the sheet using the “Share” button and select “Anyone with the link can edit”.
-3. In Modbus Monitor Advanced, go to Setup → Log tab and turn on “Use Google Sheets”.
-4. When prompted with “Google Account Setup”, click “Cancel” (account setup not necessary for this option).
-5. Adjust the logging interval to save battery and internet traffic.
-6. Click “Connect” (or tap the Link) to start communication. Verify data is logged in the shared Google Sheet.
-
-### Method 2: Use a Private Google Sheet (requires Google account)
-
-This method requires a Google Account. Data is kept private. You can create a new sheet automatically or reuse an existing one.
+Requires a Google Account. Data is kept private. You can create a new sheet automatically or reuse an existing one.
 
 1. Go to Settings and select “Use Google Sheets”.
 2. Enable “Create New Sheet on Start” if you want a new spreadsheet created each time the app starts; otherwise it reuses the same spreadsheet.
@@ -220,43 +238,22 @@ Content in this guide consolidates and updates material from the legacy page at 
 
 ---
 
-## Legacy Workflow: Shared vs Account Sheets
+## Legacy Shared Sheet Workflow (Deprecated)
 
-### Method 1: Shared Google Sheet (No Account Login)
+The former "public shared sheet (anyone with the link can edit)" workflow has been deprecated and removed. All logging now requires an authenticated Google account and writes only to spreadsheets owned by or explicitly shared with that account.
 
-Use a publicly editable shared sheet when multiple devices must log to one spreadsheet without signing into a Google account on the device.
+Reasons for deprecation:
+- Data integrity risks (unauthorized edits, accidental deletions)
+- Lack of per-user audit trail and reliable version history
+- Privacy requirements for industrial and regulated environments
+- Improved token-based access control and revocation capability
 
-Steps:
-- Create a new Google Sheet at [sheets.google.com](https://sheets.google.com)
-- Click “Share” → set "Anyone with the link can edit"
-- Paste the sheet link/ID in the app Settings
-- Start Client Mode; data appends at the chosen interval
+If you previously used a public shared sheet:
+- Create (or reuse) a private sheet under your account
+- Share with specific emails using Viewer/Editor roles as needed
+- Update the Spreadsheet ID in the app settings
 
-Pros:
-- No per-device Google login required
-- Simple for fleets or temporary devices
-
-Cons:
-- Less secure; anyone with link can edit
-- Audit/history control is weaker
-
-### Method 2: Private Google Sheet (Account Login)
-
-Use a private sheet when data privacy and access control are required.
-
-Steps:
-1. Settings → Google Sheets → enable
-2. Tap "Sign in with Google" and choose the account
-3. Optionally enable "Create New Sheet on Start" to auto-create a fresh spreadsheet each app start
-4. Configure Append/Update mode and interval
-5. Start Client Mode; data appends with timestamp
-
-Pros:
-- Full control over access and sharing
-- Version history and ownership under your account
-
-Cons:
-- Requires device/account login flow
+All subsequent references in this guide assume the authenticated private sheet workflow.
 
 ---
 
