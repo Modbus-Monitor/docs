@@ -260,7 +260,7 @@ You can also reuse the monitoring point screenshots from the Advanced Guide in t
 - Configure sensor-specific parameters
 
 !!! example "Quick Multi-Point Setup (Advanced)"
-    **Import from Desktop:** If you've configured monitoring points on Modbus Monitor XPF (Windows), export the configuration file and import it into the Android app. 
+    **Import from Desktop:** If you've configured monitoring points on Modbus Monitor XPF (Windows), export the configuration file and import it into the Android app. See the [:material-database: Import & Export Guide](../guides/import-export.md) for exact steps and CSV format.
     
     **Example:** Import a configuration file with 47 pre-configured monitoring points. When auto-logging is enabled:
     
@@ -269,7 +269,7 @@ You can also reuse the monitoring point screenshots from the Advanced Guide in t
     - **Each value in its own column** in the spreadsheet
     - All data collected simultaneously and logged together
     
-    This is ideal for complex setups with many registers spread across multiple devices or address ranges.
+    This is ideal for complex setups with many registers spread across multiple devices or address ranges. For moving configurations between devices, refer to the [:octicons-database-24: Import & Export Guide](../guides/import-export.md).
 
 ### Step 6: Enable Auto-Logging
 

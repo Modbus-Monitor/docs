@@ -48,7 +48,7 @@ Modbus TCP, UDP, Serial RTU, Serial ASCII, RTU over TCP, ASCII over TCP, ThingSp
 
 **Data Management**:
 
-- CSV import/export with timed intervals (second/minute/hour)
+- CSV import/export with timed intervals (second/minute/hour) — see [:octicons-database-24: Import & Export Guide](../../guides/import-export.md)
 - Email export and cloud integration (ThingSpeak, Google Sheets)
 - Real-time logging and statistical analysis
 
@@ -190,8 +190,8 @@ The main interface combines status indicators with action buttons for easy opera
     - **Save** - Save current monitor point configuration
     - **Clear All** - Remove all monitor points and data
     - **Transform** - Legacy transformation utility to convert old monitor points to new types
-    - **Import** - Load monitor points from CSV file in Downloads folder
-    - **Export and Email** - Export all monitor points and configuration data to CSV in Downloads folder and send via email
+    - **Import** - Load monitor points from CSV file in Downloads folder ([Import & Export Guide](../../guides/import-export.md))
+    - **Export and Email** - Export all monitor points and configuration data to CSV in Downloads folder and send via email ([Import & Export Guide](../../guides/import-export.md))
     - **Google Sheets** - Real-time data publishing to spreadsheets (Add-on purchase required)
     - **ThingSpeak** - IoT dashboard and data visualization (Add-on purchase required)
     - **MQTT** - Industrial IoT messaging protocol (Add-on purchase required)
