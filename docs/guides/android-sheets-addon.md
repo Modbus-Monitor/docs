@@ -45,7 +45,7 @@ The Google Sheets Add‑on logs your Modbus data directly to a Google spreadshee
 
 ```mermaid
 flowchart LR
-    subgraph Sources[Local / Field Interfaces]    
+    subgraph Sources[Local / Field Interfaces]
         RTUServer[Modbus RTU Devices]:::modbus
         TCPEndpoints[Modbus TCP Devices]:::modbus
         BLEGateways[Bluetooth / BLE Sensors]:::modbus
@@ -59,11 +59,14 @@ flowchart LR
     RTUServer --> App
     TCPEndpoints --> App
     BLEGateways --> App
-    App -->|Poll + Aggregate| App
+    
     App -->|Authenticate| GAuth
     GAuth -->|Token| App
     App -->|Append Row| GSheets
     GSheets -->|Write| Sheet
+    PA((Poll + Aggregate))
+    App --> PA
+    PA --> App
 
     classDef modbus fill:#ffd54f,stroke:#b28900,color:#1a1a1a;
     classDef cloud fill:#bbdefb,stroke:#1976d2,color:#0d47a1;
