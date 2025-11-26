@@ -27,16 +27,6 @@ Regardless of source (RTU serial line, TCP network, or BLE gateway), everything 
 - Secure audit history, revision tracking, and export (XLSX / CSV / PDF)
 - Immediate use of Google Sheets formulas, charts, pivot tables, and Apps Script automation
 
-### FAQ: Why Only Private Authenticated Sheets?
-
-??? question "Why are only private Google Sheets supported?"
-    Public "anyone with the link can edit" sheets were deprecated for several reasons:
-    - Data integrity risks (unauthorized edits or deletions)
-    - Privacy and compliance requirements in industrial environments
-    - No reliable per-user audit trail on public edit links
-    - Stronger security via token-based authenticated access and revocation
-
-    Each write uses your authenticated Google account token. Share the sheet explicitly with Viewer or Editor roles for controlled collaboration. For dashboards, keep edit access limited and grant View-only to broader audiences.
 
 Typical architecture: multiple local Modbus RTU or TCP nodes + BLE peripherals → Android app polling & row assembly → OAuth token exchange → append via Sheets API → cloud spreadsheet for analysis and collaboration.
 
@@ -108,6 +98,31 @@ Requires a Google Account. Data is kept private. You can create a new sheet auto
 4. Press “Back”.
 5. Choose a Google account to log in.
 
+!!! info "Before You Begin"
+    **Required:**
+    
+    - Modbus Monitor Advanced app installed on Android device
+    - **Google Sheets Add-on purchased and activated** (separate in-app purchase)
+    - Google account (free Gmail account works)
+    - At least one Modbus data source: TCP server, RTU device, or BLE gateway
+    
+    **What You'll Do:**
+    
+    1. Connect your Google account to the app
+    2. Create or select a spreadsheet
+    3. Test the connection with sample data
+    4. Configure monitoring points (TCP/RTU/BLE)
+    5. Enable auto-logging and start polling
+    6. Verify data appears in Google Sheets
+
+### Step 1: Access Google Sheets Menu
+
+1. Open **Modbus Monitor Advanced** on your Android device
+2. Tap **Main Menu** (hamburger icon ☰)
+3. Select **Google Sheets**
+
+![Google Sheets Menu Screenshot](../assets/screenshots/android-advanced/google-sheets-menu.webp){ .screenshot-center loading="lazy" }
+
 ### Step 2: Understanding the Google Sheets Control Panel
 
 The control panel shows:
@@ -151,19 +166,25 @@ The control panel shows:
 ### Step 4: Create Spreadsheet and Test Connection
 
 1. Click **Create** button
-   - App automatically creates new spreadsheet in your Google Drive
-   - Writes an initial header row with timestamp and device ID columns
-   - Spreadsheet ID saved to app settings
-   - Confirmation message appears in the MESSAGE section
-2. Click **Read Sheet** button
-   - Fetches a few rows from spreadsheet (empty initially)
-   - Confirms connection is working
+   
+      - App automatically creates new spreadsheet in your Google Drive
+      - Writes an initial header row with timestamp and device ID columns
+      - Spreadsheet ID saved to app settings
+      - Confirmation message appears in the MESSAGE section
+  
+2. Click **Read Sheet** button   
+      - Fetches a few rows from spreadsheet (empty initially)
+      - Confirms connection is working
+  
 3. Click **Write Sample** button
-   - Writes test data row to spreadsheet
-   - Verifies write permissions
+   
+      - Writes test data row to spreadsheet
+      - Verifies write permissions
+  
 4. **(Optional)** Open [sheets.google.com](https://sheets.google.com) in browser
-   - Find newly created spreadsheet
-   - Verify sample row appeared
+   
+      - Find newly created spreadsheet
+      - Verify sample row appeared
 
 !!! tip "Alternative: Use Existing Spreadsheet"
     Instead of clicking **Create**, you can manually enter a **Spreadsheet ID** if you want to log to an existing sheet.
@@ -195,13 +216,16 @@ Before enabling auto-logging, ensure your monitoring points are properly configu
 1. **Main Menu → Monitoring Points**
 2. **Select TCP Channel** (if using RTU or BLE, select accordingly)
 3. **Configure Connection:**
-   - **IP Address/Hostname**: Remote server address (e.g., `192.168.1.100` or `modbus.example.com`)
-   - **Port Number**: Modbus TCP port (default: `502`)
-   - **Station ID (Slave ID)**: Device unit identifier (typically `1`)
+   
+      - **IP Address/Hostname**: Remote server address (e.g., `192.168.1.100` or `modbus.example.com`)
+      - **Port Number**: Modbus TCP port (default: `502`)
+      - **Station ID (Slave ID)**: Device unit identifier (typically `1`)
+  
 4. **Data Configuration:**
-   - **Register Address**: Starting register (e.g., `400001` for holding registers)
-   - **Number of Registers**: How many registers to poll (e.g., `10`)
-   - **Data Type**: INT16, FLOAT32, etc. (match your device)
+      - **Register Address**: Starting register (e.g., `400001` for holding registers)
+      - **Number of Registers**: How many registers to poll (e.g., `10`)
+      - **Data Type**: INT16, FLOAT32, etc. (match your device)
+  
 5. **OK** and repeat for additional points.
 
 For a deeper walkthrough of monitoring point setup (including addressing formats, data types, and common pitfalls), see the Advanced Guide:
@@ -230,7 +254,7 @@ You can also reuse the monitoring point screenshots from the Advanced Guide in t
     
     - **One row per polling cycle**
     - **47 columns** (one per monitoring point)
-    - **Comma-separated values** in spreadsheet
+    - **Each value in its own column** in the spreadsheet
     - All data collected simultaneously and logged together
     
     This is ideal for complex setups with many registers spread across multiple devices or address ranges.
@@ -276,7 +300,7 @@ You can also reuse the monitoring point screenshots from the Advanced Guide in t
 5. **Each column** = Value for one monitoring point at that timestamp
 
 ![Logged Data in Google Sheets](../assets/screenshots/android-advanced/sheets-logged-data.webp){ .screenshot-center loading="lazy" }
-Google Sheets browser view showing header row (Timestamp, Device ID, Point1, Point2, Point3...) and multiple data rows with timestamped values*
+Google Sheets browser view showing header row (Timestamp, Device ID, Point1, Point2, Point3...) and multiple data rows with timestamped values
 
 **To Stop Logging:**
 
@@ -293,37 +317,7 @@ Google Sheets browser view showing header row (Timestamp, Device ID, Point1, Poi
     - **Values**: Monitoring point data
     
     This enables centralized logging from field technicians, remote sites, or distributed sensors—all merging into one searchable database for analysis and trending.
-
 ---
-
----
-
-## Quick Start Setup
-
-!!! info "Before You Begin"
-    **Required:**
-    
-    - Modbus Monitor Advanced app installed on Android device
-    - **Google Sheets Add-on purchased and activated** (separate in-app purchase)
-    - Google account (free Gmail account works)
-    - At least one Modbus data source: TCP server, RTU device, or BLE gateway
-    
-    **What You'll Do:**
-    
-    1. Connect your Google account to the app
-    2. Create or select a spreadsheet
-    3. Test the connection with sample data
-    4. Configure monitoring points (TCP/RTU/BLE)
-    5. Enable auto-logging and start polling
-    6. Verify data appears in Google Sheets
-
-### Step 1: Access Google Sheets Menu
-
-1. Open **Modbus Monitor Advanced** on your Android device
-2. Tap **Main Menu** (hamburger icon ☰)
-3. Select **Google Sheets**
-
-![Google Sheets Menu Screenshot](../assets/screenshots/android-advanced/google-sheets-menu.webp){ .screenshot-center loading="lazy" }
 
 ---
 
@@ -354,6 +348,7 @@ Google Sheets browser view showing header row (Timestamp, Device ID, Point1, Poi
 ### Authentication
 
 **First-Time Setup:**
+
 1. Tap "Sign in with Google"
 2. Browser opens with Google consent screen
 3. Select account and grant permissions
@@ -361,36 +356,21 @@ Google Sheets browser view showing header row (Timestamp, Device ID, Point1, Poi
 5. "Authenticated as [email]" confirmation
 
 **Token Management:**
+
 - Token stored securely on device
 - Auto-refreshes when expired
 - Revoke via Google Account settings
 - Re-authenticate if issues occur
 
 **Permissions Required:**
+
 - `spreadsheets`: Read and write to spreadsheets
 - `drive.file`: Access spreadsheets created/opened by app
 - `userinfo.email`: Display signed-in account
 
 ---
 
-## Legacy Shared Sheet Workflow (Deprecated)
-
-The former "public shared sheet (anyone with the link can edit)" workflow has been deprecated and removed. All logging now requires an authenticated Google account and writes only to spreadsheets owned by or explicitly shared with that account.
-
-Reasons for deprecation:
-- Data integrity risks (unauthorized edits, accidental deletions)
-- Lack of per-user audit trail and reliable version history
-- Privacy requirements for industrial and regulated environments
-- Improved token-based access control and revocation capability
-
-If you previously used a public shared sheet:
-- Create (or reuse) a private sheet under your account
-- Share with specific emails using Viewer/Editor roles as needed
-- Update the Spreadsheet ID in the app settings
-
-All subsequent references in this guide assume the authenticated private sheet workflow.
-
----
+ 
 
 ## Account Setup Panel (Testing Controls)
 
@@ -426,6 +406,7 @@ On the first data upload, the app automatically creates a header row:
 | 2025-11-25 14:30:05 | android01 | 74.8 | 1448 | 68.4 | 101.2 |
 
 **Header Format:**
+
 - **Timestamp**: If enabled, first column
 - **Device ID**: If enabled, second column
 - **Monitor Point Names**: Remaining columns in order
@@ -442,6 +423,7 @@ On the first data upload, the app automatically creates a header row:
 | **String** | Text | `Running` |
 
 **Timestamp Format:**
+
 - **ISO 8601**: `2025-11-25T14:30:00Z` (UTC)
 - **Local Time**: `2025-11-25 14:30:00` (device timezone)
 - Google Sheets auto-detects as date/time
@@ -473,6 +455,7 @@ Cycle 3 → Row 2 (overwrite)
 ### Single Sheet Layout
 
 **Simple Time-Series Log:**
+
 ```
 Sheet: Sensor Data
 - Column A: Timestamp
@@ -483,6 +466,7 @@ Sheet: Sensor Data
 ### Multi-Sheet Structure
 
 **Organized by Category:**
+
 ```
 Spreadsheet: Factory Monitoring
 ├─ Sheet: Line 1 Sensors
@@ -492,6 +476,7 @@ Spreadsheet: Factory Monitoring
 ```
 
 **Configuration:**
+
 - Use different sheet names for each Android device/location
 - Point each app instance to its own sheet
 - Create summary sheet with references
@@ -499,6 +484,7 @@ Spreadsheet: Factory Monitoring
 ### Dashboard Sheet
 
 **Live Status Board:**
+
 ```
 Sheet: Dashboard (Update Mode)
 - Column A: Parameter Name (static)
@@ -508,6 +494,7 @@ Sheet: Dashboard (Update Mode)
 ```
 
 **Charts:**
+
 - Insert → Chart
 - Data range: `Sensor Data!A:Z`
 - Chart type: Line, Column, Gauge
@@ -520,14 +507,17 @@ Sheet: Dashboard (Update Mode)
 ### Industrial Data Logging
 
 **Monitor Points:**
+
 - Timestamp, Tank Level, Pressure, Flow Rate, Temperature
 
 **Logging:**
+
 - Append mode with 30-second intervals
 - Long-term archival for compliance
 - Weekly export to CSV for analysis
 
 **Formulas:**
+
 ```
 =AVERAGE(B2:B1000)  // Average tank level
 =MAX(D:D)           // Peak flow rate
@@ -537,11 +527,13 @@ Sheet: Dashboard (Update Mode)
 ### Multi-Device Fleet
 
 **Setup:**
+
 - Each Android device logs to separate sheet
 - Include Device ID column
 - Master sheet with IMPORTRANGE
 
 **Master Sheet Formula:**
+
 ```
 =QUERY({
   IMPORTRANGE("ID1","Sheet1!A:F");
@@ -553,11 +545,13 @@ Sheet: Dashboard (Update Mode)
 ### Shift Reports
 
 **Configuration:**
+
 - Append mode with 5-minute intervals
 - Timestamp column enabled
 - Units in monitor point names
 
 **Daily Summary:**
+
 ```
 =QUERY(A:F, "SELECT A, AVG(B), MAX(C), MIN(D) 
 WHERE A >= date '"&TEXT(TODAY(),"yyyy-mm-dd")&"' 
@@ -567,15 +561,18 @@ GROUP BY A")
 ### Quality Control
 
 **Monitor Points:**
+
 - Production count, Defect count, Cycle time
 
 **Calculated Columns:**
+
 ```
 Column F: =IF(D2>0, B2/D2, 0)  // Defect rate
 Column G: =IF(C2<60, "Pass", "Fail")  // Cycle time check
 ```
 
 **Conditional Formatting:**
+
 - Red if defect rate > 5%
 - Green if cycle time < 50s
 
@@ -586,6 +583,7 @@ Column G: =IF(C2<60, "Pass", "Fail")  // Cycle time check
 ### Google Sheets Formulas
 
 **Real-time Calculations:**
+
 ```
 // Running average of last 100 rows
 =AVERAGE(INDIRECT("B"&MAX(2,ROW()-100)&":B"&ROW()))
@@ -600,6 +598,7 @@ Column G: =IF(C2<60, "Pass", "Fail")  // Cycle time check
 ### Pivot Tables
 
 **Summarize Data:**
+
 1. Data → Pivot table
 2. Rows: Date (group by day)
 3. Values: Average(Tank Level), Max(Pressure)
@@ -608,6 +607,7 @@ Column G: =IF(C2<60, "Pass", "Fail")  // Cycle time check
 ### Charts & Graphs
 
 **Time Series Chart:**
+
 1. Select data range: `A1:F1000`
 2. Insert → Chart → Line chart
 3. X-axis: Timestamp
@@ -615,6 +615,7 @@ Column G: =IF(C2<60, "Pass", "Fail")  // Cycle time check
 5. Enable "Aggregate" for smooth lines
 
 **Gauge Dashboard:**
+
 1. Insert → Chart → Gauge chart
 2. Data range: Last row only
 3. Set min/max/threshold colors
@@ -623,12 +624,14 @@ Column G: =IF(C2<60, "Pass", "Fail")  // Cycle time check
 ### Sharing & Permissions
 
 **Collaboration:**
+
 - Share → Add email addresses
 - **Viewer**: Read-only access
 - **Commenter**: Can add comments
 - **Editor**: Can modify data
 
 **Public Link:**
+
 - Share → Get link → Anyone with link
 - Useful for public dashboards
 - Viewers can't see authentication
@@ -671,6 +674,7 @@ function dailyExport() {
 ### Testing Upload
 
 **Manual Test:**
+
 1. Configure spreadsheet with valid ID
 2. Start Client Mode with 1-2 monitor points
 3. Wait for one polling cycle
@@ -678,6 +682,7 @@ function dailyExport() {
 5. Verify new row with timestamp
 
 **Check Upload Status:**
+
 - Settings → Google Sheets → Last Upload Status
 - Shows success/failure and timestamp
 - Error messages if upload fails
@@ -685,11 +690,13 @@ function dailyExport() {
 ### Quota Limits
 
 **Google Sheets API Limits:**
+
 - **Free tier**: 300 write requests per minute per project
 - **Typical impact**: ~5s minimum between updates safe
 - **Exceeding**: Temporary throttle, resume after cooldown
 
 **Mitigation:**
+
 - Increase polling interval (30-60s recommended)
 - Use batch mode if available
 - Avoid multiple devices writing to same sheet rapidly
@@ -697,6 +704,15 @@ function dailyExport() {
 ---
 
 ## Frequently Asked Questions
+
+??? question "Why are only private Google Sheets supported?"
+    Public "anyone with the link can edit" sheets were deprecated for several reasons:
+    - Data integrity risks (unauthorized edits or deletions)
+    - Privacy and compliance requirements in industrial environments
+    - No reliable per-user audit trail on public edit links
+    - Stronger security via token-based authenticated access and revocation
+
+    Each write uses your authenticated Google account token. Share the sheet explicitly with Viewer or Editor roles for controlled collaboration. For dashboards, keep edit access limited and grant View-only to broader audiences.
 
 ??? question "How many monitor points can I log?"
     Google Sheets supports up to **18,278 columns** per sheet. Practically, keep under 50 monitor points per sheet for performance. For more data, use multiple sheets or consider MQTT add-on.
@@ -727,24 +743,28 @@ function dailyExport() {
 ## Best Practices
 
 **Spreadsheet Organization:**
+
 - One sheet per device or location
 - Descriptive sheet names (avoid generic "Sheet1")
 - Include timestamp and device ID columns
 - Archive old data periodically to new sheets
 
 **Performance:**
+
 - Keep active sheets under 100,000 rows
 - Use separate sheets for historical data
 - Avoid complex formulas in large datasets
 - Consider monthly or yearly sheet rotation
 
 **Data Management:**
+
 - Export and archive data quarterly
 - Use freeze rows/columns for headers
 - Apply conditional formatting for alerts
 - Document formulas and data sources
 
 **Security:**
+
 - Share with specific emails, not "anyone with link"
 - Use Viewer permissions for non-editors
 - Revoke app access if device is lost
