@@ -2,10 +2,7 @@
 
 **Real-time cloud spreadsheet logging for Android Modbus data**
 
-![Google Sheets Integration](../assets/screenshots/android-advanced/mma-sheets-overview.webp){ .screenshot-center loading="lazy" }
-
-!!! success "Quick Links"
-    [:material-rocket-launch-outline: **Quick Start**](#quick-start-setup) | [:material-table: **Data Format**](#data-format) | [:material-frequently-asked-questions: **FAQ**](#frequently-asked-questions)
+![Google Sheets Integration](../assets/screenshots/android-advanced/mma-addon-sheets-concept.webp){ .screenshot-center loading="lazy" }
 
 ## Overview
 
@@ -13,14 +10,19 @@ The Google Sheets Add-on enables automatic real-time logging of Modbus data dire
 
 **Key Features:**
 
-- ✅ **Real-time Logging** - Automatic row append after each polling cycle
-- ✅ **Cloud Storage** - Google Drive integration with unlimited retention
-- ✅ **Team Collaboration** - Share spreadsheets with view/edit permissions
-- ✅ **Excel Compatible** - Download as XLSX, CSV, PDF
-- ✅ **Custom Formulas** - Use Google Sheets functions on live data
-- ✅ **Charts & Pivot Tables** - Built-in visualization tools
-- ✅ **Version History** - Track all changes with timestamps
-- ✅ **Mobile & Desktop** - Access from any device
+- **Real-time Logging** - Automatic row append after each polling cycle
+- **Cloud Storage** - Google Drive integration with unlimited retention
+- **Device Merging** - Log data from multiple devices with unique IDs to build a centralized database
+- **Team Collaboration** - Share spreadsheets with view/edit permissions
+- **Excel Compatible** - Download as XLSX, CSV, PDF
+- **Custom Formulas** - Use Google Sheets functions on live data
+- **Charts & Pivot Tables** - Use Google Sheets built-in visualization tools to view trend data
+- **Version History** - Track all changes with timestamps
+- **Mobile & Desktop** - Access from any device
+
+
+!!! success "Quick Links"
+    [:material-rocket-launch-outline: **Quick Start**](#quick-start-setup) | [:material-table: **Data Format**](#data-format) | [:material-frequently-asked-questions: **FAQ**](#frequently-asked-questions)
 
 ---
 
