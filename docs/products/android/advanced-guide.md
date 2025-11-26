@@ -27,8 +27,11 @@ The advantage of the Modbus Monitor Advanced is that it combines both modes in o
 
 - **⚙️ Settings** - Configure protocols, timing, and cloud integrations  
 - **📤 Export/Import** - CSV data management and email sharing
-- **☁️ Cloud Integration** - Google Sheets, ThingSpeak, MQTT support
+- **☁️ Cloud Add-ons** - Log data to Google Sheets, ThingSpeak, or MQTT brokers with one-button setup
 - **🔄 Data Management** - Real-time logging, statistics, and data transformations
+
+!!! tip "New to Cloud Logging?"
+    The **Google Sheets Add-on** is the fastest way to get your Modbus data into the cloud—no server, database, or coding required. See [:material-table-arrow-right: Google Sheets Add-on Guide](../../guides/android-sheets-addon.md) for a complete walkthrough.
 
 ### Core Capabilities
 
@@ -48,6 +51,23 @@ Modbus TCP, UDP, Serial RTU, Serial ASCII, RTU over TCP, ASCII over TCP, ThingSp
 - CSV import/export with timed intervals (second/minute/hour)
 - Email export and cloud integration (ThingSpeak, Google Sheets)
 - Real-time logging and statistical analysis
+
+### Cloud Add-ons (Separate In-App Purchases)
+
+Extend your monitoring with cloud logging add-ons. Each add-on provides direct cloud integration without servers or complex setup:
+
+| Add-on | What It Does | Best For | Guide |
+|--------|--------------|----------|-------|
+| **Google Sheets** | Log data directly to private Google spreadsheets | Quick setup, team sharing, Excel export | [:material-table-arrow-right: Setup Guide](../../guides/android-sheets-addon.md) |
+| **MQTT** | Publish to MQTT brokers (AWS IoT, HiveMQ, etc.) | IoT platforms, Node-RED, Home Assistant | [:material-transit-connection-variant: MQTT Guide](../../guides/mqtt-addon.md) |
+| **ThingSpeak** | Send data to ThingSpeak cloud analytics | Live charts, MATLAB analysis, public dashboards | [:material-chart-line: ThingSpeak Guide](../../guides/thingspeak-addon.md) |
+
+**Key Benefits:**
+
+- **One-button setup** - Create spreadsheets or connect to brokers with minimal configuration
+- **Automatic authentication** - OAuth for Google, token management for MQTT
+- **Multi-device support** - Multiple phones can log to the same destination
+- **Works with all modes** - Client polling, Sensor Server, or mixed data sources
 
 ### Operation Modes
 
@@ -89,7 +109,7 @@ The main screen combines **status indicators** with **action buttons** for strea
 The main interface combines status indicators with action buttons for easy operation. Each row displays monitor points showing Name, Configuration details, current Modbus values, send/receive frames, and packet response times.
 
 <figure markdown id="figure-1">  
-  ![Main Window Layout](../../assets/screenshots/android-advanced/mma-main-ui.webp)
+  ![Main Window Layout](../../assets/screenshots/android-advanced/mma-main-ui.webp){ loading="lazy" }
   <figcaption>Figure 1: Main interface with key controls and status indicators</figcaption>
 </figure>
 
@@ -150,7 +170,7 @@ The main interface combines status indicators with action buttons for easy opera
 
 <div class="grid cards" markdown>
 
--   ![Main Menu Hamburger](../../assets/screenshots/android-advanced/main-menu-hamburger.webp){ width="300" style="display: block; margin: 0 auto;" }
+-   ![Main Menu Hamburger](../../assets/screenshots/android-advanced/main-menu-hamburger.webp){ width="300" style="display: block; margin: 0 auto;"  loading="lazy"}
 
 -   **Main Application Menu**
 
@@ -337,7 +357,7 @@ Monitor point configuration defines how your app connects to and interprets data
 
 <div class="grid cards" markdown>
 
--   ![Monitor Point Configuration Dialog](../../assets/screenshots/android-advanced/mma-monitor-point-configure.webp){ width="400" style="display: block; margin: 0 auto;" }
+-   ![Monitor Point Configuration Dialog](../../assets/screenshots/android-advanced/mma-monitor-point-configure.webp){ width="400" style="display: block; margin: 0 auto;"  loading="lazy"}
 
 -   **Monitor Point Configuration Dialog**
 
@@ -763,7 +783,7 @@ Both methods are accessible through the [Monitor Point Management](#monitor-poin
 The Write Dialog box is displayed when selecting the "Write" option from the [Monitor Point Management](#monitor-point-management) dialog (tap any monitor point to access). The dialog header shows the Monitor Point name along with the configured Data Type. Enter the value in the write field and click the Change button.
 
 <figure markdown>
-  ![Modbus Write Dialog](../../assets/screenshots/android-advanced/modbus-write.webp){ width="400" }
+  ![Modbus Write Dialog](../../assets/screenshots/android-advanced/modbus-write.webp){ width="400" loading="lazy" }
   <figcaption>Figure 3: Write dialog for sending values to remote devices</figcaption>
 </figure>
 
@@ -840,7 +860,7 @@ The Write Dialog box is displayed when selecting the "Write" option from the [Mo
 Turn your Android device into a **Modbus TCP Server** that other devices can poll for data. Your phone/tablet becomes a data source that remote Modbus masters can read and write using standard Modbus TCP protocol.
 
 <figure markdown>
-  ![Modbus Server Mode Interface](../../assets/screenshots/android-advanced/mma-server-main.webp){ width="500" }
+  ![Modbus Server Mode Interface](../../assets/screenshots/android-advanced/mma-server-main.webp){ width="500" loading="lazy" }
   <figcaption>Figure 4: Server mode active showing IP address, port, and connected client count</figcaption>
 </figure>
 
@@ -891,7 +911,7 @@ Turn your Android device into a **Modbus TCP Server** that other devices can pol
 **Path**: [Hamburger Menu](#hamburger-menu) → **Settings** → **Server**
 
 <figure markdown>
-  ![Server Configuration Settings](../../assets/screenshots/android-advanced/server-config.webp){width="600"}
+  ![Server Configuration Settings](../../assets/screenshots/android-advanced/server-config.webp){ width="600" loading="lazy" }
   <figcaption>Figure 5: Server settings - enable feature and configure port</figcaption>
 </figure>
 
@@ -1039,7 +1059,7 @@ Count: 10                 (your monitor point count)
 **Monitor Points** are the fundamental building blocks of Modbus Monitor Advanced. Think of them as intelligent tags (similar to PLC tags) that completely define how to communicate with a specific piece of data on a Modbus device.
 
 <figure markdown id="figure-9">
-![Monitor Points List](../../assets/screenshots/android-advanced/mma-main-ui.webp)
+![Monitor Points List](../../assets/screenshots/android-advanced/mma-main-ui.webp){ loading="lazy" }
 <figcaption>Figure 9: Main interface highlighting Monitor Points [9] - the data display area showing live values from multiple devices</figcaption>
 </figure>
 
@@ -1108,7 +1128,7 @@ Each monitor point is a **complete configuration package** containing everything
 #### How to Open the Management Dialog
 
 <figure markdown>
-  ![Accessing Monitor Points Management Dialog](../../assets/screenshots/android-advanced/mma-monitor-points-mangement.webp)
+  ![Accessing Monitor Points Management Dialog](../../assets/screenshots/android-advanced/mma-monitor-points-mangement.webp){ loading="lazy" }
   <figcaption>Figure 11: Two ways to access - tap any monitor point directly or swipe left to reveal menu</figcaption>
 </figure>
 
@@ -1226,7 +1246,7 @@ The **"Apply Settings to All"** option propagates communication settings from th
 ### Configuring Sensor Server
 
 <figure markdown>
-![Sensor Information Display](../../assets/screenshots/android-advanced/mma-sensor-config.webp)
+![Sensor Information Display](../../assets/screenshots/android-advanced/mma-sensor-config.webp){ loading="lazy" }
 <figcaption>Figure 8: Accelerometer configured in Server Mode showing real-time values accessible to remote Modbus TCP clients</figcaption>
 </figure>
 
@@ -1390,7 +1410,7 @@ Now that you understand the interface, settings, and monitor point configuration
 **What is Client Mode?** In Client (Master) Mode, your Android device polls remote Modbus devices (servers/slaves) to retrieve data and optionally write values back to them. This is the most common use case for monitoring PLCs, sensors, meters, and other industrial equipment. In this guide we configure three monitoring points—each on a different channel (1. TCP/IP, 2. USB Serial, 3. Bluetooth BLE using an HM‑10 module)—to demonstrate simultaneous multi‑channel communication.
 
 <figure markdown>
-  ![Modbus Client Mode Operation](../../assets/screenshots/android-advanced/mma-master-three-channels.webp){width="400"}
+  ![Modbus Client Mode Operation](../../assets/screenshots/android-advanced/mma-master-three-channels.webp){ width="400" loading="lazy" }
   <figcaption>Modbus Client Mode: Your device polls remote servers from TCP (i0), USB Serial (i1), and Bluetooth BLE (i2) simultaneously</figcaption>
 </figure>
 
