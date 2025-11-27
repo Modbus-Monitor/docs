@@ -153,49 +153,6 @@ Free tier works for most uses. Limits:
 
 ---
 
-## XPF-Specific Features
-
-### Working with Projects
-
-**Create Project for ThingSpeak:**
-1. **File** → **New Project**
-2. Add monitor points for all data you want to log
-3. **Tools** → **Add-Ons** → **ThingSpeak**
-4. Enable and configure
-5. **Save Project** with descriptive name
-
-**Load Project Later:**
-1. **File** → **Recent** or **Open**
-2. XPF remembers your ThingSpeak settings
-3. Click **Start Polling** to resume logging
-
-### Exporting from XPF
-
-**Local CSV Export:**
-- **Tools** → **Export Data** → Select date range
-- Export to CSV before uploading to ThingSpeak
-- Useful for backup or analysis in Excel
-
-**Combined Workflow:**
-1. Poll device and collect local data in XPF
-2. Simultaneously upload to ThingSpeak via add-on
-3. Export CSV for backup/compliance
-
-### Scheduled Polling
-
-**Automatic Polling with Task Scheduler:**
-- Configure Windows Task Scheduler to launch XPF at intervals
-- XPF opens, polls, uploads, then closes
-- Useful for continuous 24/7 monitoring
-
-**Example Schedule:**
-```
-Trigger: Every 30 minutes
-Run: "C:\Program Files\Modbus Monitor XPF\ModbusMonitor.exe" myproject.xpf
-```
-
----
-
 ## Common Tasks
 
 **How do I view uploaded data?**  

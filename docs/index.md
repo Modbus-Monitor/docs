@@ -160,22 +160,22 @@ Extend Modbus Monitor XPF with cloud connectivity:
 ### I want to...
 
 **Monitor Modbus devices:**  
-→ [:octicons-arrow-right-24: XPF User Guide](products/xpf/user-guide.md) or [:octicons-arrow-right-24: Android Guide](products/android/advanced-guide.md)
+[:octicons-arrow-right-24: XPF User Guide](products/xpf/user-guide.md) or [:octicons-arrow-right-24: Android Guide](products/android/advanced-guide.md)
 
 **Upload data to the cloud:**  
-→ [:octicons-arrow-right-24: ThingSpeak Overview](guides/thingspeak-overview.md) or [:octicons-arrow-right-24: MQTT Setup](guides/mqtt-addon.md)
+[:octicons-arrow-right-24: ThingSpeak Overview](guides/thingspeak-overview.md) or [:octicons-arrow-right-24: MQTT Setup](guides/mqtt-addon.md)
 
 **Analyze network traffic:**  
-→ [:octicons-arrow-right-24: Modbus Mapper Pro](products/mapper/user-manual.md)
+[:octicons-arrow-right-24: Modbus Mapper Pro](products/mapper/user-manual.md)
 
 **Find hardware compatibility:**  
-→ [:octicons-arrow-right-24: Hardware Guide](guides/android-hardware.md)
+[:octicons-arrow-right-24: Hardware Guide](guides/android-hardware.md)
 
 **Troubleshoot errors:**  
-→ [:octicons-arrow-right-24: Error Codes](guides/error-codes.md)
+[:octicons-arrow-right-24: Error Codes](guides/error-codes.md)
 
 **Understand Modbus addressing:**  
-→ [:octicons-arrow-right-24: 6-Digit Addressing](guides/6-digit-addressing.md)
+[:octicons-arrow-right-24: 6-Digit Addressing](guides/6-digit-addressing.md)
 
 ---
 
@@ -189,24 +189,6 @@ Extend Modbus Monitor XPF with cloud connectivity:
 | Network Analysis | ✅ | ❌ | ❌ | ✅ Advanced |
 | Multiple Connections | ✅ | ✅ | ⚠️ Limited | ✅ |
 | Data Export | ✅ CSV/JSON | ✅ CSV | ❌ | ✅ CSV |
-
----
-
-## 📱 Download Our Apps
-
-<div class="grid cards" markdown>
-
--   :material-microsoft-windows:{ .lg } **Modbus Monitor XPF**
-    
-    Professional Windows monitoring  
-    [:material-download: Download](https://quantumbitsolutions.com/windows-xpf-monitor/)
-
--   :material-android:{ .lg } **Android Apps**
-    
-    Mobile field monitoring  
-    [:material-google-play: Play Store](https://play.google.com/store/apps/dev?id=8369433099446213800)
-
-</div>
 
 ---
 

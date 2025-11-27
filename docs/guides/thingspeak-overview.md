@@ -155,8 +155,7 @@ Yes. Go to your channel → Data Export tab. Download as CSV, JSON, or XML.
 ---
 
 ## FAQ
-
- ??? question "Can I upload to multiple ThingSpeak channels?"
+??? question "Can I upload to multiple ThingSpeak channels?"
     Yes. Each XPF instance uploads data to **ThingSpeak channels** using the first 8 Monitoring Points (if assigned).  
 
     To publish to multiple channels:    
