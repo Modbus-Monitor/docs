@@ -171,6 +171,7 @@ MQTT Explorer (or other subscribers)
 | **WebSocket Secure** | `8001` | Secure web apps | ON |
 
 **Example Brokers with Secure Ports:**
+
 - HiveMQ: `tcp://broker.hivemq.com:1883` or `ssl://broker.hivemq.com:8883`
 - AWS IoT: `ssl://<endpoint>.iot.region.amazonaws.com:8883`
 - Azure IoT: `ssl://your-hub.azure-devices.net:8883`
@@ -270,18 +271,6 @@ MQTT Explorer (or other subscribers)
 8. Repeat cycle every ~1000ms (configurable)
 ```
 
-**Batch Mode Example:**
-If you enable batch publishing, one message publishes to `modbus/monitor/batch`:
-```json
-{
-  "timestamp": "2025-11-26T14:30:22Z",
-  "points": [
-    {"name": "temperature", "value": 75.3},
-    {"name": "pressure", "value": 1013.2}
-  ]
-}
-```
-
 ---
 
 ## Data Sources: Three Communication Channels
@@ -295,12 +284,14 @@ Modbus Monitor Advanced can read data from **any of three communication channels
 **Best For**: Remote Modbus servers, industrial equipment on network, desktop applications
 
 **Setup:**
+
 - Server IP: `192.168.1.100` (or public IP if remote)
 - Port: `502` (Modbus TCP standard) or custom port like `8888`
 - Protocol: `Modbus TCP`, `Modbus UDP`
 - Perfect for: Factory equipment, SCADA systems, remote gateways
 
 **MQTT Publishing:**
+
 ```
 Data Flow: Remote Server (TCP/IP) → Android App → MQTT Broker → Dashboard
 Example: Industrial PLC reading temperature → Android polling → HiveMQ cloud
@@ -311,6 +302,7 @@ Example: Industrial PLC reading temperature → Android polling → HiveMQ cloud
 **Best For**: Direct serial connections, legacy equipment, RS232/RS485 devices
 
 **Setup:**
+
 - USB adapter: FTDI, Prolific, or SiLab chipset
 - Protocol: `Modbus RTU`, `Modbus ASCII`
 - Physical cable from Android to device (5m max)
@@ -327,6 +319,7 @@ Example: Energy meter on RS485 → USB converter → Android → Cloud MQTT → 
 **Best For**: Wireless connections, portable devices, flexible range monitoring
 
 **Setup:**
+
 - Bluetooth serial adapter (tested: SIIG, Broadcom)
 - Protocol: `Modbus RTU`, `Modbus ASCII` (wireless)
 - Range: 10–30 meters (line of sight)
@@ -371,10 +364,6 @@ All three data sources are polled every cycle and published to the MQTT broker i
 
 **For advanced users and customization. Bookmark this section for quick reference.**
 
-### Connection Settings Quick Reference
-
-![MQTT Connection Settings](../assets/screenshots/android-advanced/server-config.webp){ .screenshot-center loading="lazy" }
-
 **Broker Configuration:**
 
 | Setting | Description | Example | Required |
@@ -384,57 +373,6 @@ All three data sources are polled every cycle and published to the MQTT broker i
 | **Client ID** | Unique device identifier | `android-sensor-42` | Yes |
 | **Username** | Authentication username | `field_device_01` | If broker requires |
 | **Password** | Authentication password | `●●●●●●●●` | If broker requires |
-| **Use TLS/SSL** | Enable encrypted connection | Checked/Unchecked | Optional |
-
-**Topic Structure:**
-
-| Setting | Description | Example | Result Topic |
-|---------|-------------|---------|--------------|
-| **Base Topic** | Root path for all messages | `factory/line2/modbus` | - |
-| **Device Suffix** | Auto-append Client ID | Enabled | `factory/line2/modbus/android-sensor-42` |
-| **Point Topics** | Publish each point separately | Enabled | `.../tank_level`, `.../motor_speed` |
-| **Batch Topic** | Single JSON with all points | Enabled | `.../batch` |
-
-### Publishing Modes
-
-**Individual Point Publishing:**
-```
-Topic: modbus/devices/android01/tank_level
-Payload: 75.3
-
-Topic: modbus/devices/android01/motor_speed
-Payload: 1450
-```
-
-**Batch JSON Publishing:**
-```
-Topic: modbus/devices/android01/batch
-Payload: {
-  "timestamp": "2025-11-25T14:30:22Z",
-  "device_id": "android01",
-  "points": [
-    {"name": "tank_level", "value": 75.3, "unit": "L"},
-    {"name": "motor_speed", "value": 1450, "unit": "RPM"}
-  ]
-}
-```
-
-### TLS/SSL Configuration
-
-![MQTT TLS Setup](../assets/screenshots/android-advanced/server.webp){ .screenshot-center loading="lazy" }
-
-**For Secure Brokers:**
-
-1. Enable "Use TLS/SSL" toggle
-2. Select certificate validation mode:
-   - **System CA**: Trust Android system certificates (recommended for public brokers)
-   - **Custom CA**: Upload broker's CA certificate for private brokers
-   - **Skip Verification**: Disable validation (testing only, not recommended)
-
-3. Client certificates (mutual TLS):
-   - Upload client certificate (`.crt` or `.pem`)
-   - Upload client private key
-   - Enter key password if encrypted
 
 ---
 
@@ -443,6 +381,7 @@ Payload: {
 ### AWS IoT Core Integration
 
 **Configuration:**
+
 ```yaml
 Broker: xxxxx.iot.us-east-1.amazonaws.com
 Port: 8883
@@ -499,7 +438,6 @@ Topic: nodered/modbus/input
 |---------|-------|----------|
 | **Connection Failed** | Wrong host/port | Verify broker details; check firewall |
 | **Authentication Error** | Invalid credentials | Confirm username/password; check broker logs |
-| **TLS Handshake Failed** | Certificate mismatch | Verify CA certificate; check broker TLS config |
 | **No Data Published** | MQTT disabled or Client Mode stopped | Enable MQTT toggle; start polling |
 | **Messages Not Received** | Wrong topic subscription | Check topic structure; verify wildcards (`#`, `+`) |
 
@@ -558,24 +496,28 @@ mosquitto_pub -h broker.example.com -p 1883 -t "modbus/test" -m "hello" -u usern
 ## Best Practices
 
 **Topic Design:**
+
 - Use hierarchical structure: `company/site/area/device/point`
 - Include device ID for multi-device deployments
 - Keep topic names short and descriptive
 - Use lowercase with underscores: `tank_level` not `Tank Level`
 
 **Performance:**
+
 - Poll interval ≥ 1000ms for stable networks
 - Use batch JSON for >10 monitor points
 - QoS 0 for high-frequency non-critical data
 - QoS 1 for important values
 
 **Security:**
+
 - Always use TLS/SSL for cloud brokers
 - Rotate credentials periodically
 - Use read-only credentials where possible
 - Monitor broker logs for unauthorized access
 
 **Reliability:**
+
 - Test connection before deployment
 - Set up broker monitoring/alerts
 - Document topic structure for team
