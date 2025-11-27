@@ -6,7 +6,7 @@
 
 ---
 
-## 🚀 Our Products
+## Our Products
 
 <div class="grid cards" markdown>
 
@@ -76,7 +76,7 @@
 
 ---
 
-## ☁️ Cloud & Add-ons
+## Cloud & Add-ons
 
 ### Android Add-ons
 
@@ -84,9 +84,9 @@ Extend Modbus Monitor Advanced with cloud connectivity:
 
 | Add-on | What It Does | Guide |
 |--------|--------------|-------|
-| **MQTT** | Publish data to any MQTT broker (HiveMQ, AWS IoT, Azure) | [:octicons-book-24: Setup](guides/android-mqtt-addon.md) |
-| **Google Sheets** | Log data directly to spreadsheets | [:octicons-book-24: Setup](guides/android-sheets-addon.md) |
-| **ThingSpeak** | Cloud charts, MATLAB analytics, real-time alerts | [:octicons-book-24: Setup](guides/android-thingspeak-addon.md) |
+| **MQTT** | Publish data to any MQTT broker (HiveMQ, AWS IoT, Azure) | [:octicons-book-24: MQTT Guide](guides/android-mqtt-addon.md) |
+| **Google Sheets** | Log data directly to spreadsheets | [:octicons-book-24: Sheets Guide](guides/android-sheets-addon.md) |
+| **ThingSpeak** | Cloud charts, MATLAB analytics, real-time alerts | [:octicons-book-24: ThingSpeak Setup](guides/android-thingspeak-addon.md) |
 
 ### Windows Add-ons
 
@@ -94,92 +94,46 @@ Extend Modbus Monitor XPF with cloud connectivity:
 
 | Add-on | What It Does | Guide |
 |--------|--------------|-------|
-| **MQTT** | Publish data to any MQTT broker | [:octicons-book-24: Setup](guides/mqtt-addon.md) |
-| **ThingSpeak** | Cloud charts, MATLAB analytics, real-time alerts | [:octicons-book-24: Setup](guides/thingspeak-addon.md) |
+| **MQTT** | Publish data to any MQTT broker | [:octicons-book-24: MQTT Guide](guides/mqtt-addon.md) |
+| **ThingSpeak** | Cloud charts, MATLAB analytics, real-time alerts | [:octicons-book-24: ThingSpeak Setup](guides/thingspeak-addon-windows.md) |
 
-### Cloud Platforms
+### Cloud Platform Guides
+
+Learn about cloud integrations for all platforms:
 
 | Platform | Description | Guide |
 |----------|-------------|-------|
-| **ThingSpeak Overview** | Concepts, use cases, MATLAB integration, best practices | [:octicons-book-24: Learn More](guides/thingspeak-overview.md) |
+| **ThingSpeak Overview** | Concepts, use cases, MATLAB integration, best practices | [:octicons-book-24: ThingSpeak Guide](guides/thingspeak-overview.md) |
 
 ---
 
-## 🔧 Technical Guides & References
+## Technical Guides & References
 
-<div class="grid cards" markdown>
-
--   **Hardware Integration**
-    
-    ---
-    
-    - USB Serial adapters
-    - Bluetooth modules
-    - Network equipment
-    
-    [:octicons-arrow-right-24: Hardware Guides](guides/android-hardware.md)
-
--   **Modbus Protocol**
-    
-    ---
-    
-    - Address formatting (6-digit)
-    - Error codes & troubleshooting
-    - Protocol specifications
-    
-    [:octicons-arrow-right-24: Address Formats](guides/6-digit-addressing.md)
-    [:octicons-arrow-right-24: Error Codes](guides/error-codes.md)
-
--   **Data Integration**
-    
-    ---
-    
-    - Import/Export configurations
-    - Google Sheets integration
-    - Custom scripting
-    
-    [:octicons-arrow-right-24: Import/Export](guides/import-export.md)
-
--   **Getting Help**
-    
-    ---
-    
-    - FAQs and troubleshooting
-    - Video tutorials
-    - Community forum
-    
-    [:octicons-arrow-right-24: FAQ](https://quantumbitsolutions.com/forums/)
-    [:octicons-arrow-right-24: Contact Support](https://quantumbitsolutions.com/contact-us/)
-
-</div>
+| Topic | Description | Guides |
+|-------|-------------|--------|
+| **Hardware Integration** | USB Serial adapters, Bluetooth modules, network equipment | [:octicons-arrow-right-24: Hardware Guides](guides/android-hardware.md) |
+| **Modbus Protocol** | Address formatting (6-digit), error codes, protocol specifications | [:octicons-arrow-right-24: Addressing](guides/6-digit-addressing.md) · [:octicons-arrow-right-24: Error Codes](guides/error-codes.md) |
+| **Data Integration** | Import/Export configurations, Google Sheets, custom scripting | [:octicons-arrow-right-24: Import/Export](guides/import-export.md) |
+| **Features & Demo** | Feature overview, live demonstrations, use case examples | [:octicons-arrow-right-24: Features Demo](guides/features-demo.md) |
+| **Additional Resources** | Asset guides, real-time editing help, content migration | [:octicons-arrow-right-24: Assets Guide](guides/assets-guide.md) · [:octicons-arrow-right-24: Real-time Editing](guides/real-time-editing-help.md) |
+| **Getting Help** | FAQs, troubleshooting, community forum, contact support | [:octicons-arrow-right-24: FAQ](https://quantumbitsolutions.com/forums/) · [:octicons-arrow-right-24: Support](https://quantumbitsolutions.com/contact-us/) |
 
 ---
 
-## 🎯 Quick Start by Use Case
+## Quick Start by Use Case
 
-### I want to...
-
-**Monitor Modbus devices:**  
-[:octicons-arrow-right-24: XPF User Guide](products/xpf/user-guide.md) or [:octicons-arrow-right-24: Android Guide](products/android/advanced-guide.md)
-
-**Upload data to the cloud:**  
-[:octicons-arrow-right-24: ThingSpeak Overview](guides/thingspeak-overview.md) or [:octicons-arrow-right-24: MQTT Setup](guides/mqtt-addon.md)
-
-**Analyze network traffic:**  
-[:octicons-arrow-right-24: Modbus Mapper Pro](products/mapper/user-manual.md)
-
-**Find hardware compatibility:**  
-[:octicons-arrow-right-24: Hardware Guide](guides/android-hardware.md)
-
-**Troubleshoot errors:**  
-[:octicons-arrow-right-24: Error Codes](guides/error-codes.md)
-
-**Understand Modbus addressing:**  
-[:octicons-arrow-right-24: 6-Digit Addressing](guides/6-digit-addressing.md)
+| What I Want to Do | Guide |
+|-------------------|-------|
+| Monitor Modbus devices | [:octicons-arrow-right-24: XPF User Guide](products/xpf/user-guide.md) or [:octicons-arrow-right-24: Android Guide](products/android/advanced-guide.md) |
+| Upload data to the cloud | [:octicons-arrow-right-24: ThingSpeak Overview](guides/thingspeak-overview.md) or [:octicons-arrow-right-24: MQTT Setup](guides/mqtt-addon.md) |
+| Analyze network traffic | [:octicons-arrow-right-24: Modbus Mapper Pro](products/mapper/user-manual.md) |
+| Find hardware compatibility | [:octicons-arrow-right-24: Hardware Guide](guides/android-hardware.md) |
+| Troubleshoot errors | [:octicons-arrow-right-24: Error Codes](guides/error-codes.md) |
+| Understand Modbus addressing | [:octicons-arrow-right-24: 6-Digit Addressing](guides/6-digit-addressing.md) |
 
 ---
 
-## 📊 Feature Comparison
+## Feature Comparison
 
 | Feature | XPF (Windows) | Advanced (Android) | Free (Android) | Mapper Pro |
 |---------|:-------------:|:------------------:|:--------------:|:----------:|
@@ -192,7 +146,7 @@ Extend Modbus Monitor XPF with cloud connectivity:
 
 ---
 
-## 📞 Need Help?
+## Need Help?
 
 !!! tip "Support Options"
     

@@ -83,7 +83,7 @@ markdown_extensions:
   - tables
   - toc:
       permalink: true
-      toc_depth: 4
+      toc_depth: 3
   - def_list
   - attr_list
   - md_in_html
@@ -122,32 +122,9 @@ copyright: |
 nav:
   - Home: index.md
 
-  - Products:
-    - Overview: products/index.md
-    - Modbus Monitor XPF:
-      - Complete Guide: products/xpf/user-guide.md
-      - Quick Start: products/xpf/quick-start.md
-    - Android Monitor:
-      - Free Version: products/android/free-guide.md
-      - Advanced Version: products/android/advanced-guide.md
-    - Mapper Pro:
-      - User Manual: products/mapper/user-manual.md
-      - Quick Start: products/mapper/quick-start.md
-    - Custom Solutions: products/custom/overview.md
-
   - Technical Resources:
     - Overview: technical/index.md
 
   - Support & Help:
     - Help Center: support/index.md
     - Community Forum: https://quantumbitsolutions.com/forums/
-
-  - Documentation Guides:
-    - Overview: guides/index.md
-    - " 6-Digit Addressing": guides/6-digit-addressing.md
-    - " MQTT Add-on (Android)": guides/android-mqtt-addon.md
-    - " ThingSpeak Add-on (Android)": guides/android-thingspeak-addon.md
-    - " Google Sheets Add-on (Android)": guides/android-sheets-addon.md
-    - " MQTT Add-on (XPF)": guides/mqtt-addon.md
-    - " ThingSpeak Add-on (XPF)": guides/thingspeak-addon.md
-    - " Ecosystem Tools Template": guides/ecosystem-tools-template.md
