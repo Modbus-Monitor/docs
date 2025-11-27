@@ -1,118 +1,55 @@
 # Support & Help Center
 
-Get help with our products, find answers to common questions, and connect with our support community.
+Quick access to help resources and professional support options.
 
 ## 🆘 Getting Help Fast
 
-### Most Common Issues
-1. **Connection Problems** - Device not responding or timeout errors
-2. **Configuration Issues** - Incorrect register mapping or address formats  
-3. **Performance Questions** - Optimizing polling rates and data collection
-4. **Export/Import** - Data format and compatibility questions
+**Common Issues:**
 
-[📋 Complete FAQ](faq.md){ .md-button .md-button--primary }
+- **Connection Problems** - [Error Code Lookup](../guides/error-codes.md)
+- **Configuration Issues** - [6-Digit Addressing Guide](../guides/6-digit-addressing.md)
+- **Performance Optimization** - Check product user guides
 
-### Quick Troubleshooting
-- **[Error Code Lookup](../technical/error-codes.md)** - Understand error messages
-- **[Connection Wizard](troubleshooting.md#connection-issues)** - Step-by-step diagnostics
-- **[Performance Tips](troubleshooting.md#performance)** - Optimize your setup
+**Quick Links:**
+
+- [🔍 Search Documentation](../index.md)
+- [🗣️ Community Forum](https://quantumbitsolutions.com/forums/)
 
 ## 🎬 Video Tutorials
 
-### Getting Started Series
-- **XPF First Connection** (5 mins) - Connect to your first Modbus device
-- **Android Setup** (3 mins) - Mobile monitoring basics
-- **Data Export** (4 mins) - Export data to Excel and databases
+**All Latest Tutorials:**
 
-### Advanced Topics
-- **Network Analysis** (8 mins) - Using Mapper Pro for troubleshooting
-- **Custom Registers** (6 mins) - Advanced register mapping techniques
-- **Automation Integration** (10 mins) - Connect with SCADA systems
+| Video Title | Watch |
+|-------------|-------|
+| Modbus Monitor XPF - Getting Started | [:octicons-play-24: Watch](https://www.youtube.com/watch?v=Tt_JaRWQI0w) |
+| What is Modbus and how to setup Modbus Monitor Points | [:octicons-play-24: Watch](https://www.youtube.com/watch?v=eesPvKslLV8) |
+| Android Modbus Monitor Advanced Intro | [:octicons-play-24: Watch](https://www.youtube.com/watch?v=3RiG5UEAG8g) |
+| Poll Modbus RTU device with Android Mobile Device | [:octicons-play-24: Watch](https://www.youtube.com/watch?v=eD8GEO-MyOs) |
+| Use an Ethernet Port and Android Device to Modbus/TCP Data | [:octicons-play-24: Watch](https://www.youtube.com/watch?v=bdAwtJvhbzg) |
+| Charting Data from Modbus TCP or Modbus RTU Devices | [:octicons-play-24: Watch](https://www.youtube.com/watch?v=VjAtdqMH9Zw) |
+| Modbus Data Evaluate Limits with Colors | [:octicons-play-24: Watch](https://www.youtube.com/watch?v=NJRPFJhLjis) |
+| Use Modbus Wizard to convert Standard Modbus Address into Six-digit Modbus Address | [:octicons-play-24: Watch](https://www.youtube.com/watch?v=wnDRERDeoqw) |
+| Download Modbus Map from Online Database | [:octicons-play-24: Watch](https://www.youtube.com/watch?v=7c_ZKHzH_ew) |
+| Modbus RTU or TCP Spy. Sniff & Build Modbus Map | [:octicons-play-24: Watch](https://www.youtube.com/watch?v=l6F49HPSx2U) |
+| Modbus RTU ASCII, TCP and UDP Clients | [:octicons-play-24: Watch](https://www.youtube.com/watch?v=x2XCbDIXcDA) |
+| Modbus and Bluetooth BLE | [:octicons-play-24: Watch](https://www.youtube.com/watch?v=OFuRFkKfB34) |
+| Modbus and Bluetooth Classic (ED/EDR) | [:octicons-play-24: Watch](https://www.youtube.com/watch?v=N8-giDfa3Eg) |
+| Publish Modbus RTU data to MQTT Broker | [:octicons-play-24: Watch](https://www.youtube.com/watch?v=vhivTbEz7hY) |
+| Publish Modbus RTU data to Google Sheets | [:octicons-play-24: Watch](https://www.youtube.com/watch?v=GAkMOEzmZ-k) |
 
-[🎥 All Videos](videos.md){ .md-button }
-
-## 💬 Community Support
-
-### Discussion Forum
-Join thousands of automation professionals discussing Modbus implementations, troubleshooting, and best practices.
-
-**Active Discussion Areas:**
-- **XPF Support** - Windows desktop application help
-- **Android Monitor** - Mobile app questions (Free & Advanced)
-- **Mapper Pro** - Network analysis and troubleshooting
-- **General Support** - Cross-product questions and tips
-
-[🗣️ Visit Community Forum](https://quantumbitsolutions.com/forums/){ .md-button .md-button--primary target="_blank" }
-
-### Knowledge Base
-Searchable database of solutions, tips, and technical articles contributed by our community and support team.
+[🎥 Subscribe to YouTube](https://www.youtube.com/modbusmonitor){ .md-button .md-button--primary target="_blank" }
 
 ## 📞 Professional Support
 
-### Support Channels
-
-=== "Email Support"
-    
-    **Standard Support** (24-48 hour response)
-    📧 support@quantumbitsolutions.com
-    
-    **Priority Support** (4-8 hour response)  
-    📧 priority@quantumbitsolutions.com
-
-=== "Phone Support"
-    
-    **Business Hours**: Monday-Friday, 9 AM - 6 PM EST
-    📞 +1 (555) 123-MODBUS
-    
-    **Emergency Support**: 24/7 for critical production issues
-    📞 +1 (555) 911-URGENT
-
-=== "Remote Assistance"
-    
-    **Screen Sharing**: Real-time troubleshooting sessions
-    **Remote Configuration**: Direct setup assistance
-    **Training Sessions**: Personalized product training
-
-### Support Plans
-
-| Feature | Standard | Professional | Enterprise |
-|---------|----------|-------------|------------|
-| Email Support | ✅ 48hr | ✅ 8hr | ✅ 2hr |
-| Phone Support | ❌ | ✅ Business | ✅ 24/7 |
-| Remote Assistance | ❌ | ✅ Scheduled | ✅ On-demand |
-| Custom Training | ❌ | ✅ Group | ✅ Individual |
-| Priority Updates | ❌ | ❌ | ✅ Beta Access |
-
-## 📚 Documentation & Resources
-
-### User Manuals
-- **[XPF Complete Guide](../products/xpf/user-guide.md)** - Comprehensive reference
-- **[Android User Guide](../products/android/advanced-guide.md)** - Mobile app documentation
-- **[Mapper Pro Manual](../products/mapper/user-manual.md)** - Network analysis tool
-
-### Technical References  
-- **[Hardware Compatibility](../technical/hardware.md)** - Supported devices and adapters
-- **[Protocol Reference](../technical/addressing.md)** - Modbus implementation details
-- **[API Documentation](../technical/import-export.md)** - Integration guides
-
-### Release Notes
-Stay updated with the latest features, improvements, and bug fixes.
-
-[📝 Latest Updates](release-notes.md){ .md-button }
-
-## 🔄 Submit Feedback
-
-### Feature Requests
-Have an idea for improving our products? We'd love to hear it!
-
-[💡 Suggest Feature](https://quantumbitsolutions.com/feature-request/){ .md-button target="_blank" }
-
-### Bug Reports
-Found an issue? Help us fix it quickly with detailed information.
-
-[🐛 Report Bug](https://quantumbitsolutions.com/bug-report/){ .md-button target="_blank" }
+!!! warning "Contact Information"
+    | Channel | Response Time | Contact |
+    |---------|----------------|---------|
+    | **Email** | 24-48 hours | [support@quantumbitsolutions.com](mailto:support@quantumbitsolutions.com) |
+    | **Phone** | Business hours | [+1 (919) 809-5422](tel:+1-919-809-5422) |
+    | **Community** | Community-driven | [Visit Forum](https://quantumbitsolutions.com/forums/){ target="_blank" } |
+    | **Contact Form** | 24 hours | [Get in Touch](https://quantumbitsolutions.com/feedback/){ target="_blank" } |
 
 ---
 
-!!! success "Premium Support Available"
-    Need faster response times or dedicated assistance? Upgrade to **Professional** or **Enterprise** support for priority handling and advanced features.
+!!! info "Need Quick Help?"
+    Most questions are answered in our [documentation hub](../index.md) or [community forum](https://quantumbitsolutions.com/forums/).

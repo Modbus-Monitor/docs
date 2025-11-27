@@ -6,6 +6,12 @@
 
 ---
 
+## Quick Navigation
+
+[**Our Products**](#our-products) · [**Platform Quick Links**](#platform-quick-links) · [**Cloud & Add-ons**](#cloud--add-ons) · [**Technical Guides**](#technical-guides--references) · [**Feature Comparison**](#feature-comparison) · [**Quick Start**](#quick-start-by-use-case) · [**Support**](#need-help)
+
+---
+
 ## Our Products
 
 <div class="grid cards" markdown>
@@ -76,6 +82,17 @@
 
 ---
 
+## Platform Quick Links
+
+| Platform | Get Started | Advanced Setup | Cloud Integration |
+|----------|-------------|-----------------|-------------------|
+| **Windows (XPF)** | [:octicons-rocket-24: Quick Start](products/xpf/quick-start.md) | [:octicons-book-24: Full Guide](products/xpf/user-guide.md) | [:octicons-arrow-right-24: MQTT](guides/mqtt-addon.md) · [:octicons-arrow-right-24: ThingSpeak](guides/thingspeak-addon-windows.md) |
+| **Android Advanced** | [:octicons-download-24: Install](https://play.google.com/store/apps/details?id=com.quantumbitsolutions.modbusmonitor) | [:octicons-book-24: Full Guide](products/android/advanced-guide.md) | [:octicons-arrow-right-24: MQTT](guides/android-mqtt-addon.md) · [:octicons-arrow-right-24: Sheets](guides/android-sheets-addon.md) · [:octicons-arrow-right-24: ThingSpeak](guides/android-thingspeak-addon.md) |
+| **Android Free** | [:octicons-download-24: Install](https://play.google.com/store/apps/details?id=com.quantumbitsolutions.modbusconsole) | [:octicons-book-24: User Guide](products/android/free-guide.md) | Cloud not available |
+| **Mapper Pro** | [:octicons-rocket-24: Quick Demo](products/mapper/quick-start.md) | [:octicons-book-24: Full Manual](products/mapper/user-manual.md) | N/A |
+
+---
+
 ## Cloud & Add-ons
 
 ### Android Add-ons
@@ -120,19 +137,6 @@ Learn about cloud integrations for all platforms:
 
 ---
 
-## Quick Start by Use Case
-
-| What I Want to Do | Guide |
-|-------------------|-------|
-| Monitor Modbus devices | [:octicons-arrow-right-24: XPF User Guide](products/xpf/user-guide.md) or [:octicons-arrow-right-24: Android Guide](products/android/advanced-guide.md) |
-| Upload data to the cloud | [:octicons-arrow-right-24: ThingSpeak Overview](guides/thingspeak-overview.md) or [:octicons-arrow-right-24: MQTT Setup](guides/mqtt-addon.md) |
-| Analyze network traffic | [:octicons-arrow-right-24: Modbus Mapper Pro](products/mapper/user-manual.md) |
-| Find hardware compatibility | [:octicons-arrow-right-24: Hardware Guide](guides/android-hardware.md) |
-| Troubleshoot errors | [:octicons-arrow-right-24: Error Codes](guides/error-codes.md) |
-| Understand Modbus addressing | [:octicons-arrow-right-24: 6-Digit Addressing](guides/6-digit-addressing.md) |
-
----
-
 ## Feature Comparison
 
 | Feature | XPF (Windows) | Advanced (Android) | Free (Android) | Mapper Pro |
@@ -143,6 +147,19 @@ Learn about cloud integrations for all platforms:
 | Network Analysis | ✅ | ❌ | ❌ | ✅ Advanced |
 | Multiple Connections | ✅ | ✅ | ⚠️ Limited | ✅ |
 | Data Export | ✅ CSV/JSON | ✅ CSV | ❌ | ✅ CSV |
+
+---
+
+## Quick Start by Use Case
+
+| What I Want to Do | Guide |
+|-------------------|-------|
+| Monitor Modbus devices | [:octicons-arrow-right-24: XPF User Guide](products/xpf/user-guide.md) or [:octicons-arrow-right-24: Android Guide](products/android/advanced-guide.md) |
+| Upload data to the cloud | [:octicons-arrow-right-24: ThingSpeak Overview](guides/thingspeak-overview.md) or [:octicons-arrow-right-24: MQTT Setup](guides/mqtt-addon.md) |
+| Analyze network traffic | [:octicons-arrow-right-24: Modbus Mapper Pro](products/mapper/user-manual.md) |
+| Find hardware compatibility | [:octicons-arrow-right-24: Hardware Guide](guides/android-hardware.md) |
+| Troubleshoot errors | [:octicons-arrow-right-24: Error Codes](guides/error-codes.md) |
+| Understand Modbus addressing | [:octicons-arrow-right-24: 6-Digit Addressing](guides/6-digit-addressing.md) |
 
 ---
 

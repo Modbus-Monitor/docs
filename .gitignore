@@ -1,6 +1,9 @@
 # WordPress uploads folder (temporary, not for commit)
 uploads/
 
+# YouTube API Key (local, never commit)
+.youtube-api-key
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
