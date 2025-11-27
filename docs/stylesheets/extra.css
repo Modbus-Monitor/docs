@@ -323,6 +323,16 @@
   border-radius: 0.5rem;
 }
 
+/* Button spacing in grid cards */
+.grid.cards .md-button {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.grid.cards .md-button:last-child {
+  margin-right: 0;
+}
+
 /* Responsive design for 404 page */
 @media screen and (max-width: 768px) {
   .error-page h1 {

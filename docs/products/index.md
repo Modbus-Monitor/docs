@@ -1,75 +1,119 @@
-# Products Overview
+# Products
 
-Our comprehensive suite of Modbus monitoring and analysis tools serves automation engineers, OEMs, and testing teams worldwide.
-
-## 🏢 Product Portfolio
-
-### Desktop Applications
-
-#### Modbus Monitor XPF
-Professional Windows application for comprehensive Modbus monitoring, data logging, and system analysis.
-
-**Key Features:**
-- Real-time monitoring of Modbus TCP/RTU/ASCII
-- Advanced data visualization and trending
-- Comprehensive logging and export capabilities
-- Network diagnostics and troubleshooting tools
-
-[📖 User Guide](xpf/user-guide.md){ .md-button .md-button--primary }
-[🚀 Quick Start](xpf/quick-start.md){ .md-button }
+**Professional Modbus tools for automation engineers, integrators, and field technicians.**
 
 ---
 
-#### Modbus Mapper Pro
-Network analysis and protocol sniffing tool for Modbus communications.
+<div class="grid cards" markdown>
 
-**Key Features:**
-- Live network traffic analysis
-- Protocol decode and verification  
-- Device discovery and mapping
-- Communication troubleshooting
+-   :material-microsoft-windows:{ .lg .middle } **Modbus Monitor XPF**
 
-[📖 User Manual](mapper/user-manual.md){ .md-button .md-button--primary }
-[🎬 Quick Demo](mapper/quick-start.md){ .md-button }
+    ---
 
-### Mobile Applications
+    Professional Windows application for Modbus monitoring, logging, and analysis.
 
-#### Android Monitor
-Mobile Modbus monitoring for field engineers and technicians.
+    - Real-time TCP/RTU/ASCII monitoring
+    - Advanced data visualization & trending
+    - Comprehensive logging & export
+    - Network diagnostics
 
-**Available Versions:**
-- **Free Version** - Basic monitoring capabilities
-- **Advanced Version** - Professional features and extended functionality
+    ---
 
-[📱 Free Guide](android/free-guide.md){ .md-button }
-[📱 Advanced Guide](android/advanced-guide.md){ .md-button }
+    [:octicons-book-24: User Guide](xpf/user-guide.md){ .md-button .md-button--primary }
+    [:octicons-rocket-24: Quick Start](xpf/quick-start.md){ .md-button }
 
-### Custom Solutions
+-   :material-android:{ .lg .middle } **Modbus Monitor Advanced**
 
-Tailored Modbus applications and integration services for specific industrial requirements.
+    ---
 
-[🔧 Learn More](custom/overview.md){ .md-button }
+    Full-featured Android client for mobile Modbus monitoring and cloud integration.
 
-## 🆚 Product Comparison
+    - TCP/IP, USB Serial, Bluetooth channels
+    - MQTT, Google Sheets, ThingSpeak add-ons
+    - Professional data logging
+    - Field-ready diagnostics
 
-| Feature | XPF Professional | Android Advanced | Mapper Pro |
-|---------|------------------|------------------|------------|
-| Real-time Monitoring | ✅ Full | ✅ Mobile | ✅ Analysis |
-| Data Logging | ✅ Advanced | ✅ Basic | ✅ Traffic |
-| Multiple Protocols | ✅ All | ✅ TCP/RTU | ✅ All |
-| Network Analysis | ✅ Yes | ❌ No | ✅ Advanced |
-| Mobile Access | ❌ No | ✅ Native | ❌ No |
+    ---
 
-## 💼 Use Cases
+    [:octicons-book-24: User Guide](android/advanced-guide.md){ .md-button .md-button--primary }
+    [:octicons-download-24: Play Store](https://play.google.com/store/apps/details?id=com.quantumbitsolutions.modbusmonitor){ .md-button }
 
-### Manufacturing & Production
-Monitor production equipment, collect performance data, and maintain system reliability.
+-   :material-android:{ .lg .middle } **Modbus Console (Free)**
 
-### System Integration  
-Verify Modbus implementations, troubleshoot communication issues, and validate network performance.
+    ---
 
-### Field Service
-Mobile diagnostics, on-site troubleshooting, and remote monitoring capabilities.
+    Basic Android testing tool for quick Modbus verification.
 
-### OEM Testing
-Comprehensive testing tools for product development and quality assurance.
+    - Simple read/write operations
+    - TCP and Serial support
+    - Perfect for quick tests
+    - No cost, no ads
+
+    ---
+
+    [:octicons-book-24: User Guide](android/free-guide.md){ .md-button .md-button--primary }
+    [:octicons-download-24: Play Store](https://play.google.com/store/apps/details?id=com.quantumbitsolutions.modbusconsole){ .md-button }
+
+-   :material-map:{ .lg .middle } **Modbus Mapper Pro**
+
+    ---
+
+    Protocol sniffer and network analyzer for Modbus systems.
+
+    - Live traffic analysis
+    - Protocol decode & verification
+    - Device discovery & mapping
+    - Communication troubleshooting
+
+    ---
+
+    [:octicons-book-24: User Manual](mapper/user-manual.md){ .md-button .md-button--primary }
+    [:octicons-rocket-24: Quick Demo](mapper/quick-start.md){ .md-button }
+
+-   :material-cog:{ .lg .middle } **Custom Solutions**
+
+    ---
+
+    Tailored Modbus applications and integration services.
+
+    - Custom protocol implementations
+    - OEM integration projects
+    - Enterprise solutions
+    - Dedicated support
+
+    ---
+
+    [:octicons-book-24: Overview](custom/overview.md){ .md-button .md-button--primary }
+    [:octicons-mail-24: Contact Us](https://quantumbitsolutions.com/contact-us/){ .md-button }
+
+</div>
+
+---
+
+## Quick Comparison
+
+| Feature | XPF (Windows) | Advanced (Android) | Free (Android) | Mapper Pro |
+|---------|:-------------:|:------------------:|:--------------:|:----------:|
+| Real-time Monitoring | ✅ | ✅ | ✅ | ✅ |
+| Data Logging | ✅ Advanced | ✅ | ❌ | ✅ Traffic |
+| Cloud Integration | ✅ MQTT/ThingSpeak | ✅ MQTT/Sheets/ThingSpeak | ❌ | ❌ |
+| Network Analysis | ✅ | ❌ | ❌ | ✅ Advanced |
+| Mobile | ❌ | ✅ | ✅ | ❌ |
+| License | Licensed | Licensed + Add-ons | Free | Licensed |
+| Cost | $$ | $ | Free | $$$ |
+
+---
+
+## Need Help Choosing?
+
+| You Need | Best Choice |
+|----------|-------------|
+| Desktop monitoring with full features | **Modbus Monitor XPF** |
+| Mobile field diagnostics with cloud | **Modbus Monitor Advanced** |
+| Quick mobile testing (free) | **Modbus Console** |
+| Protocol sniffing and analysis | **Modbus Mapper Pro** |
+| Custom enterprise solution | **Contact us for Custom Solutions** |
+
+---
+
+**Questions?** [Contact Us](https://quantumbitsolutions.com/contact-us/) · [Support Forum](https://quantumbitsolutions.com/forums/)
