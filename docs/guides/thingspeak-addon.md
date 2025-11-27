@@ -18,23 +18,9 @@
 ✅ Modbus Monitor XPF installed  
 ✅ ThingSpeak Add-on license key  
 ✅ ThingSpeak account at [thingspeak.com](https://thingspeak.com)  
-✅ ThingSpeak channel created with API key
+✅ **ThingSpeak channel created** - [See Overview Guide Step 1 & 2](thingspeak-overview.md#getting-started-all-platforms) for detailed channel creation instructions
 
-### Step 1: Create ThingSpeak Channel
-
-**Already have a channel?** Skip to [Step 2](#step-2-configure-in-xpf)
-
-1. Go to [thingspeak.com](https://thingspeak.com) → Sign in
-2. **Channels** → **New Channel**
-3. **Name**: "Modbus Monitor XPF"
-4. **Create 8 Fields** for your Modbus data:
-   - Field 1, 2, 3... (match your monitor points)
-5. **Save Channel**
-6. **API Keys** → Copy **Write API Key**
-
-**For detailed setup with field naming tips**, see [ThingSpeak Overview Guide - Channel Creation](thingspeak-overview.md#step-1-create-thingspeak-channel).
-
-### Step 2: Configure in XPF
+### Step 1: Configure in XPF
 
 1. **Open ThingSpeak Add-on**
    - **Tools** → **Add-Ons** → **ThingSpeak**
@@ -48,7 +34,7 @@
 3. **Apply Settings**
    - Click **Apply** → **OK**
 
-### Step 3: Verify Data Flow
+### Step 2: Verify Data Flow
 
 1. **Start Polling** in XPF
 2. Open your ThingSpeak channel

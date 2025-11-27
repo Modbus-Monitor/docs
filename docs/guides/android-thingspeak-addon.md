@@ -12,37 +12,28 @@
 ---
 
 ## Quick Start (5 Minutes)
+A fast, practical guide to get Android uploading data to ThingSpeak with minimal setup. Ideal for first-time users.
 
 ### Prerequisites
+Everything your Android device and account must have before enabling ThingSpeak integration.
 
 - ✅ Modbus Monitor Advanced installed  
 - ✅ ThingSpeak Add-on purchased  
-- ⬆️ Review the ThingSpeak Initial Setup Guide. See the [Overview Guide](thingspeak-overview.md) for platform-agnostic concepts, use cases, initial setup, and FAQs.
+- ✅ **ThingSpeak channel created** - [Overview Guide](thingspeak-overview.md#getting-started-all-platforms) for detailed channel creation and field setup instructions
 
-### Step 1: Create ThingSpeak Channel
+### Step 1: Enable ThingSpeak in App
+Turn on the integration and enter your authentication keys so the app can communicate with the ThingSpeak API and automatically send data after each polling cycle. See the [Modbus Monitor Advanced Guide](../products/android/advanced-guide.md) to adjust polling intervals and timing settings.
 
-1. Go to [thingspeak.com](https://thingspeak.com) → Sign up (free)
-2. **Channels** → **New Channel**
-3. **Name**: "Modbus Monitor" (or your project name)
-4. **Create 8 Fields**:
-   - Field 1: Tank Level
-   - Field 2: Motor Speed
-   - Field 3: Temperature
-   - (Add more as needed)
-5. **Save Channel**
-6. **API Keys** tab → Copy **Write API Key**
-
-### Step 2: Enable ThingSpeak in App
-
-1. **Hamburger Menu** → **Settings** → **ThingSpeak**
+1. Open **Hamburger Menu** → **Settings** → **ThingSpeak**
 2. Toggle **Enable ThingSpeak** ON
-3. Enter:
-   - **Write API Key**: Paste from ThingSpeak
-   - **Channel ID**: Found in ThingSpeak channel URL or details
-   - **Update Interval**: 30 seconds (min 15s for free tier)
-4. Tap **Save**
+3. Enter **Write API Key**: Paste from ThingSpeak channel. [See Overview Guide, Steps 1–2](thingspeak-overview.md#getting-started-all-platforms).
 
-### Step 3: Start Logging
+
+![Android ThingSpeak Setup](../assets/screenshots/android-advanced/mma-thingspeak-setup.webp){ .screenshot-center loading="lazy" }
+
+
+### Step 2: Start Logging
+Begin polling your Modbus device and watch values stream into ThingSpeak automatically.
 
 1. Return to main screen
 2. Tap **Link icon** to start Client Mode
@@ -54,45 +45,51 @@
 ---
 
 ## Android Configuration
+Detailed explanation of each ThingSpeak setting inside the Android app and how they affect data uploads.
 
-### App Settings
+### App Configuration
 
-![ThingSpeak Settings](../assets/screenshots/android-advanced/mma-thingspeak-settings.webp){ .screenshot-center loading="lazy" }
+**Required Setting:**
 
-**Required Fields:**
+| Field | Value | Purpose |
+|-------|-------|---------|
+| **Write API Key** | `ABCDEFG1234567890` | Copy from ThingSpeak → API Keys tab |
 
-| Field | Value | Notes |
-|-------|-------|-------|
-| **Write API Key** | `ABCDEFG1234567890` | Copy from ThingSpeak → API Keys |
-| **Channel ID** | `123456` | Your ThingSpeak channel number |
-| **Update Interval** | `30` seconds | Minimum 15s (free tier), can be 1s (paid) |
-
-**Optional Fields:**
+**Optional Settings:**
 
 | Field | Purpose |
 |-------|---------|
-| **Enable Status Updates** | Include Android app status/GPS |
-| **Latitude/Longitude** | Geolocation tracking |
-| **Elevation** | Altitude data |
+| **Use ThingSpeak** | Toggle On/Off to enable/disable automatic data uploads |
+| **Write Sample Data** | Send test data to verify your API key works |
+
 
 ### Monitor Point Mapping
 
-Monitor points automatically map to ThingSpeak fields **in order**:
+Monitor points from your Modbus configuration automatically map to ThingSpeak Fields 1–8 **in the order they appear in your app**.
+
+**Automatic Mapping:**
 
 ```
-Your App List:          ThingSpeak:
-1. Tank Level     →     Field 1
-2. Motor Speed    →     Field 2
-3. Temperature    →     Field 3
-...
-8. Flow Rate      →     Field 8
+Your Monitor Points:    ThingSpeak Channel:
+1. Tank Level      →    Field 1
+2. Motor Speed     →    Field 2
+3. Temperature     →    Field 3
+4. Pressure        →    Field 4
+5. Flow Rate       →    Field 5
+6. Humidity        →    Field 6
+7. Voltage         →    Field 7
+8. Current         →    Field 8
 ```
 
-**⚠️ Limit**: Only 8 fields supported (first 8 monitor points upload)
+**⚠️ Important Limits:**
+- Maximum 8 fields per ThingSpeak channel
+- Only the first 8 monitor points upload
+- Additional monitor points are ignored
 
 **To change what uploads:**
-- Reorder monitor points in your app
-- Changes take effect next upload cycle
+- Reorder your monitor points in the app
+- The new order takes effect on the next upload cycle
+- Fields in ThingSpeak will update with the reordered data
 
 ---
 
@@ -126,22 +123,6 @@ Your App List:          ThingSpeak:
 - WiFi or mobile data connection required
 - App pauses uploads when offline
 - Resumes when connection returns
-
-### Sensor Integration
-
-**Android Sensors + Modbus Data:**
-
-If using Sensor Server mode, sensor data also uploads:
-
-```
-Monitor Points:        ThingSpeak Fields:
-Modbus value 1    →    Field 1
-Modbus value 2    →    Field 2
-Accelerometer X   →    Field 3
-Gyro Y            →    Field 4
-```
-
-Use this for equipment + environmental monitoring.
 
 ---
 
@@ -189,6 +170,7 @@ Yes: Set up React Apps in ThingSpeak for email/SMS on threshold breach
 ---
 
 ## Cross-Platform Reference
+Feature comparison between Android and Windows versions of the ThingSpeak Add-on.
 
 | Feature | Android | Windows |
 |---------|---------|---------|
@@ -201,6 +183,7 @@ Yes: Set up React Apps in ThingSpeak for email/SMS on threshold breach
 ---
 
 ## FAQ
+Short answers to practical, real-world questions—rate limits, mapping, offline use, sensors, and alerts.
 
 ??? question "What if I have more than 8 monitor points?"
     ThingSpeak supports 8 fields max. Only the first 8 points upload. For more data:
@@ -226,6 +209,7 @@ Yes: Set up React Apps in ThingSpeak for email/SMS on threshold breach
 ---
 
 ## Resources
+Official links for further reading, MATLAB integration, community help, and support.
 
 - **ThingSpeak Docs**: [thingspeak.com/docs](https://thingspeak.com/docs)
 - **MATLAB Integration**: [mathworks.com/thingspeak](https://www.mathworks.com/help/thingspeak/)
