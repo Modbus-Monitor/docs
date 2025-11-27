@@ -1,10 +1,11 @@
 # Help & Documentation
 
-**No-nonsense guides for Modbus Monitor products. Find what you need, get it done.**
+!!! tip "All Resources in One Place"
+    For a complete overview with quick links to everything, visit the **[Main Documentation Homepage →](../index.md)**
 
 ---
 
-## Quick Start
+## Quick Navigation
 
 New to Modbus Monitor? Start here:
 
@@ -25,7 +26,7 @@ Extend Modbus Monitor Advanced with cloud connectivity:
 |--------|--------------|-------|
 | **MQTT** | Publish data to any MQTT broker (HiveMQ, AWS IoT, Azure) | [:octicons-book-24: MQTT Guide](android-mqtt-addon.md) |
 | **Google Sheets** | Log data directly to spreadsheets | [:octicons-book-24: Sheets Guide](android-sheets-addon.md) |
-| **ThingSpeak** | Send data to ThingSpeak IoT platform | [:octicons-book-24: ThingSpeak Guide](android-thingspeak-addon.md) |
+| **ThingSpeak** | Cloud charts, MATLAB analytics, real-time alerts | [:octicons-book-24: ThingSpeak Setup](android-thingspeak-addon.md) |
 
 ---
 
@@ -36,7 +37,17 @@ Extend Modbus Monitor XPF with cloud connectivity:
 | Add-on | What It Does | Guide |
 |--------|--------------|-------|
 | **MQTT** | Publish data to any MQTT broker | [:octicons-book-24: MQTT Guide](mqtt-addon.md) |
-| **ThingSpeak** | Send data to ThingSpeak IoT platform | [:octicons-book-24: ThingSpeak Guide](thingspeak-addon.md) |
+| **ThingSpeak** | Cloud charts, MATLAB analytics, real-time alerts | [:octicons-book-24: ThingSpeak Setup](thingspeak-addon.md) |
+
+---
+
+## Cloud Platform Guides
+
+Learn about cloud integrations for all platforms:
+
+| Platform | Description | Guide |
+|----------|-------------|-------|
+| **ThingSpeak Overview** | Concepts, use cases, MATLAB integration, best practices | [:octicons-book-24: ThingSpeak Guide](thingspeak-overview.md) |
 
 ---
 
@@ -53,6 +64,11 @@ Extend Modbus Monitor XPF with cloud connectivity:
 
 ## Need More Help?
 
-- **Support Forum**: [quantumbitsolutions.com/forums](https://quantumbitsolutions.com/forums/)
-- **Contact Us**: [quantumbitsolutions.com/contact-us](https://quantumbitsolutions.com/contact-us/)
-- **Email**: [support@quantumbitsolutions.com](mailto:support@quantumbitsolutions.com)
+!!! info "Support Channels"
+    - **[Community Forum](https://quantumbitsolutions.com/forums/)** - Ask questions and connect with other users
+    - **[Contact Support](https://quantumbitsolutions.com/contact-us/)** - Direct help for issues and licensing
+    - **[Email](mailto:support@quantumbitsolutions.com)** - support@quantumbitsolutions.com
+
+---
+
+**← [Back to Main Homepage](../index.md)**

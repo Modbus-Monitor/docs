@@ -4,53 +4,108 @@
     **Complete guides** for all Quantum Bit Solutions products and services.  
     **Professional Modbus tools** for automation engineers, OEMs, and testing teams.
 
+---
+
+## 🚀 Our Products
+
 <div class="grid cards" markdown>
 
--   :material-monitor-dashboard:{ .lg } **Modbus Monitor XPF**
+-   :material-monitor-dashboard:{ .lg .middle } **Modbus Monitor XPF**
 
     ---
 
-    Professional Windows application for Modbus monitoring and analysis.
+    **Professional Windows application** for Modbus monitoring, logging, and analysis.
+
+    - Real-time TCP/RTU/ASCII monitoring
+    - Advanced data visualization & trending
+    - Network diagnostics & logging
+    - MQTT & ThingSpeak cloud integration
 
     **Core Guides:**  
-    [:octicons-arrow-right-24: User Guide](products/xpf/user-guide.md) · [:octicons-arrow-right-24: Quick Start](products/xpf/quick-start.md)
+    [:octicons-book-24: User Guide](products/xpf/user-guide.md) · [:octicons-rocket-24: Quick Start](products/xpf/quick-start.md)
 
-    **Add-on Features:**  
-    [:octicons-arrow-right-24: MQTT Add-on](guides/mqtt-addon.md) · [:octicons-arrow-right-24: ThingSpeak Add-on](guides/thingspeak-addon.md)
+    **Add-ons:**  
+    [:octicons-arrow-right-24: MQTT Add-on](guides/mqtt-addon.md) · [:octicons-arrow-right-24: ThingSpeak Add-on](guides/thingspeak-overview.md)
 
--   :material-android:{ .lg } **Android Monitor**
+-   :material-android:{ .lg .middle } **Modbus Monitor Advanced**
 
     ---
 
-    Mobile Modbus monitoring for field technicians and engineers.
+    **Full-featured Android client** for mobile Modbus monitoring and cloud integration.
+
+    - TCP/IP, USB Serial, Bluetooth channels
+    - Professional data logging & analysis
+    - Field-ready diagnostics
+    - Cloud integration (MQTT, Sheets, ThingSpeak)
 
     **Core Guides:**  
-    [:octicons-arrow-right-24: Modbus Console (free)](products/android/free-guide.md) · [:octicons-arrow-right-24: Modbus Monitor Advanced](products/android/advanced-guide.md)
+    [:octicons-book-24: User Guide](products/android/advanced-guide.md) · [:octicons-download-24: Play Store](https://play.google.com/store/apps/details?id=com.quantumbitsolutions.modbusmonitor)
 
-    **Add-on Features:**  
-    [:octicons-arrow-right-24: MQTT Add-on](guides/android-mqtt-addon.md) · [:octicons-arrow-right-24: ThingSpeak Add-on](guides/android-thingspeak-addon.md) · [:octicons-arrow-right-24: Google Sheets Add-on](guides/android-sheets-addon.md)
+    **Add-ons:**  
+    [:octicons-arrow-right-24: MQTT](guides/android-mqtt-addon.md) · [:octicons-arrow-right-24: Google Sheets](guides/android-sheets-addon.md) · [:octicons-arrow-right-24: ThingSpeak](guides/thingspeak-overview.md)
 
--   :material-map:{ .lg } **Modbus Mapper Pro**
-
-    ---
-
-    Protocol sniffing and network analysis tool for Modbus systems.
-
-    [:octicons-arrow-right-24: User Manual](products/mapper/user-manual.md)
-    [:octicons-arrow-right-24: Quick Demo](products/mapper/quick-start.md)
-
--   :material-cog:{ .lg } **Custom Solutions**
+-   :material-android:{ .lg .middle } **Modbus Console (Free)**
 
     ---
 
-    Tailored Modbus applications and integration services.
+    **Basic Android testing tool** for quick Modbus verification and troubleshooting.
 
-    [:octicons-arrow-right-24: Overview](products/custom/overview.md)
-    [:octicons-arrow-right-24: Contact](https://quantumbitsolutions.com/contact-us/)
+    - Simple read/write operations
+    - TCP and Serial support
+    - Perfect for quick tests
+    - No cost, no ads
+
+    **Guides:**  
+    [:octicons-book-24: User Guide](products/android/free-guide.md) · [:octicons-download-24: Play Store](https://play.google.com/store/apps/details?id=com.quantumbitsolutions.modbusconsole)
+
+-   :material-map:{ .lg .middle } **Modbus Mapper Pro**
+
+    ---
+
+    **Protocol sniffer and network analyzer** for Modbus systems and troubleshooting.
+
+    - Live traffic analysis & decode
+    - Protocol verification
+    - Device discovery & mapping
+    - Communication troubleshooting
+
+    **Guides:**  
+    [:octicons-book-24: User Manual](products/mapper/user-manual.md) · [:octicons-rocket-24: Quick Demo](products/mapper/quick-start.md)
 
 </div>
 
-## 🔧 Technical Resources
+---
+
+## ☁️ Cloud & Add-ons
+
+### Android Add-ons
+
+Extend Modbus Monitor Advanced with cloud connectivity:
+
+| Add-on | What It Does | Guide |
+|--------|--------------|-------|
+| **MQTT** | Publish data to any MQTT broker (HiveMQ, AWS IoT, Azure) | [:octicons-book-24: Setup](guides/android-mqtt-addon.md) |
+| **Google Sheets** | Log data directly to spreadsheets | [:octicons-book-24: Setup](guides/android-sheets-addon.md) |
+| **ThingSpeak** | Cloud charts, MATLAB analytics, real-time alerts | [:octicons-book-24: Setup](guides/android-thingspeak-addon.md) |
+
+### Windows Add-ons
+
+Extend Modbus Monitor XPF with cloud connectivity:
+
+| Add-on | What It Does | Guide |
+|--------|--------------|-------|
+| **MQTT** | Publish data to any MQTT broker | [:octicons-book-24: Setup](guides/mqtt-addon.md) |
+| **ThingSpeak** | Cloud charts, MATLAB analytics, real-time alerts | [:octicons-book-24: Setup](guides/thingspeak-addon.md) |
+
+### Cloud Platforms
+
+| Platform | Description | Guide |
+|----------|-------------|-------|
+| **ThingSpeak Overview** | Concepts, use cases, MATLAB integration, best practices | [:octicons-book-24: Learn More](guides/thingspeak-overview.md) |
+
+---
+
+## 🔧 Technical Guides & References
 
 <div class="grid cards" markdown>
 
@@ -58,74 +113,111 @@
     
     ---
     
-    [:octicons-arrow-right-24: Hardware Guides](technical/hardware.md)
-    [:octicons-arrow-right-24: Serial Ports](technical/serial-ports.md)
-    [:octicons-arrow-right-24: Bluetooth Setup](technical/bluetooth.md)
+    - USB Serial adapters
+    - Bluetooth modules
+    - Network equipment
+    
+    [:octicons-arrow-right-24: Hardware Guides](guides/android-hardware.md)
 
 -   **Modbus Protocol**
     
     ---
     
-    [:octicons-arrow-right-24: Address Formats](technical/addressing.md)
-    [:octicons-arrow-right-24: Error Codes](technical/error-codes.md)
-    [:octicons-arrow-right-24: Server Setup](technical/server-setup.md)
+    - Address formatting (6-digit)
+    - Error codes & troubleshooting
+    - Protocol specifications
+    
+    [:octicons-arrow-right-24: Address Formats](guides/6-digit-addressing.md)
+    [:octicons-arrow-right-24: Error Codes](guides/error-codes.md)
 
--   **Integration & APIs**
+-   **Data Integration**
     
     ---
     
-    [:octicons-arrow-right-24: Google Sheets](integrations/google-sheets.md)
-    [:octicons-arrow-right-24: Arduino Examples](integrations/arduino.md)
-    [:octicons-arrow-right-24: Import/Export](technical/import-export.md)
+    - Import/Export configurations
+    - Google Sheets integration
+    - Custom scripting
+    
+    [:octicons-arrow-right-24: Import/Export](guides/import-export.md)
 
--   **Support Resources**
+-   **Getting Help**
     
     ---
     
-    [:octicons-arrow-right-24: FAQ](support/faq.md)
-    [:octicons-arrow-right-24: Video Tutorials](support/videos.md)
-    [:octicons-arrow-right-24: Forum](https://quantumbitsolutions.com/forums/)
-
-</div>
-
-## 🎯 Quick Access
-
-!!! tip "Popular Resources"
+    - FAQs and troubleshooting
+    - Video tutorials
+    - Community forum
     
-    - **[Modbus Monitor XPF - Complete Guide](products/xpf/user-guide.md)** - Most comprehensive guide
-    - **[MQTT Add-on Guide](guides/mqtt-addon.md)** - IoT connectivity and cloud integration
-    - **[ThingSpeak Add-on Guide](guides/thingspeak-addon.md)** - Direct ThingSpeak cloud publishing
-    - **[Quick Start Demo](products/mapper/quick-start.md)** - 5-minute setup for Mapper Pro
-    - **[Error Codes Reference](technical/error-codes.md)** - Troubleshooting guide
-    - **[Hardware Compatibility](technical/hardware.md)** - Supported devices and adapters
-
-## 📱 Get Our Apps
-
-<div class="grid" markdown>
-
-<div class="card" markdown>
-
-**Modbus Monitor XPF** (Windows)  
-Professional monitoring and analysis  
-[:material-download: Download](https://quantumbitsolutions.com/windows-xpf-monitor/)
-
-</div>
-
-<div class="card" markdown>
-
-**Android Monitor** (Mobile)  
-Field monitoring and diagnostics  
-[:material-google-play: Play Store](https://quantumbitsolutions.com/android-monitor-free/)
-
-</div>
+    [:octicons-arrow-right-24: FAQ](https://quantumbitsolutions.com/forums/)
+    [:octicons-arrow-right-24: Contact Support](https://quantumbitsolutions.com/contact-us/)
 
 </div>
 
 ---
 
-<div class="center" markdown>
-**Need Help?** Visit our [support forum](https://quantumbitsolutions.com/forums/) or [contact us](https://quantumbitsolutions.com/contact-us/) directly.
+## 🎯 Quick Start by Use Case
+
+### I want to...
+
+**Monitor Modbus devices:**  
+→ [:octicons-arrow-right-24: XPF User Guide](products/xpf/user-guide.md) or [:octicons-arrow-right-24: Android Guide](products/android/advanced-guide.md)
+
+**Upload data to the cloud:**  
+→ [:octicons-arrow-right-24: ThingSpeak Overview](guides/thingspeak-overview.md) or [:octicons-arrow-right-24: MQTT Setup](guides/mqtt-addon.md)
+
+**Analyze network traffic:**  
+→ [:octicons-arrow-right-24: Modbus Mapper Pro](products/mapper/user-manual.md)
+
+**Find hardware compatibility:**  
+→ [:octicons-arrow-right-24: Hardware Guide](guides/android-hardware.md)
+
+**Troubleshoot errors:**  
+→ [:octicons-arrow-right-24: Error Codes](guides/error-codes.md)
+
+**Understand Modbus addressing:**  
+→ [:octicons-arrow-right-24: 6-Digit Addressing](guides/6-digit-addressing.md)
+
+---
+
+## 📊 Feature Comparison
+
+| Feature | XPF (Windows) | Advanced (Android) | Free (Android) | Mapper Pro |
+|---------|:-------------:|:------------------:|:--------------:|:----------:|
+| Real-time Monitoring | ✅ | ✅ | ✅ | ✅ |
+| Data Logging | ✅ Advanced | ✅ | ❌ | ✅ Traffic |
+| Cloud Integration | ✅ MQTT/ThingSpeak | ✅ MQTT/Sheets/ThingSpeak | ❌ | ❌ |
+| Network Analysis | ✅ | ❌ | ❌ | ✅ Advanced |
+| Multiple Connections | ✅ | ✅ | ⚠️ Limited | ✅ |
+| Data Export | ✅ CSV/JSON | ✅ CSV | ❌ | ✅ CSV |
+
+---
+
+## 📱 Download Our Apps
+
+<div class="grid cards" markdown>
+
+-   :material-microsoft-windows:{ .lg } **Modbus Monitor XPF**
+    
+    Professional Windows monitoring  
+    [:material-download: Download](https://quantumbitsolutions.com/windows-xpf-monitor/)
+
+-   :material-android:{ .lg } **Android Apps**
+    
+    Mobile field monitoring  
+    [:material-google-play: Play Store](https://play.google.com/store/apps/dev?id=8369433099446213800)
+
 </div>
 
-!!! tip "Live Editing"
-    This documentation is automatically updated from our WordPress help system and can be edited locally with live preview!
+---
+
+## 📞 Need Help?
+
+!!! tip "Support Options"
+    
+    - **[Community Forum](https://quantumbitsolutions.com/forums/)** - Ask questions and share experiences
+    - **[Contact Support](https://quantumbitsolutions.com/contact-us/)** - Direct support for licensing and issues
+    - **[Email](mailto:support@quantumbitsolutions.com)** - support@quantumbitsolutions.com
+    - **[Live Chat](https://quantumbitsolutions.com/)** - Available during business hours
+
+!!! note "Documentation Status"
+    This documentation is continuously updated to match our products. All guides are current as of **November 2025**.
