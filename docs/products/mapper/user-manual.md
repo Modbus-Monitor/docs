@@ -648,50 +648,64 @@ Client B ──┘   (intelligent arbitration)
 
 ## Visual Overview: All Three Modes
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                                                                             │
-│  MODE 1: LISTEN ONLY (Passive Tap)                                         │
-│  ═════════════════════════════════════                                      │
-│                                                                             │
-│      Modbus Client ═══════════ RS485 Network ═══════════ Modbus Server     │
-│           │                         │                          │           │
-│           │                      [TAP]                         │           │
-│           │                         │                          │           │
-│           │                    Mapper Pro                       │           │
-│           │                   (Listening                        │           │
-│           │                    Only)                            │           │
-│           └─────────────────────────────────────────────────────┘           │
-│                                                                             │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  MODE 2: PASS-THROUGH (Transparent Bridge)                                 │
-│  ═════════════════════════════════════════════                             │
-│                                                                             │
-│      Modbus Client ──────→ Mapper Pro ──────→ Modbus Server                │
-│           │               (Forwarding +       │                            │
-│           │                Sniffing)          │                            │
-│           └───────────────────────────────────┘                            │
-│                                                                             │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  MODE 3: MULTIPLEX (Multi-Master Arbitration)                              │
-│  ════════════════════════════════════════════════                          │
-│                                                                             │
-│      Client 1 ──┐                                                           │
-│                ├──→ Mapper Pro ──→ Modbus Server                           │
-│      Client 2 ──┘  (Intelligent                                            │
-│                    Arbitration +                                           │
-│                    Optional                                                │
-│                    Sniffing)                                               │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph M1["MODE 1: LISTEN ONLY 🔍"]
+        direction LR
+        
+        C1["📱 Modbus<br/>Client"]
+        S1["🖥️ Modbus<br/>Server"]
+        TAP["📡 RS485<br/>Tap Point"]
+        MP2["🔍 Mapper Pro<br/>Sniffer Only"]
+        ANALYSIS["📊 Analyzer<br/>Decode + Logs"]
+
+        C1 <-->|TX/RX| TAP
+        TAP <-->|TX/RX| S1
+
+        TAP -.-|Sniff Only| MP2
+        MP2 -->|Captures| ANALYSIS
+    end
 ```
 
-**Summary:**
-- **Mode 1** = Non-invasive tap on existing RS485 line (zero impact)
-- **Mode 2** = Insert between Client and Server (active monitoring)
-- **Mode 3** = Multiple Clients safely access one Server (automatic conflict prevention)
+```mermaid
+graph TB
+    subgraph M2["MODE 2: PASS-THROUGH🔄"]
+        direction LR
+        C2["📱 Modbus<br/>Client"]
+        MP2["🔄 Mapper Pro<br/>Forwarding + Sniffing"]
+        S2["🖥️ Modbus<br/>Server"]
+        C2 <-->|TX/TX| MP2
+        MP2 <-->|TX/RX| S2
+        MP2 -.->|Captures| ANALYSIS["📊 Analyzes"]
+    end
+```
+
+```mermaid
+graph TB
+    subgraph M3["MODE 3: MULTIPLEX 🔌"]
+        direction LR
+        CA["📱 Client A<br/>HMI"]
+        CB["📊 Client B<br/>Historian"]
+        MP3["🔌 Mapper Pro<br/>Intelligent Arbitration"]
+        S3["🖥️ Modbus<br/>Server"]
+        
+        CA <-->|TX/RX| MP3
+        CB <-->|TX/RX| MP3
+        MP3 <-->|TX/RX| S3        
+        
+    end
+```
+**How Each Mode Works:**
+
+| Aspect | Mode 1 | Mode 2 | Mode 3 |
+|--------|--------|--------|--------|
+| **Left Side** | Client | Client | Clients A & B |
+| **Middle** | TAP → Mapper Pro | Mapper Pro (forwarding) | Mapper Pro (arbitration) |
+| **Right Side** | Server | Server | Server |
+| **Connection Type** | Non-invasive tap on RS485 | Direct pass-through | Multi-client arbitration |
+| **Data Flow** | Passive sniffing | Active forwarding | Intelligent routing |
+| **Sniffing** | ✅ Always active | ✅ Captures traffic | ✅ Optional logging |
+| **Network Impact** | Zero (100% passive) | Zero latency | Conflict-free routing |
 
 ---
 
