@@ -97,7 +97,7 @@ Benefits Across Both Platforms
 
     ---
 
-    [:octicons-book-24: Windows Setup Guide](thingspeak-addon.md){ .md-button .md-button--primary }
+    [:octicons-book-24: Windows Setup Guide](thingspeak-addon-windows.md){ .md-button .md-button--primary }
 
 -   :material-android:{ .lg .middle } **Android Setup**
 
