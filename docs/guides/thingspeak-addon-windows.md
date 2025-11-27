@@ -5,7 +5,7 @@
 
 **Desktop IoT logging. Cloud charts, MATLAB analytics, real-time alerts from Modbus Monitor XPF.**
 
-![ThingSpeak Integration](../assets/screenshots/windows-xpf/thingspeak-example.webp){ .screenshot-center loading="lazy" }
+![ThingSpeak Integration](../assets/screenshots/xpf/xpf-iot-thingspeak.webp){ .screenshot-center loading="lazy" }
 
 ⬆️ **New to ThingSpeak?** [← See Overview Guide](thingspeak-overview.md) for platform-agnostic concepts, use cases, and general setup.
 

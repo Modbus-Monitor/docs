@@ -5,69 +5,50 @@
 
 **Mobile IoT data logging to ThingSpeak. Cloud charts, MATLAB analytics, real-time alerts.**
 
-![ThingSpeak Integration](../assets/screenshots/android-advanced/mma-thingspeak-overview.webp){ .screenshot-center loading="lazy" }
+![ThingSpeak Integration](../assets/screenshots/xpf/xpf-iot-thingspeak.webp){ .screenshot-center loading="lazy" }
 
-⬆️ **New to ThingSpeak?** [← See Overview Guide](thingspeak-overview.md) for platform-agnostic concepts, use cases, initial setup, and FAQ.
+⬆️ **New to ThingSpeak?** [See Overview Guide](thingspeak-overview.md) for platform-agnostic concepts, use cases, initial setup, and FAQ.
 
 ---
 
-## Quick Start (5 Minutes)
-A fast, practical guide to get Android uploading data to ThingSpeak with minimal setup. Ideal for first-time users.
+## Quick Start (3 Steps)
 
 ### Prerequisites
-Everything your Android device and account must have before enabling ThingSpeak integration.
 
 - ✅ Modbus Monitor Advanced installed  
 - ✅ ThingSpeak Add-on purchased  
-- ✅ **ThingSpeak channel created** - [Overview Guide](thingspeak-overview.md#getting-started-all-platforms) for detailed channel creation and field setup instructions
+- ✅ ThingSpeak channel created with Write API Key ([see Overview Guide](thingspeak-overview.md#getting-started-all-platforms))
 
-### Step 1: Enable ThingSpeak in App
-Turn on the integration and enter your authentication keys so the app can communicate with the ThingSpeak API and automatically send data after each polling cycle. See the [Modbus Monitor Advanced Guide](../products/android/advanced-guide.md) to adjust polling intervals and timing settings.
+### Step 1: Enter Your API Key
 
 1. Open **Hamburger Menu** → **Settings** → **ThingSpeak**
 2. Toggle **Enable ThingSpeak** ON
-3. Enter **Write API Key**: Paste from ThingSpeak channel. [See Overview Guide, Steps 1–2](thingspeak-overview.md#getting-started-all-platforms).
-
+3. Paste your **Write API Key** (from ThingSpeak)
+4. Tap **OK**
 
 ![Android ThingSpeak Setup](../assets/screenshots/android-advanced/mma-thingspeak-setup.webp){ .screenshot-center loading="lazy" }
 
-
 ### Step 2: Start Logging
-Begin polling your Modbus device and watch values stream into ThingSpeak automatically.
 
 1. Return to main screen
 2. Tap **Link icon** to start Client Mode
-3. App automatically uploads data every interval
-4. Open your ThingSpeak channel to see charts update
+3. Your monitor points automatically upload to ThingSpeak
 
-**Done!** Your Modbus data is now logging to the cloud.
+### Step 3: View Your Data
+
+1. Open [ThingSpeak](https://thingspeak.com)
+2. Go to your channel → **Private View**
+3. See live charts updating with your Modbus data
+
+**Done!** Your data is now logging to the cloud.
 
 ---
 
-## Android Configuration
-Detailed explanation of each ThingSpeak setting inside the Android app and how they affect data uploads.
+## How It Works
 
-### App Configuration
+### Automatic Field Mapping
 
-**Required Setting:**
-
-| Field | Value | Purpose |
-|-------|-------|---------|
-| **Write API Key** | `ABCDEFG1234567890` | Copy from ThingSpeak → API Keys tab |
-
-**Optional Settings:**
-
-| Field | Purpose |
-|-------|---------|
-| **Use ThingSpeak** | Toggle On/Off to enable/disable automatic data uploads |
-| **Write Sample Data** | Send test data to verify your API key works |
-
-
-### Monitor Point Mapping
-
-Monitor points from your Modbus configuration automatically map to ThingSpeak Fields 1–8 **in the order they appear in your app**.
-
-**Automatic Mapping:**
+Monitor points from your Modbus configuration automatically map to ThingSpeak Fields 1–8 **in the order they appear**:
 
 ```
 Your Monitor Points:    ThingSpeak Channel:
@@ -81,72 +62,65 @@ Your Monitor Points:    ThingSpeak Channel:
 8. Current         →    Field 8
 ```
 
-**⚠️ Important Limits:**
-- Maximum 8 fields per ThingSpeak channel
-- Only the first 8 monitor points upload
-- Additional monitor points are ignored
+**⚠️ Limit:** ThingSpeak supports 8 fields maximum. Only your first 8 monitor points upload.
 
-**To change what uploads:**
-- Reorder your monitor points in the app
-- The new order takes effect on the next upload cycle
-- Fields in ThingSpeak will update with the reordered data
+**To change what uploads:** Reorder your monitor points in the app. Changes take effect on the next upload cycle.
+
+### Upload Interval
+
+Data uploads to ThingSpeak based on your polling interval. Configure timing in **Settings** → **Timing** tab.
+
+**Key Settings:**
+- **Inter-Packet Time (ms)**: Delay between Modbus requests (lower = faster polling)
+- **Interval (ms)**: Time between complete polling cycles (this determines ThingSpeak upload frequency)
+
+For detailed configuration help, see [Advanced Guide → Timing Settings](../products/android/advanced-guide.md#timing-settings).
+
+**ThingSpeak Requirements:**
+
+- **Minimum:** 15 seconds (15,000 ms) for free tier
+- **Recommended:** 30–60 seconds for balanced performance
 
 ---
 
 ## Android-Specific Features
 
-### Mobile Polling
+### Mobile Features
 
 **Start/Stop Logging:**
-- Tap **Link icon** (play) to start polling
-- Tap **Link icon** (stop) to halt
+- Tap **Link icon** to start or Stop
 - Data uploads automatically after each poll cycle
 
-**Polling Interval:**
-- Configure in **Settings** → **Timing** → **Poll Interval**
-- Example: 1000ms = data uploads every second
-- ThingSpeak accepts minimum 15 seconds
-
-**Battery Impact:**
+**Battery Savings:**
 - Frequent polling drains battery
-- Recommended: 30-60 second intervals on battery
+- Recommended: 30–60 second intervals on battery
 - Use USB power for continuous monitoring
 
-### Background Monitoring
-
-**Keep App Running:**
-- Modbus Monitor continues uploading while app is in background
-- Disable sleep timeout to keep device awake
-- Or configure via Android Settings
-
-**Network Requirements:**
-- WiFi or mobile data connection required
-- App pauses uploads when offline
-- Resumes when connection returns
+**Background Monitoring:**
+- App continues uploading while in background
+- Requires internet connection (WiFi or mobile data)
+- Pauses uploads when offline, resumes when connected
 
 ---
 
 ## Verification & Testing
 
-### Manual Verification
+### Check if it's working
 
 1. **Enable ThingSpeak** in app settings
-2. **Create simple test**: 1-2 monitor points
-3. **Start Client Mode** and run 1 polling cycle
-4. **Check ThingSpeak**:
-   - Open channel → Private View
-   - Look for recent data point timestamp
-   - Verify values match your Modbus data
+2. **Start Client Mode** on main screen
+3. **Open ThingSpeak** → Your Channel → **Private View**
+4. **Look for new data points** with recent timestamps
 
 ### Troubleshooting
 
-| Issue | Check |
-|-------|-------|
-| **No data uploaded** | Is Write API Key correct? Is internet connected? |
-| **Rate limit error** | Increase update interval to ≥15 seconds |
-| **Missing fields** | Only first 8 monitor points upload (max 8 fields) |
-| **Wrong values** | Are monitor points reading correct Modbus addresses? |
-| **No update timestamp** | Has polling cycle completed? Check interval ≥ 1 cycle |
+| Issue | Solution |
+|-------|----------|
+| **No data uploaded** | Check Write API Key is correct and copied exactly |
+| **Internet required** | Verify WiFi or mobile data connection |
+| **Rate limit error** | Increase interval to at least 15 seconds |
+| **Only seeing some fields** | Only first 8 monitor points upload |
+| **Wrong values uploading** | Verify monitor points are reading correct Modbus addresses |
 
 ---
 
