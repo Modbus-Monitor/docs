@@ -51,73 +51,6 @@ Think of it like this: your devices are already talking over RS485 cables. **Mod
     **Modbus Mapper Pro** is a powerful application built to simplify and solve the most challenging aspects of Modbus RTU communication. It is designed for system integrators, troubleshooters, automation engineers, and OEMs who need to understand, monitor, and optimize Modbus networks **without interrupting existing operations.**
 
 
-## Key Features
-
-### 1. See Your Data in Real Numbers
-Instead of confusing hex codes, see actual values (temperature: 23.5°C, pressure: 101 kPa)
-
-- Automatically figures out what type of data each register holds
-- Shows values in familiar formats (integers, decimals, text)
-- Build complete data maps within seconds
-- Save it all for later use
-
-### 2. Multiple Systems, One Device
-Share a single Modbus device between different programs without expensive equipment
-
-- No special hardware needed — just software
-- Prevents conflicts automatically
-- Perfect for old and new systems working together
-
-### 3. See Everything That's Happening
-Watch communication in real-time as it happens
-
-- See every message sent and received
-- Watch timing and response patterns
-- Spot problems as they occur
-- Record everything for analysis
-
-### 4. Find Missing Information
-Discover registers and settings from devices without manuals
-
-- Automatically maps out all devices talking on the network
-- Shows register addresses and data types
-- Builds documentation automatically
-- No guessing needed
-
-### 5. Customize Your View
-Make data display the way you want it
-
-- Change number formats (whole numbers, decimals, hex)
-- Add labels to registers (e.g., "Temperature" instead of "Register 100")
-- Adjust values for different units
-- Create views for your specific needs
-
-### 6. Complete Record of Everything
-Keep detailed logs of all communication
-
-- Every message in and out
-- Timestamps for when things happened
-- Raw data plus decoded meaning
-- Search and analyze later
-
-### 7. Simple to Use
-Built for people, not just engineers
-
-- Clean, familiar Excel-like grid
-- One-click operations
-- Helpful tips and guides
-- No complicated setup
-
-### 8. Works Anywhere
-Use it how you want
-
-- Portable — run from USB or anywhere
-- Or install from Microsoft Store
-- Windows 10/11
-- Minutes to get started
-
----
-
 ## How It Works
 
 ### The "Sniffing" Process
@@ -133,33 +66,6 @@ graph LR
     style MAPPER fill:#e3f2fd
     style ANALYSIS fill:#e8f5e8
 ```
-
-### What You See
-1. **Live Communications** - Real-time frame capture and decoding
-2. **Automatic Discovery** - Registers and coils found automatically  
-3. **Data Interpretation** - Values shown in proper formats
-4. **Network Mapping** - Communication patterns visualized
-5. **Export Results** - Save discoveries as Modbus maps
-
-## Use Cases
-
-### Industrial Automation
-Monitor, diagnose, and optimize Modbus devices on factory floors or in distributed control systems. Identify bottlenecks, validate device behavior, and ensure optimal performance.
-
-### SCADA Development
-Streamline the integration and testing of Modbus networks in SCADA applications. Verify communication chains and validate data flows during development and deployment.
-
-### Protocol Testing
-Validate and troubleshoot communication between Modbus Clients and Servers with ease. Ensure compliance with Modbus specifications and identify non-standard implementations.
-
-### System Optimization
-Analyze traffic patterns to identify inefficiencies and improve performance in Modbus networks. Optimize polling rates, reduce latency, and maximize throughput.
-
-### Legacy System Recovery
-Recover documentation and Modbus maps from undocumented or legacy systems. Perfect for system upgrades, migrations, and knowledge transfer.
-
-### Network Troubleshooting
-Debug communication issues without disrupting live operations. See exactly what's being sent and received between devices.
 
 ## Getting Started
 
@@ -709,10 +615,106 @@ graph TB
 
 ---
 
+## Key Features
+
+### 1. See Your Data in Real Numbers
+Instead of confusing hex codes, see actual values (temperature: 23.5°C, pressure: 101 kPa)
+
+- Automatically figures out what type of data each register holds
+- Shows values in familiar formats (integers, decimals, text)
+- Build complete data maps within seconds
+- Save it all for later use
+
+### 2. Multiple Systems, One Device
+Share a single Modbus device between different programs without expensive equipment
+
+- No special hardware needed — just software
+- Prevents conflicts automatically
+- Perfect for old and new systems working together
+
+### 3. See Everything That's Happening
+Watch communication in real-time as it happens
+
+- See every message sent and received
+- Watch timing and response patterns
+- Spot problems as they occur
+- Record everything for analysis
+
+### 4. Find Missing Information
+Discover registers and settings from devices without manuals
+
+- Automatically maps out all devices talking on the network
+- Shows register addresses and data types
+- Builds documentation automatically
+- No guessing needed
+
+### 5. Customize Your View
+Make data display the way you want it
+
+- Change number formats (whole numbers, decimals, hex)
+- Add labels to registers (e.g., "Temperature" instead of "Register 100")
+- Adjust values for different units
+- Create views for your specific needs
+
+### 6. Complete Record of Everything
+Keep detailed logs of all communication
+
+- Every message in and out
+- Timestamps for when things happened
+- Raw data plus decoded meaning
+- Search and analyze later
+
+### 7. Simple to Use
+Built for people, not just engineers
+
+- Clean, familiar Excel-like grid
+- One-click operations
+- Helpful tips and guides
+- No complicated setup
+
+### 8. Works Anywhere
+Use it how you want
+
+- Portable — run from USB or anywhere
+- Or install from Microsoft Store
+- Windows 10/11
+- Minutes to get started
+---
+
+
+### What You See
+1. **Live Communications** - Real-time frame capture and decoding
+2. **Automatic Discovery** - Registers and coils found automatically  
+3. **Data Interpretation** - Values shown in proper formats
+4. **Network Mapping** - Communication patterns visualized
+5. **Export Results** - Save discoveries as Modbus maps
+
+## Use Cases
+
+### Industrial Automation
+Monitor, diagnose, and optimize Modbus devices on factory floors or in distributed control systems. Identify bottlenecks, validate device behavior, and ensure optimal performance.
+
+### SCADA Development
+Streamline the integration and testing of Modbus networks in SCADA applications. Verify communication chains and validate data flows during development and deployment.
+
+### Protocol Testing
+Validate and troubleshoot communication between Modbus Clients and Servers with ease. Ensure compliance with Modbus specifications and identify non-standard implementations.
+
+### System Optimization
+Analyze traffic patterns to identify inefficiencies and improve performance in Modbus networks. Optimize polling rates, reduce latency, and maximize throughput.
+
+### Legacy System Recovery
+Recover documentation and Modbus maps from undocumented or legacy systems. Perfect for system upgrades, migrations, and knowledge transfer.
+
+### Network Troubleshooting
+Debug communication issues without disrupting live operations. See exactly what's being sent and received between devices.
+
+---
+
 ## Key Capabilities
 
 ### Real-Time Monitoring
-- Monitor 182+ unique Modbus requests within seconds
+- Monitor unique Modbus requests within seconds
 - Watch live data refresh as devices communicate
 - Analyze communication patterns instantly
 - No configuration delays or complex setup
