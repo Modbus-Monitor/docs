@@ -9,16 +9,11 @@ changelog:
   - version: "1.3.0"
     date: "2025-11-28"
     changes:
-      - "Final Relase"
-  - version: "1.3.0"
-    date: "2025-11-28"
-    changes:
-      - "Final Update"
-  - version: "1.3.0"
-    date: "2025-11-28"
-    changes:
-      - "Update user manuals"
-  - version: "1.3.0"
+      - "Final production release"
+      - "Fixed bullet list indentation in technical docs"
+      - "Content deduplication and cleanup"
+      - "Removed placeholder content"
+  - version: "1.0.47"
     date: "2025-01-15" 
     changes:
       - "Initial public release"
