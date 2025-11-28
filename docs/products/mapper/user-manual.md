@@ -67,244 +67,9 @@ Before you start, let's get familiar with the application layout. These are the 
 ## Operating Modes: Complete Guide
 
 This section covers everything you need to know about Modbus Mapper Pro's three operating modes—from quick visual overviews to detailed technical explanations.
-<br>
 
-### MODE 1: LISTEN ONLY 🔍 (Non-Intrusive Sniffing)
-
-**The passive observer** — Modbus Mapper Pro connects to your RS485 network as a non-invasive tap
-
-#### Visual Overview
-
-```mermaid
-graph TB
-    subgraph M1["MODE 1: LISTEN ONLY 🔍"]
-        direction LR
-        
-        C1["📱 Modbus<br/>Client"]
-        S1["🖥️ Modbus<br/>Server"]
-        TAP["📡 RS485<br/>Tap Point"]
-        MP2["🔍 Mapper Pro<br/>Sniffer Only"]
-        ANALYSIS["📊 Analyzer<br/>Decode + Logs"]
-
-        C1 <-->|TX/RX| TAP
-        TAP <-->|TX/RX| S1
-
-        TAP -.-|Sniff Only| MP2
-        MP2 -->|Captures| ANALYSIS
-    end
-```
-
-**How Mode 1 Works:**
-
-Modbus Mapper Pro connects as a passive RS485 tap. It never transmits—only listens to existing communication between Client and Server.
-
-- ✅ **No interference** — 100% non-intrusive
-- ✅ **No risk** — Cannot disrupt the running system
-- ✅ **Auto-discovery** — Finds registers, coils, timing, and data formats automatically
-- ✅ **Perfect for** — Reverse engineering, troubleshooting, or learning unknown systems
-
-!!! tip "Mode 1: The Safest Choice"
-    Mode 1 is the **safest** and most non-intrusive way to analyze live Modbus traffic on your RS-485 Modbus RTU network.
-
-#### How It Works (Detailed)
-
-```
-Master ⇄ Slave  
-  ↑      ↑
-  └──────┘
-     ↓
-Modbus Mapper Pro (RS485 adapter)
-  ↓
-Sniffs & analyzes all traffic
-No frames transmitted
-Builds live Modbus map
-```
-
-**Process:**
-1. Connect RS485 adapter to the existing two-wire Modbus network
-2. Application captures all frames from the bus
-3. Frames are decoded and analyzed in real-time
-4. Complete Modbus map is built automatically
-5. No interruption to active master/slave communication
-
-#### Real-World Example
-
-**Scenario:** Your facility has an old Modbus device with no documentation, connected to an HMI.
-
-**Solution:**
-1. Tap RS485 adapter into the existing two-wire network
-2. Launch Modbus Mapper Pro in Mode 1
-3. Watch the HMI communicate with the device
-4. Mapper Pro automatically discovers all registers and data types
-5. Export the discovered map for documentation and use in other tools
-
-**Result:** Complete register map within seconds, zero disruption, device continues operating normally.
-
----
-
-### MODE 2: PASS-THROUGH 🔄 (Transparent Bridge + Sniffer)
-
-**The transparent bridge** — Modbus Mapper Pro sits between Client and Server, forwarding all traffic while simultaneously capturing and analyzing
-
-#### Visual Overview
-
-```mermaid
-graph TB
-    subgraph M2["MODE 2: PASS-THROUGH🔄"]
-        direction LR
-        C2["📱 Modbus<br/>Client"]
-        MP2["🔄 Mapper Pro<br/>Forwarding + Sniffing"]
-        S2["🖥️ Modbus<br/>Server"]
-        C2 <-->|TX/TX| MP2
-        MP2 <-->|TX/RX| S2
-        MP2 -.->|Captures| ANALYSIS["📊 Analyzes"]
-    end
-```
-
-**How Mode 2 Works:**
-Mapper Pro sits in-line between Client and Server, acting as a transparent bridge. All traffic flows through unmodified while being captured for analysis.
-
-**Traffic Flow:**
-
-- Client request → Mapper Pro → Server
-- Server response → Mapper Pro → Client
-- All frames captured and decoded in real time
-
-**Benefits:**
-
-- ✅ **Zero latency** — Near-instant forwarding
-- ✅ **Full visibility** — See timing, CRC, function codes, exceptions, raw bytes
-- ✅ **Works on RS232 or RS485**
-- ✅ **Perfect for** — Live debugging, commissioning, protocol validation
-
-!!! tip "Mode 2: Wire-Level Visibility"
-    Think of it as a wire-level analyzer and proxy combined for Modbus RTU on RS-232 or RS-485 serial networks.
-
-#### How It Works (Detailed)
-
-```
-Client (Master) ──→ Modbus Mapper Pro ──→ Server (Slave)
-                    (transparent forwarding)
-                    (simultaneous sniffing)
-                            ↓
-                    Logs all traffic
-                    Decodes all frames
-                    Builds live Modbus map
-```
-
-**Process:**
-1. Configure Mapper Pro as intermediate device between Client and Server
-2. Client connects to Mapper Pro's input port
-3. Server connects to Mapper Pro's output port
-4. All frames are forwarded transparently (no modification)
-5. Simultaneously, all traffic is captured, decoded, and analyzed
-6. Live Modbus map builds as communication occurs
-
-#### Real-World Example
-
-**Scenario:** You're integrating a new HMI with an existing Modbus device, but communication seems unreliable.
-
-**Solution:**
-1. Install Mapper Pro between HMI and device in pass-through mode
-2. HMI connects to Mapper Pro; Mapper Pro connects to device
-3. System operates normally while Mapper Pro captures all traffic
-4. View frame-by-frame communication in real-time
-5. Identify CRC errors, timing issues, or data mismatches
-
-**Result:** Complete visibility into communication, both devices work normally, issues identified and resolved without disruption.
-
----
-
-### MODE 3: MULTIPLEX 🔌 (Two Masters → One Server)
-
-**The intelligent multiplexer** — Multiple Masters (Clients) share a single Slave (Server) through Modbus Mapper Pro
-
-#### Visual Overview
-
-```mermaid
-graph TB
-    subgraph M3["MODE 3: MULTIPLEX 🔌"]
-        direction LR
-        CA["📱 Client A<br/>HMI"]
-        CB["📊 Client B<br/>Historian"]
-        MP3["🔌 Mapper Pro<br/>Intelligent Arbitration"]
-        S3["🖥️ Modbus<br/>Server"]
-        
-        CA <-->|TX/RX| MP3
-        CB <-->|TX/RX| MP3
-        MP3 <-->|TX/RX| S3        
-        
-    end
-```
-
-**How Mode 3 Works:**
-Modbus RTU normally allows only **one master** per slave. Multiple masters cause bus collisions. Mapper Pro solves this with intelligent arbitration.
-
-**Traffic Flow:**
-- Client A and Client B send requests to Mapper Pro
-- Mapper Pro queues and serializes requests to prevent collisions
-- Server receives valid, properly-timed messages
-- Responses route back to the correct Client
-- Optional logging captures all traffic
-
-**Benefits:**
-
-- ✅ **No hardware multiplexer needed** — Saves $200-500
-- ✅ **Works on RS232 or RS485**
-- ✅ **Safe, automatic** — Collision-free Modbus sharing
-- ✅ **Perfect for:**
-    - HMI + SCADA both accessing one device
-    - PLC + PC sharing one slave
-    - Development laptop + production HMI
-    - Test tools alongside live systems
-
-!!! tip "Mode 3: Multi-Master Made Easy"
-    This mode is ideal when you need to **develop**, **debug**, or **monitor** without disconnecting existing equipment.
-
-#### How It Works (Detailed)
-
-```
-Client A ──┐
-           ├─→ Modbus Mapper Pro ──→ Server (Slave)
-Client B ──┘   (intelligent arbitration)
-             (optional sniffing)
-             (timestamp & log all traffic)
-```
-
-**Process:**
-1. Configure multiple Clients to connect to Mapper Pro
-2. Mapper Pro connects to the single Slave device
-3. Mapper Pro intelligently handles Modbus RTU protocol arbitration
-4. Prevents collisions by sequencing requests from multiple Masters
-5. Optionally captures and logs all traffic for analysis
-6. All communication flows transparently to the Slave
-
-#### Why Mode 3 Matters
-
-**Traditional Modbus RTU Problem:**
-- Modbus RTU standard allows only ONE Master per Slave
-- Multiple Masters cause collisions and communication failures
-- Solutions require expensive hardware multiplexers
-
-**Modbus Mapper Pro Solution:**
-- Software-based arbitration - no extra hardware needed
-- Seamless multi-master support
-- Cost-effective alternative to hardware solutions
-- Maintains protocol compliance and reliability
-
-#### Real-World Example
-
-**Scenario:** Your facility has one critical Modbus device, but both the production HMI and the data historian need access. No hardware multiplexer available.
-
-**Solution:**
-1. Install Mapper Pro with multiple client connections enabled
-2. Production HMI connects to Mapper Pro input 1
-3. Data historian connects to Mapper Pro input 2
-4. Single Slave device connects to Mapper Pro output
-5. Mapper Pro automatically arbitrates requests from both systems
-6. Optional: Enable sniffing to log all traffic for compliance
-
-**Result:** Two independent systems safely sharing one Modbus device, no collisions, reduced costs, complete visibility if needed.
+!!! tip "Choose the Right Mode for Your Needs"
+    **Mode 1** is 100% safe for any environment. **Modes 2 & 3** require brief network reconfiguration—just test first like you would with any network change.
 
 ---
 
@@ -373,225 +138,237 @@ Client B ──┘   (intelligent arbitration)
 
 ---
 
+### MODE 1: LISTEN ONLY 🔍 (Non-Intrusive Sniffing)
+
+**The passive observer** — Modbus Mapper Pro connects to your RS485 network as a non-invasive tap
+
+#### Visual Overview
+
+```mermaid
+graph TB
+    subgraph M1["MODE 1: LISTEN ONLY 🔍"]
+        direction LR
+        
+        C1["📱 Modbus<br/>Client"]
+        S1["🖥️ Modbus<br/>Server"]
+        TAP["📡 RS485<br/>Tap Point"]
+        MP2["🔍 Mapper Pro<br/>Sniffer Only"]
+        ANALYSIS["📊 Analyzer<br/>Decode + Logs"]
+
+        C1 <-->|TX/RX| TAP
+        TAP <-->|TX/RX| S1
+
+        TAP -.-|Sniff Only| MP2
+        MP2 -->|Captures| ANALYSIS
+    end
+```
+
+!!! tip "Mode 1: The Safest Choice"
+    Mode 1 is the **safest** and most non-intrusive way to analyze live Modbus traffic. It never transmits—only listens passively to existing RS-485 communication. **Safe for production environments.**
+
+#### How It Works
+
+```
+Master ⇄ Slave  
+  ↑      ↑
+  └──────┘
+     ↓
+Modbus Mapper Pro (RS485 adapter)
+  ↓
+Sniffs & analyzes all traffic
+No frames transmitted
+Builds live Modbus map
+```
+
+**Process:**
+
+1. Connect RS485 adapter to the existing two-wire Modbus network
+2. Application captures all frames from the bus
+3. Frames are decoded and analyzed in real-time
+4. Complete Modbus map is built automatically
+5. No interruption to active master/slave communication
+
+**When to Use:**
+
+- ✅ Troubleshooting existing systems without changes
+- ✅ Reverse-engineering devices with unknown register maps
+- ✅ Production monitoring (zero risk, 100% passive)
+- ✅ System documentation and performance analysis
+- ✅ Legacy system analysis before upgrades
+
+#### Real-World Example
+
+**Scenario:** Your facility has an old Modbus device with no documentation, connected to an HMI.
+
+**Solution:**
+
+1. Tap RS485 adapter into the existing two-wire network
+2. Launch Modbus Mapper Pro in Mode 1
+3. Watch the HMI communicate with the device
+4. Mapper Pro automatically discovers all registers and data types
+5. Export the discovered map for documentation and use in other tools
+
+**Result:** Complete register map within seconds, zero disruption, device continues operating normally.
+
+---
+
+### MODE 2: PASS-THROUGH 🔄 (Transparent Bridge + Sniffer)
+
+**The transparent bridge** — Modbus Mapper Pro sits between Client and Server, forwarding all traffic while simultaneously capturing and analyzing
+
+#### Visual Overview
+
+```mermaid
+graph TB
+    subgraph M2["MODE 2: PASS-THROUGH🔄"]
+        direction LR
+        C2["📱 Modbus<br/>Client"]
+        MP2["🔄 Mapper Pro<br/>Forwarding + Sniffing"]
+        S2["🖥️ Modbus<br/>Server"]
+        C2 <-->|TX/TX| MP2
+        MP2 <-->|TX/RX| S2
+        MP2 -.->|Captures| ANALYSIS["📊 Analyzes"]
+    end
+```
+
+!!! tip "Mode 2: Wire-Level Visibility"
+    Acts as a transparent bridge with zero latency. **Requires network reconfiguration**—test thoroughly before production use.
+
+#### How It Works
+
+```
+Client (Master) ──→ Modbus Mapper Pro ──→ Server (Slave)
+                    (transparent forwarding)
+                    (simultaneous sniffing)
+                            ↓
+                    Logs all traffic
+                    Decodes all frames
+                    Builds live Modbus map
+```
+
+**Process:**
+
+1. Configure Mapper Pro as intermediate device between Client and Server
+2. Client connects to Mapper Pro's input port
+3. Server connects to Mapper Pro's output port
+4. All frames are forwarded transparently (no modification)
+5. Simultaneously, all traffic is captured, decoded, and analyzed
+6. Live Modbus map builds as communication occurs
+
+**Traffic Flow:**
+
+- Client request → Mapper Pro → Server (transparent forwarding)
+- Server response → Mapper Pro → Client (zero latency)
+- All frames captured and decoded in real time
+
+**When to Use:**
+
+- ✅ System debugging during active integration
+- ✅ Live monitoring of Client-Server communication
+- ✅ Integration testing with existing devices
+- ✅ Protocol validation and compliance checking
+- ⚠️ **Requires brief network reconfiguration**
+
+#### Real-World Example
+
+**Scenario:** You're integrating a new HMI with an existing Modbus device, but communication seems unreliable.
+
+**Solution:**
+
+1. Install Mapper Pro between HMI and device in pass-through mode
+2. HMI connects to Mapper Pro; Mapper Pro connects to device
+3. System operates normally while Mapper Pro captures all traffic
+4. View frame-by-frame communication in real-time
+5. Identify CRC errors, timing issues, or data mismatches
+
+**Result:** Complete visibility into communication, both devices work normally, issues identified and resolved without disruption.
+
+---
+
+### MODE 3: MULTIPLEX 🔌 (Two Masters → One Server)
+
+**The intelligent multiplexer** — Multiple Masters (Clients) share a single Slave (Server) through Modbus Mapper Pro
+
+#### Visual Overview
+
+```mermaid
+graph TB
+    subgraph M3["MODE 3: MULTIPLEX 🔌"]
+        direction LR
+        CA["📱 Client A<br/>HMI"]
+        CB["📊 Client B<br/>Historian"]
+        MP3["🔌 Mapper Pro<br/>Intelligent Arbitration"]
+        S3["🖥️ Modbus<br/>Server"]
+        
+        CA <-->|TX/RX| MP3
+        CB <-->|TX/RX| MP3
+        MP3 <-->|TX/RX| S3        
+        
+    end
+```
+
+!!! tip "Mode 3: Multi-Master Made Easy"
+    Enables multiple masters to share one slave via intelligent arbitration. **Requires network reconfiguration**—thoroughly test with non-critical devices before production deployment.
+
+#### How It Works
+
+```
+Client A ──┐
+           ├─→ Modbus Mapper Pro ──→ Server (Slave)
+Client B ──┘   (intelligent arbitration)
+             (optional sniffing)
+             (timestamp & log all traffic)
+```
+
+**Process:**
+
+1. Configure multiple Clients to connect to Mapper Pro
+2. Mapper Pro connects to the single Slave device
+3. Mapper Pro intelligently handles Modbus RTU protocol arbitration
+4. Prevents collisions by sequencing requests from multiple Masters
+5. Optionally captures and logs all traffic for analysis
+6. All communication flows transparently to the Slave
+
+**Why This Matters:**
+
+- Traditional Modbus RTU allows only ONE Master per Slave
+- Multiple Masters cause bus collisions and failures
+- Hardware multiplexers cost $200-500+
+- Software arbitration provides collision-free sharing at no extra hardware cost
+
+**When to Use:**
+
+- ✅ Development: Multiple test systems accessing one device
+- ✅ HMI + SCADA/Historian both need device access
+- ✅ System migration: Old and new systems coexist
+- ✅ Cost savings: Avoid expensive hardware multiplexers
+- ⚠️ **Thoroughly test before production deployment**
+
+#### Real-World Example
+
+**Scenario:** Your facility has one critical Modbus device, but both the production HMI and the data historian need access. No hardware multiplexer available.
+
+**Solution:**
+
+1. Install Mapper Pro with multiple client connections enabled
+2. Production HMI connects to Mapper Pro input 1
+3. Data historian connects to Mapper Pro input 2
+4. Single Slave device connects to Mapper Pro output
+5. Mapper Pro automatically arbitrates requests from both systems
+6. Optional: Enable sniffing to log all traffic for compliance
+
+**Result:** Two independent systems safely sharing one Modbus device, no collisions, reduced costs, complete visibility if needed.
+
+---
+
 ## Quick Start Guide
 
-## Getting Started
+!!! tip "Quick Reference"
+    Want to get started fast? See our **[Quick Start Guide](quick-start.md)** for step-by-step setup instructions.
 
-### System Requirements
-- **Computer:** Windows 10 or Windows 11
-- **Connection:** USB-to-RS485 adapter (about $15-30 online)
-- **That's it!** Nothing else needed
+For quick reference, here's the essential getting started information:
 
-Optional: A physical RS485 cable "tap" if you want to spy on existing cables without disconnecting them.
-
-### Installation Options
-
-**Pick One Way to Get It:**
-
-#### Option 1: Download & Extract (Easiest)
-
-1. Go to **QuantumBitSolutions.com**
-2. Click Download
-3. Extract the file
-4. Click the .exe to run it
-5. Done! No installation hassles.
-
-!!! note "First Time?"
-    The first time you run it, it might take a few seconds to set itself up. That's normal.
-
-#### Option 2: Microsoft Store (For IT Teams)
-
-1. Open Microsoft Store on your computer
-2. Search for "Modbus Mapper Pro"
-3. Click Install
-4. Find it in your Start Menu
-5. Done!
-
-### Quick Setup
-
-=== "32-bit Version"
-
-    **For older systems and embedded PCs:**
-    
-    [:material-download: Download 32-bit](https://quantumbitsolutions.com/download/ModbusMapperPro_x86.zip){ .md-button }
-
-=== "64-bit Version"  
-
-    **For modern Windows systems:**
-    
-    [:material-download: Download 64-bit](https://quantumbitsolutions.com/download/ModbusMapperPro_x64.zip){ .md-button }
-
-=== "Microsoft Store"
-
-    **For managed environments:**
-    
-    [:material-microsoft-windows: Get from Store](https://www.microsoft.com/store/apps/9P2BP76MNTXV){ .md-button }
-
-### Step 1: Installation and Launch
-
-**After downloading and extracting the application:**
-
-1. **Extract files** to your desired location (portable - no installation needed)
-2. **Connect your RS485 adapter** to your Modbus RTU network
-3. **Launch the application** by running the executable
-
-### Step 2: Choose Your Operating Mode
-
-For this quick start guide, we'll use **Mode 1 - Listen Only** — it's the safest and easiest way to start.
-![Modbus Mapper Pro Mode 1](../../assets/screenshots/mapper/modbus-mapper-pro-mode1.webp){ .screenshot-center loading="lazy" }
-
-1. Click the **Mode Button** (bottom right of the application)
-2. Select **Listen Only** mode
-3. You're ready to connect!
-
-!!! note "Other Modes"
-    Once you're comfortable, explore **Mode 2 (Pass-Through)** and **Mode 3 (Multiplex)** — see [Operating Modes Deep Dive](#operating-modes-deep-dive) for details.
-
-### Step 3: Connect Your RS485 Adapter & Start Listening
-
-#### What You're Doing
-You're tapping into the RS485 cable (like plugging in a phone to hear a conversation without being part of it).
-
-#### How to Connect
-
-**Find your RS485 cable:**
-- Usually 2 wires going to Modbus devices
-- Often labeled A and B (or sometimes +/- or D+/D-)
-- Also find the Ground wire
-
-**Connect your adapter:**
-```
-Existing RS485 Cable          Your USB Adapter
-    A ─────────────────────────→ A
-    B ─────────────────────────→ B
-   GND ─────────────────────────→ GND
-    
-Plug adapter into your computer USB port
-```
-
-!!! warning "Important"
-    Don't disconnect anything. Just tap in. You're only listening, not interrupting.
-
-#### Software Setup
-
-1. **Pick COM Port**
-   
-      - Plug in the USB adapter
-      - In Mapper Pro, select which COM port it's using
-      - (Check Windows Device Manager if unsure — look for COM3, COM4, etc.)
-   
-2. **Set Speed (Baud Rate)**
-   
-      - Ask your device manager what baud rate your system uses
-      - Common ones: 9600, 19200, 38400
-      - Pick from the dropdown
-   
-3. **Configure Server Settings**
-   
-   - **Server:** ✅ Enable
-   - **Port:** COM15 (depends on your adapter)
-   - **Baud:** 19200 (check your device documentation)
-   - **Parity:** None (typical)
-   - **Data Bits:** 8 (typical)
-   - **Stop Bits:** 1 (typical)
-   - **Listen Only [RS-485]:** ON
-   
-4. **Click "Start" to begin monitoring**
-   
-   - Mapper Pro is now capturing all Modbus traffic
-
-Within seconds, you'll see:
-
-      - ✅ Devices talking
-      - ✅ All the data they exchange
-      - ✅ Register addresses
-      - ✅ Data values in readable format
-
-### Step 4: See What Your Devices Are Doing
-
-Once monitoring starts, you'll see three main views:
-
-#### Client Requests View — "What Are They Asking For?"
-Shows every question being asked to devices:
-
-![Modbus Mapper Pro Client Request Tab](../../assets/screenshots/mapper/modbus-mapper-pro-client-request.webp){.screenshot-center loading="lazy"}
-
-| Field | Description | Example |
-|-------|-------------|---------|
-| Slave ID | Modbus device address being queried | `1`, `17` |
-| Function | Modbus function code of the request | `03 Read Holding Registers`, `04 Read Input Registers`, `16 Write Multiple Registers` |
-| Address | Modbus Base register/coil address in standard format | `40001`, `30001`, `00001` |
-| Address6D | 6-digit addressing format for clarity and consistency | See guide: [6-Digit Addressing](../../guides/6-digit-addressing.md) |
-| Count | Number of registers/coils requested | `1`, `2`, `10` |
-
-**What to notice:** If you see 100+ different requests, that's normal. Devices are busy!
-
-#### Modbus Map (Data View) — "What Are The Values?"
-This view lets you transform raw Modbus registers into meaningful values. Use data type, byte swap, gain, and offset to convert readings into human-friendly units (similar to Modbus Monitor XPF).
-
-![Modbus mapper pro modbus map View](../../assets/screenshots/mapper/modbus-mapper-pro-modbus-map-view.webp){.screenshot-center loading="lazy"}
-
-| Control | Purpose |
-|---------|---------|
-| Save | Export the Modbus Map to CSV for use in other tools (e.g., Modbus Monitor XPF) |
-| Open | Load a previously saved Modbus Map (local or exported from XPF) |
-| + (Add) | Add a monitoring point for an address to apply post-processing |
-| - (Remove) | Remove the selected monitoring point from the list |
-| ++ (Add All) | Automatically add monitoring points for newly discovered requests |
-| Delete | Clear all monitoring points from the current map |
-| Add | Automatically add or update values from client responses |
-| Auto Update | Periodically refresh values from internal captured memory |
-
-
-1. Click **"Create Map"** or **"Add All"**
-2. All discovered data appears as a table (like Excel)
-3. Each row shows one piece of data with its current value
-4. Change the name to something meaningful:
-   - Change "Register 100" to "Temperature" 
-   - Change "Register 101" to "Pressure"
-5. Check the **"Auto Update"** box to watch values change in real-time
-
-**Example:**
-```
-Name           Value     Units
-Temperature    23.5      °C
-Pressure       101.3     kPa
-Status         Running   (text)
-```
-
-#### Messages/Logs Tab — "What's Happening Right Now?"
-This tab shows live raw traffic captured in all modes. Use it to verify requests/responses, spot errors, and understand timing.
-
-![Modbus mapper pro traffic view](../../assets/screenshots/mapper/modbus-mapper-pro-traffic-view.webp){.screenshot-center loading="lazy"}
-
-| Control | Purpose |
-|---------|---------|
-| Save | Save the traffic log to a file for later analysis |
-| Delete | Clear the current log entries |
-| Log On | Toggle logging visibility (show/hide traffic) |
-| Scroll | Enable auto-scroll to keep the latest messages in view |
-
-**Pro tip:** Turn on **"Auto Scroll"** so new messages appear at the bottom automatically.
-
-Shows every single message:
-
-- Raw data that was sent
-- Raw response that came back
-- What it all means in English
-- When it happened (timestamp)
-
-**Use this for:** Understanding problems, seeing errors, timing analysis
-
-
-
-### Step 5: Save Your Discoveries
-
-Once you've built your Modbus map:
-
-- **Save the map** for documentation purposes.
-- **Copy data** to clipboard for sharing
-- **Export configuration** for use in other applications (Modbus Map View - Save)
-- **Use with Modbus Monitor XPF** for active monitoring and control
+--8<-- "products/mapper/quick-start.md:18:230"
 
 ---
 
@@ -929,3 +706,7 @@ Monitor communications between **two separate masters** and one or more slaves s
 ---
 
 **Professional Modbus network analysis** - Mapper Pro provides the insights you need to understand, troubleshoot, and document existing Modbus systems.
+
+---
+
+<small>**Important Notice:** Modbus Mapper Pro is designed for development, testing, troubleshooting, and system analysis. While Mode 1 (Listen Only) is non-intrusive and safe for any environment, Modes 2 and 3 require network reconfiguration and should be tested in lab environments before production deployment. Users are responsible for assessing suitability for their specific applications, particularly in critical infrastructure, safety systems, or environments where operations impact health, safety, or essential services. Always follow your organization's change management procedures and obtain proper authorization before modifying live production systems. **This software is provided "as-is" without warranty of any kind. The developer is not liable for any damages, losses, or claims arising from use of this software.** See the End User License Agreement (EULA) for complete terms and conditions.</small>
