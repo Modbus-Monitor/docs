@@ -95,13 +95,18 @@ if [[ $confirm =~ ^[Yy]$ ]]; then
     sed -i "s/Version [0-9.]*/Version $new_version/" docs/index.md
     sed -i "s/Last Updated: [A-Za-z0-9, ]*/Last Updated: $(date +'%B %d, %Y')/" docs/index.md
     
+    # Update mkdocs.yml copyright footer
+    sed -i "s/Documentation Version [0-9.]*/Documentation Version $new_version/" mkdocs.yml
+    sed -i "s/Last Updated: [A-Za-z0-9, ]*/Last Updated: $(date +'%B %d, %Y')/" mkdocs.yml
+    
     echo "✅ Version updated successfully!"
     echo "📝 Files updated:"
     echo "   - docs/_version.yml"
     echo "   - docs/index.md"
+    echo "   - mkdocs.yml"
     echo
     echo "🚀 Don't forget to commit and push your changes:"
-    echo "   git add docs/_version.yml docs/index.md"
+    echo "   git add docs/_version.yml docs/index.md mkdocs.yml"
     echo "   git commit -m \"📌 Release version $new_version: $changes\""
     echo "   git push origin main"
 else
