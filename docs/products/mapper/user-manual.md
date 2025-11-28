@@ -586,6 +586,8 @@ Client B ──┘   (intelligent arbitration)
 
 ## Visual Overview: All Three Modes
 
+
+#### **MODE 1: LISTEN ONLY 🔍 (Non-Intrusive Sniffing)**
 ```mermaid
 graph TB
     subgraph M1["MODE 1: LISTEN ONLY 🔍"]
@@ -604,7 +606,16 @@ graph TB
         MP2 -->|Captures| ANALYSIS
     end
 ```
+**Mode 1 Explained (Simple & Clear)**: In Listen-Only mode, Modbus Mapper Pro connects as a passive RS485 tap. It does not transmit anything—it simply “listens” to the existing communication between the Client and Server.
 
+   - ✅ No interference
+   - ✅ No risk to the running system
+   - ✅ Mapper Pro auto-discovers registers, coil patterns, request timing, and data formats
+   - ✅ Ideal for reverse engineering or diagnosing a live system
+
+This is the **safest** and **100% non-intrusive** way to analyze real Modbus traffic.
+
+#### **MODE 2: PASS-THROUGH 🔄 (Transparent Bridge + Sniffer)**
 ```mermaid
 graph TB
     subgraph M2["MODE 2: PASS-THROUGH🔄"]
@@ -618,6 +629,22 @@ graph TB
     end
 ```
 
+**Mode 2 explained:** Mapper Pro sits transparently between Client and Server. All traffic is forwarded in real time without modification, while being captured for analysis. This gives full visibility (timing, CRC, function codes, data) during active integration and debugging on RS232 or RS485. 
+
+**Mode 2 Explained (What It Actually Does):** Mapper Pro is placed in-line between the Client and Server. It acts as a transparent bridge:
+   - Every request from the Client passes through Mapper Pro
+   - Mapper Pro forwards it to the Server
+   - Every response returns through Mapper Pro back to the Client'
+   - All frames are captured and decoded in real time
+
+   - ✅ No timing disruption (near-zero latency)
+   - ✅ Full visibility into every byte, CRC, function code, and exception
+   - ✅ Works on RS232 and RS485
+   - ✅ Perfect for live debugging, commissioning, and protocol validation
+
+Think of it as a Modbus analyzer and wire-level proxy running at the same time.
+
+#### MODE 3: MULTIPLEX 🔌 (Two Masters → One Server)
 ```mermaid
 graph TB
     subgraph M3["MODE 3: MULTIPLEX 🔌"]
@@ -633,6 +660,29 @@ graph TB
         
     end
 ```
+
+
+**Mode 3 Explained (Clear & Professional):** Modbus is normally single-master, meaning only one Client can communicate with a Server at a time. If two Clients transmit simultaneously, the bus collides and the Server rejects both. 
+
+**Mapper Pro solves this by acting as an intelligent Modbus arbiter.**
+   - Client A and Client B send requests to Mapper Pro
+   - Mapper Pro queues and serializes the requests
+   - The Server receives valid, collision-free messages
+   - Responses are routed back to the correct Client
+   - Optional logging records all traffic
+
+   - ✅ Perfect for connecting:
+     - An HMI and a SCADA
+     - A PLC and a PC
+     - A development laptop + production HMI
+     - Test tools + production network
+   - ✅ No need for a $300+ hardware multiplexer
+   - ✅ Works on RS232 or RS485
+   - ✅ Safe, automatic, conflict-free Modbus sharing
+
+Great when you want to **develop**, **debug**, or **monitor** a real device without disconnecting existing equipment.
+
+
 **How Each Mode Works:**
 
 | Aspect | Mode 1 | Mode 2 | Mode 3 |
