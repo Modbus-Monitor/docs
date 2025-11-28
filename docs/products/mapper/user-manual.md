@@ -212,14 +212,18 @@ Plug adapter into your computer USB port
       - Common ones: 9600, 19200, 38400
       - Pick from the dropdown
    
-3. **Click Settings**
-   
-      - Parity: Usually "None"
-      - Data Bits: 8
-      - Stop Bits: 1
+3. **Click Settings (Server) **
+        
+      - Server: ✅ Enable
+      - Port: COM15 [depends on your device]
+      - Baud: 19200 [depends on your device]
+      - Parity: Usually "None" [depends on your device]
+      - Data Bits: 8 [depends on your device]
+      - Stop Bits: 1 [depends on your device]
       - (Usually already correct by default)
+      - Listen Only [RS-485]: ON
    
-4. **Click "Listen" or "Start"**
+4. **Click "Listen" and "Start"**
    
       - That's it! Mapper Pro now watches your devices
 
@@ -250,9 +254,21 @@ Shows every question being asked to devices:
 **What to notice:** If you see 100+ different requests, that's normal. Devices are busy!
 
 #### Modbus Map (Data View) — "What Are The Values?"
-Powerful way to see the actual data in human-readable form by post-proecssing data using many conversions such as Data Type, Swap, Gain, and Offset (similar to Modbus Monitor XPF tool):
+This view lets you transform raw Modbus registers into meaningful values. Use data type, byte swap, gain, and offset to convert readings into human-friendly units (similar to Modbus Monitor XPF).
 
 ![Modbus mapper pro modbus map View](../../assets/screenshots/mapper/modbus-mapper-pro-modbus-map-view.webp){.screenshot-center loading="lazy"}
+
+| Control | Purpose |
+|---------|---------|
+| Save | Export the Modbus Map to CSV for use in other tools (e.g., Modbus Monitor XPF) |
+| Open | Load a previously saved Modbus Map (local or exported from XPF) |
+| + (Add) | Add a monitoring point for an address to apply post-processing |
+| - (Remove) | Remove the selected monitoring point from the list |
+| ++ (Add All) | Automatically add monitoring points for newly discovered requests |
+| Delete | Clear all monitoring points from the current map |
+| Add | Automatically add or update values from client responses |
+| Auto Update | Periodically refresh values from internal captured memory |
+
 
 1. Click **"Create Map"** or **"Add All"**
 2. All discovered data appears as a table (like Excel)
@@ -271,12 +287,20 @@ Status         Running   (text)
 ```
 
 #### Messages/Logs Tab — "What Was Going On?"
-View the live traffic that are monitored in all modes.
+This tab shows live raw traffic captured in all modes. Use it to verify requests/responses, spot errors, and understand timing.
 
 ![Modbus mapper pro traffic view](../../assets/screenshots/mapper/modbus-mapper-pro-traffic-view.webp){.screenshot-center loading="lazy"}
 
-Shows every single message:
+| Control | Purpose |
+|---------|---------|
+| Save | Save the traffic log to a file for later analysis |
+| Delete | Clear the current log entries |
+| Log On | Toggle logging visibility (show/hide traffic) |
+| Scroll | Enable auto-scroll to keep the latest messages in view |
 
+**Pro tip:** Turn on **"Auto Scroll"** so new messages appear at the bottom automatically.
+
+Shows every single message:
 
 - Raw data that was sent
 - Raw response that came back
@@ -285,7 +309,7 @@ Shows every single message:
 
 **Use this for:** Understanding problems, seeing errors, timing analysis
 
-**Pro tip:** Turn on **"Auto Scroll"** so new messages appear at the bottom automatically.
+
 
 ### Step 5: Save Your Discoveries
 
