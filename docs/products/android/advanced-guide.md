@@ -181,7 +181,7 @@ The main interface combines status indicators with action buttons for easy opera
     **Main**
     
     - **[Home](#main-interface-overview)** - Return to the main monitoring interface
-    - **[Modbus Console](../free-guide.md)** - Simple console-style interface for basic Modbus communication (see [Free version guide](../free-guide.md))
+    - **[Modbus Console](free-guide.md)** - Simple console-style interface for basic Modbus communication (see [Free version guide](free-guide.md))
     - **[Settings](#settings)** - Configure app behavior and protocols
     - **Purchases** - Verify license and purchase status
     

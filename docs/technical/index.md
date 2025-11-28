@@ -92,8 +92,7 @@
     **Protocol Support:**
 
     | Protocol | Transport | Platform | Use Case |
-    |----------|-----------|----------|----------|
-    | **Modbus TCP** | Ethernet | Windows, Android | Multi-device register mapping |
+    |----------|-----------|----------|----------|    
     | **Modbus RTU** | Serial | Windows (COM), Android (USB/BT) | Serial device configuration |
     | **Modbus ASCII** | Serial | Windows, Android | ASCII-based device setup |
 
@@ -141,6 +140,7 @@
 === "Serial (RS485/RS232)"
 
     **XPF Windows:**
+    
     - **Native COM Ports**: Direct Windows serial port access
     - **USB-to-Serial**: FTDI, Prolific, CH340 chipsets supported
     - **Multi-Drop RS485**: Up to 32-247 devices per bus (spec-dependent)
@@ -151,6 +151,7 @@
     - **Flow Control**: None, Hardware (RTS/CTS), Software (XON/XOFF)
 
     **Android:**
+
     - **USB OTG**: FTDI, CP210x, CH34x, PL2303 chipsets via USB OTG cable
     - **Bluetooth Serial**: SPP (Serial Port Profile) adapters
     - **Baud Rates**: 9600, 19200, 38400, 57600, 115200 bps (common)
@@ -172,6 +173,7 @@
     | **Server Mode** | Bind to specific IP or all | Bind to Wi-Fi interface | - |
 
     **Network Topology:**
+
     - **Point-to-Point**: Direct device connection
     - **Star**: Multiple devices via switch/router
     - **Routed**: Cross-subnet with routing
@@ -180,6 +182,7 @@
 === "Wireless"
 
     **Bluetooth (Android Only):**
+
     - **SPP Profile**: Serial Port Profile for serial adapters
     - **Pairing Required**: Android Settings → Bluetooth
     - **Range**: ~10-30 meters (Class 2 devices)
@@ -187,12 +190,14 @@
     - **Adapters**: HC-05, HC-06, RN42, commercial BT-serial bridges
 
     **Wi-Fi (Android):**
+
     - **Standards**: 802.11 b/g/n/ac
     - **Frequency**: 2.4GHz and 5GHz
     - **Connection**: WPA2/WPA3 encrypted networks
     - **IP Assignment**: DHCP or static
 
     **USB OTG (Android):**
+
     - **Chipset Support**: FTDI FT232, Silicon Labs CP210x, WCH CH340, Prolific PL2303
     - **Power**: Self-powered or USB-powered adapters
     - **Driver**: Automatic detection (no root required)
@@ -200,6 +205,7 @@
 === "Cloud/IoT (Android Add-ons)"
 
     **MQTT Add-on:**
+
     - **Brokers**: AWS IoT Core, Azure IoT Hub, HiveMQ, Mosquitto, EMQX
     - **Transport**: TCP (1883), TLS/SSL (8883), WebSockets (80/443)
     - **QoS Levels**: 0 (At most once), 1 (At least once), 2 (Exactly once)
@@ -209,6 +215,7 @@
     [:octicons-arrow-right-24: MQTT Add-on Guide](../guides/android-mqtt-addon.md)
 
     **ThingSpeak Add-on:**
+
     - **Protocol**: HTTPS REST API
     - **Update Rate**: 15 seconds minimum (free tier), 1 second (paid)
     - **Data Fields**: Up to 8 channels per ThingSpeak channel
@@ -217,6 +224,7 @@
     [:octicons-arrow-right-24: ThingSpeak Add-on Guide](../guides/android-thingspeak-addon.md)
 
     **Google Sheets Add-on:**
+
     - **Protocol**: Google Sheets API v4 (OAuth 2.0)
     - **Authentication**: Google account with drive.file scope
     - **Update Rate**: 5 seconds recommended (API rate limits)
@@ -283,8 +291,9 @@
 | **DCBA** | Little-endian words, little-endian bytes | `78 56 34 12` | Intel x86 format |
 
 **Word Swap (for 32-bit and larger):**
-- **High-Low (HL)**: High word first (standard Modbus)
-- **Low-High (LH)**: Low word first (alternate devices)
+
+    - **High-Low (HL)**: High word first (standard Modbus)
+    - **Low-High (LH)**: Low word first (alternate devices)
 
 !!! tip "Finding Correct Byte Order"
     If values appear incorrect, try different byte swap combinations. Most Modbus devices use ABCD (no swap) or BADC format.
@@ -305,10 +314,11 @@ Scaled Value = (Raw Value × Multiplier) + Offset
 | Flow Meter | 0-65535 | 0-1000 GPM | 0.0153 | 0 | Direct GPM reading |
 
 **Both XPF and Android support:**
-- Multiplication factor
-- Addition/subtraction offset
-- Decimal precision (display rounding)
-- Engineering units (text suffix)
+
+    - Multiplication factor
+    - Addition/subtraction offset
+    - Decimal precision (display rounding)
+    - Engineering units (text suffix)
 
 ---
 
@@ -348,10 +358,10 @@ Scaled Value = (Raw Value × Multiplier) + Offset
 
 **Use Cases:**
 
-- **Protocol Gateway**: Client reads PLC, Server exposes to SCADA
-- **Device Simulator**: Test clients without physical hardware
-- **Sensor Bridge (Android)**: Expose phone sensors as Modbus registers
-- **Data Aggregator**: Combine multiple sources into one Modbus interface
+  - **Protocol Gateway**: Client reads PLC, Server exposes to SCADA
+  - **Device Simulator**: Test clients without physical hardware
+  - **Sensor Bridge (Android)**: Expose phone sensors as Modbus registers
+  - **Data Aggregator**: Combine multiple sources into one Modbus interface
 
 ### Sensor Server Mode (Android Only)
 
@@ -384,33 +394,33 @@ Scaled Value = (Raw Value × Multiplier) + Offset
 
 **CSV (Comma-Separated Values):**
 
-- **XPF**: Export monitor points, server data, logs
-- **Android**: Export monitor points with timestamps
-- **Columns**: Timestamp, Name, Value, Status, Config
-- **Scheduling**: Manual, timed intervals (second/minute/hour)
+  - **XPF**: Export monitor points, server data, logs
+  - **Android**: Export monitor points with timestamps
+  - **Columns**: Timestamp, Name, Value, Status, Config
+  - **Scheduling**: Manual, timed intervals (second/minute/hour)
 
 **Google Sheets (Android Add-on):**
 
-- Real-time row append to cloud spreadsheet
-- Automatic timestamp and device ID columns
-- OAuth 2.0 authentication
-- 5-second minimum interval recommended
+  - Real-time row append to cloud spreadsheet
+  - Automatic timestamp and device ID columns
+  - OAuth 2.0 authentication
+  - 5-second minimum interval recommended
 
 **Email Export (Android):**
 
-- Attach CSV to email directly from app
-- Configure recipient, subject, body
-- Triggered manually or on schedule
+  - Attach CSV to email directly from app
+  - Configure recipient, subject, body
+  - Triggered manually or on schedule
 
 ### Logging Capabilities
 
 **XPF:**
 
-- **Packet Logs**: Raw Modbus frames with timestamps
-- **Value Logs**: Monitor point data over time
-- **Server Logs**: Client request/response history
-- **Scanner Logs**: Device discovery results
-- **File Formats**: CSV, TXT, XML
+  - **Packet Logs**: Raw Modbus frames with timestamps
+  - **Value Logs**: Monitor point data over time
+  - **Server Logs**: Client request/response history
+  - **Scanner Logs**: Device discovery results
+  - **File Formats**: CSV, TXT, XML
 
 **Android:**
 
@@ -471,26 +481,29 @@ Scaled Value = (Raw Value × Multiplier) + Offset
 ### Data Import/Export
 
 **Monitor Point Configuration Files:**
-- **Format**: CSV with headers (Name, Address, Type, Channel, Protocol, etc.)
-- **XPF**: Save/Load configurations for different devices
-- **Android**: Import/Export from Downloads folder
-- **Use Case**: Share configurations between devices, backup settings
+
+  - **Format**: CSV with headers (Name, Address, Type, Channel, Protocol, etc.)
+  - **XPF**: Save/Load configurations for different devices
+  - **Android**: Import/Export from Downloads folder
+  - **Use Case**: Share configurations between devices, backup settings
 
 ### Third-Party Integration
 
 **Compatible Tools:**
-- **QModMaster**: Open-source Modbus master (Linux/Windows)
-- **pymodbus**: Python Modbus library
-- **ModScan**: Commercial Windows Modbus scanner
-- **Node-RED**: Visual IoT flow programming (MQTT integration)
-- **Home Assistant**: Smart home automation (MQTT integration)
-- **Grafana**: Visualization dashboards (ThingSpeak, Sheets data sources)
+
+  - **QModMaster**: Open-source Modbus master (Linux/Windows)
+  - **pymodbus**: Python Modbus library
+  - **ModScan**: Commercial Windows Modbus scanner
+  - **Node-RED**: Visual IoT flow programming (MQTT integration)
+  - **Home Assistant**: Smart home automation (MQTT integration)
+  - **Grafana**: Visualization dashboards (ThingSpeak, Sheets data sources)
 
 **Protocol Compliance:**
-- **Modbus.org Specification**: Fully compliant
-- **Function Codes**: Standard 01-23 supported
-- **Exception Codes**: All standard exceptions handled
-- **CRC/LRC**: Correct checksum implementation
+
+  - **Modbus.org Specification**: Fully compliant
+  - **Function Codes**: Standard 01-23 supported
+  - **Exception Codes**: All standard exceptions handled
+  - **CRC/LRC**: Correct checksum implementation
 
 ---
 
@@ -500,33 +513,33 @@ Scaled Value = (Raw Value × Multiplier) + Offset
 
 **XPF:**
 
-- Runs on Windows with OS-level firewall
-- VPN support for remote access
-- No built-in encryption (use VPN or secure network)
-- Authentication: None (Modbus protocol limitation)
+  - Runs on Windows with OS-level firewall
+  - VPN support for remote access
+  - No built-in encryption (use VPN or secure network)
+  - Authentication: None (Modbus protocol limitation)
 
 **Android:**
 
-- App permissions: Network, USB, Bluetooth, Storage
-- Wi-Fi security: WPA2/WPA3 encrypted networks
-- Cloud add-ons: TLS/SSL for MQTT, OAuth 2.0 for Sheets
-- Bluetooth: PIN/passkey pairing
+  - App permissions: Network, USB, Bluetooth, Storage
+  - Wi-Fi security: WPA2/WPA3 encrypted networks
+  - Cloud add-ons: TLS/SSL for MQTT, OAuth 2.0 for Sheets
+  - Bluetooth: PIN/passkey pairing
 
 **Best Practices:**
 
-- Use VPN for remote Modbus access
-- Isolate Modbus networks from internet (air-gap or VLAN)
-- Enable TLS/SSL for MQTT cloud connections
-- Use strong passwords for cloud services
-- Regularly update app/software
-- Monitor logs for unauthorized access attempts
+  - Use VPN for remote Modbus access
+  - Isolate Modbus networks from internet (air-gap or VLAN)
+  - Enable TLS/SSL for MQTT cloud connections
+  - Use strong passwords for cloud services
+  - Regularly update app/software
+  - Monitor logs for unauthorized access attempts
 
 ### Data Protection
 
-- **Local Storage**: Data stored on device (not cloud by default)
-- **Cloud Add-ons**: User-controlled (opt-in)
-- **Encryption**: MQTT TLS, Google API HTTPS, ThingSpeak HTTPS
-- **Privacy**: No telemetry or analytics without consent
+  - **Local Storage**: Data stored on device (not cloud by default)
+  - **Cloud Add-ons**: User-controlled (opt-in)
+  - **Encryption**: MQTT TLS, Google API HTTPS, ThingSpeak HTTPS
+  - **Privacy**: No telemetry or analytics without consent
 
 ---
 
@@ -534,18 +547,18 @@ Scaled Value = (Raw Value × Multiplier) + Offset
 
 ### Documentation
 
-- **[XPF User Guide](../products/xpf/user-guide.md)** - Complete Windows application manual
-- **[Android Advanced Guide](../products/android/advanced-guide.md)** - Mobile app comprehensive documentation
-- **[Mapper Pro Manual](../products/mapper/user-manual.md)** - Register mapping tool
-- **[6-Digit Addressing Guide](../guides/6-digit-addressing.md)** - Extended address format
-- **[Add-on Guides](../guides/mqtt-addon.md)** - MQTT, ThingSpeak, Google Sheets
+  - **[XPF User Guide](../products/xpf/user-guide.md)** - Complete Windows application manual
+  - **[Android Advanced Guide](../products/android/advanced-guide.md)** - Mobile app comprehensive documentation
+  - **[Mapper Pro Manual](../products/mapper/user-manual.md)** - Register mapping tool
+  - **[6-Digit Addressing Guide](../guides/6-digit-addressing.md)** - Extended address format
+  - **[Add-on Guides](../guides/mqtt-addon.md)** - MQTT, ThingSpeak, Google Sheets
 
 ### Support Channels
 
-- **[Help Center](../support/index.md)** - FAQ and common issues
-- **[Community Forum](https://quantumbitsolutions.com/forums/)** - User discussions
-- **[YouTube Tutorials](https://www.youtube.com/@ModbusMonitor/videos)** - Video demonstrations
-- **Email**: [support@quantumbitsolutions.com](mailto:support@quantumbitsolutions.com)
+  - **[Help Center](../support/index.md)** - FAQ and common issues
+  - **[Community Forum](https://quantumbitsolutions.com/forums/)** - User discussions
+  - **[YouTube Tutorials](https://www.youtube.com/@ModbusMonitor/videos)** - Video demonstrations
+  - **Email**: [support@quantumbitsolutions.com](mailto:support@quantumbitsolutions.com)
 
 ### Product Comparison
 

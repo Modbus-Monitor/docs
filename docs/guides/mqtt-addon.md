@@ -420,7 +420,7 @@ For production systems, always use encrypted MQTT connections to protect your da
    - Visit [HiveMQ Cloud](https://www.hivemq.com/cloud/)
    - Create cluster (2-3 minutes)
    - Note cluster URL: `your-cluster.s2.eu.hivemq.cloud`
-![alt text](../assets/screenshots/xpf/xpf-mqtt-secure.webp)
+![XPF MQTT Secure Configuration](../assets/screenshots/xpf/xpf-mqtt-secure.webp){ loading="lazy" }
 2. **Configure XPF for TLS**
    ```yaml
    Broker Host: your-cluster.s2.eu.hivemq.cloud
@@ -1707,8 +1707,6 @@ Cloud Publishing:
 This MQTT Add-on is part of a growing ecosystem of XPF add-ons:
 
 - **[ThingSpeak Add-on](thingspeak-addon.md)**: Dedicated ThingSpeak cloud integration
-- **SQL Add-on**: Direct database logging and integration *(coming soon)*
-- **Email Add-on**: Automated email reporting and alerts *(coming soon)*
 - **Custom Add-ons**: Contact us for specialized integration requirements
 
 ---

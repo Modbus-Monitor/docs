@@ -139,8 +139,8 @@ keywords: modbus, protocol, technical, [topic-keywords]
 [Things to avoid and troubleshooting]
 
 ## 📚 Related Resources
-- [Related article 1](link.md)
-- [Related article 2](link.md)
+- [6-Digit Addressing Guide](6-digit-addressing.md)
+- [Import/Export Guide](import-export.md)
 ```
 
 ## 🔍 Search Optimization Strategy
@@ -228,7 +228,7 @@ plugins:
 
 **Internal Links** (Within Documentation)
 ```markdown
-For connection issues, see [Error Codes](../technical/error-codes.md#connection-errors).
+For connection issues, see [Error Codes](error-codes.md#connection-errors).
 ```
 
 **External Links** (To WordPress)
