@@ -1,3 +1,6 @@
+!!! warning "📝 Document In Progress"
+    This documentation is currently under construction. Content, examples, and diagrams are being updated and refined. Check back soon for the complete guide.
+
 # Modbus Mapper Pro - User Manual
 
 **Revolutionize Modbus Monitoring: See, Decode, and Analyze Like Never Before**
@@ -18,12 +21,12 @@ Think of it like this: your devices are already talking over RS485 cables. **Mod
 
 **Three Simple Things It Does:**
 
-1. **Spy on existing communication** (Mode 1: Listen Only Mode)
-   
-       - Connect to a live RS485 line and watch devices talk
-       - See every request and response in real time
-       - Automatically discover register addresses without documentation   
-       - Zero risk — the software does not transmit anything
+1. **Spy on existing communication** (Mode 1: Listen Only Mode)   
+
+      - Connect to a live RS485 line and watch devices talk
+      - See every request and response in real time
+      - Automatically discover register addresses without documentation   
+      - Zero risk — the software does not transmit anything
 
 2. **Forward and monitor** (Mode 2: Pass-Through Mode)
    
@@ -50,6 +53,30 @@ Think of it like this: your devices are already talking over RS485 cables. **Mod
 
     **Modbus Mapper Pro** is a powerful application built to simplify and solve the most challenging aspects of Modbus RTU communication. It is designed for system integrators, troubleshooters, automation engineers, and OEMs who need to understand, monitor, and optimize Modbus networks **without interrupting existing operations.**
 
+## Understanding the User Interface
+
+![Modbus Mapper PRO UI](../../assets/screenshots/mapper/modbus-mapper-pro-ui.webp){ .screenshot-center loading="lazy" }
+
+Before you start, let's get familiar with the application layout. These are the key components you'll see:
+
+
+| # | Component | Purpose |
+|---|-----------|---------|
+| 1 | **Communications** | Configure COM port, baud rate, and connection settings for your RS485 adapter |
+| 2 | **Client Request Viewer** | Real-time log showing all Modbus requests being sent to your device |
+| 3 | **Live Modbus Map** | Table view of discovered registers with live values updating in real-time |
+| 4 | **Traffic Log** | Raw Modbus message exchanges with timestamps for debugging and analysis |
+| 5 | **Licensing** | Activate your license key when first launching (appears as modal dialog if needed) |
+| 6 | **Settings & Help** | Access documentation, preferences, advanced options, and timeouts |
+| 7 | **Server Port** | RS485 connection for Listen-Only (Mode 1), Pass-Through (Mode 2), or Multiplex (Mode 3) |
+| 8 | **Client 1 Port** | First Modbus client connection for Pass-Through (Mode 2) or Multiplex (Mode 3) modes |
+| 9 | **Client 2 Port** | Second Modbus client connection for Multiplex (Mode 3) mode only |
+| 10 | **Control Panel** | LED status indicators and Start/Stop buttons for operations |
+| 11 | **Mode Button** | Toggle between Listen Only, Pass-Through, and Multiplex operating modes |
+
+**Pro Tip:** Spend a minute familiarizing yourself with these components now. You'll refer back to them as we work through the steps below.
+
+
 
 ## How It Works
 
@@ -66,6 +93,52 @@ graph LR
     style MAPPER fill:#e3f2fd
     style ANALYSIS fill:#e8f5e8
 ```
+
+## Quick Start Guide
+
+### Understanding Operating Modes
+
+Modbus Mapper Pro has three ways to work. Pick one based on what you want to do:
+
+#### Mode 1: Listen Only — "Just Watch" 🔍
+**Best for:** Observing and understanding your system
+
+You tap into existing RS485 cables and watch devices communicate.
+
+- ✅ **No changes to your system** — purely observation
+- ✅ **Completely safe** — you can't break anything by watching
+- ✅ **Automatic discovery** — see all data being exchanged
+- ✅ **Perfect for learning** — understand what devices are talking about
+
+**Example:** You have an old device with no manual. Plug in and watch it work. Mapper Pro shows you all the register numbers and data it uses.
+
+#### Mode 2: Pass-Through — "Be The Middle" 🔄
+**Best for:** Debugging and analyzing live communication
+
+Mapper Pro sits between two devices, forwarding everything while recording it all.
+
+- ✅ **Active monitoring** — see communication while system works
+- ✅ **Instant logging** — record every exchange for analysis
+- ✅ **Transparent** — devices don't know Mapper Pro is there
+- ✅ **Problem finding** — spot CRC errors, timing issues, data corruption
+
+**Example:** New HMI won't talk to old device. Put Mapper Pro in between. See exactly what's wrong in real-time.
+
+#### Mode 3: Multiplex — "Smart Splitter" 🔌
+**Best for:** Multiple systems sharing one device
+
+Multiple programs/systems can access one Modbus device without conflicts.
+
+- ✅ **No special hardware** — just software
+- ✅ **Automatic conflict prevention** — handles all the complexity
+- ✅ **Cheaper than multiplexers** — software instead of expensive equipment
+- ✅ **Optional recording** — watch traffic if needed
+
+**Example:** Both the production HMI and data logging system need the same device. Mapper Pro lets them both work without interference.
+
+!!! tip "Start Here"
+    **New to Modbus?** Start with **Mode 1 (Listen Only)**. Just watch and learn.
+
 
 ## Getting Started
 
@@ -118,51 +191,6 @@ Optional: A physical RS485 cable "tap" if you want to spy on existing cables wit
     **For managed environments:**
     
     [:material-microsoft-windows: Get from Store](https://www.microsoft.com/store/apps/9P2BP76MNTXV){ .md-button }
-
-## Quick Start Guide
-
-### Understanding Operating Modes
-
-Modbus Mapper Pro has three ways to work. Pick one based on what you want to do:
-
-#### Mode 1: Listen Only — "Just Watch" 🔍
-**Best for:** Observing and understanding your system
-
-You tap into existing RS485 cables and watch devices communicate.
-
-- ✅ **No changes to your system** — purely observation
-- ✅ **Completely safe** — you can't break anything by watching
-- ✅ **Automatic discovery** — see all data being exchanged
-- ✅ **Perfect for learning** — understand what devices are talking about
-
-**Example:** You have an old device with no manual. Plug in and watch it work. Mapper Pro shows you all the register numbers and data it uses.
-
-#### Mode 2: Pass-Through — "Be The Middle" 🔄
-**Best for:** Debugging and analyzing live communication
-
-Mapper Pro sits between two devices, forwarding everything while recording it all.
-
-- ✅ **Active monitoring** — see communication while system works
-- ✅ **Instant logging** — record every exchange for analysis
-- ✅ **Transparent** — devices don't know Mapper Pro is there
-- ✅ **Problem finding** — spot CRC errors, timing issues, data corruption
-
-**Example:** New HMI won't talk to old device. Put Mapper Pro in between. See exactly what's wrong in real-time.
-
-#### Mode 3: Multiplex — "Smart Splitter" 🔌
-**Best for:** Multiple systems sharing one device
-
-Multiple programs/systems can access one Modbus device without conflicts.
-
-- ✅ **No special hardware** — just software
-- ✅ **Automatic conflict prevention** — handles all the complexity
-- ✅ **Cheaper than multiplexers** — software instead of expensive equipment
-- ✅ **Optional recording** — watch traffic if needed
-
-**Example:** Both the production HMI and data logging system need the same device. Mapper Pro lets them both work without interference.
-
-!!! tip "Start Here"
-    **New to Modbus?** Start with **Mode 1 (Listen Only)**. Just watch and learn.
 
 ### Step 1: Installation and Launch
 
