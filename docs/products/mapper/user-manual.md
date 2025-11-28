@@ -72,72 +72,33 @@ Before you start, let's get familiar with the application layout. These are the 
 | 8 | **Client 1 Port** | First Modbus client connection for Pass-Through (Mode 2) or Multiplex (Mode 3) modes |
 | 9 | **Client 2 Port** | Second Modbus client connection for Multiplex (Mode 3) mode only |
 | 10 | **Control Panel** | LED status indicators and Start/Stop buttons for operations |
-| 11 | **Mode Button** | Toggle between Listen Only, Pass-Through, and Multiplex operating modes |
+| 11 | **Mode Button** | Toggle between Listen Only (On for Mode 1), Pass-Through (Off for Mode 2), and Multiplex operating modes (Off for Mode 3) |
 
 **Pro Tip:** Spend a minute familiarizing yourself with these components now. You'll refer back to them as we work through the steps below.
 
 
 
-## How It Works
-
-### The "Sniffing" Process
-
-```mermaid
-graph LR
-    HMI[HMI/SCADA] -->|Modbus RTU| DEVICE[Field Device]
-    DEVICE -->|Response| HMI
-    MAPPER[Mapper Pro] -.->|Silent Monitoring| HMI
-    MAPPER -.->|Traffic Analysis| DEVICE
-    MAPPER --> ANALYSIS[Decoded Data & Maps]
-    
-    style MAPPER fill:#e3f2fd
-    style ANALYSIS fill:#e8f5e8
-```
-
 ## Quick Start Guide
 
 ### Understanding Operating Modes
 
-Modbus Mapper Pro has three ways to work. Pick one based on what you want to do:
+Modbus Mapper Pro has three ways to work. Pick one based on what you need:
 
-#### Mode 1: Listen Only — "Just Watch" 🔍
-**Best for:** Observing and understanding your system
-
-You tap into existing RS485 cables and watch devices communicate.
-
-- ✅ **No changes to your system** — purely observation
-- ✅ **Completely safe** — you can't break anything by watching
-- ✅ **Automatic discovery** — see all data being exchanged
-- ✅ **Perfect for learning** — understand what devices are talking about
-
-**Example:** You have an old device with no manual. Plug in and watch it work. Mapper Pro shows you all the register numbers and data it uses.
-
-#### Mode 2: Pass-Through — "Be The Middle" 🔄
-**Best for:** Debugging and analyzing live communication
-
-Mapper Pro sits between two devices, forwarding everything while recording it all.
-
-- ✅ **Active monitoring** — see communication while system works
-- ✅ **Instant logging** — record every exchange for analysis
-- ✅ **Transparent** — devices don't know Mapper Pro is there
-- ✅ **Problem finding** — spot CRC errors, timing issues, data corruption
-
-**Example:** New HMI won't talk to old device. Put Mapper Pro in between. See exactly what's wrong in real-time.
-
-#### Mode 3: Multiplex — "Smart Splitter" 🔌
-**Best for:** Multiple systems sharing one device
-
-Multiple programs/systems can access one Modbus device without conflicts.
-
-- ✅ **No special hardware** — just software
-- ✅ **Automatic conflict prevention** — handles all the complexity
-- ✅ **Cheaper than multiplexers** — software instead of expensive equipment
-- ✅ **Optional recording** — watch traffic if needed
-
-**Example:** Both the production HMI and data logging system need the same device. Mapper Pro lets them both work without interference.
+| Mode | Name | What It Does | Works With | Best For |
+|------|------|--------------|------------|----------|
+| 🔍 **Mode 1** | Listen Only | Watch traffic without touching anything | **RS485 only** (non-intrusive tap) | Learning, troubleshooting, discovery |
+| 🔄 **Mode 2** | Pass-Through | Forward traffic while monitoring | RS232 or RS485 | Debugging, integration testing |
+| 🔌 **Mode 3** | Multiplex | Share one device with multiple systems | RS232 or RS485 | Multi-master setups, cost savings |
 
 !!! tip "Start Here"
-    **New to Modbus?** Start with **Mode 1 (Listen Only)**. Just watch and learn.
+    **New to Modbus?** Start with **Mode 1 (Listen Only)** — the safest option for RS485 networks. Just tap in, watch, and learn — you can't break anything!
+    
+!!! info "RS485 vs RS232"
+    - **Mode 1** requires **RS485** for non-intrusive monitoring (tapping into existing network)
+    - **Mode 2 & 3** work with both **RS232** and **RS485** (requires reconfiguring connections)
+
+!!! info "Want More Details?"
+    See **[Visual Overview: All Three Modes](#visual-overview-all-three-modes)** for detailed diagrams and **[Operating Modes Deep Dive](#operating-modes-deep-dive)** for expert-level explanations.
 
 
 ## Getting Started
@@ -202,13 +163,15 @@ Optional: A physical RS485 cable "tap" if you want to spy on existing cables wit
 
 ### Step 2: Choose Your Operating Mode
 
-Modbus Mapper Pro offers three operating modes. Select based on your needs:
+For this quick start guide, we'll use **Mode 1 - Listen Only** — it's the safest and easiest way to start.
+![Modbus Mapper Pro Mode 1](../../assets/screenshots/mapper/modbus-mapper-pro-mode1.webp){ .screenshot-center loading="lazy" }
 
-- **Mode 1 - Listen Only**: Best for initial analysis and troubleshooting (no integration needed)
-- **Mode 2 - Pass-Through**: For active system integration with simultaneous monitoring
-- **Mode 3 - Multiplex**: For sharing a single RS485 Slave with multiple Masters
+1. Click the **Mode Button** (bottom right of the application)
+2. Select **Listen Only** mode
+3. You're ready to connect!
 
-For this quick start guide, we'll focus on **Mode 1 - Listen Only** as it requires minimal setup and no changes to your existing network.
+!!! note "Other Modes"
+    Once you're comfortable, explore **Mode 2 (Pass-Through)** and **Mode 3 (Multiplex)** — see [Operating Modes Deep Dive](#operating-modes-deep-dive) for details.
 
 ### Step 3: Connect Your RS485 Adapter & Start Listening
 
@@ -238,46 +201,58 @@ Plug adapter into your computer USB port
 #### Software Setup
 
 1. **Pick COM Port**
-   - Plug in the USB adapter
-   - In Mapper Pro, select which COM port it's using
-   - (Check Windows Device Manager if unsure — look for COM3, COM4, etc.)
+   
+      - Plug in the USB adapter
+      - In Mapper Pro, select which COM port it's using
+      - (Check Windows Device Manager if unsure — look for COM3, COM4, etc.)
    
 2. **Set Speed (Baud Rate)**
-   - Ask your device manager what baud rate your system uses
-   - Common ones: 9600, 19200, 38400
-   - Pick from the dropdown
+   
+      - Ask your device manager what baud rate your system uses
+      - Common ones: 9600, 19200, 38400
+      - Pick from the dropdown
    
 3. **Click Settings**
-   - Parity: Usually "None"
-   - Data Bits: 8
-   - Stop Bits: 1
-   - (Usually already correct by default)
+   
+      - Parity: Usually "None"
+      - Data Bits: 8
+      - Stop Bits: 1
+      - (Usually already correct by default)
    
 4. **Click "Listen" or "Start"**
-   - That's it! Mapper Pro now watches your devices
+   
+      - That's it! Mapper Pro now watches your devices
 
 Within seconds, you'll see:
-- ✅ Devices talking
-- ✅ All the data they exchange
-- ✅ Register addresses
-- ✅ Data values in readable format
+
+      - ✅ Devices talking
+      - ✅ All the data they exchange
+      - ✅ Register addresses
+      - ✅ Data values in readable format
 
 ### Step 4: See What Your Devices Are Doing
 
-Once listening starts, you'll see three main views:
+Once listening starts, you can look at the traffic using the see three main views:
 
-#### Requests Tab — "What Are They Asking For?"
+#### Client Requests View — "What Are They Asking For?"
 Shows every question being asked to devices:
 
-- **Device ID** — which device is being asked (Slave 1, Slave 2, etc.)
-- **Data Type** — type of question (Read, Write, etc.)
-- **Address** — where the data lives in the device
-- **How Often** — how many times per second/minute it's asked
+![Modbus Mapper Pro Client Request Tab](../../assets/screenshots/mapper/modbus-mapper-pro-client-request.webp){.screenshot-center loading="lazy"}
+
+| Field | Description | Example |
+|-------|-------------|---------|
+| Slave ID | Modbus device address being queried | `1`, `17` |
+| Function | Modbus function code of the request | `03 Read Holding Registers`, `04 Read Input Registers`, `16 Write Multiple Registers` |
+| Address | Modbus Base register/coil address in standard format | `40001`, `30001`, `00001` |
+| Address6D | 6-digit addressing format for clarity and consistency | See guide: [6-Digit Addressing](../../guides/6-digit-addressing.md) |
+| Count | Number of registers/coils requested | `1`, `2`, `10` |
 
 **What to notice:** If you see 100+ different requests, that's normal. Devices are busy!
 
-#### Data View (Map) — "What Are The Values?"
-Shows actual data in human-readable form:
+#### Modbus Map (Data View) — "What Are The Values?"
+Powerful way to see the actual data in human-readable form by post-proecssing data using many conversions such as Data Type, Swap, Gain, and Offset (similar to Modbus Monitor XPF tool):
+
+![Modbus mapper pro modbus map View](../../assets/screenshots/mapper/modbus-mapper-pro-modbus-map-view.webp){.screenshot-center loading="lazy"}
 
 1. Click **"Create Map"** or **"Add All"**
 2. All discovered data appears as a table (like Excel)
@@ -295,8 +270,13 @@ Pressure       101.3     kPa
 Status         Running   (text)
 ```
 
-#### Messages/Logs Tab — "What Was Said?"
+#### Messages/Logs Tab — "What Was Going On?"
+View the live traffic that are monitored in all modes.
+
+![Modbus mapper pro traffic view](../../assets/screenshots/mapper/modbus-mapper-pro-traffic-view.webp){.screenshot-center loading="lazy"}
+
 Shows every single message:
+
 
 - Raw data that was sent
 - Raw response that came back
@@ -311,9 +291,9 @@ Shows every single message:
 
 Once you've built your Modbus map:
 
-- **Save the map** for documentation purposes
+- **Save the map** for documentation purposes.
 - **Copy data** to clipboard for sharing
-- **Export configuration** for use in other applications
+- **Export configuration** for use in other applications (Modbus Map View - Save)
 - **Use with Modbus Monitor XPF** for active monitoring and control
 
 ---
