@@ -8,6 +8,8 @@ Transform your Arduino Uno into a fully functional Modbus RTU Server for seamles
 
 In this guide, we'll walk you through setting up your Arduino Uno as a Modbus RTU Server. This setup allows seamless reading of both Digital and Analog I/O using any Modbus Client. We'll provide comprehensive, step-by-step instructions, including sample code and a detailed project demonstration. By the end of this tutorial, you'll be able to effortlessly read Arduino's Analog and Digital inputs using the Modbus Monitor XPF Program.
 
+![Arduino Server](../assets/screenshots/technical/arduino-server.webp){ .screenshot-shadow loading="lazy" }
+
 ---
 
 ## Source Code
