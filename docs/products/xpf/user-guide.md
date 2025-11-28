@@ -4426,6 +4426,7 @@ Defines how to interpret the raw Modbus register data.
 | **DATETIME** | Variable | Date/Time | Formatted timestamps |
 
 **Most Common Types:**
+
 - **UINT16**: Unsigned 16-bit integer (0-65535) - default for most registers
 - **INT16**: Signed 16-bit integer (-32768 to 32767) - for negative values
 - **FLOAT32**: 32-bit floating point - for decimal precision
