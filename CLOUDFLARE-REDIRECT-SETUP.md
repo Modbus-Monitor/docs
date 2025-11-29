@@ -1,4 +1,4 @@
-# Cloudflare Redirect Setup Guide
+ # Cloudflare Redirect Setup Guide
 
 Complete guide to set up 301 redirects from your old WordPress help pages to the new GitHub Pages docs site using Cloudflare.
 
