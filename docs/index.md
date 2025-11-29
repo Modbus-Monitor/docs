@@ -23,7 +23,7 @@
     Quick access to the most‑visited help topics.
 
     - [:octicons-alert-24: Error Codes](guides/error-codes.md)
-    - [:octicons-usb-24: USB‑OTG Serial & Adapters](guides/android-hardware.md#usb-otg-serial-adapters)
+    - [:material-usb: USB‑OTG Serial & Adapters](guides/android-hardware.md#usb-otg-serial-adapters)
     - [:octicons-server-24: Android Server Mode](products/android/advanced-guide.md#modbus-server-mode-slave)
     - [:octicons-device-camera-video-24: Sensor Server](products/android/advanced-guide.md#sensor-server-mode)
 
