@@ -121,10 +121,12 @@ copyright: |
 
 nav:
   - Home: index.md
+  - Download & Purchase: downloads-purchase.md
 
   - Technical Resources:
     - Overview: technical/index.md
 
   - Support & Help:
     - Help Center: support/index.md
+    - FAQ: support/faq.md
     - Community Forum: https://quantumbitsolutions.com/forums/

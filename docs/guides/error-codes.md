@@ -1,123 +1,150 @@
-# Error Codes & Troubleshooting Guide
+# Error Codes & Troubleshooting
 
-**Understand and resolve common Modbus Monitor Advanced errors**
-
-This guide explains error codes and their solutions, consolidated from the legacy documentation. Error codes help diagnose communication, configuration, and input issues.
+Comprehensive reference for diagnosing Modbus Monitor (Windows & Android) communication and configuration issues.
 
 ---
+## How to Read Errors
 
-## Connection and Communication Errors
+Error mechanisms fall into two families:
 
-These errors occur during Modbus polling or server operations due to protocol/channel mismatches, network issues, or device problems.
+1. **Application / Connection Errors** (numbers like `#3`, `#99`): The app could not complete a transaction (network, protocol, timing, configuration).
+2. **Protocol Exceptions** (device returns codes like `01`, `02`, `03` that surface as **Error #9**): The device understood the request frame but rejected it.
 
-### Common Connection Errors
+**Rule of Thumb:**
 
-| Error Code | Name | Cause | Solution |
-|-----------|------|-------|----------|
-| **#3** | Connection or Communication Transaction Create Error | Device not responding or timeout | Check device is powered and reachable; increase Timeout in Settings |
-| **#4** | Connection or Communication Transaction Create Error | Similar to #3 | Verify IP address, port, and device availability |
-| **#5** | Receive Frame Data Decode Error | Loss of Wi-Fi / Ethernet connection or invalid data | Check network connection; verify IP addresses; restart device |
-| **#7** | Modbus Transaction Execute Error | Protocol or device mismatch | Verify correct Protocol (TCP, RTU, ASCII) and Channel (TCP/IP, Serial, Bluetooth) combination |
-| **#9** | Slave Returned Error | Device rejected the Modbus request | Check valid Modbus address and slave ID; verify device configuration |
-| **#10** | Transaction Response Error | Invalid response from device | Verify device is in Modbus mode; check polling interval isn't too fast |
-| **#11** | Response Decode Error | Response data format invalid | Confirm data type (INT16, FLOAT32, etc.) matches device |
-| **#12** | Error Closing Connection | TCP/UDP socket closure issue | May be temporary; retry or restart app |
-| **#14** | Response Processing Error | Response cannot be processed | Check register address and data type configuration |
-| **#15** | Read/Write Processing Error | Data read/write operation failed | Verify permissions and device state |
-| **#17** | Packet Transaction ID Mis-match (Late Response?) | Device response delayed or out of order | **Increase Timeout setting** (Settings → Timing → Timeout) |
-| **#99** | Error Opening Connection | TCP, UDP, Bluetooth, or USB serial port failure | Check channel/protocol combination; verify USB drivers for serial adapters |
-
-### Protocol & Channel Combinations
-
-**Valid combinations:**
-
-- **TCP/IP Channel**: Modbus TCP, Modbus UDP
-- **Serial Channel**: Modbus RTU, Modbus ASCII, RTU over TCP, ASCII over TCP
-- **Bluetooth Channel**: Modbus RTU, Modbus ASCII only (NOT TCP)
-- **USB OTG Serial**: Modbus RTU, Modbus ASCII via FTDI/SiLab/Prolific adapters
-
-**Common mistake**: Selecting Modbus TCP on Bluetooth Channel → Error #99. Always match the channel to supported protocols.
+* If you get **#3 / #4 / #12 / #99**: Inspect network/channel configuration first (IP, port, protocol, wiring, adapter, driver).
+* If you get **#9**: Inspect addressing (register, function code, data type, length) — see Modbus Exceptions table.
+* If you get **#17**: Usually a timing mismatch; raise Timeout.
+* If you get **#5**: Transport instability (Wi‑Fi drop, cable unplug, serial noise).
 
 ---
+## General Debugging Steps
 
-## Input Errors
+Before deep dives ensure fundamentals:
 
-These errors occur when monitor point configuration contains invalid or out-of-range values.
-
-### Input Error Categories
-
-| Error Code | Field | Valid Range | Issue | Fix |
-|-----------|-------|-------------|-------|-----|
-| **#1209522** | Count | 1–255 | Count empty, not a number, or out of range | Enter a number between 1 and 255 |
-| **#1209522** | Slave ID | 1–255 | Slave ID empty, not a number, or out of range | Enter a number between 1 and 255 |
-| **#3209523** | Address | 0–65535 | Address empty, not a number, or out of range | Enter a number between 0 and 65535 (e.g., `40001` for holding register) |
-| **#3209523** | Slave ID | 1–255 | Slave ID empty, not a number, or out of range | Enter a number between 1 and 255 |
-| **#3209523** | Count | 1–255 | Count empty, not a number, or out of range | Enter a number between 1 and 255 |
-| **#3209522** | (Any numeric field) | N/A | Number Conversion Error (keyboard type, spaces, typos) | Check for spaces before/after numbers; use correct keyboard; re-enter carefully |
-
-### How to Fix Input Errors
-
-1. **Open the Monitor Point Configuration** dialog (Main Menu → Monitoring Points → Select point → Change)
-2. **Check each field**:
-   - **Address**: No spaces, valid Modbus register (e.g., `40001`, `40002`)
-   - **Slave ID**: Must be 1 or higher (typically `1`)
-   - **Count**: Number of registers to read (1–255)
-   - **Data Type**: Match device specs (INT16, FLOAT32, etc.)
-3. **Save and retry polling**
+1. **Physical Connection:** Device powered? Ethernet link LEDs or serial wiring correct? USB‑OTG adapter recognized?
+2. **Network Configuration:** IP/Port correct (default 502 for Modbus TCP). Can you `ping` the device? (On Android use a network utility app.)
+3. **Modbus Identity:** Slave/Unit ID matches device configuration.
+4. **Wiring (RS485):** A+/B- not reversed; termination resistors at both ends; common ground present.
+5. **Protocol–Channel Match:** Selected protocol supported by underlying channel (see table below).
 
 ---
+## Application Error Codes
 
-## Troubleshooting Steps
+Generated by the application when a connection or transaction cannot proceed.
 
-### Step 1: Check Network & Device
+| Code | Name | Probable Cause | Recommended Solution |
+| :--- | :--- | :--- | :--- |
+| **#3** | **Transaction Create Error** | Device not responding / initial timeout | Power cycle device; verify reachability; increase Timeout (Settings → Timing). |
+| **#4** | **Transaction Create Error** | Host unreachable (similar to #3) | Confirm IP/Port; check firewall rules; test with `ping`. |
+| **#5** | **Receive Frame Decode Error** | Lost connection or corrupted frame (noise, drop) | Stabilize network; verify unique IP; check cabling or Wi‑Fi strength; restart device. |
+| **#7** | **Modbus Transaction Execute Error** | Protocol–Channel mismatch | Ensure chosen Protocol fits Channel (e.g., RTU only over Serial/Bluetooth unless tunneling). |
+| **#9** | **Slave Returned Error** | Device rejected request (Exception code) | Validate register, function, slave ID; see Modbus Exceptions section. |
+| **#10** | **Transaction Response Error** | Empty/invalid response frame | Verify device in Modbus mode; lower poll rate or increase interval. |
+| **#11** | **Response Decode Error** | Data type / byte order mismatch | Check data type (INT16, FLOAT32); verify endianness vs device map. |
+| **#12** | **Error Closing Connection** | Socket close issue (transient) | Retry; if persistent reboot app/device. |
+| **#14** | **Response Processing Error** | Register/data outside expected bounds | Recheck address + length + configured data type. |
+| **#15** | **Read/Write Processing Error** | Internal read/write failure | Confirm device allows write; not in local/program mode; verify permissions. |
+| **#17** | **Packet ID Mismatch** | Late/out‑of‑order response after retry | Increase Timeout; reduce simultaneous requests. |
+| **#99** | **Error Opening Connection** | Channel/protocol initialization failure | Confirm protocol selection; for USB install drivers (FTDI/CH340/CP210x/Prolific). |
 
-- Ping the device IP from your Android phone (use a network utility app)
-- Verify the device is powered on and in Modbus mode
-- Check firewall rules don't block the Modbus port (default 502 for TCP)
+### Common Missing / Edge Codes
+Your environment may also surface (not always enumerated):
 
-### Step 2: Verify Monitor Point Configuration
-
-- Open Monitoring Points → Select your point → Change
-- Confirm:
-  - **Channel** matches your connection type (TCP/IP, Serial, Bluetooth)
-  - **Protocol** is supported by the channel
-  - **Address**, **Slave ID**, **Count** are within valid ranges (no spaces)
-  - **Data Type** matches the device (check device manual)
-
-### Step 3: Increase Timeout (Most Common Fix)
-
-- Main Menu → Settings → Timing → Timeout
-- Default is 1000 ms (1 second)
-- Try 2000–5000 ms for slow networks or devices
-- If still failing, try 10000 ms (10 seconds)
-
-### Step 4: Check Connection Details
-
-- For TCP/IP: Verify IP address and port (default 502)
-- For Serial (RTU/ASCII): Verify baud rate (9600, 19200, 38400, etc.)
-- For Bluetooth: Ensure device is paired before polling
-
-### Step 5: Restart & Reset
-
-- Close and reopen the app
-- Try polling again
-- If persistent, export your monitor points (Main Menu → Data → Export) and restart the app
+* **#1 / #2 (CRC Error / Frame Integrity)**: Electrical noise or cabling faults → Improve shielding, check terminations.
+* **#6 (Send / Write Error)**: OS/socket could not send frame → Check network congestion; retry after short delay.
+* **#13 (Socket Stall Timeout)**: Open connection but stalled stream → Increase Timeout; inspect gateway latency.
 
 ---
+## Protocol & Channel Compatibility
 
-## Quick Reference
+| Channel | Supported Protocols | Notes |
+| :------ | :------------------ | :---- |
+| TCP/IP | Modbus TCP, Modbus UDP, RTU-over-TCP, ASCII-over-TCP | RTU/ASCII over TCP require device/gateway support. |
+| Serial (RS485/USB) | Modbus RTU, Modbus ASCII | Use correct baud, parity, stop bits. |
+| Bluetooth (Classic) | Modbus RTU, Modbus ASCII | Acts as virtual serial (SPP). |
+| Bluetooth LE | Limited—depends on service characteristics | Not all devices expose full Modbus frames. |
+| USB‑OTG Serial | Modbus RTU, Modbus ASCII | Quality adapter (FTDI, CP210x, CH340). Avoid low power hubs. |
 
-**Most Common Errors:**
-
-- **#99**: Wrong protocol/channel combo → Fix: Select correct channel in Monitor Point configuration
-- **#17**: Timeout too short → Fix: Increase Timeout in Settings → Timing
-- **#9**: Invalid address or slave ID → Fix: Verify address and slave ID in device manual
-- **#5**: Network disconnected → Fix: Check Wi-Fi/Ethernet connection
+**Common Mistake:** Selecting Modbus TCP on Bluetooth → results in **#99**.
 
 ---
+## Modbus Protocol Exceptions (Error #9 Context)
 
-If you encounter an error not listed here, contact support with:
-- Error code number
-- Monitor point configuration (Channel, Protocol, Address, Slave ID, Data Type)
-- Device type and connection method
+When **Error #9** occurs the device returned a Modbus Exception code; connectivity is fine—request semantics failed.
+
+| Exception | Name | Cause | Solution |
+| :--- | :--- | :--- | :--- |
+| **01** | Illegal Function | Unsupported Function Code / Write to read‑only | Verify device supports function; avoid writing coils/registers marked RO. |
+| **02** | Illegal Data Address | Register address outside map | Check map; adjust address or length not to exceed bounds. |
+| **03** | Illegal Data Value | Value out of range / malformed request | Validate data type and permissible value range. |
+| **04** | Slave Device Failure | Hardware fault during operation | Restart device; inspect device diagnostics. |
+| **06** | Slave Device Busy | Device processing long task | Increase Poll Interval or backoff/retry delay. |
+| **10** | Gateway Path Unavailable | Gateway cannot reach downstream serial target | Check gateway → serial wiring; confirm downstream powered. |
+| **11** | Gateway Target Failed | Downstream device did not respond | Verify slave ID; confirm downstream power & address. |
+
+---
+## Input Validation Errors
+
+Arise from invalid monitor point configuration (ranges, formats, numeric conversion).
+
+| Code | Field | Valid Range | Issue | Fix |
+| :--- | :--- | :--- | :--- | :--- |
+| **#1209522** | Count | 1–255 | Empty / non‑numeric / out of range | Enter value 1–255. |
+| **#1209522** | Slave ID | 1–255 | Empty / non‑numeric / out of range | Enter value 1–255. |
+| **#3209523** | Address | 0–65535 | Empty / non‑numeric / out of range | Provide valid register (e.g., Holding 40001). |
+| **#3209523** | Slave ID | 1–255 | Empty / invalid | Provide valid slave/unit ID. |
+| **#3209523** | Count | 1–255 | Empty / invalid | Provide register count in range. |
+| **#3209522** | Any numeric | N/A | Number conversion error (spaces, locale) | Remove spaces; ensure numeric keyboard; re‑enter. |
+
+**Fix Steps:** Open Monitoring Points → Select → Change → Correct fields (Address, Slave ID, Count, Data Type) → Save → Retry polling.
+
+---
+## Hardware & Physical Layer Issues
+
+| Symptom | Possible Cause | Mitigation |
+| :------ | :------------- | :--------- |
+| Intermittent **#3/#5** on RS485 | Electrical noise / improper shielding | Use twisted shielded pair; separate from high‑voltage lines; proper grounding. |
+| Frequent CRC / frame corruption | Missing termination / bias | Add 120Ω termination both ends; ensure bias resistors present. |
+| USB serial disconnects | Low power OTG hub | Use powered hub; quality adapter chipset. |
+| Late responses (**#17**) | Device overloaded / poll too fast | Increase poll interval; batch reads; raise Timeout. |
+
+---
+## Performance Tuning
+
+* Start with moderate poll interval (e.g., 1000–2000 ms); decrease only if error rate remains low.
+* Group adjacent registers to minimize transaction overhead.
+* Raise timeout before increasing retries (timeouts usually more effective than high retry counts).
+
+---
+## Step-by-Step Troubleshooting Flow
+
+1. Identify error code (log or UI).  
+2. Classify: Application vs Protocol Exception (#9).  
+3. For connection errors → Validate physical/link settings; adjust Timeout.  
+4. For #9 → Map Exception code; fix address/function/data issues.  
+5. For decode errors (#11/#14) → Verify data type & endianness.  
+6. Re-test with simplified single register (known good).  
+7. Scale back up gradually (add registers/channels).  
+8. Persisting issue → Capture log snippet & config; contact support.
+
+---
+## Quick Reference Cheat Sheet
+
+| Error | First Check | Typical Fix |
+| :---- | :---------- | :---------- |
+| **#99** | Protocol–Channel mismatch | Select valid protocol for channel. |
+| **#17** | Timeout too short | Increase Timeout (2–5s). |
+| **#9** | Address/function invalid | Correct register/function; consult map. |
+| **#5** | Transport instability | Stabilize network / wiring; restart device. |
+| **#11** | Data type mismatch | Adjust data type / endianness. |
+
+---
+## Need More Help?
+
+Provide support with: Error code, Exception (if #9), Channel & Protocol, Register/Count, Slave ID, Device model, Log excerpt.
+
+**Support Channels:** FAQ → Email → Forum. Faster resolution when detailed config is included.
+
+*Last updated: November 29, 2025*
 
