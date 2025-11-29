@@ -12,6 +12,33 @@
 
 ---
 
+## Start Here
+
+<div class="grid cards" markdown>
+
+-   :material-lifebuoy:{ .lg .middle } **Top Fixes**
+
+    ---
+
+    Quick access to the most‑visited help topics.
+
+    - [:octicons-alert-24: Error Codes](guides/error-codes.md)
+    - [:octicons-usb-24: USB‑OTG Serial & Adapters](guides/android-hardware.md#usb-otg-serial-adapters)
+    - [:octicons-server-24: Android Server Mode](products/android/advanced-guide.md#modbus-server-mode-slave)
+    - [:octicons-device-camera-video-24: Sensor Server](products/android/advanced-guide.md#sensor-server-mode)
+
+-   :material-compass:{ .lg .middle } **Popular Guides**
+
+    ---
+
+    - [:octicons-book-24: Arduino Modbus RTU Server](technical/arduino-server.md)
+    - [:octicons-file-24: Import & Export](guides/import-export.md)
+    - [:octicons-question-24: FAQ](support/faq.md)
+
+</div>
+
+---
+
 ## Our Products
 
 <div class="grid cards" markdown>
